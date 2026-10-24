@@ -39,7 +39,7 @@ async function nominatim(params) {
 
 async function getPage(url) {
   try {
-    const r = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; pninim-bot/1.0)', 'Accept-Language': 'he,en' }, redirect: 'follow', signal: AbortSignal.timeout(15000) });
+    const r = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml', 'Accept-Language': 'he-IL,he;q=0.9,en;q=0.8' }, redirect: 'follow', signal: AbortSignal.timeout(15000) });
     if (!r.ok || !(r.headers.get('content-type') || '').includes('html')) { console.log('  page', r.status, url); return null; }
     return { url: r.url, html: (await r.text()).slice(0, 3_000_000) };
   } catch (e) { console.log('  page error', url, e.message); return null; }
@@ -72,18 +72,22 @@ function addressesIn(html) {
 }
 
 const TOWN_CLASSES = new Set(['place', 'boundary']);
+// OSM spells some towns differently
+const TOWN_ALIAS = { 'פרדס חנה': 'פרדס חנה-כרכור', 'כרם מהר”ל': 'כרם מהר"ל', 'מעלות תרשיחא': 'מעלות-תרשיחא' };
 const norm = s => (s || '').replace(/["'`׳״”“.,:;!?()\[\]{}|/\\\s-]+/g, '').toLowerCase();
 // "פרדס חנה" is "פרדס חנה-כרכור" in OSM, "עמק החולה" is an area: try a few spellings of the town
 function townQueries(town) {
-  const t = town.replace(/^(קיבוץ|מושב|אזור|היישוב|כפר) /, '');
-  return [...new Set([town, t, t.replace(/-/g, ' '), t.split(/[-–]/)[0].trim()])].filter(Boolean);
+  const t = town.replace(/^(קיבוץ|מושב|אזור|היישוב) /, '');
+  return [...new Set([TOWN_ALIAS[town], town, t, t.replace(/-/g, ' '), t.split(/[-–]/)[0].trim()])].filter(Boolean);
 }
 async function townCentre(p) {
   const prev = p.lat != null ? [p.lat, p.lng] : null;
   const town = (p.town || '').split(/[,/(]| ו?ליד /)[0].trim();
   if (!town) return null;
   for (const q of townQueries(town)) {
-    const res = await nominatim({ q });
+    // settlements first: a plain search for "אבנת" or "אלמוג" returns streets and bus stops named after them
+    let res = await nominatim({ q, featureType: 'settlement' });
+    if (!res.length) res = await nominatim({ q });
     for (const r of res) {
       const pt = [+r.lat, +r.lon], cls = r.category || r.class;
       const isTown = TOWN_CLASSES.has(cls) || (cls === 'natural' || cls === 'waterway') && norm(r.name).includes(norm(q));
@@ -134,8 +138,10 @@ async function fromOsmName(p, centre) {
       // the OSM feature's own name has to match the place name, not just share a word ("יקב אלונה" is not "לונה מזון")
       const hit = res.find(r => {
         const cls = r.category || r.class, a = norm(r.name), b = norm(n);
-        return !TOWN_CLASSES.has(cls) && !['highway', 'landuse', 'railway'].includes(cls)
-          && a.length >= 3 && (a.includes(b) || b.includes(a))
+        // a settlement is no better than the town centre; streets and bus stops named after a place are not the place
+        const settlement = cls === 'boundary' && r.type === 'administrative' || cls === 'place' && !['isolated_dwelling', 'farm', 'locality', 'square'].includes(r.type);
+        const street = cls === 'highway' && !['path', 'footway', 'track', 'cycleway', 'pedestrian'].includes(r.type) || cls === 'railway';
+        return !settlement && !street && a.length >= 3 && (a.includes(b) || b.includes(a))
           && km([+r.lat, +r.lon], [centre.lat, centre.lng]) < (d < 0.1 ? 5 : 12);
       });
       if (hit) return { lat: +hit.lat, lng: +hit.lon, src: `OpenStreetMap: ${hit.display_name.split(',').slice(0, 2).join(',')}` };
