@@ -7,7 +7,10 @@ import { DIVIDER_SVG } from './art';
 import Illo from './Illo';
 import PlaceCard from './PlaceCard';
 import CheckPopup, { checkSeen } from './CheckPopup';
-import SchematicMap, { FULL, OUTLINE, poly } from './SchematicMap';
+import dynamic from 'next/dynamic';
+import { FULL, OUTLINE, poly } from '@/lib/outline';
+
+const MapView = dynamic(() => import('./MapView'), { ssr: false, loading: () => <div id="map" /> });
 
 const MOBILE = '(max-width:860px)';
 const isMobile = () => typeof window !== 'undefined' && matchMedia(MOBILE).matches;
@@ -31,7 +34,6 @@ export default function Explorer({ places }: { places: Place[] }) {
   const [mapOpen, setMapOpen] = useState(false);
   const [hlId, setHlId] = useState<number | null>(null);
   const [hoverId, setHoverId] = useState<number | null>(null);
-  const [tip, setTip] = useState<{ text: string; x: number; y: number } | null>(null);
   const [cut, setCut] = useState<number | null>(null);
   const [layoutTick, setLayoutTick] = useState(0);
   const [measureTick, setMeasureTick] = useState(0);
@@ -94,13 +96,12 @@ export default function Explorer({ places }: { places: Place[] }) {
   }, []);
   useEffect(() => { if (mapOpen) { const t = setTimeout(() => setLayoutTick(x => x + 1), 520); return () => clearTimeout(t); } }, [mapOpen]);
 
-  const pickPin = useCallback((id: number) => {
+  // a pin click highlights its card; the popup's "לכרטיס" jumps to it (on mobile, back to the list)
+  const pickPin = useCallback((id: number) => setHlId(id), []);
+  const openCard = useCallback((id: number) => {
     setHlId(id);
     if (isMobile()) setView('list');
     requestAnimationFrame(() => document.getElementById('c' + id)?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
-  }, []);
-  const hoverPin = useCallback((p: Place | null, e?: React.MouseEvent) => {
-    setTip(p && e ? { text: p.name + (p.town ? ' · ' + p.town : ''), x: e.clientX + 12, y: e.clientY + 12 } : null);
   }, []);
 
   const toggleFold = () => {
@@ -116,7 +117,6 @@ export default function Explorer({ places }: { places: Place[] }) {
   const shown = cut == null ? items : items.slice(0, cut);
   const rest = cut == null ? [] : items.slice(cut);
   const open = panel === 'open';
-  const zoom = !!(st.regions.length || st.q);
 
   return (
     <>
@@ -194,11 +194,11 @@ export default function Explorer({ places }: { places: Place[] }) {
             </div>
             <div className="mapcol">
               <aside className="mapbox" ref={mapboxRef}>
-                <SchematicMap items={items} zoom={zoom} activeId={hlId ?? hoverId} onPick={pickPin} onHover={hoverPin} />
+                <MapView items={items} activeId={hoverId ?? hlId} visible={mapOpen || view === 'map'} onPick={pickPin} onOpenCard={openCard} />
                 <div className="legend">
-                  <span><i />פנינה</span>
+                  <span><i />מיקום מדויק</span>
+                  <span><i className="t" />מיקום משוער, בתוך היישוב</span>
                   <span><svg viewBox="-1.2 -1.2 2.4 2.4" width="12" height="12" style={{ verticalAlign: '-1px', marginInlineEnd: 4 }}><polygon points="0,-1 0.26,-0.36 0.95,-0.31 0.43,0.14 0.59,0.81 0,0.45 -0.59,0.81 -0.43,0.14 -0.95,-0.31 -0.26,-0.36" fill="#F3E27C" stroke="#22333B" strokeWidth=".15" /></svg>המלצת המערכת</span>
-                  <span>המיקום משוער ברמת יישוב עד שנאמת כתובות</span>
                 </div>
               </aside>
             </div>
@@ -207,7 +207,6 @@ export default function Explorer({ places }: { places: Place[] }) {
         </div>
       </div>
       <CheckPopup ref={popRef} />
-      {tip && <div id="tip" style={{ left: tip.x, top: tip.y }}>{tip.text}</div>}
     </>
   );
 }
