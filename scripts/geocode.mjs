@@ -40,9 +40,9 @@ async function nominatim(params) {
 async function getPage(url) {
   try {
     const r = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; pninim-bot/1.0)', 'Accept-Language': 'he,en' }, redirect: 'follow', signal: AbortSignal.timeout(15000) });
-    if (!r.ok || !(r.headers.get('content-type') || '').includes('html')) return null;
+    if (!r.ok || !(r.headers.get('content-type') || '').includes('html')) { console.log('  page', r.status, url); return null; }
     return { url: r.url, html: (await r.text()).slice(0, 3_000_000) };
-  } catch { return null; }
+  } catch (e) { console.log('  page error', url, e.message); return null; }
 }
 
 const SOCIAL = /facebook\.com|instagram\.com|fb\.me|linktr\.ee|wa\.me|whatsapp/i;
@@ -72,14 +72,24 @@ function addressesIn(html) {
 }
 
 const TOWN_CLASSES = new Set(['place', 'boundary']);
+const norm = s => (s || '').replace(/["'`׳״”“.,:;!?()\[\]{}|/\\\s-]+/g, '').toLowerCase();
+// "פרדס חנה" is "פרדס חנה-כרכור" in OSM, "עמק החולה" is an area: try a few spellings of the town
+function townQueries(town) {
+  const t = town.replace(/^(קיבוץ|מושב|אזור|היישוב|כפר) /, '');
+  return [...new Set([town, t, t.replace(/-/g, ' '), t.split(/[-–]/)[0].trim()])].filter(Boolean);
+}
 async function townCentre(p) {
   const prev = p.lat != null ? [p.lat, p.lng] : null;
-  const town = (p.town || '').split(/[,/]| ו?ליד /)[0].trim();
+  const town = (p.town || '').split(/[,/(]| ו?ליד /)[0].trim();
   if (!town) return null;
-  const res = (await nominatim({ q: town })).filter(r => TOWN_CLASSES.has(r.category || r.class));
-  for (const r of res) {
-    const pt = [+r.lat, +r.lon];
-    if (!prev || km(pt, prev) < 35) return { lat: pt[0], lng: pt[1], src: `מרכז היישוב ${town} (OSM)` };
+  for (const q of townQueries(town)) {
+    const res = await nominatim({ q });
+    for (const r of res) {
+      const pt = [+r.lat, +r.lon], cls = r.category || r.class;
+      const isTown = TOWN_CLASSES.has(cls) || (cls === 'natural' || cls === 'waterway') && norm(r.name).includes(norm(q));
+      if (isTown && (!prev || km(pt, prev) < 35)) return { lat: pt[0], lng: pt[1], src: `מרכז היישוב ${town} (OSM)` };
+    }
+    console.log('  town miss', JSON.stringify(q), res.slice(0, 3).map(r => `${r.category || r.class}/${r.type}:${r.name}`).join(' ; '));
   }
   return null;
 }
@@ -113,14 +123,24 @@ async function fromSite(p, centre) {
   return null;
 }
 
+// generic words that don't identify a place on their own
+const GENERIC = /^(יקב|חוות|חווה|משק|סטודיו|גלריה|הגלריה|מבשלת|בית|קפה|מסעדה|מרכז|שוק|גינת|מעיין)$/;
 async function fromOsmName(p, centre) {
   if (!centre) return null;
-  const names = [...new Set([p.name, p.name.split(/ - | – |\||,|\(/)[0]].map(s => s.trim()).filter(s => s.length >= 3))];
-  const d = 0.06;
+  const names = [...new Set([p.name, p.name.split(/ - | – |\||,|\(/)[0]].map(s => s.trim()).filter(s => s.length >= 3 && !GENERIC.test(s)))];
   for (const n of names) {
-    const res = await nominatim({ q: n, viewbox: `${centre.lng - d},${centre.lat + d},${centre.lng + d},${centre.lat - d}`, bounded: 1 });
-    const hit = res.find(r => !TOWN_CLASSES.has(r.category || r.class) && !['highway', 'landuse', 'railway'].includes(r.category || r.class) && km([+r.lat, +r.lon], [centre.lat, centre.lng]) < 5);
-    if (hit) return { lat: +hit.lat, lng: +hit.lon, src: `OpenStreetMap: ${hit.display_name.split(',').slice(0, 2).join(',')}` };
+    for (const d of [0.06, 0.15]) {
+      const res = await nominatim({ q: n, viewbox: `${centre.lng - d},${centre.lat + d},${centre.lng + d},${centre.lat - d}`, bounded: 1 });
+      // the OSM feature's own name has to match the place name, not just share a word ("יקב אלונה" is not "לונה מזון")
+      const hit = res.find(r => {
+        const cls = r.category || r.class, a = norm(r.name), b = norm(n);
+        return !TOWN_CLASSES.has(cls) && !['highway', 'landuse', 'railway'].includes(cls)
+          && a.length >= 3 && (a.includes(b) || b.includes(a))
+          && km([+r.lat, +r.lon], [centre.lat, centre.lng]) < (d < 0.1 ? 5 : 12);
+      });
+      if (hit) return { lat: +hit.lat, lng: +hit.lon, src: `OpenStreetMap: ${hit.display_name.split(',').slice(0, 2).join(',')}` };
+      if (res.length) console.log('  name miss', JSON.stringify(n), res.slice(0, 3).map(r => `${r.category || r.class}/${r.type}:${r.name}`).join(' ; '));
+    }
   }
   return null;
 }
