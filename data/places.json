@@ -1082,8 +1082,8 @@
   ],
   "link": "https://www.bolanim.co.il/",
   "descr": "סיור בעקבות תופעת הבולענים באזור ים המלח",
-  "lat": 31.62,
-  "lng": 35.4,
+  "lat": 31.4524,
+  "lng": 35.38482,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
@@ -1094,7 +1094,7 @@
   "hours": null,
   "ctags": [],
   "precision": "town",
-  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
+  "geo_source": "מרכז היישוב אזור עין גדי (OSM)"
  },
  {
   "id": 34,
@@ -1516,7 +1516,7 @@
   "descr": "יש סיורים וטעימות",
   "lat": 32.56581,
   "lng": 34.94353,
-  "approx": false,
+  "approx": true,
   "shabbat": "unknown",
   "family": "unknown",
   "pick": false,
@@ -1528,8 +1528,8 @@
   ],
   "hours": null,
   "ctags": [],
-  "precision": "exact",
-  "geo_source": "OpenStreetMap: לונה מזון מן הטבע, השמורה"
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 48,
@@ -3513,8 +3513,8 @@
   ],
   "link": "https://www.parks.org.il/reserve-park/ramon",
   "descr": "פארק לאומי מהמם, מהחדשים והמושקעים ביותר, עם דרך נוף סלולה ומראות עוצרי נשימה. האזור הספציפי הזה של המכתש שימש בעבר לכריית מחצבים, ועכשיו עבר שיקום יסודי והפך לפארק גיאולוגי. לצד ציר הנסיעה הוכשרו חניות ושבילים קצרים שאפשר ללכת בהם אל סלעים ססגוניים עם שלטי הסבר והמחשה",
-  "lat": 30.58,
-  "lng": 34.88,
+  "lat": 30.59002,
+  "lng": 34.80281,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
@@ -3536,7 +3536,7 @@
    "מותר עם כלבים"
   ],
   "precision": "town",
-  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
+  "geo_source": "מרכז היישוב מכתש רמון (OSM)"
  },
  {
   "id": 111,
@@ -3555,7 +3555,7 @@
   "descr": "שבילים ומסלולים בין המעיינות והשדות - בגולףקאר, אופניים או ברגל. מותר לטבול במעיינות. בחורף ובאביב הכל מוריק ויפהפה",
   "lat": 32.49737,
   "lng": 35.45886,
-  "approx": false,
+  "approx": true,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -3572,8 +3572,8 @@
    "כניסה חינם",
    "נגיש"
   ],
-  "precision": "exact",
-  "geo_source": "OpenStreetMap: פארק השלושה, מועצה אזורית עמק המעיינות"
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 112,
