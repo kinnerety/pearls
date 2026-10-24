@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import type * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { Place } from '@/lib/types';
+import { isApprox } from '@/lib/geo';
 
 // Real map (Leaflet + CARTO Positron tiles). Gets the same filtered array as the list.
 // Places located only to their town get a dashed ring and an honest note instead of a navigation link.
@@ -11,7 +12,6 @@ type Props = { items: Place[]; activeId: number | null; visible: boolean; onPick
 const ISRAEL: [[number, number], [number, number]] = [[29.45, 34.25], [33.35, 35.9]];
 const STAR = 'M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z';
 const esc = (s: string) => s.replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]!));
-export const isApprox = (p: Place) => (p.precision ? p.precision !== 'exact' : p.approx);
 
 function iconHtml(p: Place, on: boolean) {
   const cls = 'mk' + (p.pick ? ' mk-pick' : '') + (isApprox(p) ? ' mk-town' : '') + (on ? ' on' : '');
