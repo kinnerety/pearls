@@ -4,7 +4,7 @@ import { notFound, permanentRedirect } from 'next/navigation';
 import { CAT_ILLO, ZONE_NAMES } from '@/lib/config';
 import { zonesOf } from '@/lib/filters';
 import { SITE_URL, idOfSlug, slugOf } from '@/lib/slug';
-import { PLACES, placeById } from '@/lib/places';
+import { getPlace, getPlaces } from '@/lib/store';
 import { DIVIDER_SVG } from '@/components/art';
 import Illo from '@/components/Illo';
 import PlaceCard from '@/components/PlaceCard';
@@ -14,10 +14,10 @@ import { isApprox } from '@/lib/geo';
 
 type Props = { params: Promise<{ slug: string }> };
 
-export const generateStaticParams = () => PLACES.map(p => ({ slug: slugOf(p) }));
+export const generateStaticParams = async () => (await getPlaces()).map(p => ({ slug: slugOf(p) }));
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const p = placeById(idOfSlug((await params).slug));
+  const p = await getPlace(idOfSlug((await params).slug));
   if (!p) return {};
   const title = `${p.name}${p.town ? ' · ' + p.town : ''}`;
   const description = p.descr.length > 160 ? p.descr.slice(0, 157) + '…' : p.descr;
@@ -32,11 +32,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PlacePage({ params }: Props) {
   const { slug } = await params;
-  const p = placeById(idOfSlug(slug));
+  const p = await getPlace(idOfSlug(slug));
   if (!p) notFound();
   if (decodeURIComponent(slug) !== slugOf(p)) permanentRedirect(`/p/${encodeURIComponent(slugOf(p))}`);
 
-  const near = PLACES.filter(o => o.id !== p.id && o.region.some(r => p.region.includes(r))).slice(0, 6);
+  const near = (await getPlaces()).filter(o => o.id !== p.id && o.region.some(r => p.region.includes(r))).slice(0, 6);
   const jsonLd = {
     '@context': 'https://schema.org', '@type': 'TouristAttraction', name: p.name, description: p.descr,
     url: `${SITE_URL}/p/${slugOf(p)}`, ...(p.link ? { sameAs: p.link } : {}),

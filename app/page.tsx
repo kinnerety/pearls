@@ -1,12 +1,13 @@
-import { PLACES } from '@/lib/places';
+import { getPlaces } from '@/lib/store';
 import Hero from '@/components/Hero';
 import Explorer from '@/components/Explorer';
 
-export default function Home() {
+export default async function Home() {
+  const places = await getPlaces();
   return (
     <div className="wrap">
       <Hero />
-      <Explorer places={PLACES} />
+      <Explorer places={places} />
     </div>
   );
 }

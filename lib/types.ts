@@ -10,6 +10,7 @@ export type Place = {
   lat: number | null;
   lng: number | null;
   approx: boolean;
+  geo_source?: string;
   /** "exact": address or coordinates from the place's own source; "town": centre of the town */
   precision?: 'exact' | 'town';
   address?: string;
