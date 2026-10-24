@@ -7,7 +7,7 @@ on:
         description: "מזהי מקומות מופרדים בפסיק (ריק = הכול)"
         required: false
   push:
-    paths: [scripts/geocode.mjs, .github/workflows/geocode.yml]
+    paths: [scripts/geocode.mjs, data/geo_hints.json, .github/workflows/geocode.yml]
 permissions:
   contents: write
 jobs:

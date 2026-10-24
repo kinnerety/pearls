@@ -14,6 +14,7 @@ const FILE = new URL('../data/places.json', import.meta.url);
 const REPORT = new URL('../data/geo_report.md', import.meta.url);
 const UA = 'pninim-israeliot-geocoder/1.0 (https://github.com/kinnerety/pearls)';
 const places = JSON.parse(fs.readFileSync(FILE, 'utf8'));
+const HINTS = JSON.parse(fs.readFileSync(new URL('../data/geo_hints.json', import.meta.url), 'utf8'));
 const ONLY = process.env.ONLY ? new Set(process.env.ONLY.split(',').map(Number)) : null;
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -48,11 +49,19 @@ async function getPage(url) {
 const SOCIAL = /facebook\.com|instagram\.com|fb\.me|linktr\.ee|wa\.me|whatsapp/i;
 const SUBPAGE = /contact|צור.?קשר|הגעה|איך.?מגיעים|דרכי.?הגעה|location|directions|find.?us|visit|about|אודות|מיקום|map/i;
 
+const GH = '0123456789bcdefghjkmnpqrstuvwxyz';
+function geohash(h) {
+  const lat = [-90, 90], lng = [-180, 180]; let even = true;
+  for (const ch of h) { const v = GH.indexOf(ch); for (let i = 4; i >= 0; i--) { const r = even ? lng : lat, m = (r[0] + r[1]) / 2; if ((v >> i) & 1) r[0] = m; else r[1] = m; even = !even; } }
+  return [(lat[0] + lat[1]) / 2, (lng[0] + lng[1]) / 2];
+}
 function coordsIn(html) {
   const s = html.replace(/&amp;/g, '&').replace(/%2C/gi, ',');
   const out = [];
   const add = (lat, lng, how) => { lat = +lat; lng = +lng; if (inIsrael(lat, lng)) out.push({ lat, lng, how }); };
   for (const m of s.matchAll(/[?&](?:ll|q|query|center|daddr|destination|sll|cbll)=(\d{2}\.\d{3,}),\s*(\d{2}\.\d{3,})/g)) add(m[1], m[2], 'map link');
+  for (const m of s.matchAll(/[?&]to=ll\.(\d{2}\.\d{3,}),(\d{2}\.\d{3,})/g)) add(m[1], m[2], 'waze');
+  for (const m of s.matchAll(/waze\.com\/ul\/h([0-9b-hjkmnp-z]{7,12})/g)) { const [la, ln] = geohash(m[1]); add(la, ln, 'waze'); }
   for (const m of s.matchAll(/@(\d{2}\.\d{4,}),(\d{2}\.\d{4,})/g)) add(m[1], m[2], 'google maps');
   for (const m of s.matchAll(/!3d(\d{2}\.\d{4,})!4d(\d{2}\.\d{4,})/g)) add(m[1], m[2], 'google maps');
   for (const m of s.matchAll(/!2d(\d{2}\.\d{4,})!3d(\d{2}\.\d{4,})/g)) add(m[2], m[1], 'google maps embed');
@@ -151,12 +160,22 @@ async function fromOsmName(p, centre) {
   return null;
 }
 
+async function fromHint(p, centre) {
+  const h = HINTS[p.id];
+  if (!h) return null;
+  if (h.lat != null) return { lat: h.lat, lng: h.lng, src: h.src };
+  const r = (await nominatim({ q: h.address }))[0];
+  if (r && (!centre || km([+r.lat, +r.lon], [centre.lat, centre.lng]) < 12)) return { lat: +r.lat, lng: +r.lon, src: `${h.src}: ${h.address}`, address: h.address };
+  console.log('  hint address not found', h.address);
+  return null;
+}
+
 const rows = [];
 for (const p of places) {
   if (ONLY && !ONLY.has(p.id)) continue;
   if (!p.region?.length) continue; // websites have no physical place
   const centre = (await townCentre(p)) || (p.lat != null ? { lat: p.lat, lng: p.lng, src: 'מיקום משוער קודם (לא נמצא ב-OSM)' } : null);
-  const exact = (await fromSite(p, centre)) || (await fromOsmName(p, centre));
+  const exact = (await fromHint(p, centre)) || (await fromSite(p, centre)) || (await fromOsmName(p, centre));
   const r = exact || centre;
   if (!r) { rows.push([p.id, p.name, '—', 'לא נמצא מיקום']); continue; }
   p.lat = +r.lat.toFixed(5); p.lng = +r.lng.toFixed(5);
