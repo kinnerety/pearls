@@ -15,8 +15,8 @@
   ],
   "link": "https://www.spherawinery.com",
   "descr": "יקב של יינות לבנים. אפשר להזמין מקום לטעימות וגבינות. מתאים לשילוב עם טיול בטבע, מערות לוזית ומערות בית גוברין.",
-  "lat": 31.6712,
-  "lng": 34.9447,
+  "lat": 31.67119,
+  "lng": 34.94472,
   "approx": false,
   "shabbat": "unknown",
   "family": "no",
@@ -30,7 +30,9 @@
   "hours": "בתיאום מראש בלבד",
   "ctags": [
    "פיקניק"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (map link)"
  },
  {
   "id": 2,
@@ -61,7 +63,9 @@
    "סיורים"
   ],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 3,
@@ -80,9 +84,9 @@
   ],
   "link": "https://roniandasaf.co.il/seasonalcooking",
   "descr": "סיור ליקוט בגן הירק ובסביבה + בישול ארוחה של 7 מנות. 3-4 שעות. יש גם סיורים בגינה, שוק וקורסים של חקלאות מתחדשת ויצרנית",
-  "lat": 32.86,
-  "lng": 35.37,
-  "approx": true,
+  "lat": 32.88757,
+  "lng": 35.3326,
+  "approx": false,
   "shabbat": "unknown",
   "family": "unknown",
   "pick": false,
@@ -97,7 +101,9 @@
   "hours": "סדנאות מתחילות בדרך כלל ב-9:00 ונמשכות כ-4.5 שעות",
   "ctags": [
    "עונתי"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (google maps embed)"
  },
  {
   "id": 4,
@@ -112,9 +118,9 @@
   ],
   "link": "https://www.9design.co.il",
   "descr": "בסדנה הפרטית מחליטים מראש איזה רהיט מנגרים והסדנה נמשכת כארבע שעות שבהן לומדים על הכלים והשיטות. יש עוד קורסים וסדנאות",
-  "lat": 32.92,
-  "lng": 35.3,
-  "approx": true,
+  "lat": 33.02013,
+  "lng": 35.27664,
+  "approx": false,
   "shabbat": "unknown",
   "family": "yes",
   "pick": false,
@@ -126,7 +132,10 @@
    "סדנה"
   ],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "exact",
+  "geo_source": "כתובת מאתר המקום: המתכת 32",
+  "address": "המתכת 32"
  },
  {
   "id": 5,
@@ -146,8 +155,8 @@
   ],
   "link": "https://www.nura-cooking.co.il",
   "descr": "סיורי ליקוט שאחריהם ארוחות + סיורי אוכל ושווקים",
-  "lat": 31.73,
-  "lng": 35.06,
+  "lat": 31.71693,
+  "lng": 35.06157,
   "approx": true,
   "shabbat": "unknown",
   "family": "yes",
@@ -163,7 +172,9 @@
   "hours": null,
   "ctags": [
    "עונתי"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב מטע (OSM)"
  },
  {
   "id": 6,
@@ -182,7 +193,7 @@
   "descr": "מנזר יווני-אורתודוקסי על צוק במדרון נחל קדרון. יפהפה!",
   "lat": 31.7049,
   "lng": 35.3313,
-  "approx": false,
+  "approx": true,
   "shabbat": "open",
   "family": "no",
   "pick": false,
@@ -198,7 +209,9 @@
   "ctags": [
    "תצפית",
    "מסלול הליכה קצר"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 7,
@@ -216,9 +229,9 @@
   ],
   "link": "https://hebrew.balmofgileadfarm.com/",
   "descr": "חממה לפיתוח חקלאות מקומית של צמחי תבלין, בושם ומרפא. מגדלים צמחי בושם ומרפא מקראיים ומדבריים",
-  "lat": 31.79,
-  "lng": 35.46,
-  "approx": true,
+  "lat": 31.79003,
+  "lng": 35.46197,
+  "approx": false,
   "shabbat": "unknown",
   "family": "yes",
   "pick": false,
@@ -228,7 +241,9 @@
    "סיורים"
   ],
   "hours": "6:00-21:00",
-  "ctags": []
+  "ctags": [],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (schema.org)"
  },
  {
   "id": 8,
@@ -263,7 +278,9 @@
   "hours": "כל יום חול עד כניסת שבת; סיורים מתחילים עד שלוש שעות לפני החשכה",
   "ctags": [
    "השכרת אופניים"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 9,
@@ -283,8 +300,8 @@
   ],
   "link": "https://suit-case.co/",
   "descr": "סטודיו עם חנות וגלריה למוצרים שימושיים עם אמירה. יש גם סדנאות של שעה עד שלוש שעות, למשל סדנה ליצירת ינשוף ב-45 דקות, שנראית חמודה מאוד :) קפה גלריה בימי שישי",
-  "lat": 30.99,
-  "lng": 34.93,
+  "lat": 30.9888,
+  "lng": 34.9251,
   "approx": true,
   "shabbat": "unknown",
   "family": "yes",
@@ -294,7 +311,9 @@
    "סדנה"
   ],
   "hours": "גלריה ביום שישי 9:00-13:00; שאר הימים בתיאום מראש",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב ירוחם (OSM)"
  },
  {
   "id": 10,
@@ -315,9 +334,9 @@
   ],
   "link": "https://zuak.co.il",
   "descr": "סטודיו לאומנות מרוקאית, עם חנות וסדנאות לצביעת אריחים ולעיצוב שולחנות קפה (שעה עד שלוש). יש גם אפשרות להרצאה וסיור בסטודיו, שעה",
-  "lat": 30.99,
-  "lng": 34.93,
-  "approx": true,
+  "lat": 30.9856,
+  "lng": 34.9318,
+  "approx": false,
   "shabbat": "unknown",
   "family": "yes",
   "pick": false,
@@ -329,7 +348,9 @@
    "סדנה"
   ],
   "hours": "סדנאות ביום חמישי ושישי 10:00,11:00,12:00,14:00; אחר בתיאום",
-  "ctags": []
+  "ctags": [],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (schema.org)"
  },
  {
   "id": 12,
@@ -348,9 +369,9 @@
   ],
   "link": "https://www.glentz-beer.com",
   "descr": "מבשלת בוטיק, יש גם סדנת בירה: היכרות קלילה עם הסגנונות השונים של הבירה, דרך סדנה עם כל סודות הבירה - משלב בניית המתכון ועד לביקבוק",
-  "lat": 30.99,
-  "lng": 34.93,
-  "approx": true,
+  "lat": 30.98884,
+  "lng": 34.9248,
+  "approx": false,
   "shabbat": "closed",
   "family": "no",
   "pick": false,
@@ -364,7 +385,9 @@
   "hours": "א'-ה' 17:30-02:00; ו' 12:30 עד חצי שעה לפני שבת; מוצ\"ש משעה אחרי צאת שבת עד 02:00",
   "ctags": [
    "בירה ומשקאות"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (schema.org)"
  },
  {
   "id": 13,
@@ -381,9 +404,9 @@
   ],
   "link": "https://calcalit-yeruham.co.il",
   "descr": "הפארק כולל חניוני יער, שולחנות פיקניק, כרי דשא ,שבילי אופניים, מסלולי טיול, אתרי עתיקות, מרכז צפרות ואקולוגיה ובית קפה. אפשר לשכור אופניים, לא בשבת.  בעמוד הפייסבוק יש מידע על עוד דברים מסביב וזמני פריחה",
-  "lat": 30.975,
-  "lng": 34.905,
-  "approx": true,
+  "lat": 30.9886,
+  "lng": 34.89368,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -397,7 +420,9 @@
   "ctags": [
    "השכרת אופניים",
    "כניסה חינם"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: אגם ירוחם, ירוחם"
  },
  {
   "id": 14,
@@ -415,8 +440,8 @@
   ],
   "link": "https://visit-yerucham.com/tour-item-attraction/%D7%9B%D7%A8%D7%9D-%D7%99%D7%A8%D7%95%D7%97%D7%9D/",
   "descr": "סיור בכרם זיתים, עם הרצאת טעימות של שמן זית",
-  "lat": 30.98,
-  "lng": 34.92,
+  "lat": 30.9888,
+  "lng": 34.9251,
   "approx": true,
   "shabbat": "unknown",
   "family": "unknown",
@@ -431,7 +456,9 @@
   "ctags": [
    "יין",
    "שמן זית"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב ירוחם (OSM)"
  },
  {
   "id": 15,
@@ -449,8 +476,8 @@
   ],
   "link": "https://israel-2go.co.il/tour/%D7%94%D7%A9%D7%98%D7%99%D7%99%D7%98%D7%A2%D7%9C-%D7%A1%D7%99%D7%95%D7%A8-%D7%95%D7%98%D7%A2%D7%99%D7%9E%D7%95%D7%AA-%D7%91%D7%91%D7%A0%D7%99-%D7%91%D7%A8%D7%A7/",
   "descr": "תעשיית החלות במאפיות, סירי הצ'ולנט המסורתיים, הצצה אל בתי המדרש העצומים, ילדים ועגלות גם ב12 בלילה. יש מצב שיש גם סיורים בבני ברק, צריך לחפש",
-  "lat": 31.787,
-  "lng": 35.222,
+  "lat": 31.77885,
+  "lng": 35.22579,
   "approx": true,
   "shabbat": "closed",
   "family": "yes",
@@ -460,7 +487,9 @@
    "סיורים"
   ],
   "hours": "סיור בימי חמישי 20:30-23:00",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב ירושלים (OSM)"
  },
  {
   "id": 16,
@@ -491,7 +520,9 @@
   "hours": null,
   "ctags": [
    "ארוחות"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 17,
@@ -508,15 +539,17 @@
   ],
   "link": "https://www.jaimegifts.com/he/88",
   "descr": "חנות מתנות בנחלת שבעה",
-  "lat": 31.781,
-  "lng": 35.218,
+  "lat": 31.77885,
+  "lng": 35.22579,
   "approx": true,
   "shabbat": "closed",
   "family": "unknown",
   "pick": false,
   "tags": [],
   "hours": "א'-ה' 10:30-20:30; ו' 9:30-15:00 (קיץ) / 9:30-14:00 (חורף); מוצ\"ש סגור (שבת לא מופיעה בשעות)",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב ירושלים (OSM)"
  },
  {
   "id": 18,
@@ -546,7 +579,9 @@
    "קבוצות"
   ],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 19,
@@ -566,8 +601,8 @@
   ],
   "link": "https://www.facebook.com/michalkitchentable",
   "descr": "סלי פיקניק + סדנאות בישול, אפייה והרצאות + ארוחות בהזמנה מראש",
-  "lat": 32.86,
-  "lng": 35.73,
+  "lat": 32.87003,
+  "lng": 35.69827,
   "approx": true,
   "shabbat": "unknown",
   "family": "unknown",
@@ -578,7 +613,9 @@
    "סדנה"
   ],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב כנף (OSM)"
  },
  {
   "id": 20,
@@ -595,9 +632,9 @@
   ],
   "link": "https://www.tiuli.com/points-of-interest/143/%D7%A2%D7%99%D7%9F-%D7%9B%D7%A0%D7%A3-%D7%97%D7%A8%D7%91%D7%AA-%D7%93%D7%99%D7%A8-%D7%A2%D7%96%D7%99%D7%96",
   "descr": "מעיין יפה, תצפית ובית כנסת עתיק. מעיין כנף בווייז",
-  "lat": 32.857,
-  "lng": 35.736,
-  "approx": true,
+  "lat": 32.86298,
+  "lng": 35.71304,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -616,7 +653,9 @@
    "יין",
    "כניסה חינם",
    "נגיש"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: מעיין כנף, 869"
  },
  {
   "id": 21,
@@ -638,9 +677,9 @@
   ],
   "link": "https://www.instagram.com/diraziz2021",
   "descr": "דיר, מחלבה ומגבנה. בתיאום מראש אפשר להגיע לסיור בדיר, הסברים על הגבינות וטעימות. מניסיון: וואו. שירי ורביד מהממים והגבינות הן מהטעימות והמעניינות שיש פה. רעננות, חדשניות, יוצאות דופן",
-  "lat": 32.86,
-  "lng": 35.73,
-  "approx": true,
+  "lat": 32.86412,
+  "lng": 35.71243,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": true,
@@ -653,7 +692,9 @@
   "hours": "ראשון-שבת בתיאום מראש",
   "ctags": [
    "גבינות"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: בית כנסת עתיק דיר עזיז, 869"
  },
  {
   "id": 22,
@@ -673,8 +714,8 @@
   ],
   "link": "https://azizolavender.com",
   "descr": "שדות לבנדר, חנות מהממת (מניסיון) ומזקקה של שמן אתרי מלבנדר. בתיאום מראש אפשר להגיע לסיור שכולל סיפורים אישיים והסברים על גידול הלבנדר. AZIZO Lavender Farm בווייז",
-  "lat": 32.86,
-  "lng": 35.73,
+  "lat": 32.87003,
+  "lng": 35.69827,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
@@ -689,7 +730,9 @@
   "hours": "כל ימות השבוע 10:00-15:00",
   "ctags": [
    "בית קפה ומאפייה"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב כנף (OSM)"
  },
  {
   "id": 23,
@@ -708,8 +751,8 @@
   ],
   "link": "https://www.yaelvloch.com/",
   "descr": "סדנאות לניפוח זכוכית, שעתיים-שלוש, מכינים חיות, תכשיטים, צמחים, כפיות ועוד",
-  "lat": 31.77,
-  "lng": 35.22,
+  "lat": 31.77885,
+  "lng": 35.22579,
   "approx": true,
   "shabbat": "unknown",
   "family": "yes",
@@ -722,7 +765,9 @@
    "פעילות לילדים"
   ],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב ירושלים (OSM)"
  },
  {
   "id": 24,
@@ -739,15 +784,17 @@
   ],
   "link": "https://www.facebook.com/garage.sale.the.back.yard",
   "descr": "חנות יד שנייה ווינטג’ ענקית ומעולה",
-  "lat": 32.75,
-  "lng": 35.28,
+  "lat": 32.74431,
+  "lng": 35.27812,
   "approx": true,
   "shabbat": "open",
   "family": "unknown",
   "pick": false,
   "tags": [],
   "hours": "ד'–ה' 10:00–14:00, ו' 10:00–16:00, שבת 10:00–18:00",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב ציפורי (OSM)"
  },
  {
   "id": 25,
@@ -768,8 +815,8 @@
   ],
   "link": "https://meshekofir.co.il",
   "descr": "יקב ומכוורת - טעימות, סיור מודרך, סל פיקניק ועוד",
-  "lat": 32.76,
-  "lng": 35.24,
+  "lat": 32.75731,
+  "lng": 35.22131,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
@@ -787,7 +834,9 @@
    "פיקניק",
    "יין",
    "גבינות"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב אלון הגליל (OSM)"
  },
  {
   "id": 26,
@@ -804,9 +853,9 @@
   ],
   "link": "https://agurvineyards.com/",
   "descr": "יקב בוטיק במושב עגור שבעמק האלה, המציע טעימות יין בליווי מוצרים של יצרנים מקומיים קטנים, לעיתים עם מוזיקה חיה.",
-  "lat": 31.7,
-  "lng": 34.92,
-  "approx": true,
+  "lat": 31.69463,
+  "lng": 34.91257,
+  "approx": false,
   "shabbat": "unknown",
   "family": "unknown",
   "pick": false,
@@ -819,7 +868,9 @@
   "hours": "טעימות בסופי שבוע 10:00-16:00; במהלך השבוע בתיאום מראש (tiuli)",
   "ctags": [
    "מוזיקה והופעות"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (google maps)"
  },
  {
   "id": 27,
@@ -836,9 +887,9 @@
   ],
   "link": "https://www.srigimwinery.co.il/",
   "descr": "יקב בוטיק בלי-און עם סיורים וטעימות (יש לאמת פרטים).",
-  "lat": 31.65,
-  "lng": 34.88,
-  "approx": true,
+  "lat": 31.6797,
+  "lng": 34.93236,
+  "approx": false,
   "shabbat": "open",
   "family": "unknown",
   "pick": false,
@@ -846,7 +897,9 @@
    "טעימות"
   ],
   "hours": "יום שבת 11:00-16:00 בתיאום מראש (tiuli)",
-  "ctags": []
+  "ctags": [],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: יקב שריגים, גפנים"
  },
  {
   "id": 28,
@@ -870,8 +923,8 @@
   ],
   "link": "https://www.cookingviews.com",
   "descr": "סיור ‘מהשדה לצלחת’ שמשלב ביקור בבית קלייה, בית בד, חוות צמחי מרפא ויקב, כחמש שעות + סל פיקניק + סדנאות בישול",
-  "lat": 32.75,
-  "lng": 35.28,
+  "lat": 32.74431,
+  "lng": 35.27812,
   "approx": true,
   "shabbat": "closed",
   "family": "no",
@@ -884,7 +937,9 @@
    "קולינריה"
   ],
   "hours": "בתיאום אישי, כל ימות השבוע למעט שבת",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב ציפורי (OSM)"
  },
  {
   "id": 29,
@@ -903,8 +958,8 @@
   ],
   "link": "https://bierjudaicajlm.co.il",
   "descr": "בית מלאכה משפחתי לצורפות יודאיקה מכסף בעבודת יד. יש ביקורים בבית המלאכה וכמובן חנות",
-  "lat": 31.78,
-  "lng": 35.22,
+  "lat": 31.77885,
+  "lng": 35.22579,
   "approx": true,
   "shabbat": "closed",
   "family": "unknown",
@@ -914,7 +969,9 @@
    "סיורים/ביקורים בבית המלאכה"
   ],
   "hours": "ראשון-חמישי 8:30-15:30",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב ירושלים (OSM)"
  },
  {
   "id": 30,
@@ -941,7 +998,9 @@
   "pick": false,
   "tags": [],
   "hours": "א'-ה' 08:00–17:00, שישי וערבי חג 08:00–13:00/14:00 (שבת לא מצוין)",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 31,
@@ -968,7 +1027,9 @@
    "חנות מתנות"
   ],
   "hours": "א'-ה' 9:00-19:00, ו' 9:00-14:00, שבת סגור",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 32,
@@ -1001,7 +1062,9 @@
    "סיורים"
   ],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 33,
@@ -1029,7 +1092,9 @@
    "סיור מודרך"
   ],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 34,
@@ -1049,8 +1114,8 @@
   ],
   "link": "https://www.assafwinery.com",
   "descr": "שילוב של יקב, מטבח-שפית ויחידות אירוח ששלושתם זורמים יחד ולחוד. האירוח כולל טעימות יינות, ארוחת טאפאס מלווה ביינות בצוהריים ועוד מפגשים סביב מטבח ויין",
-  "lat": 32.75,
-  "lng": 35.7,
+  "lat": 33.02974,
+  "lng": 35.69703,
   "approx": true,
   "shabbat": "closed",
   "family": "unknown",
@@ -1066,7 +1131,9 @@
   "ctags": [
    "יין",
    "לינה"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב קדמת צבי (OSM)"
  },
  {
   "id": 35,
@@ -1086,9 +1153,9 @@
   ],
   "link": "https://sadaria.co.il",
   "descr": "סדנת הדפסה עתיקה. מקום להתנסות בדפוס ובכריכה כמו שעשו את זה פעם, כולל סידור האותיות בגלופה וכריכה ידנית. יש סיורים, סדנאות ומוזיאון דפוס",
-  "lat": 32.68,
-  "lng": 35.4,
-  "approx": true,
+  "lat": 32.66635,
+  "lng": 35.45015,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -1103,7 +1170,9 @@
   "hours": "א-ש 09:00-17:00, יש לתאם הגעה מראש",
   "ctags": [
    "מוזיאון"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (google maps embed)"
  },
  {
   "id": 36,
@@ -1122,9 +1191,9 @@
   ],
   "link": "https://www.facebook.com/derech.hazayit",
   "descr": "משתלה ובית קפה. בפייסבוק שלהם כתוב: מגוון עצום של פרחים, שתילים, עצים ועצי זית עתיקים (האוסף הגדול בארץ!), עציצים, ציוד ועוד. מקום לעצור לקפה מתוק בתוך משתלה מקסימה ובאווירה כיפית",
-  "lat": 31.45,
-  "lng": 34.55,
-  "approx": true,
+  "lat": 31.44813,
+  "lng": 34.54637,
+  "approx": false,
   "shabbat": "closed",
   "family": "yes",
   "pick": false,
@@ -1141,7 +1210,9 @@
    "בית קפה ומאפייה",
    "כניסה חינם",
    "נגיש"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: משתלת דרך הזית, הדס"
  },
  {
   "id": 37,
@@ -1160,8 +1231,8 @@
   ],
   "link": "https://fresco.cafe",
   "descr": "בית קלייה ובית קפה. אפשר להזמין מראש סיור עם הסבר והדגמה של תהליך הקלייה.",
-  "lat": 32.73,
-  "lng": 35.23,
+  "lat": 32.72743,
+  "lng": 35.21335,
   "approx": true,
   "shabbat": "closed",
   "family": "unknown",
@@ -1174,7 +1245,9 @@
    "סיורים"
   ],
   "hours": "א-ה 8:00-15:00, ו 8:00-14:00",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב זרזיר (OSM)"
  },
  {
   "id": 38,
@@ -1191,15 +1264,17 @@
   ],
   "link": "https://www.facebook.com/gwwndwlyn.sprym.yd.snyyh/",
   "descr": "חנות ספרים יד שנייה",
-  "lat": 32.968,
-  "lng": 35.545,
+  "lat": 32.96822,
+  "lng": 35.54382,
   "approx": true,
   "shabbat": "unknown",
   "family": "unknown",
   "pick": false,
   "tags": [],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב ראש פינה (OSM)"
  },
  {
   "id": 39,
@@ -1218,8 +1293,8 @@
   ],
   "link": "https://www.instagram.com/adi.fogel",
   "descr": "מפייסבוק: סיורים לשוחרי ושוחרות עיצוב שבהם נפגשים עם יוצרים ישראלים (קרמיקה, טקסטיל, תאורה ועוד) ונחשפים לתהליכי העבודה ולסיפור האישי. דרך מצוינת להכיר את סצנת העיצוב המקומית העכשווית",
-  "lat": 32.06,
-  "lng": 34.78,
+  "lat": 32.0853,
+  "lng": 34.78181,
   "approx": true,
   "shabbat": "unknown",
   "family": "unknown",
@@ -1230,7 +1305,9 @@
    "סיורים"
   ],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב תל אביב (OSM)"
  },
  {
   "id": 41,
@@ -1262,7 +1339,9 @@
   "ctags": [
    "כניסה חינם",
    "עונתי"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 42,
@@ -1279,8 +1358,8 @@
   ],
   "link": "https://www.tiuli.com/tracks/163",
   "descr": "מרבדי תורמוסים ומגוון פרחים אחרים בפברואר-מרץ",
-  "lat": 31.685,
-  "lng": 34.9707,
+  "lat": 31.68223,
+  "lng": 34.9737,
   "approx": false,
   "shabbat": "open",
   "family": "yes",
@@ -1297,7 +1376,9 @@
    "פריחה",
    "מסלול הליכה קצר",
    "כניסה חינם"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: תל שוכה, 375"
  },
  {
   "id": 43,
@@ -1314,15 +1395,17 @@
   ],
   "link": "https://museumeinharod.org.il",
   "descr": "מוזיאון אומנות",
-  "lat": 32.56,
-  "lng": 35.39,
+  "lat": 32.56233,
+  "lng": 35.39313,
   "approx": true,
   "shabbat": "open",
   "family": "unknown",
   "pick": false,
   "tags": [],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב עין חרוד איחוד (OSM)"
  },
  {
   "id": 44,
@@ -1339,15 +1422,17 @@
   ],
   "link": "https://www.instagram.com/anatika_vintage/",
   "descr": "חנות יד שנייה עם קפה ונוף",
-  "lat": 32.81,
-  "lng": 35.49,
+  "lat": 32.84409,
+  "lng": 35.42448,
   "approx": true,
   "shabbat": "open",
   "family": "unknown",
   "pick": false,
   "tags": [],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב מסד (OSM)"
  },
  {
   "id": 45,
@@ -1364,8 +1449,8 @@
   ],
   "link": "https://www.cley-bereshit.lanegev.co.il",
   "descr": "סדנאות יצירה בחומרים טבעיים ובשיטות עתיקות, כולל חוויה של שרפת החומר בתנורים מיוחדים",
-  "lat": 31.33,
-  "lng": 34.7,
+  "lat": 31.37187,
+  "lng": 34.64371,
   "approx": true,
   "shabbat": "unknown",
   "family": "unknown",
@@ -1376,7 +1461,9 @@
   ],
   "hours": null,
   "note": "הסטודיו פתוח למבקרים בעיקר בפסטיבל דרום אדום.",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב תאשור (OSM)"
  },
  {
   "id": 46,
@@ -1393,8 +1480,8 @@
   ],
   "link": "https://www.mk-artour.com/makers-tour",
   "descr": "מהאתר: סיור המספר את סיפורם של בעלי מלאכה, וחנויות וותיקות ששרדו בדרך נס את מבחן הזמן. נושא פרס התיירות הבינלאומי. הסיור נותן כבוד ובמה למקצועות עבר ומאפשר לגעת לכמה שעות בהיסטוריה המיוחדת של ת\"א. יש גם גרסת קולינריה, גרסת חקלאות וגרסת מייקרים של מחזור ומחדוש",
-  "lat": 32.06,
-  "lng": 34.77,
+  "lat": 32.0853,
+  "lng": 34.78181,
   "approx": true,
   "shabbat": "closed",
   "family": "unknown",
@@ -1407,7 +1494,9 @@
    "סיורים"
   ],
   "hours": "משרד א-ה 9:00-13:00",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב תל אביב (OSM)"
  },
  {
   "id": 47,
@@ -1425,9 +1514,9 @@
   ],
   "link": "https://www.alonawinery.com",
   "descr": "יש סיורים וטעימות",
-  "lat": 32.57,
-  "lng": 34.95,
-  "approx": true,
+  "lat": 32.56581,
+  "lng": 34.94353,
+  "approx": false,
   "shabbat": "unknown",
   "family": "unknown",
   "pick": false,
@@ -1438,7 +1527,9 @@
    "סיורים"
   ],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: לונה מזון מן הטבע, השמורה"
  },
  {
   "id": 48,
@@ -1456,8 +1547,8 @@
   ],
   "link": "https://www.facebook.com/drorbarak.nostalgia",
   "descr": "מוזיאון נוסטלגיה של יותר מ-2,000 פריטים מתקופת פלשתינה-א”י, כולל סיור מצחיק ומהנה ופעלולים טכניים שמפעילים המבקרים בעצמם במהלך הסיור. חובה לתאם מראש",
-  "lat": 32.66,
-  "lng": 35.26,
+  "lat": 32.6772,
+  "lng": 35.22387,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
@@ -1470,7 +1561,9 @@
   "hours": "כל יום 9:00–21:00 (עודכן לפני כחמש שנים), בתיאום טלפוני בלבד",
   "ctags": [
    "מוזיאון"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב יפעת (OSM)"
  },
  {
   "id": 49,
@@ -1490,8 +1583,8 @@
   ],
   "link": "https://www.visityodfat.com",
   "descr": "מתחם חנויות קטנות ומקסימות במיוחד, כולל פריטים לעיצוב הבית, גבינות, מעדנייה, תכשיטים, משחקי ילדים ייחודיים, מאפייה, בגדים יד שנייה ובית קפה עם נוף הורס",
-  "lat": 32.83,
-  "lng": 35.27,
+  "lat": 32.83724,
+  "lng": 35.27155,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
@@ -1507,7 +1600,9 @@
   "ctags": [
    "בית קפה ומאפייה",
    "נגיש"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב יודפת (OSM)"
  },
  {
   "id": 50,
@@ -1525,8 +1620,8 @@
   ],
   "link": "https://pelter.co.il",
   "descr": "יקב ומזקקה משפחתיים בקיבוץ עין זיוון שבגולן, עם מרכז מבקרים המציע טעימות יינות ותוצרי מזקקה, ביקורי קבוצות ואירועים. האתר מחייב אישור גיל 18+.",
-  "lat": 33.08,
-  "lng": 35.8,
+  "lat": 33.09628,
+  "lng": 35.7962,
   "approx": true,
   "shabbat": "open",
   "family": "no",
@@ -1543,7 +1638,9 @@
   "ctags": [
    "ארוחות",
    "בירה ומשקאות"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב עין זיוון (OSM)"
  },
  {
   "id": 51,
@@ -1563,8 +1660,8 @@
   ],
   "link": "https://www.neot-gallery.com",
   "descr": "האסם הישן של נאות מרדכי הוא היום חנות גלריה של עשרות יוצרים ואומנים מקומיים: עיצוב הבית, אופנה, ריהוט, רוקחות ועוד. יש גם סדנאות",
-  "lat": 33.1572,
-  "lng": 35.5993,
+  "lat": 33.15978,
+  "lng": 35.5956,
   "approx": false,
   "shabbat": "closed",
   "family": "yes",
@@ -1576,7 +1673,9 @@
   "hours": "א-ד 10:00-16:00, ה 11:00-17:00, ו 9:00-14:00",
   "ctags": [
    "גלריות ואמנות"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (schema.org)"
  },
  {
   "id": 52,
@@ -1595,8 +1694,8 @@
   ],
   "link": "https://www.maarag.org",
   "descr": "חנות-גלריה ובית קפה שהם מרכז הכשרה שיקומי-תעסוקתי עבור אנשים עם מוגבלויות שונות מכל רחבי הגליל. החנות מקסימה, ויש בה עץ, טקסטיל, ריהוט, קרמיקה ועוד",
-  "lat": 32.98,
-  "lng": 35.27,
+  "lat": 32.99725,
+  "lng": 35.27253,
   "approx": true,
   "shabbat": "closed",
   "family": "yes",
@@ -1615,7 +1714,9 @@
    "צמחוני",
    "כשר",
    "עסק חברתי"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב כפר ורדים (OSM)"
  },
  {
   "id": 53,
@@ -1632,15 +1733,17 @@
   ],
   "link": "https://moroccofantasy.co.il",
   "descr": "מהאתר: החנות היא בית ענקי של עיצוב ושיק, 400 מ\"ר של כל מה שאפשר לייצר ולייבא ממרוקו. תמצאו כאן ישן לצד חדש, צבעוניות משמחת ואווירה מעולה",
-  "lat": 32.98,
-  "lng": 35.59,
+  "lat": 32.98864,
+  "lng": 35.57073,
   "approx": true,
   "shabbat": "closed",
   "family": "unknown",
   "pick": false,
   "tags": [],
   "hours": "א-ה 9:00-16:00, ו 9:00-14:00, שבת סגור",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב מחניים (OSM)"
  },
  {
   "id": 54,
@@ -1661,8 +1764,8 @@
   ],
   "link": "https://www.kfar-giladi.org.il/%D7%A9%D7%91%D7%99%D7%9C-%D7%94%D7%9C%D7%95%D7%9C%D7%99%D7%9D/",
   "descr": "פעם זה היה שביל שמוליך בין לולים. היום הוא מוליך בין מבשלת בירה, חנות ספרים ותקליטים, קרמיקה ובית קפה",
-  "lat": 33.24,
-  "lng": 35.57,
+  "lat": 33.24178,
+  "lng": 35.57496,
   "approx": true,
   "shabbat": "unknown",
   "family": "unknown",
@@ -1676,7 +1779,9 @@
   "ctags": [
    "בירה ומשקאות",
    "גלריות ואמנות"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב כפר גלעדי (OSM)"
  },
  {
   "id": 55,
@@ -1695,8 +1800,8 @@
   ],
   "link": "https://www.instagram.com/viv_cafe2hand/",
   "descr": "בית קפה וחנות יד שנייה",
-  "lat": 30.61,
-  "lng": 34.8,
+  "lat": 30.61197,
+  "lng": 34.80122,
   "approx": true,
   "shabbat": "unknown",
   "family": "unknown",
@@ -1709,7 +1814,9 @@
   "ctags": [
    "בית קפה ומאפייה",
    "יד שנייה ווינטג'"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב מצפה רמון (OSM)"
  },
  {
   "id": 56,
@@ -1726,9 +1833,9 @@
   ],
   "link": "https://insidemitzpe.co.il",
   "descr": "מעמוד הפייסבוק: סיורים מקומיים אל הקסם של מצפה רמון. נפגוש דמויות ייחודיות, בתים מגניבים, סיפורים והפתעות",
-  "lat": 30.61,
-  "lng": 34.8,
-  "approx": true,
+  "lat": 30.6102,
+  "lng": 34.8019,
+  "approx": false,
   "shabbat": "unknown",
   "family": "yes",
   "pick": false,
@@ -1737,7 +1844,9 @@
    "סיורים"
   ],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (schema.org)"
  },
  {
   "id": 57,
@@ -1759,8 +1868,8 @@
   ],
   "link": "https://mitzpe-ramon.co.il/%d7%a8%d7%95%d7%91%d7%a2-%d7%93%d7%a8%d7%9b%d7%99-%d7%94%d7%91%d7%a9%d7%9e%d7%99%d7%9d-%d7%91%d7%9e%d7%a6%d7%a4%d7%94-%d7%a8%d7%9e%d7%95%d7%9f-%d7%9e%d7%93%d7%a8%d7%99%d7%9a/",
   "descr": "מרכז של גלריות, חנויות ומקומות אוכל",
-  "lat": 30.615,
-  "lng": 34.79,
+  "lat": 30.61197,
+  "lng": 34.80122,
   "approx": true,
   "shabbat": "unknown",
   "family": "yes",
@@ -1775,7 +1884,9 @@
   "hours": null,
   "ctags": [
    "גלריות ואמנות"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב מצפה רמון (OSM)"
  },
  {
   "id": 58,
@@ -1796,9 +1907,9 @@
   ],
   "link": "https://alpaca.co.il",
   "descr": "סיור בין הלאמות והאלפקות המתוקות, אפשר עם האכלה, יש גם יחידות אירוח וסיורים. חוויה מקסימה!",
-  "lat": 30.62,
-  "lng": 34.78,
-  "approx": true,
+  "lat": 30.61078,
+  "lng": 34.77677,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -1816,7 +1927,9 @@
   "ctags": [
    "האכלת חיות",
    "לינה"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: חוות האלפקות, Ramon Crater"
  },
  {
   "id": 59,
@@ -1833,9 +1946,9 @@
   ],
   "link": "https://achoti.com",
   "descr": "חנות הסחר ההוגן הראשונה בישראל, המשווקת מוצרים ייחודיים ועבודות יד של נשים מרחבי הארץ והאזור: תכשיטים, תיקים, שטיחים, חפצים לבית ולמטבח, בובות, מצעים רקומים, אופנה, שמן זית, קונפיטורות ועוד",
-  "lat": 32.0626,
-  "lng": 34.7711,
-  "approx": false,
+  "lat": 32.0853,
+  "lng": 34.78181,
+  "approx": true,
   "shabbat": "closed",
   "family": "unknown",
   "pick": false,
@@ -1845,7 +1958,9 @@
   "hours": "א-ה 10:00-17:00, ו 10:00-14:00; שבת לא מצוין",
   "ctags": [
    "עסק חברתי"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב תל אביב (OSM)"
  },
  {
   "id": 61,
@@ -1864,8 +1979,8 @@
   ],
   "link": "https://moawine.co.il",
   "descr": "יקב משפחתי בערבה המייצר יין מענבים מכרמי מצפה רמון. במרכז המבקרים טעימות יין והזמנת ביקור.",
-  "lat": 30.56,
-  "lng": 35.18,
+  "lat": 30.55862,
+  "lng": 35.18014,
   "approx": true,
   "shabbat": "open",
   "family": "no",
@@ -1877,7 +1992,9 @@
    "מרכז מבקרים"
   ],
   "hours": "א'-ש' 12:00-17:00 (ה' עד 22:30)",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב צופר (OSM)"
  },
  {
   "id": 62,
@@ -1896,8 +2013,8 @@
   ],
   "link": "https://ein-hod.info/nisco",
   "descr": "מוזיאון יחיד במינו לתיבות נגינה, פטיפונים, עוגבים וכלי נגינה מכניים אחרים. אפשרות לקונצרט פרטי ולסיורים מוזיקליים",
-  "lat": 32.7,
-  "lng": 34.98,
+  "lat": 32.69154,
+  "lng": 34.99953,
   "approx": true,
   "shabbat": "unknown",
   "family": "yes",
@@ -1910,7 +2027,9 @@
   "hours": null,
   "ctags": [
    "מוזיקה והופעות"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב עין הוד (OSM)"
  },
  {
   "id": 63,
@@ -1929,9 +2048,9 @@
   ],
   "link": "https://www.westgalil.org.il/opr/kefar-masaryk-tourism",
   "descr": "בכל שבת אחרונה של החודש: דוכנים, סדנאות וסיורים, הופעה אקוסטית, דוכני פירות, גבינות וקפה, עבודות יד, אופנה, סקולנטים, קרון ספרים, טעימות יין ועוד. בנוסף מתקיימים סיורים לגלריה, לסנדלריה ולתערוכת נעמן, ויש קפה ואוכל בקרון צ'כוליטא",
-  "lat": 32.9,
-  "lng": 35.1,
-  "approx": true,
+  "lat": 32.89122,
+  "lng": 35.09841,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -1946,7 +2065,9 @@
   "hours": "שבת אחרונה בחודש; עגלת קפה ו-ש 9-14 (2021)",
   "ctags": [
    "שוק"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (schema.org)"
  },
  {
   "id": 64,
@@ -1963,15 +2084,17 @@
   ],
   "link": "https://www.facebook.com/NaomehArt",
   "descr": "חנות וגלריה של יוצרים ועבודת יד",
-  "lat": 32.92,
-  "lng": 35.07,
+  "lat": 32.92817,
+  "lng": 35.07564,
   "approx": true,
   "shabbat": "open",
   "family": "unknown",
   "pick": false,
   "tags": [],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב עכו (OSM)"
  },
  {
   "id": 66,
@@ -1993,9 +2116,9 @@
   ],
   "link": "https://www.makomhashraa.co.il/",
   "descr": "בית קפה מעולה וחנות יפה במיוחד של יוצרים ועבודות יד. אווירה נעימה, אוכל מצוין, דברים יפים. בקומה מעל יש סדנאות אומנים. אפשר להזמין סדנאות, ולפעמים יש הופעות והרצאות",
-  "lat": 32.73,
-  "lng": 35.17,
-  "approx": true,
+  "lat": 32.73094,
+  "lng": 35.17203,
+  "approx": false,
   "shabbat": "closed",
   "family": "unknown",
   "pick": true,
@@ -2008,7 +2131,9 @@
   "ctags": [
    "בית קפה ומאפייה",
    "גלריות ואמנות"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (schema.org)"
  },
  {
   "id": 67,
@@ -2026,8 +2151,8 @@
   ],
   "link": "https://www.shaniki-tours.co.il",
   "descr": "מרק תימני, לחוח צפתי, פריקסה, גבינות, מאפיית בוטיק, תה חם, ויסקי ועוד - בסמטאות צפת העתיקה. כשלוש שעות",
-  "lat": 32.965,
-  "lng": 35.495,
+  "lat": 32.96463,
+  "lng": 35.50245,
   "approx": true,
   "shabbat": "unknown",
   "family": "yes",
@@ -2037,7 +2162,9 @@
    "סיור"
   ],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב צפת (OSM)"
  },
  {
   "id": 68,
@@ -2054,8 +2181,8 @@
   ],
   "link": "https://jerusalemchimes.co.il",
   "descr": "חנות שבשבות ופעמוני רוח",
-  "lat": 32.968,
-  "lng": 35.545,
+  "lat": 32.96822,
+  "lng": 35.54382,
   "approx": true,
   "shabbat": "unknown",
   "family": "yes",
@@ -2068,7 +2195,9 @@
   "hours": null,
   "ctags": [
    "יין"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב ראש פינה (OSM)"
  },
  {
   "id": 69,
@@ -2089,8 +2218,8 @@
   ],
   "link": "https://www.abrahamtours.com/he/locations/all-private-tours/",
   "descr": "מהאתר: נצרת היא מקום מסתורי עם סיפור מרתק. זהו סיפור שיש בו כאב, אתגרים, קשיים אך גם אופטימי, מלא תקווה ובעיקר טעים. מעוז ינון הוא יזם ואיש חזון מרתק. הסיור כולל טעימות ומפגשים עם יזמים מקומיים. כדאי לשלב עם לינה בפאוזי עאזר אין",
-  "lat": 32.7,
-  "lng": 35.3,
+  "lat": 32.70663,
+  "lng": 35.30485,
   "approx": true,
   "shabbat": "unknown",
   "family": "unknown",
@@ -2101,7 +2230,9 @@
   ],
   "hours": null,
   "note": "סיורים מבית אברהם הוסטל",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב נצרת (OSM)"
  },
  {
   "id": 70,
@@ -2119,8 +2250,8 @@
   ],
   "link": "https://www.wikiloc.com/hiking-trails/en-kerem-13376026",
   "descr": "שביל של 8 ק”מ שמקיף את הכפר עין כרם ועובר בעתיקות, כנסיות, בארות, עצים עתיקים ועוד. אפשר ללכת גם רק חלקים ממנו ולא חייבים את כולו",
-  "lat": 31.768,
-  "lng": 35.16,
+  "lat": 31.76764,
+  "lng": 35.1639,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
@@ -2131,7 +2262,9 @@
   "hours": null,
   "ctags": [
    "כניסה חינם"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב עין כרם (OSM)"
  },
  {
   "id": 71,
@@ -2151,9 +2284,9 @@
   ],
   "link": "http://goatswiththewind.com",
   "descr": "בתיאום מראש בלבד. חוות עיזים, גבינות ומסעדה. העיזים ניזונות ממרעה טבעי בלבד, ולכן החלב והגבינות אורגניים. מהאתר: יושבים על שטיחים וכריות ואוכלים ממבחר הגבינות בצד סלטים, לחם שאור ומשקה מי ורדים, מול בקעת בית נטופה",
-  "lat": 32.84,
-  "lng": 35.28,
-  "approx": true,
+  "lat": 32.83527,
+  "lng": 35.28976,
+  "approx": false,
   "shabbat": "unknown",
   "family": "unknown",
   "pick": false,
@@ -2167,7 +2300,9 @@
   "ctags": [
    "גבינות",
    "אורגני"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: חלב עם הרוח, ואדי פטריות"
  },
  {
   "id": 72,
@@ -2205,7 +2340,9 @@
   "ctags": [
    "ארוחות",
    "גבינות"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 73,
@@ -2225,9 +2362,9 @@
   ],
   "link": "https://ourwildflowers.wordpress.com/about",
   "descr": "גינה קהילתית קטנה של פרחי בר ועצי בוסתן שמטופחת על ידי מתנדבים ומתנדבות. פיסת טבע בלב העיר שהשיבו אליה את שלל פרחי הבר של האזור, ביניהם צמחים בסכנת הכחדה (מינים אדומים)",
-  "lat": 31.94,
-  "lng": 34.84,
-  "approx": true,
+  "lat": 31.93092,
+  "lng": 34.82799,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -2242,7 +2379,9 @@
   "ctags": [
    "כניסה חינם",
    "נגיש"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: האחו הפורח, חוטר"
  },
  {
   "id": 74,
@@ -2262,9 +2401,9 @@
   ],
   "link": "https://www.meshek-shmueli.co.il",
   "descr": "חוות עיזים וחנות גבינות, אפשר גם להגיע לסיורים",
-  "lat": 31.73,
-  "lng": 34.73,
-  "approx": true,
+  "lat": 31.73609,
+  "lng": 34.72193,
+  "approx": false,
   "shabbat": "unknown",
   "family": "yes",
   "pick": false,
@@ -2278,7 +2417,9 @@
   "hours": "חנות: א'-ה' 9-18; ו' 8-14 (לפי תיוולי); שבת לא מופיעה",
   "ctags": [
    "גבינות"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (map link)"
  },
  {
   "id": 75,
@@ -2297,8 +2438,8 @@
   ],
   "link": "https://www.rnwinery.co.il",
   "descr": "אפשר לתאם סיורים",
-  "lat": 30.88,
-  "lng": 34.42,
+  "lat": 30.90391,
+  "lng": 34.39689,
   "approx": true,
   "shabbat": "closed",
   "family": "no",
@@ -2310,7 +2451,9 @@
    "סיורים בתיאום"
   ],
   "hours": "ביקור בתיאום מראש בלבד, 45-60 דקות, טל' 08-6555849",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב קדש ברנע (OSM)"
  },
  {
   "id": 76,
@@ -2331,9 +2474,9 @@
   ],
   "link": "https://www.beit-hadvash.com/",
   "descr": "במתחם המבקרים אפשר לצפות בהתנהלות הדבורים בכוורת שקופה, לשמוע הרצאה על חיי הדבורה בכוורת ולטעום מסוגי הדבש המופקים במקום",
-  "lat": 30.88,
-  "lng": 34.42,
-  "approx": true,
+  "lat": 30.90343,
+  "lng": 34.39887,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -2343,7 +2486,9 @@
    "טעימות"
   ],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (google maps)"
  },
  {
   "id": 77,
@@ -2360,9 +2505,9 @@
   ],
   "link": "https://israelbusinessguide.com/catalog/maalot-_tarshiha/rynok_urban_market_maalot-tarshiha/",
   "descr": "רק בשבתות. אוכל, בגדים, צעצועים, פיצוחים, ירקות ועוד",
-  "lat": 33.01,
-  "lng": 35.27,
-  "approx": true,
+  "lat": 33.01189,
+  "lng": 35.26393,
+  "approx": false,
   "shabbat": "open",
   "family": "unknown",
   "pick": false,
@@ -2374,7 +2519,9 @@
   "hours": "שבת 06:00-15:00 (לפי כתבה דצמ' 2024)",
   "ctags": [
    "שוק"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (google maps embed)"
  },
  {
   "id": 79,
@@ -2423,8 +2570,8 @@
   ],
   "link": "https://www.facebook.com/jlmshuk/",
   "descr": "מעמוד הפייסבוק: סיורים קולינריים עם לב ונשמה בשוק מחנה יהודה. קולינריה משובחת ולא שגרתית, מתובלת בתוכן איכותי וחווייתי",
-  "lat": 31.785,
-  "lng": 35.212,
+  "lat": 31.77885,
+  "lng": 35.22579,
   "approx": true,
   "shabbat": "unknown",
   "family": "unknown",
@@ -2435,7 +2582,9 @@
    "סיורים קולינריים"
   ],
   "hours": "סיורים: שישי 10:00, חמישי 18:00 (לפי פוסט מ־2024)",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב ירושלים (OSM)"
  },
  {
   "id": 82,
@@ -2456,15 +2605,17 @@
   ],
   "link": "https://www.facebook.com/AniamArts",
   "descr": "תכשיטים, אריחי קרמיקה מצוירים, כלי קרמיקה, תשמישי קדושה, כלי בית, נגרות, סלים קלועים, תמונות ומסגרות, מראות, שעונים, מוצרים אורגניים וטבעיים וכל טוב מתוצרת הגולן. הכפר מעוצב כמדרחוב אירופי רומנטי שסביבו פועלות הגלריות",
-  "lat": 32.95,
-  "lng": 35.74,
+  "lat": 32.95687,
+  "lng": 35.73976,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
   "tags": [],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב אניעם (OSM)"
  },
  {
   "id": 83,
@@ -2485,8 +2636,8 @@
   ],
   "link": "https://goarava.co.il/business/%D7%92%D7%9F-%D7%99%D7%A8%D7%A7-%D7%A6%D7%95%D7%A4%D7%A8/",
   "descr": "אגרוטוריזם, סיור בגן ובחממות וארוחה מהחממה לצלחת. עונתי, בתיאום",
-  "lat": 30.56,
-  "lng": 35.18,
+  "lat": 30.55862,
+  "lng": 35.18014,
   "approx": true,
   "shabbat": "unknown",
   "family": "yes",
@@ -2506,7 +2657,9 @@
    "בית קפה ומאפייה",
    "אורגני",
    "עונתי"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב צופר (OSM)"
  },
  {
   "id": 84,
@@ -2540,7 +2693,9 @@
   "note": "פסטיבל שנתי, מתקיים בפברואר",
   "ctags": [
    "עונתי"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 86,
@@ -2559,8 +2714,8 @@
   ],
   "link": "https://www.instagram.com/explore/locations/531958600/byt-hrybwt---qdmt-zby/",
   "descr": "מהאתר: בבית שמזכיר את האגדות של עמי ותמי, עם נוף של הגולן, מחכות צנצנות מסודרות ובהן למעלה מ-100 סוגי ריבות. אנחנו מזמינים את הקהל לשמוע הסברים על תהליך הייצור, לטעום מהריבות וליהנות מתה צמחים שמוגש לכל אורח",
-  "lat": 32.75,
-  "lng": 35.7,
+  "lat": 33.02974,
+  "lng": 35.69703,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
@@ -2570,7 +2725,9 @@
    "תה צמחים"
   ],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב קדמת צבי (OSM)"
  },
  {
   "id": 87,
@@ -2593,8 +2750,8 @@
   ],
   "link": "https://www.facebook.com/peteleretz",
   "descr": "חווה חקלאית אורגנית לגידול פירות יער, שהיא גם חדשנית וגם מסורתית, עם סל פיקניק שאפשר לאכול בחצר המשק, הופעות וחנות משק שמציעה המון דברים מפטל וגם ממשקים אחרים. בתיאום מראש",
-  "lat": 31.77,
-  "lng": 34.98,
+  "lat": 31.80204,
+  "lng": 34.97446,
   "approx": true,
   "shabbat": "unknown",
   "family": "unknown",
@@ -2611,7 +2768,9 @@
    "פיקניק",
    "אורגני",
    "מוזיקה והופעות"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב תעוז (OSM)"
  },
  {
   "id": 88,
@@ -2634,8 +2793,8 @@
   ],
   "link": "https://www.kerembarak.com",
   "descr": "מתחם של יקב, מאפייה של לחמי מחמצת ומחלבה לייצור גבינות. אפשר להגיע לסיורים משולבים ולארוחת טעימות מתוצרי המתחם, וגם לסדנאות אפייה קצרות",
-  "lat": 31.65,
-  "lng": 34.84,
+  "lat": 31.82943,
+  "lng": 34.92704,
   "approx": true,
   "shabbat": "unknown",
   "family": "unknown",
@@ -2651,7 +2810,9 @@
   "ctags": [
    "ארוחות",
    "יין"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב בקוע (OSM)"
  },
  {
   "id": 89,
@@ -2671,9 +2832,9 @@
   ],
   "link": "https://amphoraewines.com",
   "descr": "יש גם ערבי מוזיקה ומפגשי יין שבהם מוגשות מזיגות של 4 יינות ממבחר יינות היקב ופלטת טעימות של גבינות, בגט טרי, ממרחים, פירות, זיתים ואגוזים",
-  "lat": 32.65,
-  "lng": 34.98,
-  "approx": true,
+  "lat": 32.63908,
+  "lng": 34.99393,
+  "approx": false,
   "shabbat": "open",
   "family": "no",
   "pick": false,
@@ -2684,7 +2845,9 @@
   "hours": null,
   "ctags": [
    "מוזיקה והופעות"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: יקב אמפורה, הזית"
  },
  {
   "id": 90,
@@ -2709,8 +2872,8 @@
   ],
   "link": "https://clil.org.il",
   "descr": "חוץ מטיול ברגל בכפר האקולוגי, אפשר להזמין כאן סדנאות כמו קליעת סלים, קרמיקה ובישול, לבקר בחנות צמחי אוויר ולהזמין מקום לארוחה מקומית אורגנית",
-  "lat": 32.98,
-  "lng": 35.19,
+  "lat": 32.98553,
+  "lng": 35.20048,
   "approx": true,
   "shabbat": "unknown",
   "family": "yes",
@@ -2727,7 +2890,9 @@
   "ctags": [
    "ארוחות",
    "לינה"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב כליל (OSM)"
  },
  {
   "id": 91,
@@ -2748,8 +2913,8 @@
   ],
   "link": "https://bauhaus-center.com/?p=206",
   "descr": "סיור עצמאי עם מכשיר שמע ואוזניות בין מבחר בתי באוהאוס בולטים סביב כיכר דיזנגוף שנבנו בשנות ה-30 וה-40 של המאה ה-20. מתחילים בסרט רקע במרכז הבאוהאוס ויוצאים לסיור של שעה וחצי עד שעתיים וחצי עם אוזניות ומפה",
-  "lat": 32.078,
-  "lng": 34.774,
+  "lat": 32.0853,
+  "lng": 34.78181,
   "approx": true,
   "shabbat": "unknown",
   "family": "yes",
@@ -2759,7 +2924,9 @@
    "רצוי הרשמה מראש"
   ],
   "hours": "6 ימים בשבוע; קיץ 10:00-17:00, חורף 10:00-15:00",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב תל אביב (OSM)"
  },
  {
   "id": 92,
@@ -2778,8 +2945,8 @@
   ],
   "link": "https://chckk.org.il",
   "descr": "סיורים מודרכים בין המבנים המרכזיים של הכפר והיכרות קרובה עם אורח החיים בו, מוזיאון לתרבות והיסטוריה צ’רקסית וטעימות מהמטבח הצ’רקסי",
-  "lat": 32.72,
-  "lng": 35.44,
+  "lat": 32.72105,
+  "lng": 35.44077,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
@@ -2797,7 +2964,9 @@
   "ctags": [
    "מוזיאון",
    "מוזיקה והופעות"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב כפר כמא (OSM)"
  },
  {
   "id": 94,
@@ -2817,9 +2986,9 @@
   ],
   "link": "https://www.vidor-center.co.il",
   "descr": "סיור רב-חושי הכולל סרט, כניסה לחממות תצוגה עם מיטב גידולי הערבה וביקור בחלל חווייתי שבו תוכלו להוריד גשם, להפוך לחקלאים ולהציץ לתוך חייהם של משפחות הערבה",
-  "lat": 30.78,
-  "lng": 35.24,
-  "approx": true,
+  "lat": 30.7722,
+  "lng": 35.23235,
+  "approx": false,
   "shabbat": "closed",
   "family": "yes",
   "pick": false,
@@ -2831,7 +3000,9 @@
    "פעילות משפחתית"
   ],
   "hours": "א-ה 10:00-14:00",
-  "ctags": []
+  "ctags": [],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (google maps)"
  },
  {
   "id": 95,
@@ -2850,8 +3021,8 @@
   ],
   "link": "https://www.dvivonim.co.il/post/ras-ali",
   "descr": "מהכניסה לכפר ראס עלי ועד לטחנת הנזירים, מסלול מתוק לאורך הנחל, סלול ונגיש לגמרי, מתאים לילדים ולעגלות. בסוף יש מדשאה וטחנת קמח יפה. כדאי לשלב עם ביקור במאפיית אל-טוואחין שגם היא בכניסה לכפר",
-  "lat": 32.76,
-  "lng": 35.17,
+  "lat": 32.77212,
+  "lng": 35.15423,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
@@ -2870,7 +3041,9 @@
    "פיקניק",
    "כניסה חינם",
    "נגיש"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב ראס עלי (OSM)"
  },
  {
   "id": 96,
@@ -2892,8 +3065,8 @@
   ],
   "link": "https://www.rishlakish.com",
   "descr": "בית בד אורגני עם שמן זית מדהים. המבנה עשוי קש וחומר, שוכן בחצר מושלמת, מעוצב מקסים. אם מתאמים אפשר לשמוע את הסיפור המיוחד של משפחת נוי מאיר ושל בית הבד. אפשר כמובן גם לטעום ולקנות משמן הזית",
-  "lat": 32.75,
-  "lng": 35.28,
+  "lat": 32.74431,
+  "lng": 35.27812,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
@@ -2908,7 +3081,9 @@
   "ctags": [
    "שמן זית",
    "כשר"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב ציפורי (OSM)"
  },
  {
   "id": 98,
@@ -2925,9 +3100,9 @@
   ],
   "link": null,
   "descr": "פטריות - תצורות מלח בעיגולים לבנים יפים על פני המים, מדרום למלון הכי דרומי. דרך המלח - מול מלון דיוויד יוצא שביל ממלח בתוך המים. מדבר - מישור שכולו מלח, פונים לתחנת שאיבה פי-5 לפני המלונות. כדאי לגגל להנחיות הגעה נוספות",
-  "lat": 31.17,
-  "lng": 35.37,
-  "approx": true,
+  "lat": 31.18983,
+  "lng": 35.36522,
+  "approx": false,
   "shabbat": "open",
   "family": "unknown",
   "pick": false,
@@ -2943,7 +3118,9 @@
    "תצפית",
    "מים ומעיינות",
    "כניסה חינם"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: פטריות ים המלח, דרך ים המלח"
  },
  {
   "id": 99,
@@ -2968,8 +3145,8 @@
   ],
   "link": "https://www.facebook.com/Sadnaoteincarmel",
   "descr": "מתחם אמנות רב-תחומי, בית קפה, סדנאות ומוזיאון. אפשר לטייל בין האומנים עצמאית או בסיור מודרך ולהזמין מגוון סדנאות. יש גם בית קפה מומלץ מאוד - זהרה.",
-  "lat": 32.68,
-  "lng": 34.97,
+  "lat": 32.67701,
+  "lng": 34.95312,
   "approx": true,
   "shabbat": "closed",
   "family": "yes",
@@ -2984,7 +3161,9 @@
   "ctags": [
    "בית קפה ומאפייה",
    "גלריות ואמנות"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב עין כרמל (OSM)"
  },
  {
   "id": 101,
@@ -3007,8 +3186,8 @@
   ],
   "link": "https://galilioliveoil.co.il",
   "descr": "בית בד בוטיק שאפשר להזמין בו הדרכה על הפקת שמן הזית, זנים, טעמים, אחסון, שימוש נכון במטבח הביתי, וכמובן טעימות. אפשר גם להזמין סדנת טעימות של כשעתיים שמעביר ערן גלילי, טועם מוסמך מטעם ארגון השמן העולמי ושופט בינ”ל בתחרויות שמן זית. בחנות ניתן לרכוש גם מוצרי מזון של יצרנים מקומיים אחרים",
-  "lat": 32.73,
-  "lng": 35.19,
+  "lat": 32.73456,
+  "lng": 35.18906,
   "approx": true,
   "shabbat": "open",
   "family": "no",
@@ -3022,7 +3201,9 @@
    "סיורים"
   ],
   "hours": "א'-ה' 09:00-15:00 בתיאום מראש; ו' 10:00-14:30; שבת 10:00-16:00",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב בית לחם הגלילית (OSM)"
  },
  {
   "id": 102,
@@ -3043,8 +3224,8 @@
   ],
   "link": "https://www.carmey-avdat.co.il",
   "descr": "חוות בודדים עם יקב שמארח לטעימות, מסלולים, סיורים מודרכים, אפשרות לבקר אצל השכנים הבדואים, בית קפה ומרחבי אירוח משותפים ופרטיים",
-  "lat": 30.87,
-  "lng": 34.79,
+  "lat": 30.87374,
+  "lng": 34.79259,
   "approx": true,
   "shabbat": "open",
   "family": "no",
@@ -3063,7 +3244,9 @@
    "בית קפה ומאפייה",
    "יין",
    "לינה"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב שדה בוקר (OSM)"
  },
  {
   "id": 103,
@@ -3080,9 +3263,9 @@
   ],
   "link": "https://park-hamesila.co.il",
   "descr": "מסילת הברזל של פעם הפכה לשביל יפה, נעים ונגיש בין שכונות ירושלים. ההמלצה שקיבלתי הייתה להתחיל מהחלק הקרוב לגן החיות, ליד הכניסה ליד עין יעל, וללכת כשעתיים עד למתחם התחנה",
-  "lat": 31.757,
-  "lng": 35.21,
-  "approx": true,
+  "lat": 31.76115,
+  "lng": 35.21818,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -3094,7 +3277,9 @@
   "ctags": [
    "כניסה חינם",
    "נגיש"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: פארק המסילה, המושבה הגרמנית"
  },
  {
   "id": 104,
@@ -3114,8 +3299,8 @@
   ],
   "link": "https://www.batshlomo.com",
   "descr": "סיור קצרצר במושבה הוותיקה ובנוף הכרמים ואחריו ארוחת טעימות בתוך היקב בהדרכת יינן, או בחצר, או בליווי ארוחת שף. יש גם מלון בוטיק",
-  "lat": 32.6,
-  "lng": 35.0,
+  "lat": 32.59944,
+  "lng": 35.00295,
   "approx": true,
   "shabbat": "closed",
   "family": "unknown",
@@ -3132,7 +3317,9 @@
   "ctags": [
    "ארוחות",
    "לינה"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב בת שלמה (OSM)"
  },
  {
   "id": 105,
@@ -3161,7 +3348,9 @@
   "hours": "א'–ה' ושבת 9:00–16:00, ו' 9:00–14:00 (פארק נהריים, בתשלום)",
   "ctags": [
    "כניסה חינם"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 106,
@@ -3179,8 +3368,8 @@
   ],
   "link": "https://www.golanispirit.com",
   "descr": "מזקקת וויסקי ומשקאות נוספים ומיוחדים, יש סיורים עם טעימות בהזמנה מראש",
-  "lat": 32.99,
-  "lng": 35.69,
+  "lat": 32.99203,
+  "lng": 35.6877,
   "approx": true,
   "shabbat": "closed",
   "family": "no",
@@ -3194,7 +3383,9 @@
   "hours": "א'-ה' 10-17; ו' 10-14; שבת סגור",
   "ctags": [
    "יין"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב קצרין (OSM)"
  },
  {
   "id": 107,
@@ -3219,8 +3410,8 @@
   ],
   "link": "https://www.makura.co.il",
   "descr": "בית בד אורגני עם בראנץ’, חנות, טעימות וסיור",
-  "lat": 32.65,
-  "lng": 34.98,
+  "lat": 32.64612,
+  "lng": 34.98996,
   "approx": true,
   "shabbat": "open",
   "family": "unknown",
@@ -3231,7 +3422,9 @@
   "hours": "לפי מאמר ישן: שישי 10:00-13:00, שבת 10:00-16:00 (לא אומת)",
   "ctags": [
    "אורגני"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב כרם מהר”ל (OSM)"
  },
  {
   "id": 108,
@@ -3251,8 +3444,8 @@
   ],
   "link": "https://www.taikoteahouse.com",
   "descr": "טקס תה יפני - בלבוש הקימונו המסורתי טאיקו מארחת לטקס התה היפני, על כליו העתיקים ומסבירה את שורשיו בחיי המשפחה היפנית ובפילוסופיית הזן היפני. בתמצית של ארבעים דקות, טאיקו עורכת את טקס התה המקורי (האורך כנהוג כשלוש שעות). יש במקום גם לינה ביורטות ומסעדה יפנית",
-  "lat": 32.92,
-  "lng": 35.32,
+  "lat": 32.90611,
+  "lng": 35.32876,
   "approx": true,
   "shabbat": "unknown",
   "family": "yes",
@@ -3265,7 +3458,9 @@
   "hours": null,
   "ctags": [
    "לינה"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב מכמנים (OSM)"
  },
  {
   "id": 109,
@@ -3282,9 +3477,9 @@
   ],
   "link": "https://timeout.co.il/porta-6-%D7%A4%D7%90%D7%A8%D7%A7-%D7%94%D7%A1%D7%95%D7%A4%D7%A8%D7%99%D7%9D/",
   "descr": "פארק שכונתי מקסים לעצירה קלה, למנוחה ולהתבוננות. מרבדי דשא, ספרייה פתוחה, אזורי ישיבה ולימוד, מתחמי משחקים, עצי מאכל, שבילי הליכה ואופניים, גינת כלבים, מגרש קט-רגל, אמפיתאטרון ובית קפה",
-  "lat": 31.26,
-  "lng": 34.79,
-  "approx": true,
+  "lat": 31.25555,
+  "lng": 34.78883,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -3299,7 +3494,9 @@
    "בית קפה ומאפייה",
    "כניסה חינם",
    "מותר עם כלבים"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: פארק הסופרים, שכונה ב"
  },
  {
   "id": 110,
@@ -3337,7 +3534,9 @@
    "מסלול הליכה קצר",
    "נגיש",
    "מותר עם כלבים"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 111,
@@ -3354,9 +3553,9 @@
   ],
   "link": "https://www.tiuli.com/attractions/1165/%D7%A4%D7%90%D7%A8%D7%A7-%D7%94%D7%9E%D7%A2%D7%99%D7%99%D7%A0%D7%95%D7%AA",
   "descr": "שבילים ומסלולים בין המעיינות והשדות - בגולףקאר, אופניים או ברגל. מותר לטבול במעיינות. בחורף ובאביב הכל מוריק ויפהפה",
-  "lat": 32.5,
-  "lng": 35.47,
-  "approx": true,
+  "lat": 32.49737,
+  "lng": 35.45886,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -3372,7 +3571,9 @@
    "השכרת אופניים",
    "כניסה חינם",
    "נגיש"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: פארק השלושה, מועצה אזורית עמק המעיינות"
  },
  {
   "id": 112,
@@ -3390,9 +3591,9 @@
   ],
   "link": "https://www.naharayim.co.il",
   "descr": "סיור שמשלב - גם בעזרת מיצגים למיניהם - את הסיפור של תחנת החשמל הראשונה, מלחמת העצמאות בקיבוץ, נוף, ציפורי מים וגשרים עתיקים",
-  "lat": 32.62,
-  "lng": 35.55,
-  "approx": true,
+  "lat": 32.6231,
+  "lng": 35.56344,
+  "approx": false,
   "shabbat": "closed",
   "family": "yes",
   "pick": false,
@@ -3404,7 +3605,9 @@
    "פעילות לילדים"
   ],
   "hours": "ימים א'-ה' 9:00-16:00, שישי 9:00-14:00; שבת וחג לקבוצות/סיורים פרטיים בתיאום; סיורים מודרכים 11:00 ו-12:30",
-  "ctags": []
+  "ctags": [],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: נהריים בגשר, 90"
  },
  {
   "id": 113,
@@ -3424,8 +3627,8 @@
   ],
   "link": "https://www.instagram.com/jordanvalleycenter/",
   "descr": "פארק צפרות עם בריכות, אזורים ביצתיים, תעלות מים, קיר קינון ואזור של אחו מגוון. בפארק תוכננו שבילים ומסתורי צפרות וצילום. מיליוני ציפורים חולפות ועוצרות כאן בנדידה ונעזרות בבתי הגידול המגוונים למנוחה, מציאת מזון ומסתור. בכפר יש יחידות אירוח",
-  "lat": 32.45,
-  "lng": 35.55,
+  "lat": 32.45816,
+  "lng": 35.55677,
   "approx": true,
   "shabbat": "unknown",
   "family": "yes",
@@ -3439,7 +3642,9 @@
   "ctags": [
    "צפרות",
    "לינה"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב כפר רופין (OSM)"
  },
  {
   "id": 114,
@@ -3475,7 +3680,9 @@
    "תצפית",
    "פריחה",
    "כניסה חינם"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 115,
@@ -3493,9 +3700,9 @@
   ],
   "link": "https://gangaroo.co.il",
   "descr": "חוות חיות אוסטרליות. בגן גורו יש קנגורו חופשיים שאפשר ללטף ולהאכיל, וכן צפרייה עם עשרות תוכים צבעוניים ועוד ציפורים גדולות וייחודיות. יש גם עיזים ננסיות וגדיים ועוד בעלי חיים מעניינים כמו קזואר, אמו, שועלים מעופפים ומיני זוחלים נדירים",
-  "lat": 32.5,
-  "lng": 35.45,
-  "approx": true,
+  "lat": 32.5019,
+  "lng": 35.45032,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -3509,7 +3716,9 @@
   "hours": "א'-ה' 9:00-16:00 (יולי-אוגוסט עד 20:00), ו' 9:00-15:00, ש' 9:00-17:00",
   "ctags": [
    "האכלת חיות"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (google maps embed)"
  },
  {
   "id": 116,
@@ -3547,7 +3756,9 @@
    "פריחה",
    "צפרות",
    "כניסה חינם"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 117,
@@ -3577,7 +3788,9 @@
    "עבודת יד"
   ],
   "hours": null,
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 118,
@@ -3599,9 +3812,9 @@
   ],
   "link": "https://neot-semadar.com",
   "descr": "מבנה ייחודי ומעניין שתוכנן ונבנה על ידי בני ובנות המקום, עם מגדל צינון פסיבי, שמאכלס בתי מלאכה לצורפות, ויטראז', משי, קרמיקה, נייר, נגרות ועוד. אפשר לשלב סיור בבית האומנויות וביקב או להזמין סדנאות אצל האומנים",
-  "lat": 30.05,
-  "lng": 35.02,
-  "approx": true,
+  "lat": 30.04962,
+  "lng": 35.02846,
+  "approx": false,
   "shabbat": "closed",
   "family": "yes",
   "pick": false,
@@ -3610,7 +3823,9 @@
    "סיורים"
   ],
   "hours": "א-ה 10:00-15:00, ו 9:30-12:30, שבת סגור",
-  "ctags": []
+  "ctags": [],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: בית האומנויות, 1128"
  },
  {
   "id": 119,
@@ -3631,9 +3846,9 @@
   ],
   "link": "https://neot-semadar.com/hapundak/",
   "descr": "יקב אורגני עם סיורים ובית קפה עם חנות של תוצרת אורגנית מקומית. מקום מעולה לעצור בדרך צפונה מהערבה או מאילת, במקום כביש 90",
-  "lat": 30.05,
-  "lng": 35.02,
-  "approx": true,
+  "lat": 30.04798,
+  "lng": 35.05545,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -3655,7 +3870,9 @@
    "צמחוני",
    "אורגני",
    "נגיש"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (google maps)"
  },
  {
   "id": 120,
@@ -3691,7 +3908,9 @@
    "מסלול הליכה קצר",
    "כניסה חינם",
    "עונתי"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 121,
@@ -3709,7 +3928,7 @@
   "link": "https://www.tiuli.com/points-of-interest/5/פלמינגו-באילת-המצפור-בבריכות-המלח",
   "descr": "בבריכות המלח של חוות עברונה גרות מדי חורף להקות של מאות פריטי פלמינגו. אפשר להגיע ממש עד לבריכה ולתצפת (יש גם באזור דור)",
   "lat": 29.88,
-  "lng": 35.0,
+  "lng": 35,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
@@ -3722,7 +3941,9 @@
   "ctags": [
    "כניסה חינם",
    "עונתי"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 122,
@@ -3739,9 +3960,9 @@
   ],
   "link": "https://www.tiuli.com/points-of-interest/873/-14",
   "descr": "מראה מהמם ומיוחד מאוד של אגם באמצע המדבר האדום של תמנע. אפשר לרדת ואפילו לשחות (המים מלוחים, אין שירותי הצלה) אבל גם לצפות בלבד זה מספיק. מיוחד מאוד",
-  "lat": 29.79,
-  "lng": 34.98,
-  "approx": true,
+  "lat": 29.76614,
+  "lng": 35.00025,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -3757,7 +3978,9 @@
   "ctags": [
    "תצפית",
    "כניסה חינם"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: האגם הנעלם, מועצה אזורית חבל אילות"
  },
  {
   "id": 123,
@@ -3788,7 +4011,9 @@
   "note": "חשוב לברר לפני שיוצאים אם השביל פתוח: הוא נסגר לסירוגין בגלל המצב הביטחוני",
   "ctags": [
    "מסלול הליכה קצר"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מיקום משוער קודם (לא נמצא ב-OSM)"
  },
  {
   "id": 124,
@@ -3805,8 +4030,8 @@
   ],
   "link": "https://www.tiuli.com/points-of-interest/457",
   "descr": "טיילת נוחה, ירוקה ויפה לאורך גדת הירדן, בליווי צמחי מים רבים ופינות ישיבה. נגיש ומתאים לפיקניקים",
-  "lat": 32.98,
-  "lng": 35.62,
+  "lat": 33.18691,
+  "lng": 35.62451,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
@@ -3821,7 +4046,9 @@
    "פיקניק",
    "כניסה חינם",
    "נגיש"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב שדה נחמיה (OSM)"
  },
  {
   "id": 125,
@@ -3840,8 +4067,8 @@
   ],
   "link": "https://gilfanto.co.il/",
   "descr": "סיורים בשוק הפשפשים + מוזיאון פרטי לנוסטלגיה מקומית שמספר את סיפורה של תוצרת הארץ של פעם, ובו גיל מארח עם הרבה זכרונות מישראל של שנות ה-40-70. אוסף מוצרים, אריזות, פריטים תעשייתים, וכמובן כרזות, שלטי חנויות ועוד",
-  "lat": 32.053,
-  "lng": 34.756,
+  "lat": 32.04434,
+  "lng": 34.75099,
   "approx": true,
   "shabbat": "unknown",
   "family": "yes",
@@ -3853,7 +4080,9 @@
   "hours": "בתיאום מראש בלבד, טלפון 054-4510345",
   "ctags": [
    "מוזיאון"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב יפו (OSM)"
  },
  {
   "id": 126,
@@ -3874,9 +4103,9 @@
   ],
   "link": "https://de-karina.co.il",
   "descr": "מקום שמייצר שוקולד, עם בית קפה שיש בו תפריט מבוסס שוקולד, סיורים עם טעימות וסדנאות לכל הגילים, גם למבוגרים",
-  "lat": 33.08,
-  "lng": 35.8,
-  "approx": true,
+  "lat": 33.09633,
+  "lng": 35.79883,
+  "approx": false,
   "shabbat": "closed",
   "family": "yes",
   "pick": false,
@@ -3890,7 +4119,9 @@
   "hours": "א-ה 10:00-17:00, ו 9:00-15:00",
   "ctags": [
    "כשר"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (map link)"
  },
  {
   "id": 127,
@@ -3912,8 +4143,8 @@
   ],
   "link": "https://www.eretz-gshur.co.il",
   "descr": "בית בד שמייצר שמן זית ב-10 טעמים. הם נטעו בגשור מעל חמש מאות דונם של כרמים עם עשרה זנים שונים של זיתים, כל אחד עם טעמים וארומות האופייניים לו, ואפשר לטעום מהם במקום ולהרגיש את ההבדלים. יש גם קוסמטיקה משמן זית.",
-  "lat": 32.82,
-  "lng": 35.73,
+  "lat": 32.81918,
+  "lng": 35.71601,
   "approx": true,
   "shabbat": "closed",
   "family": "yes",
@@ -3927,7 +4158,9 @@
   "hours": "א-ה 8:00-16:00, ו 10:00-13:00, שבת סגור (מומלץ לתאם: 04-6764036); אתר רשמי ללא שעות",
   "ctags": [
    "שמן זית"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב גשור (OSM)"
  },
  {
   "id": 128,
@@ -3949,9 +4182,9 @@
   ],
   "link": "https://www.bethlehemfoodforest.com",
   "descr": "שישה דונם של חיים וצמחי מאכל שמקיימים את עצמם במערכת אקולוגית בת-קיימא דמוית יער. באתר שלהם יש רשימה של יערות מאכל נוספים בצפון, ליד גדרה וליד אשדוד. יש סיורים של כשעה וחצי וקורסים ארוכים",
-  "lat": 32.73,
-  "lng": 35.19,
-  "approx": true,
+  "lat": 32.73328,
+  "lng": 35.18728,
+  "approx": false,
   "shabbat": "unknown",
   "family": "no",
   "pick": false,
@@ -3963,7 +4196,9 @@
    "קורסים"
   ],
   "hours": "סיור של כשעה, בהרשמה מראש",
-  "ctags": []
+  "ctags": [],
+  "precision": "exact",
+  "geo_source": "קואורדינטות מאתר המקום (schema.org)"
  },
  {
   "id": 129,
@@ -3980,9 +4215,9 @@
   ],
   "link": "https://www.tiuli.com/points-of-interest/516/%D7%90%D7%A0%D7%93%D7%A8%D7%98%D7%AA-%D7%97%D7%98%D7%99%D7%91%D7%AA-%D7%94%D7%A0%D7%92%D7%91",
   "descr": "פסל סביבתי ומבנה מורכב מבטון שאפשר לטפס עליו, להצטלם בו, ליהנות ממשחקי אור וצל, ללכת קצת לאיבוד ולהקשיב למגדל הנושם ברוח. מושלם בשקיעה",
-  "lat": 31.27,
-  "lng": 34.82,
-  "approx": true,
+  "lat": 31.26661,
+  "lng": 34.82053,
+  "approx": false,
   "shabbat": "open",
   "family": "yes",
   "pick": false,
@@ -3995,7 +4230,9 @@
   "ctags": [
    "תצפית",
    "כניסה חינם"
-  ]
+  ],
+  "precision": "exact",
+  "geo_source": "OpenStreetMap: אנדרטת חטיבת הנגב, מעלה החטיבה"
  },
  {
   "id": 130,
@@ -4015,8 +4252,8 @@
   ],
   "link": "https://sadearomatics.com",
   "descr": "חוות לבנדר וצמחי בושם נוספים, שבה מזקקים שמנים אתריים בעבודת יד ובשיטות מסורתיות. יש חנות תוצרת השדה ומרחב ייחודי לסיורים ותוכן",
-  "lat": 33.08,
-  "lng": 35.8,
+  "lat": 33.09628,
+  "lng": 35.7962,
   "approx": true,
   "shabbat": "open",
   "family": "yes",
@@ -4032,7 +4269,9 @@
   "hours": "א'-שבת 10:00-15:00",
   "ctags": [
    "פיקניק"
-  ]
+  ],
+  "precision": "town",
+  "geo_source": "מרכז היישוב עין זיוון (OSM)"
  },
  {
   "id": 132,
@@ -4051,8 +4290,8 @@
   ],
   "link": "https://www.instagram.com/yaldati_sheli/",
   "descr": "עגלת קפה שווה במיוחד בתוך המשתלה \"שתילי הר\" באבו גוש, של מיכל, הבעלים של מסעדת מאג'דה.",
-  "lat": 31.805,
-  "lng": 35.11,
+  "lat": 31.80635,
+  "lng": 35.10887,
   "approx": true,
   "shabbat": "open",
   "family": "unknown",
@@ -4061,6 +4300,8 @@
    "עגלת קפה"
   ],
   "hours": "א' 7:30–14:00, ב'–ה' 7:30–17:00, ו' 7:30–14:00, שבת 10:00–17:00",
-  "ctags": []
+  "ctags": [],
+  "precision": "town",
+  "geo_source": "מרכז היישוב אבו גוש (OSM)"
  }
 ]
