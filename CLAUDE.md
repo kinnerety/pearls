@@ -61,6 +61,8 @@ Technical notes for Claude:
 - Next.js 15 App Router + TypeScript, no Tailwind (port the sketch CSS), `lang="he" dir="rtl"`, filters in URL params, list and map share one filtered array.
 - Map: real map (Leaflet + CARTO Positron/OSM) with **automatic geocoding** — Kinneret will not drag pins. Town-level places get `precision: "town"` and a distinct "approximate" marker. If too few are exact, revisit with her.
 - Milestones: M0 infra → M1 1:1 port of the sketch → M2 real map + geocoding → M3 place pages / sharing / SEO → M4 go-live → M5 Neon + `/admin` (full "add place"; replaces the review artifact). **Each milestone = a PR with a Vercel Preview that Kinneret approves before merge.**
+- Repo layout (built 2026-10-24, PR #1): site data `data/places.json` (copied from `places_site.json` by `scripts/import_places.py`, which keeps the repo-owned location fields); `scripts/validate-data.mjs` runs before every build; `lib/filters.ts` = the one filter used by list, map and counts; `lib/store.ts` reads Neon when `DATABASE_URL` is set, otherwise the JSON (an empty Neon table is seeded from the JSON once); `/admin` = password (`ADMIN_PASSWORD`) + signed cookie.
+- Geocoding runs in GitHub Actions (`.github/workflows/geocode.yml`, triggered by pushing a change to `scripts/geocode.mjs`), because the Claude container cannot reach Nominatim or the places' websites. It writes `lat/lng/precision/geo_source` into `data/places.json` and a report to `data/geo_report.md`, and commits back to the branch.
 - Domain: `pninim.co.il` is taken; she wants `pninim-il.co.il` (she checks/buys via an Israeli registrar). Meanwhile `pearls.vercel.app`.
 
 ## מי אחראי על מה (שרשורים)
