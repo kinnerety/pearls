@@ -8,10 +8,12 @@ export function shareText(p: Place, site: string) {
   const what = (p.descr || '').split(/(?<=[.!?])\s+/)[0].replace(/[.!?]+$/, '').trim();
   const area = p.region.length ? ` (באזור ${p.region.join(', ')})` : '';
   const waze = p.cats.includes('אתרי אינטרנט') ? '' : wazeUrl(p);
+  // WhatsApp builds the picture preview only for a link that opens the message (tested 2026-10-25), so ours goes first
   return [
+    `${site}/p/${encodeURIComponent(slugOf(p))}`,
     `מעניין אותי לבדוק את '${p.name}'.` + (what ? ` זה ${what}${area}.` : area ? `${area}.` : ''),
-    `מתוך האתר 'פנינים ישראליות': ${site}/p/${encodeURIComponent(slugOf(p))}`,
     p.link && `לכל הפרטים: ${p.link}`,
     waze && `לניווט בווייז: ${waze}`,
+    `מתוך האתר 'פנינים ישראליות'`,
   ].filter(Boolean).join('\n');
 }
