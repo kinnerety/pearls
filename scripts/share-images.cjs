@@ -9,7 +9,7 @@ const src = fs.readFileSync(path.join(__dirname, '../lib/illo.ts'), 'utf8');
 const ILLO = eval('(' + src.slice(src.indexOf('{', src.indexOf('ILLO'))).replace(/;\s*$/, '') + ')');
 const CATS = [
   ['טבע ונוף', 'valley', '#BFE3C9'], ['אוכל ושתייה', 'wine', '#FAE59A'], ['סדנאות', 'apron', '#CFE6F2'],
-  ['סיורים ומפגשים', 'speech', '#DFEBA0'], ['חקלאות', 'tractor', '#FAE59A'], ['בעלי חיים', 'hedgehog', '#BFE3C9'],
+  ['סיורים ומפגשים', 'finjan', '#DFEBA0'], ['חקלאות', 'tractor', '#FAE59A'], ['בעלי חיים', 'hedgehog', '#BFE3C9'],
   ['יוצרים וחנויות', 'stand', '#CFE6F2'], ['תרבות', 'tile', '#DFEBA0'], ['עגלות קפה', 'coffee', '#FAE59A'], ['אתרי אינטרנט', 'almond', '#CFE6F2'],
 ];
 const out = process.argv[2] || path.join(__dirname, '../public/share');
