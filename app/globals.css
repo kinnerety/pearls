@@ -14,8 +14,10 @@ body{margin:0;overflow-x:clip;background:var(--paper);color:var(--ink);font-fami
 .wrap{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 header{position:relative;margin-inline:calc(50% - 50vw);min-height:300px;overflow:hidden}
 /* natural 1200:440 ratio so wide screens see the whole illustration (sun and sky included); only beyond ~2600px does it start trimming the sky */
-.hero-art{display:block;width:100%;height:clamp(300px,36.67vw,960px)}
-header .title{position:absolute;top:clamp(20px,4vw,48px);right:max(24px,calc(50vw - 616px));max-width:min(440px,60%)}
+:root{--hero:clamp(300px,36.67vw,960px)}
+.hero-art{display:block;width:100%;height:var(--hero)}
+/* the title sits on the illustration: the subtitle's baseline stays ~5mm above the hills (which start at 224/440 of the picture's height under the title), whatever the screen width */
+header .title{position:absolute;bottom:calc(var(--hero) * 0.491 + 5mm);right:max(24px,calc(50vw - 616px));max-width:min(440px,60%)}
 h1{font-family:var(--display);font-weight:900;font-size:clamp(2.4rem,6vw,4.4rem);line-height:.95;margin:0;letter-spacing:-.01em;text-wrap:balance}
 .lede{margin:10px 0 0;color:var(--muted);max-width:36ch;font-size:clamp(.95rem,1.6vw,1.1rem)}
 .sketch-note{display:inline-block;margin-top:12px;font-size:.8rem;font-weight:600;color:var(--ink);background:var(--sun);padding:3px 12px;border-radius:999px;box-shadow:var(--shadow);transform:rotate(-2deg)}
