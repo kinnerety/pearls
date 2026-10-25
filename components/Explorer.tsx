@@ -113,7 +113,7 @@ export default function Explorer({ places }: { places: Place[] }) {
           <span><span className={'count' + (act ? ' long' : '')} id="count">{countText(items.length, !!act)}</span> <span id="countnote" className="where" /></span>
         </span>
         <div className="views" role="group" aria-label="תצוגה">
-          <button className="chip" aria-pressed={view === 'list'} onClick={() => setView('list')}>כל הפנינים יחד</button>
+          <button className="chip" aria-pressed={view === 'list'} onClick={() => setView('list')}>גלריית פנינים</button>
           <button className="chip" aria-pressed={view === 'map'} onClick={() => setView('map')}>
             על המפה<svg className="il" viewBox={FULL.join(' ')} aria-hidden="true"><polygon points={poly(OUTLINE)} /></svg>
           </button>
