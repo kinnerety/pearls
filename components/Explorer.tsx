@@ -142,7 +142,7 @@ export default function Explorer({ places }: { places: Place[] }) {
             </div>
             <div className="grp" id="f-pref">
               <span className="flabel">עוד העדפות</span>
-              <p className="fnote"><b>חשוב:</b> יכול להיות שיש עוד פנינים שמתאימות למשפחות או פתוחות בשבת ולא סווגו ככאלה, ולהפך</p>
+              <p className="fnote">יכול להיות שיש עוד פנינים שמתאימות למשפחות או פתוחות בשבת ולא סווגו ככאלה, ולהפך</p>
               {PREFS.map(k => {
                 const on = st.prefs.includes(k), n = places.filter(p => matches(p, st) && hasPref(p, k)).length;
                 if (!n && !on) return null;
