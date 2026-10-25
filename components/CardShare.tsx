@@ -29,5 +29,12 @@ export default function CardShare({ p }: { p: Place }) {
     }
     try { await navigator.clipboard.writeText(text); setDone(true); setTimeout(() => setDone(false), 2000); } catch { prompt('העתיקו את הטקסט:', text); }
   };
-  return <button type="button" className="sh" onPointerDown={load} onClick={share}>{done ? 'הועתק, אפשר להדביק ✓' : 'שיתוף או שליחה לעצמי'}</button>;
+  return (
+    <button type="button" className="sh" onPointerDown={load} onClick={share}>
+      <span className="blob" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 10.7l6.8-4.4M8.6 13.3l6.8 4.4" /></svg>
+      </span>
+      {done ? 'הועתק, אפשר להדביק ✓' : 'שיתוף או שליחה לעצמי'}
+    </button>
+  );
 }
