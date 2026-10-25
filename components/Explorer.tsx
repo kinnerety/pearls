@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Place } from '@/lib/types';
 import { CATS, CAT_ILLO, PREFS, PREF_LABEL, ZONES, ZONE_ILLO } from '@/lib/config';
 import { EMPTY, FilterState, activeCount, fromSearch, hasPref, matches, toSearch } from '@/lib/filters';
@@ -31,37 +31,31 @@ export default function Explorer({ places }: { places: Place[] }) {
   const [ready, setReady] = useState(false);
   const [view, setView] = useState<'list' | 'map'>('list');
   const [panel, setPanel] = useState<'open' | 'closed'>('open');
-  const [mapOpen, setMapOpen] = useState(false);
-  const [hlId, setHlId] = useState<number | null>(null);
-  const [hoverId, setHoverId] = useState<number | null>(null);
-  const [cut, setCut] = useState<number | null>(null);
-  const [layoutTick, setLayoutTick] = useState(0);
-  const [measureTick, setMeasureTick] = useState(0);
   const [sideH, setSideH] = useState<string | undefined>();
   const popRef = useRef<HTMLDialogElement>(null);
   const sideRef = useRef<HTMLElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
-  const mapboxRef = useRef<HTMLElement>(null);
 
   // filters come from (and go back to) the URL, so a filtered view can be shared
+  const viewOf = (search: string) => (new URLSearchParams(search).get('v') === 'map' ? 'map' : 'list');
   useEffect(() => {
     setSt(fromSearch(location.search));
+    setView(viewOf(location.search));
     if (isMobile()) setPanel('closed');
     setReady(true);
-    const onPop = () => setSt(fromSearch(location.search));
+    const onPop = () => { setSt(fromSearch(location.search)); setView(viewOf(location.search)); };
     addEventListener('popstate', onPop);
     return () => removeEventListener('popstate', onPop);
   }, []);
   useEffect(() => {
     if (!ready) return;
-    const s = toSearch(st);
+    const s = toSearch(st) + (view === 'map' ? (toSearch(st) ? '&' : '?') + 'v=map' : '');
     if (s !== location.search) history.replaceState(null, '', location.pathname + s);
-  }, [st, ready]);
+  }, [st, view, ready]);
 
   const items = useMemo(() => places.filter(p => matches(p, st)), [places, st]);
   const act = activeCount(st);
 
-  const update = (f: (s: FilterState) => FilterState) => { setHlId(null); setSt(f); };
+  const update = (f: (s: FilterState) => FilterState) => setSt(f);
   const toggleRegion = (k: string) => update(s => ({ ...s, regions: s.regions.includes(k) ? s.regions.filter(r => r !== k) : [...s.regions, k] }));
   const togglePref = (k: string, on: boolean) => {
     update(s => ({ ...s, prefs: on ? s.prefs.filter(x => x !== k) : [...s.prefs, k] }));
@@ -79,43 +73,11 @@ export default function Explorer({ places }: { places: Place[] }) {
     setPop(true); const t = setTimeout(() => setPop(false), 300); return () => clearTimeout(t);
   }, [nowK]);
 
-  // with the map open, cards beside it sit in short rows; rows that start below the map move to a full-width list
-  useLayoutEffect(() => { setCut(null); setMeasureTick(t => t + 1); }, [items, mapOpen, panel, layoutTick]);
-  useLayoutEffect(() => {
-    if (!mapOpen || isMobile() || !listRef.current || !mapboxRef.current) return;
-    const H = mapboxRef.current.offsetHeight, top = listRef.current.getBoundingClientRect().top;
-    const idx = [...listRef.current.children].findIndex(c => c.getBoundingClientRect().top - top >= H - 20);
-    setCut(idx > 0 ? idx : null);
-  }, [measureTick]); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    let t: ReturnType<typeof setTimeout>;
-    const relayout = () => { clearTimeout(t); t = setTimeout(() => setLayoutTick(x => x + 1), 120); };
-    addEventListener('resize', relayout);
-    document.fonts?.ready.then(() => setLayoutTick(x => x + 1));
-    return () => removeEventListener('resize', relayout);
-  }, []);
-  useEffect(() => { if (mapOpen) { const t = setTimeout(() => setLayoutTick(x => x + 1), 520); return () => clearTimeout(t); } }, [mapOpen]);
-
-  // a pin click highlights its card; the popup's "לכרטיס" jumps to it (on mobile, back to the list)
-  const pickPin = useCallback((id: number) => setHlId(id), []);
-  const openCard = useCallback((id: number) => {
-    setHlId(id);
-    if (isMobile()) setView('list');
-    requestAnimationFrame(() => document.getElementById('c' + id)?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
-  }, []);
-
   const toggleFold = () => {
     if (panel === 'open' && sideRef.current && sideRef.current.offsetHeight > 100) setSideH(sideRef.current.offsetHeight + 'px');
     setPanel(panel === 'open' ? 'closed' : 'open');
   };
 
-  const onCardsOver = (e: React.MouseEvent) => {
-    const a = (e.target as HTMLElement).closest('.card') as HTMLElement | null;
-    setHoverId(a ? +a.dataset.id! : null);
-  };
-
-  const shown = cut == null ? items : items.slice(0, cut);
-  const rest = cut == null ? [] : items.slice(cut);
   const open = panel === 'open';
 
   return (
@@ -150,17 +112,15 @@ export default function Explorer({ places }: { places: Place[] }) {
           <span className={'blob' + (pop ? ' pop' : '')} id="now-illo"><Illo k={nowK} /></span>
           <span><span className={'count' + (act ? ' long' : '')} id="count">{countText(items.length, !!act)}</span> <span id="countnote" className="where" /></span>
         </span>
-        <button className="maptog" id="maptog" aria-expanded={mapOpen} onClick={() => setMapOpen(!mapOpen)}>
-          {mapOpen ? 'סגירת המפה' : 'לראות על המפה'}
-          <svg viewBox={FULL.join(' ')} aria-hidden="true"><polygon points={poly(OUTLINE)} /></svg>
-        </button>
         <div className="views" role="group" aria-label="תצוגה">
-          <button className="chip" aria-pressed={view === 'list'} onClick={() => setView('list')}>רשימה</button>
-          <button className="chip" aria-pressed={view === 'map'} onClick={() => setView('map')}>מפה</button>
+          <button className="chip" aria-pressed={view === 'list'} onClick={() => setView('list')}>גלריה</button>
+          <button className="chip" aria-pressed={view === 'map'} onClick={() => setView('map')}>
+            מפה<svg className="il" viewBox={FULL.join(' ')} aria-hidden="true"><polygon points={poly(OUTLINE)} /></svg>
+          </button>
         </div>
       </div>
 
-      <div className="main" id="main" data-view={view} data-panel={panel} data-map={mapOpen ? 'open' : 'closed'}
+      <div className="main" id="main" data-view={view} data-panel={panel}
         style={sideH ? ({ '--sideH': sideH } as React.CSSProperties) : undefined}>
         <aside className="side" aria-label="סינונים" ref={sideRef}>
           <button className="fold" id="fold" aria-expanded={open} aria-label={open ? 'סגירת פאנל הסינון' : 'פתיחת פאנל הסינון'} title={open ? 'סגירת הסינון' : 'פתיחת הסינון'} onClick={toggleFold}>
@@ -187,23 +147,18 @@ export default function Explorer({ places }: { places: Place[] }) {
           </div>
         </aside>
         <div className="content">
-          <div className="results" onMouseOver={onCardsOver} onMouseLeave={() => setHoverId(null)}>
-            <div className="list" id="list" ref={listRef}>
-              {items.length ? shown.map(p => <PlaceCard key={p.id} p={p} hl={p.id === hlId} />)
-                : <div className="empty"><span className="blob"><Illo k="hedgehog" /></span>אין פנינים שמתאימות לכל הסינונים. נסו להסיר אחד מהם.</div>}
-            </div>
-            <div className="mapcol">
-              <aside className="mapbox" ref={mapboxRef}>
-                <MapView items={items} activeId={hoverId ?? hlId} visible={mapOpen || view === 'map'} onPick={pickPin} onOpenCard={openCard} />
-                <div className="legend">
-                  <span><i />מיקום מדויק</span>
-                  <span><i className="t" />מיקום משוער, בתוך היישוב</span>
-                  <span><svg viewBox="-1.2 -1.2 2.4 2.4" width="12" height="12" style={{ verticalAlign: '-1px', marginInlineEnd: 4 }}><polygon points="0,-1 0.26,-0.36 0.95,-0.31 0.43,0.14 0.59,0.81 0,0.45 -0.59,0.81 -0.43,0.14 -0.95,-0.31 -0.26,-0.36" fill="#F3E27C" stroke="#22333B" strokeWidth=".15" /></svg>המלצת המערכת</span>
-                </div>
-              </aside>
-            </div>
-            <div className="list" id="list2">{rest.map(p => <PlaceCard key={p.id} p={p} hl={p.id === hlId} />)}</div>
+          <div className="list" id="list">
+            {items.length ? items.map(p => <PlaceCard key={p.id} p={p} />)
+              : <div className="empty"><span className="blob"><Illo k="hedgehog" /></span>אין פנינים שמתאימות לכל הסינונים. נסו להסיר אחד מהם.</div>}
           </div>
+          <aside className="mapbox">
+            <MapView items={items} visible={view === 'map'} />
+            <div className="legend">
+              <span className="hover-hint">ריחוף על סמן פותח את הכרטיס, לחיצה משאירה אותו פתוח</span>
+              <span className="touch-hint">נגיעה בסמן פותחת את הכרטיס</span>
+              <span><svg viewBox="-1.2 -1.2 2.4 2.4" width="12" height="12" style={{ verticalAlign: '-1px', marginInlineEnd: 4 }}><polygon points="0,-1 0.26,-0.36 0.95,-0.31 0.43,0.14 0.59,0.81 0,0.45 -0.59,0.81 -0.43,0.14 -0.95,-0.31 -0.26,-0.36" fill="#F3E27C" stroke="#22333B" strokeWidth=".15" /></svg>המלצת המערכת</span>
+            </div>
+          </aside>
         </div>
       </div>
       <CheckPopup ref={popRef} />

@@ -3,8 +3,7 @@ import dynamic from 'next/dynamic';
 import type { Place } from '@/lib/types';
 
 const MapView = dynamic(() => import('./MapView'), { ssr: false, loading: () => <div id="map" /> });
-const noop = () => {};
 
 export default function PlaceMap({ p }: { p: Place }) {
-  return <MapView items={[p]} activeId={null} visible onPick={noop} onOpenCard={noop} />;
+  return <MapView items={[p]} visible />;
 }

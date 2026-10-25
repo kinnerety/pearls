@@ -3,12 +3,13 @@ import { CAT_ILLO, ZONE_NAMES } from '@/lib/config';
 import { zonesOf } from '@/lib/filters';
 import Illo from './Illo';
 import CardShare from './CardShare';
+import { isApprox } from '@/lib/geo';
 
 const STAR = 'M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z';
 
-export default function PlaceCard({ p, hl }: { p: Place; hl?: boolean }) {
+export default function PlaceCard({ p }: { p: Place }) {
   return (
-    <article className={'card' + (hl ? ' hl' : '')} id={`c${p.id}`} data-id={p.id}>
+    <article className="card" data-id={p.id}>
       {p.pick && <span className="pick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={STAR} /></svg>המלצת המערכת</span>}
       <span className="badge"><Illo k={CAT_ILLO[p.cats[0]] || 'bench'} /></span>
       <div>
@@ -16,7 +17,7 @@ export default function PlaceCard({ p, hl }: { p: Place; hl?: boolean }) {
           <h3>{p.name}</h3>
           {zonesOf(p).map(z => <span key={z} className={`cat zone z${ZONE_NAMES.indexOf(z)}`}>{z}</span>)}
         </div>
-        <div className="where">{p.town || ''}{p.town ? ' · ' : ''}{p.region.join(', ')}</div>
+        <div className="where">{p.town || ''}{p.town ? ' · ' : ''}{p.region.join(', ')}{isApprox(p) && p.lat != null && <span className="approx"> · מיקום משוער</span>}</div>
       </div>
       {/* one row of pills: the yellow families pill first (rightmost), then the green ones (Shabbat, categories) */}
       <div className="cats">
