@@ -172,9 +172,8 @@ export default function Explorer({ places }: { places: Place[] }) {
             <MapHelp />
             <MapView items={items} visible={view === 'map'} />
             <div className="legend">
-              <span className="hover-hint">ריחוף על סמן פותח את הכרטיס, לחיצה משאירה אותו פתוח</span>
-              <span className="touch-hint">נגיעה בסמן פותחת את הכרטיס</span>
-              <span><svg viewBox="-1.2 -1.2 2.4 2.4" width="12" height="12" style={{ verticalAlign: '-1px', marginInlineEnd: 4 }}><polygon points="0,-1 0.26,-0.36 0.95,-0.31 0.43,0.14 0.59,0.81 0,0.45 -0.59,0.81 -0.43,0.14 -0.95,-0.31 -0.26,-0.36" fill="#F3E27C" stroke="#22333B" strokeWidth=".15" /></svg>המלצת המערכת</span>
+              {/* the same badge as on the map markers: a yellow circle with a black star */}
+              <span className="legend-pick"><i className="pk"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" /></svg></i>המלצת המערכת</span>
             </div>
           </aside>
         </div>
