@@ -5,6 +5,7 @@ import { CATS, CAT_ILLO, PREFS, PREF_LABEL, ZONES, ZONE_ILLO } from '@/lib/confi
 import { EMPTY, FilterState, activeCount, fromSearch, hasPref, matches, toSearch } from '@/lib/filters';
 import { DIVIDER_SVG } from './art';
 import Illo from './Illo';
+import MapHelp from './MapHelp';
 import PlaceCard from './PlaceCard';
 import CheckPopup, { checkSeen } from './CheckPopup';
 import dynamic from 'next/dynamic';
@@ -168,6 +169,7 @@ export default function Explorer({ places }: { places: Place[] }) {
               : <div className="empty"><span className="blob"><Illo k="hedgehog" /></span>אין פנינים שמתאימות לכל הסינונים. נסו להסיר אחד מהם.</div>}
           </div>
           <aside className="mapbox">
+            <MapHelp />
             <MapView items={items} visible={view === 'map'} />
             <div className="legend">
               <span className="hover-hint">ריחוף על סמן פותח את הכרטיס, לחיצה משאירה אותו פתוח</span>

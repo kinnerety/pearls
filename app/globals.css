@@ -149,6 +149,14 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 
 .mapbox{background:var(--sheet);border-radius:8px 24px 10px 20px/20px 10px 24px 8px;padding:14px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow)}
 #map{width:100%;height:min(78vh,760px);display:block}
+/* "how to use the map?" link and its tip, above the map */
+.maphelp{position:relative;align-self:flex-start;z-index:4}
+.maphelp-link{font:inherit;font-size:.9rem;font-weight:600;color:var(--ink);background:none;border:0;padding:2px 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.maphelp-link:hover,.maphelp-link[aria-expanded="true"]{text-decoration-thickness:2px}
+.maphelp-tip{position:absolute;top:calc(100% + 6px);right:0;width:min(420px,calc(100vw - 48px));background:var(--sheet);color:var(--ink);border-radius:8px 18px 10px 16px/16px 10px 18px 8px;padding:14px 16px;box-shadow:0 2px 0 rgba(60,55,30,.06),0 12px 28px -8px rgba(60,55,30,.45);font-size:.9rem;line-height:1.55;text-align:right}
+.maphelp-title{display:block;font-family:var(--display);font-size:1.1rem;margin-bottom:6px}
+.maphelp-tip p{margin:0 0 8px}
+.maphelp-tip ul{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:4px}
 .legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.78rem;color:var(--muted)}
 .legend .touch-hint{display:none}
 @media (hover:none){.legend .hover-hint{display:none}.legend .touch-hint{display:inline}}
