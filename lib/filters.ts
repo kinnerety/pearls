@@ -27,17 +27,18 @@ export function matches(p: Place, st: FilterState, skip?: 'region' | 'cat'): boo
 export const activeCount = (st: FilterState) => st.regions.length + st.cats.length + st.prefs.length + (st.q ? 1 : 0);
 export const zonesOf = (p: Place) => Object.keys(ZONES).filter(z => ZONES[z].some(r => p.region.includes(r)));
 
-// Filters live in the URL so a filtered view can be shared: ?region=גולן,ערבה&cat=סדנאות,תרבות&pref=...&q=...
+// Filters live in the URL so a filtered view can be shared: ?region=גולן|ערבה&cat=סדנאות|תרבות&pref=...&q=...
+// ('|' and not ',' because a category name can contain a comma: "יקבים, מבשלות ומזקקות")
 export function fromSearch(search: string): FilterState {
   const u = new URLSearchParams(search);
-  const list = (k: string) => (u.get(k) || '').split(',').map(s => s.trim()).filter(Boolean);
+  const list = (k: string) => (u.get(k) || '').split('|').map(s => s.trim()).filter(Boolean);
   return { regions: list('region'), cats: list('cat'), prefs: list('pref'), q: u.get('q') || '' };
 }
 export function toSearch(st: FilterState): string {
   const u = new URLSearchParams();
-  if (st.regions.length) u.set('region', st.regions.join(','));
-  if (st.cats.length) u.set('cat', st.cats.join(','));
-  if (st.prefs.length) u.set('pref', st.prefs.join(','));
+  if (st.regions.length) u.set('region', st.regions.join('|'));
+  if (st.cats.length) u.set('cat', st.cats.join('|'));
+  if (st.prefs.length) u.set('pref', st.prefs.join('|'));
   if (st.q) u.set('q', st.q);
   const s = u.toString();
   return s ? '?' + s : '';
