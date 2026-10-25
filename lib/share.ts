@@ -1,13 +1,15 @@
 import type { Place } from './types';
 import { wazeUrl } from './geo';
 
-// The text a card shares. Placeholder wording until Kinneret sends hers.
+// Kinneret's wording (2026-10-25). Lines with nothing to say (no link, no region, websites without Waze) are dropped.
 export function shareText(p: Place, site: string) {
+  const what = (p.descr || '').split(/(?<=[.!?])\s+/)[0].replace(/[.!?]+$/, '').trim();
+  const area = p.region.length ? ` (באזור ${p.region.join(', ')})` : '';
   const waze = p.cats.includes('אתרי אינטרנט') ? '' : wazeUrl(p);
   return [
-    p.town ? `${p.name} · ${p.town}` : p.name,
-    p.link && `למקור: ${p.link}`,
-    waze && `ניווט בווייז: ${waze}`,
-    `מתוך "פנינים ישראליות": ${site}`,
+    `מעניין אותי לבדוק את '${p.name}'.` + (what ? ` זה ${what}${area}.` : area ? `${area}.` : ''),
+    p.link && `לכל הפרטים: ${p.link}`,
+    waze && `לניווט בווייז: ${waze}`,
+    `מתוך האתר 'פנינים ישראליות' ${site}`,
   ].filter(Boolean).join('\n');
 }
