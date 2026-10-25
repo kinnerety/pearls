@@ -113,9 +113,9 @@ export default function Explorer({ places }: { places: Place[] }) {
           <span><span className={'count' + (act ? ' long' : '')} id="count">{countText(items.length, !!act)}</span> <span id="countnote" className="where" /></span>
         </span>
         <div className="views" role="group" aria-label="תצוגה">
-          <button className="chip" aria-pressed={view === 'list'} onClick={() => setView('list')}>גלריה</button>
+          <button className="chip" aria-pressed={view === 'list'} onClick={() => setView('list')}>כל הפנינים יחד</button>
           <button className="chip" aria-pressed={view === 'map'} onClick={() => setView('map')}>
-            מפה<svg className="il" viewBox={FULL.join(' ')} aria-hidden="true"><polygon points={poly(OUTLINE)} /></svg>
+            על המפה<svg className="il" viewBox={FULL.join(' ')} aria-hidden="true"><polygon points={poly(OUTLINE)} /></svg>
           </button>
         </div>
       </div>
@@ -124,7 +124,9 @@ export default function Explorer({ places }: { places: Place[] }) {
         style={sideH ? ({ '--sideH': sideH } as React.CSSProperties) : undefined}>
         <aside className="side" aria-label="סינונים" ref={sideRef}>
           <button className="fold" id="fold" aria-expanded={open} aria-label={open ? 'סגירת פאנל הסינון' : 'פתיחת פאנל הסינון'} title={open ? 'סגירת הסינון' : 'פתיחת הסינון'} onClick={toggleFold}>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5" fill="none" stroke="currentColor" strokeWidth="1.8" /><path d="M15 4v16" stroke="currentColor" strokeWidth="1.8" /><path d={open ? 'M8 9.5l2.5 2.5L8 14.5' : 'M10.5 9.5L8 12l2.5 2.5'} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            {/* beside the map (wide screens): a side-panel icon; above it (narrow screens): a chevron pointing where the panel will go */}
+            <svg className="ico-side" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5" fill="none" stroke="currentColor" strokeWidth="1.8" /><path d="M15 4v16" stroke="currentColor" strokeWidth="1.8" /><path d={open ? 'M8 9.5l2.5 2.5L8 14.5' : 'M10.5 9.5L8 12l2.5 2.5'} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            <svg className="ico-top" viewBox="0 0 24 24" aria-hidden="true"><path d={open ? 'M6 15l6-6 6 6' : 'M6 9l6 6 6-6'} fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             <span className="lbl">סינונים</span>
             {act > 0 && !open && <span className="on">{act}</span>}
           </button>
