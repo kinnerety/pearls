@@ -79,6 +79,8 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .side .fold .ico-top{display:none}
 .side .grp{display:flex;flex-wrap:wrap;gap:6px}
 .side .flabel{width:100%;min-width:0;margin-bottom:2px}
+.side .fnote{width:100%;margin:-2px 0 4px;font-size:.78rem;line-height:1.4;color:var(--muted)}
+.side .fnote b{color:var(--ink)}
 .side input[type=search]{max-width:none;width:100%;flex:none}
 .qbox{position:relative;display:flex}
 .qbox input[type=search]{padding-left:40px}
@@ -147,9 +149,12 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 #map .leaflet-marker-icon:hover .mk,#map .leaflet-marker-icon:focus-visible .mk{transform:scale(calc(var(--mks,1) * 1.15))}
 /* the popup is the place's own card, nothing else */
 #map .cardpop .leaflet-popup-content-wrapper{background:transparent;color:var(--ink);border-radius:0;box-shadow:none;padding:0}
-#map .cardpop .leaflet-popup-content{margin:0;width:min(330px,calc(100vw - 56px))!important;font-family:var(--body);font-size:16px;line-height:1.55;direction:rtl;text-align:right}
+#map .cardpop .leaflet-popup-content{margin:0;width:min(330px,calc(100vw - 76px))!important;font-family:var(--body);font-size:16px;line-height:1.55;direction:rtl;text-align:right}
 #map .cardpop .leaflet-popup-tip-container{margin-top:-1px}
 #map .cardpop .leaflet-popup-tip{background:var(--sheet);box-shadow:0 3px 6px rgba(60,55,30,.2)}
+/* the card opens above the marker; near the top edge it flips below it, near the sides it slides sideways (the tip stays on the marker) */
+#map .cardpop .leaflet-popup-content-wrapper,#map .cardpop .leaflet-popup-close-button{transform:translate(var(--dx,0px),var(--dy,0px))}
+#map .cardpop.below .leaflet-popup-tip-container{transform:translateY(50px) rotate(180deg)}
 #map .cardpop .card{transform:none;margin:0}
 #map .cardpop .card p{margin:0}
 #map .cardpop .card a{color:var(--ink)}

@@ -36,6 +36,7 @@ export default function MapView({ items, visible }: Props) {
   const popEl = useRef<HTMLDivElement | null>(null);
   const closeT = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const sticky = useRef(false);
+  const stickyPan = useRef(false);
   const openId = useRef<number | null>(null);
   const ready = useRef<Promise<void> | null>(null);
   const fit = useRef<(animate: boolean) => void>(() => {});
@@ -61,7 +62,7 @@ export default function MapView({ items, visible }: Props) {
       el.addEventListener('mouseenter', () => clearTimeout(closeT.current));
       el.addEventListener('mouseleave', () => { if (!sticky.current) closeT.current = setTimeout(() => m.closePopup(), 250); });
       popEl.current = el;
-      popup.current = Lf.popup({ className: 'cardpop', maxWidth: 330, minWidth: 200, offset: [0, -14], autoPanPadding: [16, 16], closeButton: true }).setContent(el);
+      popup.current = Lf.popup({ className: 'cardpop', maxWidth: 330, minWidth: 200, offset: [0, -14], autoPan: false, closeButton: true }).setContent(el);
       m.on('popupclose', () => { sticky.current = false; openId.current = null; setOpen(null); });
       map.current = m;
     });
@@ -82,7 +83,7 @@ export default function MapView({ items, visible }: Props) {
         if (sticky.current && !stick) return; // a clicked card stays until it is closed or another is clicked
         sticky.current = stick;
         openId.current = p.id;
-        pop.options.autoPan = stick;
+        stickyPan.current = stick;
         setOpen(p);
         pop.setLatLng(mk.getLatLng());
         if (!pop.isOpen()) m.openPopup(pop);
@@ -111,8 +112,30 @@ export default function MapView({ items, visible }: Props) {
     });
   }, [items]);
 
-  // the card is rendered into the popup after it opens: tell Leaflet the size changed so it sits above the marker
-  useLayoutEffect(() => { if (open) popup.current?.update(); }, [open]);
+  // the card is rendered into the popup after it opens: tell Leaflet the size changed, then place it where it fits
+  useLayoutEffect(() => {
+    const m = map.current, pop = popup.current;
+    if (!open || !m || !pop) return;
+    pop.update();
+    const el = pop.getElement(), wrap = el?.querySelector<HTMLElement>('.leaflet-popup-content-wrapper');
+    const at = pop.getLatLng();
+    if (!el || !wrap || !at) return;
+    const PAD = 8, GAP = 34, size = m.getSize(), pt = m.latLngToContainerPoint(at), h = wrap.offsetHeight, w = wrap.offsetWidth;
+    // above the marker when there is room, otherwise below it (the CSS does the flipping)
+    const below = pt.y - GAP - h < PAD && pt.y + GAP + h <= size.y - PAD;
+    el.classList.toggle('below', below);
+    el.style.setProperty('--dy', below ? `${h + 2 * GAP}px` : '0px');
+    // slide sideways so the card stays inside the map; the tip stays on the marker
+    const dx = w > size.x - 2 * PAD ? size.x / 2 - pt.x : Math.max(PAD - (pt.x - w / 2), Math.min(0, size.x - PAD - (pt.x + w / 2)));
+    el.style.setProperty('--dx', `${Math.round(dx)}px`);
+    // a clicked card that still doesn't fit (small phone map): pan the map just enough
+    if (stickyPan.current) {
+      const top = below ? pt.y + GAP : pt.y - GAP - h, bottom = top + h;
+      const dy = top < PAD ? top - PAD : bottom > size.y - PAD ? bottom - (size.y - PAD) : 0;
+      if (dy) m.panBy([0, dy], { animate: true, duration: .35 });
+      stickyPan.current = false;
+    }
+  }, [open]);
 
   // the map view is hidden behind the gallery: tell Leaflet its size changed when it is shown
   useEffect(() => {

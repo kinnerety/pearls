@@ -132,7 +132,9 @@ export default function Explorer({ places }: { places: Place[] }) {
           </button>
           <div className="body">
             <div className="grp" id="f-cat">
-              <span className="flabel">מה עושים</span>
+              <span className="flabel">מה יבוא טוב עכשיו</span>
+              {/* "all": pressed when no category is chosen; clicking it clears the category and the preferences */}
+              <Chip pressed={!st.cat} onClick={() => update(s => ({ ...s, cat: '', prefs: [] }))} n={places.filter(p => matches(p, { ...st, cat: '', prefs: [] })).length}><Illo k="acorn" />כל הפנינים</Chip>
               {CATS.map(k => (
                 <Chip key={k} pressed={st.cat === k} onClick={() => update(s => ({ ...s, cat: s.cat === k ? '' : k }))}
                   n={places.filter(p => matches(p, st, 'cat') && p.cats.includes(k)).length}><Illo k={CAT_ILLO[k]} />{k}</Chip>
@@ -140,6 +142,7 @@ export default function Explorer({ places }: { places: Place[] }) {
             </div>
             <div className="grp" id="f-pref">
               <span className="flabel">עוד העדפות</span>
+              <p className="fnote"><b>חשוב:</b> יכול להיות שיש עוד פנינים שמתאימות למשפחות או פתוחות בשבת ולא סווגו ככאלה, ולהפך</p>
               {PREFS.map(k => {
                 const on = st.prefs.includes(k), n = places.filter(p => matches(p, st) && hasPref(p, k)).length;
                 if (!n && !on) return null;

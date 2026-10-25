@@ -61,8 +61,14 @@ export default function PlaceForm({ initial, hidden: hidden0, updatedAt }: { ini
             {ZONES[z].map(r => <button type="button" key={r} className="chip sm" aria-pressed={p.region.includes(r)} onClick={() => toggle('region', r)}>{r}</button>)}
           </div>
         ))}
-        <h2>מה עושים</h2>
+        <h2>קטגוריות</h2>
         <div className="adm-row">{CATS.map(c => <button type="button" key={c} className="chip" aria-pressed={p.cats.includes(c)} onClick={() => toggle('cats', c)}>{c}</button>)}</div>
+        {p.cats.length > 1 && (
+          <div className="adm-row"><b>הקטגוריה הראשית (האייקון של הכרטיס):</b>
+            {/* the first category is the one whose illustration the card and the map marker show */}
+            {p.cats.map((c, i) => <button type="button" key={c} className="chip sm" aria-pressed={i === 0} onClick={() => set('cats', [c, ...p.cats.filter(x => x !== c)])}>{c}</button>)}
+          </div>
+        )}
       </section>
 
       <section className="adm-card">

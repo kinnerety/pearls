@@ -25,8 +25,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${title} | פנינים ישראליות`, description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: 'פנינים ישראליות', locale: 'he_IL', type: 'article' },
-    twitter: { card: 'summary_large_image', title, description },
+    // the category's picture is what WhatsApp & co. show next to a shared link
+    openGraph: { title, description, url, siteName: 'פנינים ישראליות', locale: 'he_IL', type: 'article', images: [{ url: `/share/${CAT_ILLO[p.cats[0]] || 'valley'}.jpg`, width: 1080, height: 1080, alt: p.cats[0] }] },
+    twitter: { card: 'summary_large_image', title, description, images: [`/share/${CAT_ILLO[p.cats[0]] || 'valley'}.jpg`] },
   };
 }
 
