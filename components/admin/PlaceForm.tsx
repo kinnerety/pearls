@@ -14,6 +14,7 @@ export default function PlaceForm({ initial, hidden: hidden0, updatedAt }: { ini
   const [p, setP] = useState<Place>(initial);
   const [hidden, setHidden] = useState(hidden0);
   const [tags, setTags] = useState(initial.tags.join(', '));
+  const [types, setTypes] = useState((initial.types || []).join(', '));
   const [errors, setErrors] = useState<string[]>([]);
   const [msg, setMsg] = useState('');
   const [q, setQ] = useState('');
@@ -28,7 +29,8 @@ export default function PlaceForm({ initial, hidden: hidden0, updatedAt }: { ini
 
   const search = (text: string) => start(async () => { setHits(await geocode(text)); });
   const submit = () => start(async () => {
-    const place: Place = { ...p, tags: tags.split(/[,،]/).map(s => s.trim()).filter(Boolean) };
+    const split = (t: string) => t.split(/[,،]/).map(s => s.trim()).filter(Boolean);
+    const place: Place = { ...p, tags: split(tags), types: split(types) };
     const r = await save(place, hidden);
     if (!r.ok) { setErrors(r.errors); setMsg(''); return; }
     setErrors([]); setMsg('נשמר ✓ האתר מתעדכן תוך כמה שניות');
@@ -51,7 +53,9 @@ export default function PlaceForm({ initial, hidden: hidden0, updatedAt }: { ini
         <label>קישור (אתר המקום, ואם אין אז פייסבוק/אינסטגרם)<input dir="ltr" value={p.link} onChange={e => set('link', e.target.value)} placeholder="https://" /></label>
         <label>תיאור<textarea rows={4} value={p.descr} onChange={e => set('descr', e.target.value)} /></label>
         <label>הערה צהובה על הכרטיס (לא חובה)<input value={p.note || ''} onChange={e => set('note', e.target.value || undefined)} /></label>
+        <label>סוגים (מופרדים בפסיק, לחיפוש: יקב, גבינות, חנות מעניינת...)<input value={types} onChange={e => setTypes(e.target.value)} /></label>
         <label>תגיות (מופרדות בפסיק, לחיפוש)<input value={tags} onChange={e => setTags(e.target.value)} /></label>
+        <label>שעות פתיחה ומידע מעשי (שמור במאגר, לא מוצג באתר כרגע)<input value={p.hours || ''} onChange={e => set('hours', e.target.value || undefined)} /></label>
       </section>
 
       <section className="adm-card">

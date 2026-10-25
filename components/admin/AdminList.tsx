@@ -24,13 +24,16 @@ export default function AdminList({ places }: { places: StoredPlace[] }) {
         {tab('town', 'מיקום משוער')}
       </div>
       <table className="adm-table">
-        <thead><tr><th>שם</th><th>יישוב</th><th>אזור</th><th>מיקום</th><th></th></tr></thead>
+        <thead><tr><th>שם</th><th>יישוב</th><th>אזור</th><th>קטגוריות</th><th>שבת</th><th>משפחות</th><th>מיקום</th><th></th></tr></thead>
         <tbody>
           {list.map(p => (
             <tr key={p.id} className={p.hidden ? 'off' : ''}>
               <td>{p.pick && '★ '}<Link href={`/admin/p/${p.id}`}>{p.name}</Link>{p.hidden && <span className="adm-tag">מוסתר</span>}</td>
               <td>{p.town}</td>
               <td>{p.region.join(', ')}</td>
+              <td>{p.cats.join(', ')}</td>
+              <td>{p.shabbat === 'open' ? 'פתוח' : p.shabbat === 'closed' ? 'סגור' : '—'}</td>
+              <td>{p.family === 'yes' ? 'כן' : p.family === 'no' ? 'לא' : '—'}</td>
               <td>{p.lat == null ? '—' : p.precision === 'exact' ? 'מדויק' : 'משוער'}</td>
               <td><Link href={`/admin/p/${p.id}`}>עריכה</Link></td>
             </tr>
