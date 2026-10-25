@@ -65,9 +65,23 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .views .chip .il{width:11px;height:20px;margin-inline-start:6px;vertical-align:-5px}
 .views .chip .il polygon{fill:var(--lime);stroke:var(--ink);stroke-width:4;stroke-linejoin:round}
 .views .chip[aria-pressed="true"] .il polygon{fill:var(--sun-deep);stroke:var(--sheet)}
+/* the map button is light blue so it stands out (Kinneret) */
+.views .mapbtn:not([aria-pressed="true"]){background:#BFDDEE}
+.views .mapbtn:not([aria-pressed="true"]):hover{background:#A9D1E8}
 /* gallery / map: one filtered array, one of the two shown */
 .main[data-view="list"] .mapbox{display:none}
 .main[data-view="map"] .list{display:none}
+/* switching slides sideways: the map comes from and leaves toward the left (its button's side), the gallery the right */
+@keyframes in-left{from{opacity:0;transform:translateX(-48px)}to{opacity:1;transform:none}}
+@keyframes in-right{from{opacity:0;transform:translateX(48px)}to{opacity:1;transform:none}}
+@keyframes out-left{to{opacity:0;transform:translateX(-48px)}}
+@keyframes out-right{to{opacity:0;transform:translateX(48px)}}
+.main[data-view="map"] .mapbox{animation:in-left .32s cubic-bezier(.2,.7,.3,1) both}
+.main[data-view="list"] .list{animation:in-right .32s cubic-bezier(.2,.7,.3,1) both}
+.main[data-leaving][data-view="map"] .mapbox{animation:out-left .18s ease-in both}
+.main[data-leaving][data-view="list"] .list{animation:out-right .18s ease-in both}
+.main{overflow-x:clip}
+@media (prefers-reduced-motion:reduce){.main .mapbox,.main .list{animation:none!important}}
 
 .main{display:grid;grid-template-columns:250px minmax(0,1fr);gap:20px;align-items:start}
 .main[data-panel="closed"]{grid-template-columns:46px minmax(0,1fr)}

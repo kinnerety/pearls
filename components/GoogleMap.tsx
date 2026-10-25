@@ -168,6 +168,9 @@ export default function GoogleMap({ items, apiKey, onFail }: Props) {
       const el = box.current;
       el.dataset.z = zoomClass(m.getZoom() ?? 8);
       m.addListener('zoom_changed', () => { el.dataset.z = zoomClass(m.getZoom() ?? 8); });
+      // Ctrl/⌘ + wheel over the map zooms only the map, not the whole page (Google still gets the event)
+      const noPageZoom = (e: WheelEvent) => { if (e.ctrlKey || e.metaKey) e.preventDefault(); };
+      el.addEventListener('wheel', noPageZoom, { passive: false });
 
       const pop = new CardPopup();
       const shut = () => { clearTimeout(closeT.current); pop.shut(); sticky.current = false; openId.current = null; setOpen(null); };
