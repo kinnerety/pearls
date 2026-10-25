@@ -65,9 +65,27 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .views .chip .il{width:11px;height:20px;margin-inline-start:6px;vertical-align:-5px}
 .views .chip .il polygon{fill:var(--lime);stroke:var(--ink);stroke-width:4;stroke-linejoin:round}
 .views .chip[aria-pressed="true"] .il polygon{fill:var(--sun-deep);stroke:var(--sheet)}
+/* the map button is light blue so it stands out (Kinneret) */
+.views .mapbtn:not([aria-pressed="true"]){background:#BFDDEE}
+.views .mapbtn:not([aria-pressed="true"]):hover{background:#A9D1E8}
 /* gallery / map: one filtered array, one of the two shown */
 .main[data-view="list"] .mapbox{display:none}
 .main[data-view="map"] .list{display:none}
+/* switching is a real slide, like turning a page: both panels share one cell and move together; the map comes in
+   from the left (its button's side) and pushes the gallery out to the right, and back */
+.main .content{display:grid;overflow-x:clip;align-items:start}
+.content>.list,.content>.mapbox{grid-area:1/1}
+.main[data-slide] .list,.main[data-slide] .mapbox{display:flex}
+.main[data-slide] .list{display:grid}
+@keyframes slide-in-left{from{transform:translateX(calc(-100% - 24px))}to{transform:none}}
+@keyframes slide-out-right{from{transform:none}to{transform:translateX(calc(100% + 24px))}}
+@keyframes slide-in-right{from{transform:translateX(calc(100% + 24px))}to{transform:none}}
+@keyframes slide-out-left{from{transform:none}to{transform:translateX(calc(-100% - 24px))}}
+.main[data-slide="map"] .mapbox{animation:slide-in-left .45s cubic-bezier(.65,0,.35,1) both}
+.main[data-slide="map"] .list{animation:slide-out-right .45s cubic-bezier(.65,0,.35,1) both}
+.main[data-slide="list"] .list{animation:slide-in-right .45s cubic-bezier(.65,0,.35,1) both}
+.main[data-slide="list"] .mapbox{animation:slide-out-left .45s cubic-bezier(.65,0,.35,1) both}
+@media (prefers-reduced-motion:reduce){.main .mapbox,.main .list{animation:none!important}}
 
 .main{display:grid;grid-template-columns:250px minmax(0,1fr);gap:20px;align-items:start}
 .main[data-panel="closed"]{grid-template-columns:46px minmax(0,1fr)}
@@ -131,8 +149,19 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 
 .mapbox{background:var(--sheet);border-radius:8px 24px 10px 20px/20px 10px 24px 8px;padding:14px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow)}
 #map{width:100%;height:min(78vh,760px);display:block}
+/* "how to use the map?" link and its tip, above the map */
+.maphelp{position:relative;align-self:flex-start;z-index:4}
+.maphelp-link{font:inherit;font-size:.9rem;font-weight:600;color:var(--ink);background:none;border:0;padding:2px 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.maphelp-link:hover,.maphelp-link[aria-expanded="true"]{text-decoration-thickness:2px}
+.maphelp-tip{position:absolute;top:calc(100% + 6px);right:0;width:min(420px,calc(100vw - 48px));background:var(--sheet);color:var(--ink);border-radius:8px 18px 10px 16px/16px 10px 18px 8px;padding:14px 16px;box-shadow:0 2px 0 rgba(60,55,30,.06),0 12px 28px -8px rgba(60,55,30,.45);font-size:.9rem;line-height:1.55;text-align:right}
+.maphelp-title{display:block;font-family:var(--display);font-size:1.1rem;margin-bottom:6px}
+.maphelp-tip p{margin:0 0 8px}
+.maphelp-tip ul{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:4px}
 .legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.78rem;color:var(--muted)}
 .legend .touch-hint{display:none}
+.legend-pick{display:inline-flex;align-items:center;gap:6px}
+.legend-pick .pk{width:15px;height:15px;border-radius:50%;background:var(--sun-deep);display:grid;place-items:center;box-shadow:0 1px 2px rgba(60,55,30,.45)}
+.legend-pick .pk svg{width:9px;height:9px;fill:var(--ink)}
 @media (hover:none){.legend .hover-hint{display:none}.legend .touch-hint{display:inline}}
 /* real map: paper-cut markers and popups in the site's palette */
 #map{border-radius:6px 18px 8px 14px/14px 8px 18px 6px;overflow:hidden;background:var(--mist);z-index:0}
@@ -164,6 +193,22 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 #map .leaflet-bar{border:0;box-shadow:var(--shadow);border-radius:999px;overflow:hidden}
 #map .leaflet-bar a{background:var(--sheet);color:var(--ink);border-bottom-color:var(--line);font-family:var(--body)}
 #map .leaflet-bar a:hover{background:var(--sun)}
+/* Google map: the same paper markers, and the place's own card as the popup (our own overlays, not Google's) */
+.gmk-layer{position:absolute;left:0;top:0}
+.gmk{position:absolute;width:36px;height:36px;margin:-18px 0 0 -18px;padding:0;border:0;background:none;display:grid;place-items:center;cursor:pointer;z-index:1}
+.gmk:hover,.gmk:focus-visible{z-index:2;outline:none}
+.gmk:hover .mk,.gmk:focus-visible .mk{transform:scale(calc(var(--mks,1) * 1.15))}
+.gmk:focus-visible .mk{outline:2px solid var(--ink);outline-offset:1px}
+.gpop{position:absolute;width:0;height:0;z-index:3}
+.gpop-box{position:absolute;left:0;bottom:var(--gap);transform:translateX(calc(-50% + var(--dx,0px)));width:min(330px,calc(100vw - 76px));direction:rtl;text-align:right;font-family:var(--body);font-size:16px;line-height:1.55;color:var(--ink);cursor:auto}
+.gpop.below .gpop-box{bottom:auto;top:var(--gap)}
+.gpop-tip{position:absolute;left:-7px;top:calc(-1 * var(--gap) - 7px);width:14px;height:14px;background:var(--sheet);transform:rotate(45deg);box-shadow:0 3px 6px rgba(60,55,30,.2)}
+.gpop.below .gpop-tip{top:calc(var(--gap) - 7px)}
+.gpop .card{transform:none;margin:0}
+.gpop .card p{margin:0}
+.gpop .card a{color:var(--ink)}
+.gpop-x{position:absolute;top:-10px;left:-10px;z-index:1;width:26px;height:26px;line-height:26px;font:inherit;font-size:20px;color:var(--ink);background:var(--sun-deep);border:0;border-radius:50%;padding:0;text-align:center;cursor:pointer;box-shadow:var(--shadow)}
+@media (hover:hover){.gpop-x{display:none}}
 #tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--sheet);font-size:.85rem;padding:3px 8px;border-radius:6px;z-index:5}
 .empty{grid-column:1/-1;color:var(--muted);padding:30px;text-align:center}
 .empty .blob{display:block;width:120px;height:120px;margin:0 auto 10px}
