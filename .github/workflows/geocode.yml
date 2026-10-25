@@ -1,0 +1,31 @@
+name: geocode
+# Finds coordinates for the places (needs the open internet) and commits them back to the branch.
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "מזהי מקומות מופרדים בפסיק (ריק = הכול)"
+        required: false
+  push:
+    paths: [scripts/geocode.mjs, data/geo_hints.json, .github/workflows/geocode.yml]
+permissions:
+  contents: write
+jobs:
+  geocode:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node scripts/geocode.mjs
+        env:
+          ONLY: ${{ github.event.inputs.only }}
+      - run: node scripts/validate-data.mjs
+      - name: commit results
+        run: |
+          git config user.name "geocode-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/places.json data/geo_report.md
+          git diff --cached --quiet || git commit -m "מיקומים: גיאוקודינג אוטומטי"
+          git push

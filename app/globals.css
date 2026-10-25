@@ -1,0 +1,273 @@
+/* Layout: paper-cut collage landscape on top, filters on a torn-paper sheet, list beside a paper map. Deliberately one light world (no dark variant). */
+:root{
+  color-scheme:light;
+  --paper:#FAF7EF; --sheet:#FFFDF7; --cream:#F6EFD9; --sun:#FCF0B4; --sun-deep:#F3E27C;
+  --lime:#E8F2B2; --sage:#CBEBD5; --mist:#DDEEF6;
+  --ink:#22333B; --muted:#5E7480; --line:#E6DEC7;
+  --shadow:0 1px 0 rgba(60,55,30,.06),0 6px 14px -6px rgba(60,55,30,.28);
+  --display:var(--font-display),"Frank Ruhl Libre","David Libre",Georgia,serif;
+  --body:var(--font-body),"Assistant","Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;overflow-x:clip;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;direction:rtl;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.wrap{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+header{position:relative;margin-inline:calc(50% - 50vw);min-height:300px;overflow:hidden}
+/* natural 1200:440 ratio so wide screens see the whole illustration (sun and sky included); only beyond ~2600px does it start trimming the sky */
+:root{--hero:clamp(300px,36.67vw,960px)}
+.hero-art{display:block;width:100%;height:var(--hero)}
+/* the title sits on the illustration: the subtitle's baseline stays ~5mm above the hills (which start at 224/440 of the picture's height under the title), whatever the screen width */
+header .title{position:absolute;bottom:calc(var(--hero) * 0.491 + 5mm);right:max(24px,calc(50vw - 616px));max-width:min(440px,60%)}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(2.4rem,6vw,4.4rem);line-height:.95;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.lede{margin:10px 0 0;color:var(--muted);max-width:36ch;font-size:clamp(.95rem,1.6vw,1.1rem)}
+.sketch-note{display:inline-block;margin-top:12px;font-size:.8rem;font-weight:600;color:var(--ink);background:var(--sun);padding:3px 12px;border-radius:999px;box-shadow:var(--shadow);transform:rotate(-2deg)}
+@media (max-width:640px){header .title{position:static;padding:20px 24px 0;max-width:none}header{display:flex;flex-direction:column-reverse}.hero-art{height:220px}}
+
+.filters{position:relative;display:flex;flex-direction:column;gap:12px;background:var(--sheet);border-radius:6px 22px 8px 18px/18px 8px 22px 6px;padding:20px 22px;box-shadow:var(--shadow);margin-top:-36px;z-index:1}
+.frow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.flabel{font-family:var(--display);font-size:1rem;font-weight:700;color:var(--ink);min-width:5em}
+.chip{font:inherit;font-size:.92rem;border:0;background:var(--cream);color:var(--ink);border-radius:999px;padding:4px 14px;cursor:pointer;font-weight:600;transition:transform .15s,background .15s}
+.chip:hover{background:var(--sun);transform:translateY(-1px)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--sheet)}
+.chip .n{opacity:.55;font-size:.8em;margin-inline-start:5px;font-variant-numeric:tabular-nums}
+select,input[type=search]{font:inherit;font-size:.92rem;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:4px 12px}
+input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
+:focus-visible{outline:2px solid var(--sun-deep);outline-offset:2px}
+.regions{align-items:flex-start}
+.ftop{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.ftop .qbox{flex:0 1 340px}
+.ftop .qbox input[type=search]{max-width:none;width:100%;flex:1}
+.clouds{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;flex:1;min-width:0}
+@media (min-width:1200px){.clouds{grid-template-columns:1.45fr 1fr 1.1fr 1fr}}
+.cloud{position:relative;display:flex;flex-wrap:wrap;gap:5px;align-content:flex-start;padding:12px 14px 14px;border-radius:30px 44px 26px 40px/34px 26px 42px 28px;box-shadow:var(--shadow);overflow:hidden}
+.cloud::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.75) 1.3px,transparent 1.6px);background-size:10px 10px;pointer-events:none}
+.cloud:nth-child(1){background:var(--mist)} .cloud:nth-child(2){background:var(--sun)} .cloud:nth-child(3){background:var(--lime)} .cloud:nth-child(4){background:var(--sage)}
+.cloud>*{position:relative}
+.cloud .chip{background:var(--sheet)}
+.cloud .chip[aria-pressed="true"]{background:var(--ink);color:var(--sheet);box-shadow:0 0 0 2px var(--sun-deep)}
+.cloud .chip[aria-pressed="true"]::before{content:"✓ "}
+.cloud .gname{width:100%;display:flex;align-items:center;gap:6px;font-family:var(--display);font-weight:700;font-size:1rem}
+.cloud .gname .illo{width:34px;height:34px}
+.chip.sm{font-size:.86rem;padding:2px 11px}
+.chip.clear{background:transparent;outline:1px dashed var(--muted)}
+.chip .illo{width:22px;height:22px;display:inline-block;vertical-align:-6px;margin-inline-end:5px}
+.chip.all{white-space:nowrap;max-width:100%;padding-inline:9px;overflow:hidden;text-overflow:ellipsis} .chip.all .illo{margin-inline-end:3px}
+
+.divider{display:block;width:min(560px,90%);height:44px;margin:0 auto}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.bar .now{display:flex;align-items:center;gap:10px}
+.bar .now .blob{width:56px;height:56px;display:grid;place-items:center;transition:transform .3s}
+.bar .now .illo{width:52px;height:52px}
+.bar .now .blob.pop{transform:rotate(-8deg) scale(1.1)}
+.count{font-family:var(--display);font-weight:900;font-size:1.5rem}
+.count.long{font-size:1.2rem}
+.views{display:flex;gap:4px}
+.views .chip .il{width:11px;height:20px;margin-inline-start:6px;vertical-align:-5px}
+.views .chip .il polygon{fill:var(--lime);stroke:var(--ink);stroke-width:4;stroke-linejoin:round}
+.views .chip[aria-pressed="true"] .il polygon{fill:var(--sun-deep);stroke:var(--sheet)}
+/* the map button is light blue so it stands out (Kinneret) */
+.views .mapbtn:not([aria-pressed="true"]){background:#BFDDEE}
+.views .mapbtn:not([aria-pressed="true"]):hover{background:#A9D1E8}
+/* gallery / map: one filtered array, one of the two shown */
+.main[data-view="list"] .mapbox{display:none}
+.main[data-view="map"] .list{display:none}
+/* switching is a real slide, like turning a page: both panels share one cell and move together; the map comes in
+   from the left (its button's side) and pushes the gallery out to the right, and back */
+.main .content{display:grid;overflow-x:clip;align-items:start}
+.content>.list,.content>.mapbox{grid-area:1/1}
+.main[data-slide] .list,.main[data-slide] .mapbox{display:flex}
+.main[data-slide] .list{display:grid}
+@keyframes slide-in-left{from{transform:translateX(calc(-100% - 24px))}to{transform:none}}
+@keyframes slide-out-right{from{transform:none}to{transform:translateX(calc(100% + 24px))}}
+@keyframes slide-in-right{from{transform:translateX(calc(100% + 24px))}to{transform:none}}
+@keyframes slide-out-left{from{transform:none}to{transform:translateX(calc(-100% - 24px))}}
+.main[data-slide="map"] .mapbox{animation:slide-in-left .45s cubic-bezier(.65,0,.35,1) both}
+.main[data-slide="map"] .list{animation:slide-out-right .45s cubic-bezier(.65,0,.35,1) both}
+.main[data-slide="list"] .list{animation:slide-in-right .45s cubic-bezier(.65,0,.35,1) both}
+.main[data-slide="list"] .mapbox{animation:slide-out-left .45s cubic-bezier(.65,0,.35,1) both}
+@media (prefers-reduced-motion:reduce){.main .mapbox,.main .list{animation:none!important}}
+
+.main{display:grid;grid-template-columns:250px minmax(0,1fr);gap:20px;align-items:start}
+.main[data-panel="closed"]{grid-template-columns:46px minmax(0,1fr)}
+.side{position:sticky;top:12px;background:var(--sheet);border-radius:8px 22px 10px 18px/18px 10px 22px 8px;padding:16px 16px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - 24px);overflow:auto}
+.side{padding-top:44px}
+.side .fold{position:absolute;top:10px;left:10px;width:30px;height:30px;display:grid;place-items:center;border:0;background:transparent;color:var(--ink);border-radius:6px;cursor:pointer}
+.side .fold:hover{background:var(--cream)}
+.side .fold svg{width:20px;height:20px}
+.side .fold .lbl{display:none}
+.side .fold .ico-top{display:none}
+.side .grp{display:flex;flex-wrap:wrap;gap:6px}
+.side .flabel{width:100%;min-width:0;margin-bottom:2px}
+.side .fnote{width:100%;margin:-2px 0 4px;font-size:.78rem;line-height:1.4;color:var(--muted)}
+.side .fnote b{color:var(--ink)}
+.side input[type=search]{max-width:none;width:100%;flex:none}
+.qbox{position:relative;display:flex}
+.qbox input[type=search]{padding-left:40px}
+.qbox button{position:absolute;left:3px;top:50%;transform:translateY(-50%);width:30px;height:30px;border:0;border-radius:50%;background:var(--ink);color:var(--sheet);display:grid;place-items:center;cursor:pointer}
+.qbox button:hover{background:var(--sun-deep);color:var(--ink)}
+.qbox button svg{width:15px;height:15px}
+.main[data-panel="closed"] .side{padding:12px 6px;align-items:center;overflow:visible}
+.main[data-panel="closed"] .side .body{display:none}
+.main[data-panel="closed"] .side .fold{left:50%;transform:translateX(-50%)}
+.main[data-panel="closed"] .side{min-height:var(--sideH,calc(100vh - 24px));height:var(--sideH,auto)}
+.fold .on{position:absolute;top:-4px;right:-6px;min-width:16px;height:16px;line-height:16px;padding:0 3px;background:var(--sun-deep);color:var(--ink);border-radius:999px;font-size:.7rem;font-weight:700;text-align:center}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;min-width:0}
+.content{min-width:0;display:flex;flex-direction:column;gap:14px}
+
+.card{position:relative;background:var(--sheet);border-radius:4px 18px 6px 16px/16px 6px 18px 4px;padding:20px 18px 16px;display:flex;flex-direction:column;gap:8px;min-width:0;box-shadow:var(--shadow);transition:transform .2s}
+.card:nth-child(3n+2){transform:rotate(.4deg)} .card:nth-child(3n){transform:rotate(-.35deg)}
+.card:hover{transform:translateY(-3px) rotate(0)}
+.card .trow{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;padding-left:34px}
+.card h3{font-family:var(--display);font-weight:700;font-size:1.3rem;line-height:1.2;margin:0}
+.card .trow .zone{white-space:nowrap}
+.where .approx{color:var(--muted);opacity:.85}
+.where{font-size:.85rem;color:var(--muted)}
+.card .where{padding-left:34px}
+.card .badge{position:absolute;top:14px;left:14px;width:30px;height:30px}
+.card .badge .illo{width:30px;height:30px}
+.desc{margin:0;font-size:.95rem;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.cats,.kts{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.kt{font-size:.8rem;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--sage);color:var(--ink)}
+.kt.off{background:var(--cream)}
+.kt.fam{background:var(--sun)}
+.cat{font-size:.78rem;background:var(--lime);color:var(--ink);border-radius:999px;padding:1px 9px}
+.cat.zone{font-weight:700;background:var(--sheet);box-shadow:inset 0 0 0 1.5px var(--zc)}
+.cat.z0{--zc:#9CCDE4} .cat.z1{--zc:var(--sun-deep)} .cat.z2{--zc:#C9D96A} .cat.z3{--zc:#8FD0A6}
+.note{margin:0;font-size:.86rem;font-weight:600;color:var(--ink);background:var(--sun);border-radius:3px 12px 4px 10px;padding:6px 12px;box-shadow:var(--shadow);transform:rotate(-.6deg)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto}
+/* share: a light-blue paper blob with the share icon, the label in grey beside it */
+.sh{display:inline-flex;align-items:center;gap:8px;font:inherit;font-weight:600;font-size:.86rem;color:var(--muted);background:none;border:0;padding:0;cursor:pointer}
+.sh .lbl{line-height:1.15;text-align:right}
+.sh .blob{display:grid;place-items:center;width:30px;height:30px;background:#D3E9F4;border-radius:46% 54% 50% 50%/52% 46% 54% 48%;color:var(--ink);transition:background .15s,transform .15s}
+.sh .blob svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sh:hover .blob{background:#BFDDEE;transform:rotate(-6deg)}
+.sh:hover{color:var(--ink)}
+.go{color:var(--ink);background:#F7EBA6;font-weight:400;font-size:.92rem;text-decoration:none;border-radius:999px;padding:4px 14px}
+.go:hover{background:var(--sun-deep)}
+.pick{position:absolute;top:-11px;left:54px;display:inline-flex;align-items:center;gap:4px;font-size:.76rem;font-weight:700;color:var(--ink);background:var(--sun-deep);padding:3px 10px;border-radius:999px;transform:rotate(-3deg);box-shadow:var(--shadow);z-index:1}
+.pick svg{width:11px;height:11px;fill:currentColor}
+
+.mapbox{background:var(--sheet);border-radius:8px 24px 10px 20px/20px 10px 24px 8px;padding:14px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow)}
+#map{width:100%;height:min(78vh,760px);display:block}
+/* "how to use the map?" link and its tip, above the map */
+.maphelp{position:relative;align-self:flex-start;z-index:4}
+.maphelp-link{font:inherit;font-size:.9rem;font-weight:600;color:var(--ink);background:none;border:0;padding:2px 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.maphelp-link:hover,.maphelp-link[aria-expanded="true"]{text-decoration-thickness:2px}
+.maphelp-tip{position:absolute;top:calc(100% + 6px);right:0;width:min(420px,calc(100vw - 48px));background:var(--sheet);color:var(--ink);border-radius:8px 18px 10px 16px/16px 10px 18px 8px;padding:14px 16px;box-shadow:0 2px 0 rgba(60,55,30,.06),0 12px 28px -8px rgba(60,55,30,.45);font-size:.9rem;line-height:1.55;text-align:right}
+.maphelp-title{display:block;font-family:var(--display);font-size:1.1rem;margin-bottom:6px}
+.maphelp-tip p{margin:0 0 8px}
+.maphelp-tip ul{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:4px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.78rem;color:var(--muted)}
+.legend .touch-hint{display:none}
+.legend-pick{display:inline-flex;align-items:center;gap:6px}
+.legend-pick .pk{width:15px;height:15px;border-radius:50%;background:var(--sun-deep);display:grid;place-items:center;box-shadow:0 1px 2px rgba(60,55,30,.45)}
+.legend-pick .pk svg{width:9px;height:9px;fill:var(--ink)}
+@media (hover:none){.legend .hover-hint{display:none}.legend .touch-hint{display:inline}}
+/* real map: paper-cut markers and popups in the site's palette */
+#map{border-radius:6px 18px 8px 14px/14px 8px 18px 6px;overflow:hidden;background:var(--mist);z-index:0}
+#map .leaflet-control-attribution{font-family:var(--body);font-size:.65rem;background:rgba(255,253,247,.85)}
+/* OSM's tiles are loud; soften them toward the paper palette */
+#map .leaflet-tile-pane{filter:saturate(.5) sepia(.15) brightness(1.04) contrast(.92)}
+/* markers: the category's illustration on a small paper cutout, scaled down in the overview */
+.mk-wrap{background:none;border:0;display:grid;place-items:center}
+.mk{position:relative;display:grid;place-items:center;width:36px;height:36px;background:var(--sheet);border-radius:46% 54% 50% 50%/52% 46% 54% 48%;box-shadow:0 1px 0 rgba(60,55,30,.1),0 4px 9px -2px rgba(60,55,30,.5);transform:scale(var(--mks,1));transition:transform .15s;cursor:pointer}
+.mk .illo{width:24px;height:24px}
+.mk .pk{position:absolute;top:-6px;right:-6px;width:15px;height:15px;border-radius:50%;background:var(--sun-deep);display:grid;place-items:center;box-shadow:0 1px 2px rgba(60,55,30,.45)}
+.mk .pk svg{width:9px;height:9px;fill:var(--ink)}
+#map[data-z="s"]{--mks:.68}
+#map[data-z="m"]{--mks:.84}
+#map .leaflet-marker-icon:hover .mk,#map .leaflet-marker-icon:focus-visible .mk{transform:scale(calc(var(--mks,1) * 1.15))}
+/* the popup is the place's own card, nothing else */
+#map .cardpop .leaflet-popup-content-wrapper{background:transparent;color:var(--ink);border-radius:0;box-shadow:none;padding:0}
+#map .cardpop .leaflet-popup-content{margin:0;width:min(330px,calc(100vw - 76px))!important;font-family:var(--body);font-size:16px;line-height:1.55;direction:rtl;text-align:right}
+#map .cardpop .leaflet-popup-tip-container{margin-top:-1px}
+#map .cardpop .leaflet-popup-tip{background:var(--sheet);box-shadow:0 3px 6px rgba(60,55,30,.2)}
+/* the card opens above the marker; near the top edge it flips below it, near the sides it slides sideways (the tip stays on the marker) */
+#map .cardpop .leaflet-popup-content-wrapper,#map .cardpop .leaflet-popup-close-button{transform:translate(var(--dx,0px),var(--dy,0px))}
+#map .cardpop.below .leaflet-popup-tip-container{transform:translateY(50px) rotate(180deg)}
+#map .cardpop .card{transform:none;margin:0}
+#map .cardpop .card p{margin:0}
+#map .cardpop .card a{color:var(--ink)}
+#map .cardpop .leaflet-popup-close-button{top:-10px;right:auto;left:-10px;width:26px;height:26px;line-height:26px;font-size:20px;color:var(--ink);background:var(--sun-deep);border-radius:50%;padding:0;text-align:center;box-shadow:var(--shadow)}
+@media (hover:hover){#map .cardpop .leaflet-popup-close-button{display:none}}
+#map .leaflet-bar{border:0;box-shadow:var(--shadow);border-radius:999px;overflow:hidden}
+#map .leaflet-bar a{background:var(--sheet);color:var(--ink);border-bottom-color:var(--line);font-family:var(--body)}
+#map .leaflet-bar a:hover{background:var(--sun)}
+/* Google map: the same paper markers, and the place's own card as the popup (our own overlays, not Google's) */
+.gmk-layer{position:absolute;left:0;top:0}
+.gmk{position:absolute;width:36px;height:36px;margin:-18px 0 0 -18px;padding:0;border:0;background:none;display:grid;place-items:center;cursor:pointer;z-index:1}
+.gmk:hover,.gmk:focus-visible{z-index:2;outline:none}
+.gmk:hover .mk,.gmk:focus-visible .mk{transform:scale(calc(var(--mks,1) * 1.15))}
+.gmk:focus-visible .mk{outline:2px solid var(--ink);outline-offset:1px}
+.gpop{position:absolute;width:0;height:0;z-index:3}
+.gpop-box{position:absolute;left:0;bottom:var(--gap);transform:translateX(calc(-50% + var(--dx,0px)));width:min(330px,calc(100vw - 76px));direction:rtl;text-align:right;font-family:var(--body);font-size:16px;line-height:1.55;color:var(--ink);cursor:auto}
+.gpop.below .gpop-box{bottom:auto;top:var(--gap)}
+.gpop-tip{position:absolute;left:-7px;top:calc(-1 * var(--gap) - 7px);width:14px;height:14px;background:var(--sheet);transform:rotate(45deg);box-shadow:0 3px 6px rgba(60,55,30,.2)}
+.gpop.below .gpop-tip{top:calc(var(--gap) - 7px)}
+.gpop .card{transform:none;margin:0}
+.gpop .card p{margin:0}
+.gpop .card a{color:var(--ink)}
+.gpop-x{position:absolute;top:-10px;left:-10px;z-index:1;width:26px;height:26px;line-height:26px;font:inherit;font-size:20px;color:var(--ink);background:var(--sun-deep);border:0;border-radius:50%;padding:0;text-align:center;cursor:pointer;box-shadow:var(--shadow)}
+@media (hover:hover){.gpop-x{display:none}}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--sheet);font-size:.85rem;padding:3px 8px;border-radius:6px;z-index:5}
+.empty{grid-column:1/-1;color:var(--muted);padding:30px;text-align:center}
+.empty .blob{display:block;width:120px;height:120px;margin:0 auto 10px}
+.empty .illo{width:120px;height:120px}
+
+/* Spot illustrations as paper cut-outs: soft tints, no outlines, a shadow under every piece */
+.illo{display:block;overflow:visible}
+.illo .y{fill:var(--sun-deep)} .illo .b{fill:#9CCDE4} .illo .w{fill:#FFFFFF} .illo .l{fill:#D8E97A} .illo .s{fill:#A6DDB7} .illo .c{fill:var(--sheet)} .illo .n{fill:var(--ink)} .illo .wd{fill:#E6C9A0} .illo .wd2{fill:#D6B27F} .illo .or{fill:#F4B183} .illo .tb{fill:#5E9CC9} .illo .sq{fill:#A9B97A} .illo .rk{fill:#DCD6C8} .illo .pk{fill:#2E5A73} .illo .rk2{fill:#C9C2B1}
+.illo .y,.illo .l,.illo .s,.illo .c,.illo .n,.illo .b,.illo .w,.illo .wd,.illo .rk,.illo .tb,.illo g.c>*,.illo g.y>*{filter:drop-shadow(0 1.2px 1px rgba(60,55,30,.3))}
+.illo .o{stroke:none}
+.illo path.o:not([class*=" "]),.illo path[fill=none]{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.check-pop{border:0;padding:0;background:transparent;max-width:min(380px,calc(100vw - 32px))}
+.check-pop::backdrop{background:rgba(34,51,59,.35)}
+.check-pop .sheet{position:relative;background:var(--sheet);border-radius:10px 26px 12px 22px/22px 12px 26px 10px;box-shadow:var(--shadow);padding:22px 24px 20px;text-align:center;direction:rtl;color:var(--ink)}
+.check-pop .sheet::before{content:"";position:absolute;inset:0 0 auto 0;height:90px;border-radius:inherit;background:var(--mist);opacity:.7}
+.check-pop .pic{position:relative;display:block;width:150px;height:98px;margin:-2px auto 6px}
+.check-pop h2{position:relative;font-family:var(--display);font-weight:900;font-size:1.45rem;margin:0 0 8px}
+.check-pop p{margin:0 0 18px;font-size:.98rem;line-height:1.6}
+.check-pop button{font:inherit;font-weight:700;border:0;background:var(--ink);color:var(--sheet);border-radius:999px;padding:7px 22px;cursor:pointer}
+.check-pop button:hover{background:var(--sun-deep);color:var(--ink)}
+.check-pop .once{display:flex;gap:8px;align-items:flex-start;text-align:right;font-size:.85rem;line-height:1.45;color:var(--muted);margin:0 0 16px;cursor:pointer}
+.check-pop .once input{margin-top:3px;accent-color:var(--ink);flex:none}
+@media (max-width:1100px){.main{grid-template-columns:230px minmax(0,1fr)}.main[data-panel="closed"]{grid-template-columns:46px minmax(0,1fr)}}
+@media (max-width:860px){
+  .main,.main[data-panel="closed"]{grid-template-columns:1fr}
+  .side{position:static;max-height:none}
+  .main[data-panel="closed"] .side{align-items:flex-start}
+  .side{padding-top:16px}
+  .side .fold{position:static;width:auto;height:auto;display:inline-flex;align-items:center;gap:6px;align-self:flex-start;padding:4px 8px;font:inherit;font-weight:700;font-size:.9rem}
+  .side .fold .lbl{display:inline}
+  .side .fold .ico-side{display:none}
+  .side .fold .ico-top{display:block;width:18px;height:18px}
+  .main[data-panel="closed"] .side .fold{transform:none}
+  .main[data-panel="closed"] .side{min-height:0;height:auto}
+  .fold .on{position:static}
+  .mapbox{position:static}
+  #map{height:70vh}
+}
+
+/* place page */
+.place-page{padding-top:20px;max-width:880px}
+.crumbs{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.crumbs .brand{font-family:var(--display);font-weight:900;font-size:1.4rem;color:var(--ink)}
+.crumbs a{color:var(--muted);text-decoration:none;font-weight:600;font-size:.92rem}
+.crumbs a:hover{color:var(--ink)}
+.place{position:relative;background:var(--sheet);border-radius:6px 26px 8px 22px/22px 8px 26px 6px;box-shadow:var(--shadow);padding:30px 28px 24px;display:flex;flex-direction:column;gap:10px}
+.place h1{font-size:clamp(2rem,5vw,3rem);padding-left:60px}
+.place .where{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.place .badge{position:absolute;top:22px;left:22px;width:52px;height:52px}
+.place .badge .illo{width:52px;height:52px}
+.place .pick{left:90px}
+.place a.cat{text-decoration:none} .place a.cat:hover{background:var(--sun)}
+.place .lead{margin:6px 0 0;font-size:1.08rem;line-height:1.7}
+.place .check{margin:4px 0 0;font-size:.85rem;color:var(--muted);background:var(--cream);border-radius:8px;padding:8px 12px}
+.place .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.place .go.nav{background:var(--mist)}
+.share{font:inherit;font-weight:700;font-size:.92rem;border:0;background:var(--ink);color:var(--sheet);border-radius:999px;padding:4px 16px;cursor:pointer}
+.share:hover{background:var(--sun-deep);color:var(--ink)}
+.place-map #map{height:340px}
+.near h2{font-family:var(--display);font-size:1.5rem;margin:0 0 12px}
+@media (max-width:640px){.place{padding:24px 18px 20px}.place .badge{width:40px;height:40px}.place .badge .illo{width:40px;height:40px}.place h1{padding-left:46px}.place .pick{left:70px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}.card{transform:none!important}}
