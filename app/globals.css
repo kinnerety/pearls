@@ -164,6 +164,22 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 #map .leaflet-bar{border:0;box-shadow:var(--shadow);border-radius:999px;overflow:hidden}
 #map .leaflet-bar a{background:var(--sheet);color:var(--ink);border-bottom-color:var(--line);font-family:var(--body)}
 #map .leaflet-bar a:hover{background:var(--sun)}
+/* Google map: the same paper markers, and the place's own card as the popup (our own overlays, not Google's) */
+.gmk-layer{position:absolute;left:0;top:0}
+.gmk{position:absolute;width:36px;height:36px;margin:-18px 0 0 -18px;padding:0;border:0;background:none;display:grid;place-items:center;cursor:pointer;z-index:1}
+.gmk:hover,.gmk:focus-visible{z-index:2;outline:none}
+.gmk:hover .mk,.gmk:focus-visible .mk{transform:scale(calc(var(--mks,1) * 1.15))}
+.gmk:focus-visible .mk{outline:2px solid var(--ink);outline-offset:1px}
+.gpop{position:absolute;width:0;height:0;z-index:3}
+.gpop-box{position:absolute;left:0;bottom:var(--gap);transform:translateX(calc(-50% + var(--dx,0px)));width:min(330px,calc(100vw - 76px));direction:rtl;text-align:right;font-family:var(--body);font-size:16px;line-height:1.55;color:var(--ink);cursor:auto}
+.gpop.below .gpop-box{bottom:auto;top:var(--gap)}
+.gpop-tip{position:absolute;left:-7px;top:calc(-1 * var(--gap) - 7px);width:14px;height:14px;background:var(--sheet);transform:rotate(45deg);box-shadow:0 3px 6px rgba(60,55,30,.2)}
+.gpop.below .gpop-tip{top:calc(var(--gap) - 7px)}
+.gpop .card{transform:none;margin:0}
+.gpop .card p{margin:0}
+.gpop .card a{color:var(--ink)}
+.gpop-x{position:absolute;top:-10px;left:-10px;z-index:1;width:26px;height:26px;line-height:26px;font:inherit;font-size:20px;color:var(--ink);background:var(--sun-deep);border:0;border-radius:50%;padding:0;text-align:center;cursor:pointer;box-shadow:var(--shadow)}
+@media (hover:hover){.gpop-x{display:none}}
 #tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--sheet);font-size:.85rem;padding:3px 8px;border-radius:6px;z-index:5}
 .empty{grid-column:1/-1;color:var(--muted);padding:30px;text-align:center}
 .empty .blob{display:block;width:120px;height:120px;margin:0 auto 10px}
