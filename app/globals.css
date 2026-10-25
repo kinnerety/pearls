@@ -51,6 +51,7 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .chip.sm{font-size:.86rem;padding:2px 11px}
 .chip.clear{background:transparent;outline:1px dashed var(--muted)}
 .chip .illo{width:22px;height:22px;display:inline-block;vertical-align:-6px;margin-inline-end:5px}
+.chip.all{white-space:nowrap;max-width:100%;padding-inline:9px;overflow:hidden;text-overflow:ellipsis} .chip.all .illo{margin-inline-end:3px}
 
 .divider{display:block;width:min(560px,90%);height:44px;margin:0 auto}
 .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}

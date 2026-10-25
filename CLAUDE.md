@@ -26,7 +26,7 @@
 - **קטגוריות (10):** טבע ונוף, אוכל ושתייה, סדנאות, סיורים ומפגשים, חקלאות, בעלי חיים, יוצרים וחנויות, תרבות, עגלות קפה, אתרי אינטרנט. (שאלה פתוחה: האם עגלות קפה נשארות קטגוריה נפרדת.)
 - **תגיות על הכרטיס — רק עובדות חיוביות וידועות:** "גם למשפחות", "פתוח בשבת". כשלא ידוע או שלילי — לא מציגים כלום. ("סגור בשבת" הוסר מהכרטיס כי אין לו פילטר.) לא כותבים "בתיאום מראש" למקום מסוים; יש הערה כללית באתר לבדוק תמיד.
 - **"עוד העדפות" בפאנל הסינון:** רק שלוש: גם למשפחות / פתוח בשבת / המלצת המערכת. מתחת לכותרת משפט קטן: "**חשוב:** יכול להיות שיש עוד פנינים שמתאימות למשפחות או פתוחות בשבת ולא סווגו ככאלה, ולהפך".
-- **כותרת פאנל הקטגוריות: "מה יבוא טוב עכשיו"** (לא "מה עושים"). הצ'יפ הראשון הוא **"כל הפנינים"** עם אייקון בלוט, נבחר כברירת מחדל, והוא גם הדרך לנקות את סינון הקטגוריה וההעדפות.
+- **כותרת פאנל הקטגוריות: "מה יבוא טוב עכשיו"** (לא "מה עושים"). הצ'יפ הראשון הוא **"כל הפנינים"** עם אייקון בלוט, נבחר כברירת מחדל, והוא גם הדרך לנקות את סינון הקטגוריה וההעדפות (לא את האזורים). כשנבחר אזור הוא נקרא **"כל הפנינים באזור שבחרת"**, וכשנבחרו כמה: **"כל הפנינים באזורים שבחרת"**.
 - **"המלצת המערכת":** מדבקת כוכב + פילטר; נקבעת ידנית על ידי כנרת בלבד (שדה `pick`). המדבקה בצד שמאל של הכרטיס, ליד האייקון. במפה: כוכב צהוב קטן.
 - **קישור:** התווית היא **"למקור"** (כפתור צהוב רך, לא דומיננטי, בצד שמאל של הכרטיס). אתר עצמאי של המקום עדיף על פייסבוק/אינסטגרם.
 - **מקומות שנסגרו — מוסרים מהאתר**, לא מסומנים "סגור". סטטוס לא מוצג לציבור.
@@ -65,6 +65,7 @@ Technical notes for Claude:
 - Milestones: M0 infra → M1 1:1 port of the sketch → M2 real map + geocoding → M3 place pages / sharing / SEO → M4 go-live → M5 Neon + `/admin` (full "add place"; replaces the review artifact). **Each milestone = a PR with a Vercel Preview that Kinneret approves before merge.**
 - Repo layout (built 2026-10-24, PR #1): site data `data/places.json` (copied from `places_site.json` by `scripts/import_places.py`, which keeps the repo-owned location fields); `scripts/validate-data.mjs` runs before every build; `lib/filters.ts` = the one filter used by list, map and counts; `lib/store.ts` reads Neon when `DATABASE_URL` is set, otherwise the JSON (an empty Neon table is seeded from the JSON once); `/admin` = password (`ADMIN_PASSWORD`) + signed cookie.
 - Geocoding runs in GitHub Actions (`.github/workflows/geocode.yml`, triggered by pushing a change to `scripts/geocode.mjs`), because the Claude container cannot reach Nominatim or the places' websites. It writes `lat/lng/precision/geo_source` into `data/places.json` and a report to `data/geo_report.md`, and commits back to the branch.
+- מצב נוכחי (25.10.2026 בוקר): כל הקוד ב-PR #1 (https://github.com/kinnerety/pearls/pull/1, ענף `claude/project-thread-1gu2j4`), עדיין לא מוזג ל-main. פריוויו (דורש התחברות ל-Vercel): https://pearls-git-claude-project-thread-1gu2j4-kinneret-s-projects.vercel.app . כל push לענף נפרס אוטומטית תוך 1–2 דקות. פתוח: בדיקת השיתוף בטלפון (עם אמיר), אישור כנרת שהמפה נטענת, ואז M4 (דומיין, go-live) ו-M5 (Neon דרך Vercel Marketplace, `ADMIN_PASSWORD`).
 - Domain: `pninim.co.il` is taken; she wants `pninim-il.co.il` (she checks/buys via an Israeli registrar). Meanwhile `pearls.vercel.app`.
 
 ## מי אחראי על מה (שרשורים)

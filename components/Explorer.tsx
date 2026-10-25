@@ -134,7 +134,7 @@ export default function Explorer({ places }: { places: Place[] }) {
             <div className="grp" id="f-cat">
               <span className="flabel">מה יבוא טוב עכשיו</span>
               {/* "all": pressed when no category is chosen; clicking it clears the category and the preferences */}
-              <Chip pressed={!st.cat} onClick={() => update(s => ({ ...s, cat: '', prefs: [] }))} n={places.filter(p => matches(p, { ...st, cat: '', prefs: [] })).length}><Illo k="acorn" />כל הפנינים</Chip>
+              <Chip className="all" pressed={!st.cat} onClick={() => update(s => ({ ...s, cat: '', prefs: [] }))} n={places.filter(p => matches(p, { ...st, cat: '', prefs: [] })).length}><Illo k="acorn" />{st.regions.length === 0 ? 'כל הפנינים' : st.regions.length === 1 ? 'כל הפנינים באזור שבחרת' : 'כל הפנינים באזורים שבחרת'}</Chip>
               {CATS.map(k => (
                 <Chip key={k} pressed={st.cat === k} onClick={() => update(s => ({ ...s, cat: s.cat === k ? '' : k }))}
                   n={places.filter(p => matches(p, st, 'cat') && p.cats.includes(k)).length}><Illo k={CAT_ILLO[k]} />{k}</Chip>
