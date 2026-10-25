@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react';
 import type * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { TILE_URL, TILE_ATTR } from '@/lib/geo';
 
 // Small map for the admin form: click anywhere or drag the pin to set the exact spot.
 export default function PinMap({ lat, lng, onMove }: { lat: number | null; lng: number | null; onMove: (lat: number, lng: number) => void }) {
@@ -18,7 +19,7 @@ export default function PinMap({ lat, lng, onMove }: { lat: number | null; lng: 
       const Lf = (mod as unknown as { default?: typeof L }).default || (mod as unknown as typeof L);
       lib.current = Lf;
       const m = Lf.map(box.current, { zoomSnap: 0.25 }).fitBounds([[29.45, 34.25], [33.35, 35.9]]);
-      Lf.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19, subdomains: 'abcd', attribution: '&copy; OpenStreetMap &copy; CARTO' }).addTo(m);
+      Lf.tileLayer(TILE_URL, { maxZoom: 19, attribution: TILE_ATTR }).addTo(m);
       m.on('click', e => cb.current(+e.latlng.lat.toFixed(5), +e.latlng.lng.toFixed(5)));
       map.current = m;
       place(lat, lng, true);

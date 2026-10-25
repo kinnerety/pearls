@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
-import { SITE_URL, slugOf } from '@/lib/slug';
-import { getPlaces } from '@/lib/store';
+import { SITE_URL } from '@/lib/slug';
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  return [{ url: SITE_URL, priority: 1 }, ...(await getPlaces()).map(p => ({ url: `${SITE_URL}/p/${encodeURIComponent(slugOf(p))}`, priority: .7 }))];
+// Launch with the home page only; the /p place pages are kept in the code for later but not advertised.
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [{ url: SITE_URL, priority: 1 }];
 }

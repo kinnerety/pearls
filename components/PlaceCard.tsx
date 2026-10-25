@@ -2,8 +2,7 @@ import type { Place } from '@/lib/types';
 import { CAT_ILLO, ZONE_NAMES } from '@/lib/config';
 import { zonesOf } from '@/lib/filters';
 import Illo from './Illo';
-import Link from 'next/link';
-import { slugOf } from '@/lib/slug';
+import CardShare from './CardShare';
 
 const STAR = 'M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z';
 
@@ -14,7 +13,7 @@ export default function PlaceCard({ p, hl }: { p: Place; hl?: boolean }) {
       <span className="badge"><Illo k={CAT_ILLO[p.cats[0]] || 'bench'} /></span>
       <div>
         <div className="trow">
-          <h3><Link href={`/p/${slugOf(p)}`}>{p.name}</Link></h3>
+          <h3>{p.name}</h3>
           {zonesOf(p).map(z => <span key={z} className={`cat zone z${ZONE_NAMES.indexOf(z)}`}>{z}</span>)}
         </div>
         <div className="where">{p.town || ''}{p.town ? ' · ' : ''}{p.region.join(', ')}</div>
@@ -28,6 +27,7 @@ export default function PlaceCard({ p, hl }: { p: Place; hl?: boolean }) {
       <p className="desc">{p.descr}</p>
       {p.note && <p className="note">{p.note}</p>}
       <div className="foot">
+        <CardShare p={p} />
         {p.link ? <a className="go" href={p.link} target="_blank" rel="noopener">למקור ←</a> : <span className="where">אין קישור</span>}
       </div>
     </article>

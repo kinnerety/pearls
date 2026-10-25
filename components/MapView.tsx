@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import type * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { Place } from '@/lib/types';
-import { isApprox } from '@/lib/geo';
+import { isApprox, wazeUrl, TILE_URL, TILE_ATTR } from '@/lib/geo';
 
 // Real map (Leaflet + CARTO Positron tiles). Gets the same filtered array as the list.
 // Places located only to their town get a dashed ring and an honest note instead of a navigation link.
@@ -19,7 +19,7 @@ function iconHtml(p: Place, on: boolean) {
 }
 
 function popupHtml(p: Place) {
-  const nav = !isApprox(p) && p.lat != null ? `<a class="pop-nav" href="https://waze.com/ul?ll=${p.lat},${p.lng}&navigate=yes" target="_blank" rel="noopener">ניווט</a>` : '';
+  const nav = !isApprox(p) && p.lat != null ? `<a class="pop-nav" href="${wazeUrl(p)}" target="_blank" rel="noopener">ניווט</a>` : '';
   return `<div class="pop" dir="rtl"><b class="pop-name">${esc(p.name)}</b><div class="pop-where">${esc(p.town || '')}${p.town ? ' · ' : ''}${esc(p.region.join(', '))}</div>` +
     (isApprox(p) ? '<div class="pop-approx">מיקום משוער, בתוך היישוב. פרטי הגעה מדויקים באתר המקום</div>' : '') +
     `<div class="pop-foot"><button type="button" class="pop-card" data-id="${p.id}">לכרטיס</button>${nav}${p.link ? `<a class="go" href="${esc(p.link)}" target="_blank" rel="noopener">למקור ←</a>` : ''}</div></div>`;
@@ -46,10 +46,7 @@ export default function MapView({ items, activeId, visible, onPick, onOpenCard }
       lib.current = Lf;
       const m = Lf.map(box.current, { zoomSnap: 0.25, scrollWheelZoom: false, attributionControl: true });
       m.fitBounds(ISRAEL);
-      Lf.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        maxZoom: 18, subdomains: 'abcd',
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      }).addTo(m);
+      Lf.tileLayer(TILE_URL, { maxZoom: 18, attribution: TILE_ATTR }).addTo(m);
       m.attributionControl.setPrefix(false);
       layer.current = Lf.layerGroup().addTo(m);
       m.on('popupopen', e => {
