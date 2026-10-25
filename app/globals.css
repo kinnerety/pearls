@@ -114,11 +114,12 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto}
 /* share: a light-blue paper blob with the share icon, the label in grey beside it */
 .sh{display:inline-flex;align-items:center;gap:8px;font:inherit;font-weight:600;font-size:.86rem;color:var(--muted);background:none;border:0;padding:0;cursor:pointer}
+.sh .lbl{line-height:1.15;text-align:right}
 .sh .blob{display:grid;place-items:center;width:30px;height:30px;background:#D3E9F4;border-radius:46% 54% 50% 50%/52% 46% 54% 48%;color:var(--ink);transition:background .15s,transform .15s}
 .sh .blob svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .sh:hover .blob{background:#BFDDEE;transform:rotate(-6deg)}
 .sh:hover{color:var(--ink)}
-.go{color:var(--ink);background:#F7EBA6;font-weight:700;font-size:.92rem;text-decoration:none;border-radius:999px;padding:4px 14px}
+.go{color:var(--ink);background:#F7EBA6;font-weight:400;font-size:.92rem;text-decoration:none;border-radius:999px;padding:4px 14px}
 .go:hover{background:var(--sun-deep)}
 .pick{position:absolute;top:-11px;left:54px;display:inline-flex;align-items:center;gap:4px;font-size:.76rem;font-weight:700;color:var(--ink);background:var(--sun-deep);padding:3px 10px;border-radius:999px;transform:rotate(-3deg);box-shadow:var(--shadow);z-index:1}
 .pick svg{width:11px;height:11px;fill:currentColor}

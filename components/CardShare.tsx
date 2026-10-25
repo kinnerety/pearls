@@ -34,7 +34,7 @@ export default function CardShare({ p }: { p: Place }) {
       <span className="blob" aria-hidden="true">
         <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 10.7l6.8-4.4M8.6 13.3l6.8 4.4" /></svg>
       </span>
-      {done ? 'הועתק, אפשר להדביק ✓' : 'שיתוף או שליחה לעצמי'}
+      <span className="lbl">{done ? <>הועתק,<br />אפשר להדביק ✓</> : <>שיתוף או<br />שליחה לעצמי</>}</span>
     </button>
   );
 }
