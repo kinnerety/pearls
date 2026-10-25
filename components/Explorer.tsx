@@ -64,7 +64,7 @@ export default function Explorer({ places }: { places: Place[] }) {
 
   // scenario picture: what you're looking for right now
   const nowK = !items.length ? 'hedgehog' : st.prefs.includes('המלצת המערכת') ? 'almond' : st.prefs.includes('למשפחות') ? 'hammock'
-    : st.prefs.includes('פתוח בשבת') ? 'table' : st.cat ? CAT_ILLO[st.cat]
+    : st.prefs.includes('פתוח בשבת') ? 'table' : st.cats.length ? CAT_ILLO[st.cats[0]]
     : st.regions.length === 1 ? ZONE_ILLO[Object.keys(ZONES).find(z => ZONES[z].includes(st.regions[0]))!] : st.q ? 'trail' : 'bench';
   const [pop, setPop] = useState(false);
   const firstNow = useRef(true);
@@ -133,10 +133,10 @@ export default function Explorer({ places }: { places: Place[] }) {
           <div className="body">
             <div className="grp" id="f-cat">
               <span className="flabel">מה יבוא טוב עכשיו</span>
-              {/* "all": pressed when no category is chosen; clicking it clears the category and the preferences */}
-              <Chip className="all" pressed={!st.cat} onClick={() => update(s => ({ ...s, cat: '', prefs: [] }))} n={places.filter(p => matches(p, { ...st, cat: '', prefs: [] })).length}><Illo k="acorn" />{st.regions.length === 0 ? 'כל הפנינים' : st.regions.length === 1 ? 'כל הפנינים באזור שבחרת' : 'כל הפנינים באזורים שבחרת'}</Chip>
+              {/* "all": pressed when no category is chosen; clicking it clears the categories and the preferences */}
+              <Chip className="all" pressed={!st.cats.length} onClick={() => update(s => ({ ...s, cats: [], prefs: [] }))} n={places.filter(p => matches(p, { ...st, cats: [], prefs: [] })).length}><Illo k="acorn" />{st.regions.length === 0 ? 'כל הפנינים' : st.regions.length === 1 ? 'כל הפנינים באזור שבחרת' : 'כל הפנינים באזורים שבחרת'}</Chip>
               {CATS.map(k => (
-                <Chip key={k} pressed={st.cat === k} onClick={() => update(s => ({ ...s, cat: s.cat === k ? '' : k }))}
+                <Chip key={k} pressed={st.cats.includes(k)} onClick={() => update(s => ({ ...s, cats: s.cats.includes(k) ? s.cats.filter(c => c !== k) : [...s.cats, k] }))}
                   n={places.filter(p => matches(p, st, 'cat') && p.cats.includes(k)).length}><Illo k={CAT_ILLO[k]} />{k}</Chip>
               ))}
             </div>
