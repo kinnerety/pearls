@@ -10,7 +10,7 @@ import PlaceCard from './PlaceCard';
 // Markers and the popup are our own HTML overlays (no Map ID needed): each marker is the category's illustration on a
 // paper cutout; hovering (tapping on a phone) opens the place's card itself, so the map never shows a different,
 // shorter version of a place.
-type Props = { items: Place[]; visible: boolean; apiKey: string; onFail: () => void };
+type Props = { items: Place[]; visible: boolean; zoom?: number; apiKey: string; onFail: () => void };
 
 const ISRAEL = { south: 29.45, west: 34.25, north: 33.35, east: 35.9 };
 const STAR = 'M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z';
@@ -134,7 +134,7 @@ function overlays(maps: google.maps.MapsLibrary, core: google.maps.CoreLibrary) 
 }
 type Overlays = ReturnType<typeof overlays>;
 
-export default function GoogleMap({ items, apiKey, onFail }: Props) {
+export default function GoogleMap({ items, zoom, apiKey, onFail }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const map = useRef<google.maps.Map | null>(null);
   const layer = useRef<InstanceType<Overlays['MarkerLayer']> | null>(null);
@@ -232,7 +232,7 @@ export default function GoogleMap({ items, apiKey, onFail }: Props) {
           for (const p of pts) b.extend({ lat: p.lat!, lng: p.lng! });
           m.fitBounds(b, 30);
           google.maps.event.addListenerOnce(m, 'idle', () => { if ((m.getZoom() ?? 0) > 13) m.setZoom(13); });
-        } else if (pts.length === 1) { m.setCenter({ lat: pts[0].lat!, lng: pts[0].lng! }); m.setZoom(12); }
+        } else if (pts.length === 1) { m.setCenter({ lat: pts[0].lat!, lng: pts[0].lng! }); m.setZoom(zoom ?? 12); }
         else m.fitBounds(ISRAEL, 0);
       };
       // a hidden map (gallery view) has no size: fit once it is shown
