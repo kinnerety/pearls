@@ -29,7 +29,7 @@ export default function PlaceCard({ p }: { p: Place }) {
       {p.note && <p className="note">{p.note}</p>}
       <div className="foot">
         <CardShare p={p} />
-        {p.link ? <a className="go" href={p.link} target="_blank" rel="noopener">למקור ←</a> : <span className="where">אין קישור</span>}
+        {p.link ? <a className="go" href={p.link} target="_blank" rel="noopener">לאתר ←</a> : <span className="where">אין קישור</span>}
       </div>
     </article>
   );

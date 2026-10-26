@@ -264,10 +264,16 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .place .lead{margin:6px 0 0;font-size:1.08rem;line-height:1.7}
 .place .check{margin:4px 0 0;font-size:.85rem;color:var(--muted);background:var(--cream);border-radius:8px;padding:8px 12px}
 .place .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-.place .go.nav{background:var(--mist)}
-.share{font:inherit;font-weight:700;font-size:.92rem;border:0;background:var(--ink);color:var(--sheet);border-radius:999px;padding:4px 16px;cursor:pointer}
-.share:hover{background:var(--sun-deep);color:var(--ink)}
+.share{font:inherit;font-weight:400;font-size:.92rem;border:0;background:#BFDDEE;color:var(--ink);border-radius:999px;padding:4px 16px;cursor:pointer}
+.share:hover{background:#9CCDE4}
 .place-map #map{height:340px}
 .near h2{font-family:var(--display);font-size:1.5rem;margin:0 0 12px}
 @media (max-width:640px){.place{padding:24px 18px 20px}.place .badge{width:40px;height:40px}.place .badge .illo{width:40px;height:40px}.place h1{padding-left:46px}.place .pick{left:70px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.card{transform:none!important}}
+
+/* place page: wooden sign "לכל הפנינים", the board's pointed end is the arrow */
+.sign{display:inline-block;filter:drop-shadow(0 2px 0 rgba(60,55,30,.18)) drop-shadow(0 6px 10px rgba(60,55,30,.18));text-decoration:none;margin-inline-start:14px}
+.sign span{display:inline-block;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%);color:var(--ink);font-weight:600;font-size:1rem;line-height:1;padding:9px 28px 9px 16px;
+  background:#D6B27F;background-image:repeating-linear-gradient(90deg,rgba(120,80,40,0) 0 18px,rgba(120,80,40,.14) 18px 20px,rgba(120,80,40,0) 20px 23px,rgba(120,80,40,.08) 23px 24px);
+  transform:rotate(-2deg);transition:transform .15s}
+.sign:hover span{transform:rotate(0) translateX(-2px);background-color:#E0BF8E}

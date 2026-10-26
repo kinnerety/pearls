@@ -12,7 +12,7 @@ import PlaceCard from './PlaceCard';
 // Fallback map (Leaflet + OpenStreetMap tiles), used until a Google Maps key is set. Gets the same filtered array as the gallery.
 // Each marker is the category's illustration on a paper cutout; hovering (tapping on a phone) opens the place's
 // card itself as the popup, so the map never shows a different, shorter version of a place.
-type Props = { items: Place[]; visible: boolean };
+type Props = { items: Place[]; visible: boolean; zoom?: number };
 
 const ISRAEL: [[number, number], [number, number]] = [[29.45, 34.25], [33.35, 35.9]];
 const STAR = 'M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z';
@@ -27,7 +27,7 @@ function iconHtml(p: Place) {
 // marker size follows the zoom: small in the overview (the Galilee is crowded), full size once you zoom in
 const zoomClass = (z: number) => (z <= 8 ? 's' : z <= 9 ? 'm' : 'l');
 
-export default function LeafletMap({ items, visible }: Props) {
+export default function LeafletMap({ items, visible, zoom }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
   const lib = useRef<typeof L | null>(null);
@@ -104,7 +104,7 @@ export default function LeafletMap({ items, visible }: Props) {
       fit.current = (animate: boolean) => {
         const o = { duration: .6, animate };
         if (pts.length > 1) m.flyToBounds(Lf.latLngBounds(pts.map(p => [p.lat!, p.lng!] as [number, number])), { padding: [30, 30], maxZoom: 13, ...o });
-        else if (pts.length === 1) m.flyTo([pts[0].lat!, pts[0].lng!], 12, o);
+        else if (pts.length === 1) m.flyTo([pts[0].lat!, pts[0].lng!], zoom ?? 12, o);
         else m.flyToBounds(ISRAEL, o);
       };
       // a hidden map (gallery view) has no size: fit once it is shown

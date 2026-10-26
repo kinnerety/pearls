@@ -48,7 +48,8 @@ export default async function PlacePage({ params }: Props) {
   return (
     <div className="wrap place-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
-      <nav className="crumbs"><Link href="/" className="brand">פנינים ישראליות</Link><Link href="/">→ לכל הפנינים</Link></nav>
+      {/* a wooden signpost pointing back to all the pearls (Kinneret, 2026-10-26: no site title on this page) */}
+      <nav className="crumbs"><Link href="/" className="sign"><span>לכל הפנינים</span></Link></nav>
       <article className="place">
         {p.pick && <span className="pick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" /></svg>המלצת המערכת</span>}
         <span className="badge"><Illo k={CAT_ILLO[p.cats[0]] || 'bench'} /></span>
@@ -66,9 +67,9 @@ export default async function PlacePage({ params }: Props) {
         {p.note && <p className="note">{p.note}</p>}
         <p className="check">לפני שנוסעים: ההמלצות מגיעות מאנשים אמיתיים, אבל הפרטים נאספים על ידי AI. כדאי להיכנס לאתר או לפרופיל של המקום ולבדוק שעות ותיאום.</p>
         <div className="actions">
-          {p.link && <a className="go" href={p.link} target="_blank" rel="noopener">למקור ←</a>}
-          {p.lat != null && !isApprox(p) && <a className="go nav" href={`https://waze.com/ul?ll=${p.lat},${p.lng}&navigate=yes`} target="_blank" rel="noopener">ניווט ב-Waze</a>}
+          {/* share on the right, the site link on the left, no Waze (Kinneret, 2026-10-26: locations are often town-level) */}
           <ShareButton title={p.name} text={`${p.name}${p.town ? ' ב' + p.town : ''} · פנינים ישראליות`} />
+          {p.link && <a className="go" href={p.link} target="_blank" rel="noopener">לאתר ←</a>}
         </div>
       </article>
       {p.lat != null && (
