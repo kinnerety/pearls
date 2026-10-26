@@ -84,6 +84,7 @@ export default function PlaceForm({ initial, hidden: hidden0, updatedAt }: { ini
           {([['yes', 'גם למשפחות'], ['no', 'לא'], ['unknown', 'לא ידוע']] as const).map(([v, l]) => <button type="button" key={v} className="chip" aria-pressed={p.family === v} onClick={() => set('family', v)}>{l}</button>)}
         </div>
         <label className="adm-check"><input type="checkbox" checked={p.pick} onChange={e => set('pick', e.target.checked)} /> ★ המלצת המערכת</label>
+        <label className="adm-check"><input type="checkbox" checked={!!p.checked} onChange={e => set('checked', e.target.checked)} /> נבדק ידנית</label>
         <label className="adm-check"><input type="checkbox" checked={hidden} onChange={e => setHidden(e.target.checked)} /> נסגר / להסתיר מהאתר</label>
       </section>
 

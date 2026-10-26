@@ -41,7 +41,7 @@ export async function allPlaces(): Promise<StoredPlace[]> {
 /** What the public site shows. Cached until an admin save calls revalidateTag('places'). */
 export const getPlaces = unstable_cache(async (): Promise<Place[]> => {
   const all = await allPlaces();
-  return all.filter(p => !p.hidden).map(({ hidden, updated_at, ...p }) => p);
+  return all.filter(p => !p.hidden).map(({ hidden, updated_at, checked, ...p }) => p);
 }, ['places-v1'], { tags: ['places'] });
 
 export async function getPlace(id: number) {
@@ -70,6 +70,18 @@ export async function savePlace(p: Place, hidden: boolean): Promise<number> {
   }
   refresh();
   return id;
+}
+
+/** Quick changes from a row of the admin list (pick, main category, checked) without opening the form. */
+export async function patchPlace(id: number, change: (p: Place) => Place) {
+  if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
+  await ensure();
+  const [row] = await sql`select data, hidden from places where id = ${id}` as { data: Place; hidden: boolean }[];
+  if (!row) throw new Error('הפנינה לא נמצאה');
+  const after = change({ ...row.data, id });
+  await sql`update places set data = ${JSON.stringify(after)}::jsonb, updated_at = now() where id = ${id}`;
+  await sql`insert into edits_log (place_id, action, before, after) values (${id}, 'quick', ${JSON.stringify(row)}::jsonb, ${JSON.stringify({ data: after, hidden: row.hidden })}::jsonb)`;
+  refresh();
 }
 
 export async function deletePlace(id: number) {

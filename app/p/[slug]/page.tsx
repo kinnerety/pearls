@@ -10,6 +10,7 @@ import Illo from '@/components/Illo';
 import PlaceCard from '@/components/PlaceCard';
 import PlaceMap from '@/components/PlaceMap';
 import ShareButton from '@/components/ShareButton';
+import { TextsProvider } from '@/components/TextsContext';
 import { isApprox } from '@/lib/geo';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -83,7 +84,7 @@ export default async function PlacePage({ params }: Props) {
         <section className="near">
           <svg className="divider" viewBox="0 0 560 44" aria-hidden="true" dangerouslySetInnerHTML={{ __html: DIVIDER_SVG }} />
           <h2>עוד באזור</h2>
-          <div className="list">{near.map(o => <PlaceCard key={o.id} p={o} />)}</div>
+          <TextsProvider texts={texts}><div className="list">{near.map(o => <PlaceCard key={o.id} p={o} />)}</div></TextsProvider>
         </section>
       )}
     </div>
