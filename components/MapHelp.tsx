@@ -1,8 +1,11 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import { splitLead, type Texts } from '@/lib/texts';
 
 // "How to use the map?" link above the map: hover opens the tip, a click keeps it open (Kinneret's wording)
-export default function MapHelp() {
+export default function MapHelp({ texts }: { texts: Texts }) {
+  const [lead, rest] = splitLead(texts['maphelp.important']);
+  const items = texts['maphelp.items'].split('\n').map(s => s.trim()).filter(Boolean);
   const [open, setOpen] = useState(false);
   const [stuck, setStuck] = useState(false);
   const box = useRef<HTMLDivElement>(null);
@@ -23,18 +26,12 @@ export default function MapHelp() {
   return (
     <div className="maphelp" ref={box} onMouseEnter={enter} onMouseLeave={leave}>
       <button type="button" className="maphelp-link" aria-expanded={open} aria-controls="maphelp-tip"
-        onClick={() => { const s = !stuck; setStuck(s); setOpen(s); }}>איך להשתמש במפה?</button>
+        onClick={() => { const s = !stuck; setStuck(s); setOpen(s); }}>{texts['maphelp.link']}</button>
       {open && (
         <div className="maphelp-tip" id="maphelp-tip" role="tooltip">
-          <b className="maphelp-title">איך להשתמש במפה?</b>
-          <p><b>חשוב:</b> חלק מהפנינים ממוקמות בתוך היישוב באופן כללי, ולא במיקום מדויק ברמת הניווט לכתובת. כדי לנווט לשם, צריך להכניס ב-Waze את שם הפנינה.</p>
-          <ul>
-            <li>במחשב, כדי להתקרב ולהתרחק (זום-אין וזום-אאוט) צריך ללחוץ על הפלוס והמינוס, או לעמוד מעל למפה בלי ללחוץ עליה, ואז ללחוץ על קונטרול במקלדת (במק: ⌘) ולגלגל את גלגלת העכבר בו-זמנית. בטלפון פשוט מגדילים בשתי אצבעות.</li>
-            <li>כדי להזיז את המפה במחשב צריך ללחוץ עליה עם העכבר ולגרור. בטלפון גוררים עם שתי אצבעות.</li>
-            <li>במחשב, ריחוף על פנינה יפתח את ההסבר עליה.</li>
-            <li>לחיצה על פנינה תשאיר את ההסבר פתוח.</li>
-            <li>המלצות מערכת מסומנות בכוכב.</li>
-          </ul>
+          <b className="maphelp-title">{texts['maphelp.link']}</b>
+          {rest && <p>{lead && <b>{lead}</b>}{lead ? ' ' : ''}{rest}</p>}
+          {items.length > 0 && <ul>{items.map((it, i) => <li key={i}>{it}</li>)}</ul>}
         </div>
       )}
     </div>

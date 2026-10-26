@@ -4,6 +4,7 @@ import { unstable_cache, revalidatePath, revalidateTag } from 'next/cache';
 import seed from '@/data/places.json';
 import type { Place } from './types';
 import { canonTags } from './tags';
+import { DEFAULT_TEXTS, TEXT_DEFAULTS, type Texts } from './texts';
 
 // Where the places live. Phase A (no DATABASE_URL): data/places.json from the repo.
 // Phase B: Neon Postgres (added through the Vercel integration), edited in /admin. The JSON file seeds an empty table once.
@@ -18,6 +19,7 @@ function ensure() {
   if (!sql) return Promise.resolve();
   return (ready ??= (async () => {
     await sql`create table if not exists places (id integer primary key, data jsonb not null, hidden boolean not null default false, updated_at timestamptz not null default now())`;
+    await sql`create table if not exists site_texts (key text primary key, value text not null, updated_at timestamptz not null default now())`;
     await sql`create table if not exists edits_log (id serial primary key, place_id integer not null, at timestamptz not null default now(), action text not null, before jsonb, after jsonb)`;
     const [{ n }] = await sql`select count(*)::int as n from places` as { n: number }[];
     if (n === 0) {
@@ -77,4 +79,25 @@ export async function deletePlace(id: number) {
   await sql`delete from places where id = ${id}`;
   await sql`insert into edits_log (place_id, action, before) values (${id}, 'delete', ${JSON.stringify(before[0] ?? null)}::jsonb)`;
   refresh();
+}
+
+/** Editable site texts (popup, map tip, notes): the defaults from lib/texts.ts, overridden by what Kinneret saved in /admin/texts. */
+export const getTexts = unstable_cache(async (): Promise<Texts> => {
+  if (!sql) return DEFAULT_TEXTS;
+  await ensure();
+  const rows = await sql`select key, value from site_texts` as { key: string; value: string }[];
+  const t: Texts = { ...DEFAULT_TEXTS };
+  for (const r of rows) if (r.key in TEXT_DEFAULTS) t[r.key as keyof Texts] = r.value;
+  return t;
+}, ['texts-v1'], { tags: ['texts'] });
+
+export async function saveTexts(t: Partial<Texts>) {
+  if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
+  await ensure();
+  for (const [k, v] of Object.entries(t)) {
+    if (!(k in TEXT_DEFAULTS) || typeof v !== 'string') continue;
+    await sql`insert into site_texts (key, value) values (${k}, ${v}) on conflict (key) do update set value = excluded.value, updated_at = now()`;
+  }
+  revalidateTag('texts');
+  revalidatePath('/', 'layout');
 }

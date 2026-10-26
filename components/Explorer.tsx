@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Place } from '@/lib/types';
+import type { Texts } from '@/lib/texts';
 import { CATS, CAT_ILLO, PREFS, PREF_LABEL, ZONES, ZONE_ILLO } from '@/lib/config';
 import { EMPTY, FilterState, activeCount, fromSearch, hasPref, matches, toSearch } from '@/lib/filters';
 import { DIVIDER_SVG } from './art';
@@ -27,7 +28,7 @@ function countText(n: number, active: boolean) {
   return 'אין כאן פנינים שמתאימות להגדרות שבחרת, אבל זה לא אומר שאין כאלה בארץ :)';
 }
 
-export default function Explorer({ places }: { places: Place[] }) {
+export default function Explorer({ places, texts }: { places: Place[]; texts: Texts }) {
   const [st, setSt] = useState<FilterState>(EMPTY);
   const [ready, setReady] = useState(false);
   const [view, setView] = useState<'list' | 'map'>('list');
@@ -143,7 +144,7 @@ export default function Explorer({ places }: { places: Place[] }) {
             </div>
             <div className="grp" id="f-pref">
               <span className="flabel">עוד העדפות</span>
-              <p className="fnote">יכול להיות שיש עוד פנינים שמתאימות למשפחות או פתוחות בשבת ולא סווגו ככאלה, ולהפך</p>
+              <p className="fnote">{texts['prefs.note']}</p>
               {PREFS.map(k => {
                 const on = st.prefs.includes(k), n = places.filter(p => matches(p, st) && hasPref(p, k)).length;
                 if (!n && !on) return null;
@@ -158,7 +159,7 @@ export default function Explorer({ places }: { places: Place[] }) {
               : <div className="empty"><span className="blob"><Illo k="hedgehog" /></span>אין פנינים שמתאימות לכל הסינונים. נסו להסיר אחד מהם.</div>}
           </div>
           <aside className="mapbox">
-            <MapHelp />
+            <MapHelp texts={texts} />
             <MapView items={items} visible={view === 'map'} />
             <div className="legend">
               {/* the same badge as on the map markers: a yellow circle with a black star */}
@@ -167,7 +168,7 @@ export default function Explorer({ places }: { places: Place[] }) {
           </aside>
         </div>
       </div>
-      <CheckPopup ref={popRef} />
+      <CheckPopup ref={popRef} texts={texts} />
     </>
   );
 }

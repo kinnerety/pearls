@@ -4,7 +4,7 @@ import { notFound, permanentRedirect } from 'next/navigation';
 import { CAT_ILLO, ZONE_NAMES } from '@/lib/config';
 import { zonesOf } from '@/lib/filters';
 import { SITE_URL, idOfSlug, slugOf } from '@/lib/slug';
-import { getPlace, getPlaces } from '@/lib/store';
+import { getPlace, getPlaces, getTexts } from '@/lib/store';
 import { DIVIDER_SVG } from '@/components/art';
 import Illo from '@/components/Illo';
 import PlaceCard from '@/components/PlaceCard';
@@ -37,6 +37,7 @@ export default async function PlacePage({ params }: Props) {
   if (!p) notFound();
   if (decodeURIComponent(slug) !== slugOf(p)) permanentRedirect(`/p/${encodeURIComponent(slugOf(p))}`);
 
+  const texts = await getTexts();
   const near = (await getPlaces()).filter(o => o.id !== p.id && o.region.some(r => p.region.includes(r))).slice(0, 6);
   const jsonLd = {
     '@context': 'https://schema.org', '@type': 'TouristAttraction', name: p.name, description: p.descr,
@@ -65,7 +66,7 @@ export default async function PlacePage({ params }: Props) {
         <div className="cats">{p.cats.map(c => <Link key={c} href={`/?cat=${encodeURIComponent(c)}`} className="cat">{c}</Link>)}</div>
         <p className="lead">{p.descr}</p>
         {p.note && <p className="note">{p.note}</p>}
-        <p className="check">לפני שנוסעים: ההמלצות מגיעות מאנשים אמיתיים, אבל הפרטים נאספים על ידי AI. כדאי להיכנס לאתר או לפרופיל של המקום ולבדוק שעות ותיאום.</p>
+        <p className="check">{texts['place.check']}</p>
         <div className="actions">
           {/* share on the right, the site link on the left, no Waze (Kinneret, 2026-10-26: locations are often town-level) */}
           <ShareButton title={p.name} text={`${p.name}${p.town ? ' ב' + p.town : ''} · פנינים ישראליות`} />
@@ -75,7 +76,7 @@ export default async function PlacePage({ params }: Props) {
       {p.lat != null && (
         <section className="mapbox place-map" aria-label="מפה">
           <PlaceMap p={p} />
-          {isApprox(p) && <div className="legend"><span>מיקום משוער, בתוך היישוב. פרטי הגעה מדויקים באתר המקום</span></div>}
+          {isApprox(p) && <div className="legend"><span>{texts['place.approx']}</span></div>}
         </section>
       )}
       {near.length > 0 && (

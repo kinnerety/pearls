@@ -23,6 +23,7 @@ export default async function AdminHome() {
         <h1>ניהול הפנינים</h1>
         <div className="adm-row">
           <Link className="adm-btn" href="/admin/new">+ פנינה חדשה</Link>
+          <Link className="adm-btn ghost" href="/admin/texts">טקסטים של האתר</Link>
           <Link className="adm-btn ghost" href="/" target="_blank">לאתר</Link>
           <form action={logout}><button className="adm-btn ghost">יציאה</button></form>
         </div>
