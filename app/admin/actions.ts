@@ -1,7 +1,8 @@
 'use server';
 import { redirect } from 'next/navigation';
 import { endSession, passwordOk, requireAdmin, startSession } from '@/lib/auth';
-import { deletePlace, savePlace } from '@/lib/store';
+import { deletePlace, savePlace, saveTexts } from '@/lib/store';
+import type { Texts } from '@/lib/texts';
 import { checkPlace } from '@/lib/validate';
 import type { Place } from '@/lib/types';
 
@@ -22,6 +23,12 @@ export async function save(p: Place, hidden: boolean): Promise<SaveResult> {
   const errors = checkPlace(p);
   if (errors.length) return { ok: false, errors };
   try { return { ok: true, id: await savePlace(p, hidden) }; }
+  catch (e) { return { ok: false, errors: [(e as Error).message] }; }
+}
+
+export async function saveSiteTexts(t: Partial<Texts>): Promise<{ ok: true } | { ok: false; errors: string[] }> {
+  await requireAdmin();
+  try { await saveTexts(t); return { ok: true }; }
   catch (e) { return { ok: false, errors: [(e as Error).message] }; }
 }
 
