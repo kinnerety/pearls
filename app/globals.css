@@ -256,9 +256,9 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 @media (max-width:640px){.place{padding:24px 18px 20px}.place .badge{width:40px;height:40px}.place .badge .illo{width:40px;height:40px}.place h1{padding-left:46px}.place .pick{left:70px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.card{transform:none!important}}
 
-/* place page: wooden sign "לכל הפנינים", the board's pointed end is the arrow */
-.sign{display:inline-block;filter:drop-shadow(0 2px 0 rgba(60,55,30,.18)) drop-shadow(0 6px 10px rgba(60,55,30,.18));text-decoration:none;margin-inline-start:14px}
+/* place page: yellow sign "לכל הפנינים" on an ink post, the board's pointed end is the arrow (Kinneret 2026-10-26: palette colours, not brown) */
+.sign{display:inline-flex;flex-direction:column;align-items:center;filter:drop-shadow(0 2px 0 rgba(60,55,30,.14)) drop-shadow(0 6px 10px rgba(60,55,30,.16));text-decoration:none;margin-inline-start:14px}
 .sign span{display:inline-block;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%);color:var(--ink);font-weight:600;font-size:1rem;line-height:1;padding:9px 28px 9px 16px;
-  background:#D6B27F;background-image:repeating-linear-gradient(90deg,rgba(120,80,40,0) 0 18px,rgba(120,80,40,.14) 18px 20px,rgba(120,80,40,0) 20px 23px,rgba(120,80,40,.08) 23px 24px);
-  transform:rotate(-2deg);transition:transform .15s}
-.sign:hover span{transform:rotate(0) translateX(-2px);background-color:#E0BF8E}
+  background:var(--sun-deep);transform:rotate(-2deg);transition:transform .15s,background-color .15s}
+.sign::after{content:"";display:block;width:7px;height:22px;margin-top:-2px;margin-inline-end:4px;background:var(--ink);border-radius:0 0 3px 3px}
+.sign:hover span{transform:rotate(0) translateX(-2px);background:#F7EBA6}
