@@ -31,7 +31,6 @@ export default function Explorer({ places }: { places: Place[] }) {
   const [st, setSt] = useState<FilterState>(EMPTY);
   const [ready, setReady] = useState(false);
   const [view, setView] = useState<'list' | 'map'>('list');
-  const [slide, setSlide] = useState<'list' | 'map' | null>(null);
   const [panel, setPanel] = useState<'open' | 'closed'>('open');
   const [sideH, setSideH] = useState<string | undefined>();
   const popRef = useRef<HTMLDialogElement>(null);
@@ -53,16 +52,6 @@ export default function Explorer({ places }: { places: Place[] }) {
     const s = toSearch(st) + (view === 'map' ? (toSearch(st) ? '&' : '?') + 'v=map' : '');
     if (s !== location.search) history.replaceState(null, '', location.pathname + s);
   }, [st, view, ready]);
-
-  // gallery and map slide sideways like turning a page: both are shown while sliding, then only the new one
-  const slideT = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const switchView = (v: 'list' | 'map') => {
-    if (v === view || slide) return;
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { setView(v); return; }
-    setSlide(v);
-    clearTimeout(slideT.current);
-    slideT.current = setTimeout(() => { setView(v); setSlide(null); }, 450);
-  };
 
   const items = useMemo(() => places.filter(p => matches(p, st)), [places, st]);
   const act = activeCount(st);
@@ -125,14 +114,14 @@ export default function Explorer({ places }: { places: Place[] }) {
           <span><span className={'count' + (act ? ' long' : '')} id="count">{countText(items.length, !!act)}</span> <span id="countnote" className="where" /></span>
         </span>
         <div className="views" role="group" aria-label="תצוגה">
-          <button className="chip" aria-pressed={(slide ?? view) === 'list'} onClick={() => switchView('list')}>גלריית פנינים</button>
-          <button className="chip mapbtn" aria-pressed={(slide ?? view) === 'map'} onClick={() => switchView('map')}>
+          <button className="chip" aria-pressed={view === 'list'} onClick={() => setView('list')}>גלריית פנינים</button>
+          <button className="chip mapbtn" aria-pressed={view === 'map'} onClick={() => setView('map')}>
             על המפה<svg className="il" viewBox={FULL.join(' ')} aria-hidden="true"><polygon points={poly(OUTLINE)} /></svg>
           </button>
         </div>
       </div>
 
-      <div className="main" id="main" data-view={view} data-panel={panel} data-slide={slide || undefined}
+      <div className="main" id="main" data-view={view} data-panel={panel}
         style={sideH ? ({ '--sideH': sideH } as React.CSSProperties) : undefined}>
         <aside className="side" aria-label="סינונים" ref={sideRef}>
           <button className="fold" id="fold" aria-expanded={open} aria-label={open ? 'סגירת פאנל הסינון' : 'פתיחת פאנל הסינון'} title={open ? 'סגירת הסינון' : 'פתיחת הסינון'} onClick={toggleFold}>
