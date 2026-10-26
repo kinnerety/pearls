@@ -1,7 +1,8 @@
 'use server';
 import { redirect } from 'next/navigation';
 import { endSession, passwordOk, requireAdmin, startSession } from '@/lib/auth';
-import { deletePlace, savePlace, saveTexts } from '@/lib/store';
+import { deletePlace, patchPlace, savePlace, saveTexts } from '@/lib/store';
+import { CATS } from '@/lib/config';
 import type { Texts } from '@/lib/texts';
 import { checkPlace } from '@/lib/validate';
 import type { Place } from '@/lib/types';
@@ -24,6 +25,22 @@ export async function save(p: Place, hidden: boolean): Promise<SaveResult> {
   if (errors.length) return { ok: false, errors };
   try { return { ok: true, id: await savePlace(p, hidden) }; }
   catch (e) { return { ok: false, errors: [(e as Error).message] }; }
+}
+
+export type QuickPatch = { pick?: boolean; checked?: boolean; primary?: string };
+/** A change from a row of the admin list. A main category the place didn't have yet is added to it. */
+export async function quickSave(id: number, q: QuickPatch): Promise<{ ok: true } | { ok: false; error: string }> {
+  await requireAdmin();
+  if (q.primary !== undefined && !CATS.includes(q.primary)) return { ok: false, error: `קטגוריה לא מוכרת: ${q.primary}` };
+  try {
+    await patchPlace(id, p => ({
+      ...p,
+      ...(q.pick !== undefined ? { pick: q.pick } : {}),
+      ...(q.checked !== undefined ? { checked: q.checked } : {}),
+      ...(q.primary ? { cats: [q.primary, ...p.cats.filter(c => c !== q.primary)] } : {}),
+    }));
+    return { ok: true };
+  } catch (e) { return { ok: false, error: (e as Error).message }; }
 }
 
 export async function saveSiteTexts(t: Partial<Texts>): Promise<{ ok: true } | { ok: false; errors: string[] }> {

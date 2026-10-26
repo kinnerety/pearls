@@ -17,6 +17,8 @@ export type Place = {
   shabbat: 'open' | 'closed' | 'unknown';
   family: 'yes' | 'no' | 'unknown';
   pick: boolean;
+  /** Kinneret checked the details herself (after an AI gathered them). Admin only, never shown on the site. */
+  checked?: boolean;
   tags: string[];
   ctags: string[];
   hours?: string;

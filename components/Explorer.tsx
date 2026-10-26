@@ -8,6 +8,7 @@ import { DIVIDER_SVG } from './art';
 import Illo from './Illo';
 import MapHelp from './MapHelp';
 import PlaceCard from './PlaceCard';
+import { TextsProvider } from './TextsContext';
 import CheckPopup, { checkSeen } from './CheckPopup';
 import dynamic from 'next/dynamic';
 import { FULL, OUTLINE, poly } from '@/lib/outline';
@@ -83,7 +84,7 @@ export default function Explorer({ places, texts }: { places: Place[]; texts: Te
   const open = panel === 'open';
 
   return (
-    <>
+    <TextsProvider texts={texts}>
       <section className="filters" aria-label="לאן מכאן">
         <div className="ftop">
           <span className="flabel">לאן מכאן</span>
@@ -169,6 +170,6 @@ export default function Explorer({ places, texts }: { places: Place[]; texts: Te
         </div>
       </div>
       <CheckPopup ref={popRef} texts={texts} />
-    </>
+    </TextsProvider>
   );
 }
