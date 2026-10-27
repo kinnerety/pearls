@@ -6,11 +6,12 @@ import { useState, useTransition } from 'react';
 import type { Place } from '@/lib/types';
 import { CATS, ZONES } from '@/lib/config';
 import { slugOf } from '@/lib/slug';
-import { geocode, remove, save, type GeoHit } from '@/app/admin/actions';
+import { acceptDraft, geocode, remove, save, type GeoHit } from '@/app/admin/actions';
 
 const PinMap = dynamic(() => import('./PinMap'), { ssr: false, loading: () => <div className="adm-map" /> });
 
-export default function PlaceForm({ initial, hidden: hidden0, updatedAt }: { initial: Place; hidden: boolean; updatedAt?: string }) {
+// draftId: the form edits a pending draft from /admin/drafts, and saving it approves the draft (it becomes a real place)
+export default function PlaceForm({ initial, hidden: hidden0, updatedAt, draftId }: { initial: Place; hidden: boolean; updatedAt?: string; draftId?: number }) {
   const [p, setP] = useState<Place>(initial);
   const [hidden, setHidden] = useState(hidden0);
   const [tags, setTags] = useState(initial.tags.join(', '));
@@ -31,7 +32,7 @@ export default function PlaceForm({ initial, hidden: hidden0, updatedAt }: { ini
   const submit = () => start(async () => {
     const split = (t: string) => t.split(/[,،]/).map(s => s.trim()).filter(Boolean);
     const place: Place = { ...p, tags: split(tags), types: split(types) };
-    const r = await save(place, hidden);
+    const r = draftId ? await acceptDraft(draftId, place) : await save(place, hidden);
     if (!r.ok) { setErrors(r.errors); setMsg(''); return; }
     setErrors([]); setMsg('נשמר ✓ האתר מתעדכן תוך כמה שניות');
     if (isNew) router.replace(`/admin/p/${r.id}`); else router.refresh();
@@ -40,9 +41,9 @@ export default function PlaceForm({ initial, hidden: hidden0, updatedAt }: { ini
   return (
     <div className="adm-form">
       <div className="adm-top">
-        <h1>{isNew ? 'פנינה חדשה' : p.name || 'עריכה'}</h1>
+        <h1>{draftId ? `טיוטה: ${p.name}` : isNew ? 'פנינה חדשה' : p.name || 'עריכה'}</h1>
         <div className="adm-row">
-          <Link className="adm-btn ghost" href="/admin">→ לרשימה</Link>
+          <Link className="adm-btn ghost" href={draftId ? '/admin/drafts' : '/admin'}>{draftId ? '→ לפנינים החדשות' : '→ לרשימה'}</Link>
           {!isNew && <Link className="adm-btn ghost" href={`/p/${slugOf(initial)}`} target="_blank">לדף באתר</Link>}
         </div>
       </div>
@@ -108,7 +109,7 @@ export default function PlaceForm({ initial, hidden: hidden0, updatedAt }: { ini
         {errors.length > 0 && <ul className="adm-err">{errors.map(e => <li key={e}>{e}</li>)}</ul>}
         {msg && <p className="adm-ok">{msg}</p>}
         <div className="adm-row">
-          <button type="button" className="adm-btn" disabled={busy} onClick={submit}>{busy ? 'שומר...' : 'שמירה'}</button>
+          <button type="button" className="adm-btn" disabled={busy} onClick={submit}>{busy ? 'שומר...' : draftId ? 'אישור ושמירה לאתר' : 'שמירה'}</button>
           {!isNew && <button type="button" className="adm-btn danger" disabled={busy} onClick={() => { if (confirm(`למחוק את "${p.name}" לצמיתות? (אפשר במקום זה לסמן "נסגר / להסתיר")`)) start(() => remove(p.id)); }}>מחיקה</button>}
         </div>
         {updatedAt && <p className="adm-hint">עודכן לאחרונה: {new Date(updatedAt).toLocaleString('he-IL')}</p>}

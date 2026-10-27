@@ -1,9 +1,10 @@
 /* Layout: paper-cut collage landscape on top, filters on a torn-paper sheet, list beside a paper map. Deliberately one light world (no dark variant). */
 :root{
   color-scheme:light;
-  --paper:#FAF7EF; --sheet:#FFFDF7; --cream:#F6EFD9; --sun:#FCF0B4; --sun-deep:#F3E27C;
-  --lime:#E8F2B2; --sage:#CBEBD5; --mist:#DDEEF6;
-  --ink:#22333B; --muted:#5E7480; --line:#E6DEC7;
+  /* the palette (Kinneret, 27.10.2026): 8 colours + ink + white, nothing else in the UI. Secondary text and hairlines are the ink at an opacity, not extra colours. */
+  --paper:#FAF7EF; --sheet:#FFFFFF; --cream:#F2E8CC; --sun:#FCF0B4; --sun-deep:#FAD771;
+  --lime:#E8F2B2; --sage:#CBEBD5; --mist:#DDEEF6; --teal:#1C4F66;
+  --ink:#22333B; --muted:rgba(34,51,59,.65); --line:rgba(34,51,59,.15);
   --shadow:0 1px 0 rgba(60,55,30,.06),0 6px 14px -6px rgba(60,55,30,.28);
   --display:var(--font-display),"Frank Ruhl Libre","David Libre",Georgia,serif;
   --body:var(--font-body),"Assistant","Segoe UI",Arial,sans-serif;
@@ -29,6 +30,8 @@ header .title .leaves{position:absolute;z-index:-1;pointer-events:none;top:calc(
 header .title .leaves .lf{transform:translate(calc(var(--dx) * .3),calc(var(--dy) * .15 + 10px)) rotate(calc(var(--rot) * .25));animation:leafin 1.6s cubic-bezier(.25,.6,.35,1) both}
 @keyframes leafin{0%{transform:translate(var(--dx),var(--dy)) rotate(var(--rot));opacity:0}20%{opacity:1}100%{transform:translate(calc(var(--dx) * .3),calc(var(--dy) * .15 + 10px)) rotate(calc(var(--rot) * .25));opacity:1}}
 @media (prefers-reduced-motion:reduce){header .title .leaves .lf{animation:none}}
+/* category pages: nothing in the header moves (Kinneret 27.10) */
+header.still-art .hero-art *{animation:none}
 h1{font-family:var(--display);font-weight:900;font-size:var(--h1fs);line-height:.95;margin:0;letter-spacing:-.01em;text-wrap:balance}
 .lede{margin:10px 0 0;color:var(--muted);max-width:36ch;font-size:clamp(.95rem,1.6vw,1.1rem)}
 .sketch-note{display:inline-block;margin-top:12px;font-size:.8rem;font-weight:600;color:var(--ink);background:var(--sun);padding:3px 12px;border-radius:999px;box-shadow:var(--shadow);transform:rotate(-2deg)}
@@ -89,8 +92,8 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .views .chip .il polygon{fill:var(--lime);stroke:var(--ink);stroke-width:4;stroke-linejoin:round}
 .views .chip[aria-pressed="true"] .il polygon{fill:var(--sun-deep);stroke:var(--sheet)}
 /* the map button is light blue so it stands out (Kinneret) */
-.views .mapbtn:not([aria-pressed="true"]){background:#BFDDEE}
-.views .mapbtn:not([aria-pressed="true"]):hover{background:#A9D1E8}
+.views .mapbtn:not([aria-pressed="true"]){background:var(--mist)}
+.views .mapbtn:not([aria-pressed="true"]):hover{background:color-mix(in srgb,var(--mist) 90%,var(--ink))}
 /* gallery / map: one filtered array, one of the two shown */
 .main[data-view="list"] .mapbox{display:none}
 .main[data-view="map"] .list{display:none}
@@ -146,18 +149,19 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .kt.off{background:var(--cream)}
 .kt.fam{background:var(--sun)}
 .cat{font-size:.78rem;background:var(--lime);color:var(--ink);border-radius:999px;padding:1px 9px}
-.cat.zone{font-weight:700;background:var(--sheet);box-shadow:inset 0 0 0 1.5px var(--zc)}
-.cat.z0{--zc:#9CCDE4} .cat.z1{--zc:var(--sun-deep)} .cat.z2{--zc:#C9D96A} .cat.z3{--zc:#8FD0A6}
+/* the region tag keeps its outline (Kinneret): a 3px ring in the cloud colour itself (option ב, 27.10) */
+.cat.zone{font-weight:700;background:var(--sheet);box-shadow:inset 0 0 0 3px var(--zc)}
+.cat.z0{--zc:var(--mist)} .cat.z1{--zc:var(--sun)} .cat.z2{--zc:var(--lime)} .cat.z3{--zc:var(--sage)}
 .note{margin:0;font-size:.86rem;font-weight:600;color:var(--ink);background:var(--sun);border-radius:3px 12px 4px 10px;padding:6px 12px;box-shadow:var(--shadow);transform:rotate(-.6deg)}
 .foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto}
 /* share: a light-blue paper blob with the share icon, the label in grey beside it */
 .sh{display:inline-flex;align-items:center;gap:8px;font:inherit;font-weight:600;font-size:.86rem;color:var(--muted);background:none;border:0;padding:0;cursor:pointer}
 .sh .lbl{line-height:1.15;text-align:right}
-.sh .blob{display:grid;place-items:center;width:30px;height:30px;background:#D3E9F4;border-radius:46% 54% 50% 50%/52% 46% 54% 48%;color:var(--ink);transition:background .15s,transform .15s}
+.sh .blob{display:grid;place-items:center;width:30px;height:30px;background:var(--mist);border-radius:46% 54% 50% 50%/52% 46% 54% 48%;color:var(--ink);transition:background .15s,transform .15s}
 .sh .blob svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.sh:hover .blob{background:#BFDDEE;transform:rotate(-6deg)}
+.sh:hover .blob{background:color-mix(in srgb,var(--mist) 90%,var(--ink));transform:rotate(-6deg)}
 .sh:hover{color:var(--ink)}
-.go{color:var(--ink);background:#F7EBA6;font-weight:400;font-size:.92rem;text-decoration:none;border-radius:999px;padding:4px 14px}
+.go{color:var(--ink);background:var(--sun);font-weight:400;font-size:.92rem;text-decoration:none;border-radius:999px;padding:4px 14px}
 .go:hover{background:var(--sun-deep)}
 .pick{position:absolute;top:-11px;left:54px;display:inline-flex;align-items:center;gap:4px;font-size:.76rem;font-weight:700;color:var(--ink);background:var(--sun-deep);padding:3px 10px;border-radius:999px;transform:rotate(-3deg);box-shadow:var(--shadow);z-index:1}
 .pick svg{width:11px;height:11px;fill:currentColor}
@@ -242,7 +246,8 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 
 /* Spot illustrations as paper cut-outs: soft tints, no outlines, a shadow under every piece */
 .illo{display:block;overflow:visible}
-.illo .y{fill:var(--sun-deep)} .illo .b{fill:#9CCDE4} .illo .w{fill:#FFFFFF} .illo .l{fill:#D8E97A} .illo .s{fill:#A6DDB7} .illo .c{fill:var(--sheet)} .illo .n{fill:var(--ink)} .illo .wd{fill:#E6C9A0} .illo .wd2{fill:#D6B27F} .illo .or{fill:#F4B183} .illo .tb{fill:#5E9CC9} .illo .sq{fill:#A9B97A} .illo .rk{fill:#DCD6C8} .illo .pk{fill:#2E5A73} .illo .rk2{fill:#C9C2B1}
+/* palette only; wood tones (.wd/.wd2) are the one illustration-only exception */
+.illo .y{fill:var(--sun-deep)} .illo .b{fill:var(--mist)} .illo .w{fill:#FFFFFF} .illo .l{fill:var(--lime)} .illo .s{fill:var(--sage)} .illo .c{fill:var(--sheet)} .illo .n{fill:var(--ink)} .illo .wd{fill:#E6C9A0} .illo .wd2{fill:#D6B27F} .illo .or{fill:var(--sun-deep)} .illo .tb{fill:var(--teal)} .illo .sq{fill:var(--sage)} .illo .rk{fill:var(--cream)} .illo .pk{fill:var(--teal)} .illo .rk2{fill:#E6C9A0}
 .illo .y,.illo .l,.illo .s,.illo .c,.illo .n,.illo .b,.illo .w,.illo .wd,.illo .rk,.illo .tb,.illo g.c>*,.illo g.y>*{filter:drop-shadow(0 1.2px 1px rgba(60,55,30,.3))}
 .illo .o{stroke:none}
 .illo path.o:not([class*=" "]),.illo path[fill=none]{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -260,9 +265,9 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 /* the popup forms: suggest a pearl / report a mistake (components/Forms.tsx), the same paper sheet as the check popup, longer and scrolling */
 .form-pop{border:0;padding:0;background:transparent;width:min(620px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain;
   /* the scrollbar on the right and light (Kinneret 27.10): the scrolling box is ltr, the sheet inside is rtl */
-  direction:ltr;scrollbar-width:thin;scrollbar-color:#BFDDEE transparent}
+  direction:ltr;scrollbar-width:thin;scrollbar-color:#DDEEF6 transparent}
 .form-pop::-webkit-scrollbar{width:8px}
-.form-pop::-webkit-scrollbar-thumb{background:#BFDDEE;border-radius:8px}
+.form-pop::-webkit-scrollbar-thumb{background:var(--mist);border-radius:8px}
 .form-pop::-webkit-scrollbar-track{background:transparent}
 .form-pop::backdrop{background:rgba(34,51,59,.35)}
 .form-pop .sheet{position:relative;background:var(--sheet);border-radius:10px 26px 12px 22px/22px 12px 26px 10px;box-shadow:var(--shadow);padding:20px 26px 24px;direction:rtl;color:var(--ink)}
@@ -282,7 +287,7 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .form-pop .field small{display:block;color:var(--muted);font-size:.85rem;line-height:1.45;margin-bottom:4px}
 .form-pop input:not([type=radio]):not([type=checkbox]),.form-pop textarea{font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:7px 11px;width:100%}
 .form-pop textarea{resize:vertical;min-height:2.6em}
-.form-pop input:focus,.form-pop textarea:focus{outline:2px solid #BFDDEE;outline-offset:1px;border-color:#9FCBE3}
+.form-pop input:focus,.form-pop textarea:focus{outline:2px solid var(--mist);outline-offset:1px;border-color:var(--mist)}
 .form-pop .opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .form-pop .pill{display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:.95rem;width:fit-content}
 .form-pop .pill input{accent-color:var(--ink);margin:0}
@@ -336,8 +341,8 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .place .lead{margin:6px 0 0;font-size:1.08rem;line-height:1.7}
 .place .check{margin:4px 0 0;font-size:.85rem;color:var(--muted);background:var(--cream);border-radius:8px;padding:8px 12px}
 .place .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-.share{font:inherit;font-weight:400;font-size:.92rem;border:0;background:#BFDDEE;color:var(--ink);border-radius:999px;padding:4px 16px;cursor:pointer}
-.share:hover{background:#9CCDE4}
+.share{font:inherit;font-weight:400;font-size:.92rem;border:0;background:var(--mist);color:var(--ink);border-radius:999px;padding:4px 16px;cursor:pointer}
+.share:hover{background:color-mix(in srgb,var(--mist) 90%,var(--ink))}
 .place-map #map{height:340px}
 .near h2{font-family:var(--display);font-size:1.5rem;margin:0 0 12px}
 @media (max-width:640px){.place{padding:24px 18px 20px}.place .badge{width:40px;height:40px}.place .badge .illo{width:40px;height:40px}.place h1{padding-left:46px}.place .pick{left:70px}}
@@ -348,7 +353,7 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .sign span{display:inline-block;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%);color:var(--ink);font-weight:600;font-size:1rem;line-height:1;padding:9px 28px 9px 16px;
   background:var(--sun-deep);transform:rotate(-2deg);transition:transform .15s,background-color .15s}
 .sign::after{content:"";display:block;width:7px;height:22px;margin-top:-2px;margin-inline-end:4px;background:var(--ink);border-radius:0 0 3px 3px}
-.sign:hover span{transform:rotate(0) translateX(-2px);background:#F7EBA6}
+.sign:hover span{transform:rotate(0) translateX(-2px);background:var(--sun)}
 
 /* /draft/<key>: a pearl gathered from a link, shown as its real card before Kinneret adds it */
 .draft-page{display:flex;flex-direction:column;gap:18px;padding-block:24px}
@@ -365,8 +370,8 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .about h2{font-family:var(--display);font-weight:700;font-size:1.45rem;margin:22px 0 0}
 .about h3{font-family:var(--display);font-weight:700;font-size:1.1rem;margin:12px 0 0}
 .about p{margin:0;font-size:1.05rem;line-height:1.75}
-.about a{color:var(--ink);text-decoration:underline;text-decoration-color:#98C4A4;text-decoration-thickness:2px;text-underline-offset:3px}
-.about mark{background:linear-gradient(transparent 12%,#FAD771 12%,#FAD771 88%,transparent 88%);color:inherit;font-weight:700;padding:0 3px}
+.about a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--sage);text-decoration-thickness:2px;text-underline-offset:3px}
+.about mark{background:linear-gradient(transparent 12%,var(--sun-deep) 12%,var(--sun-deep) 88%,transparent 88%);color:inherit;font-weight:700;padding:0 3px}
 .about figure{margin:0}
 .about .gap{height:1.75em}
 /* like the table in Kinneret's Word file: one row, right to left = her text, her illustration, Matti's text, his illustration; on a phone two rows */
@@ -397,7 +402,7 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .list-card{display:block;align-self:center;width:min(100%,640px);background:#fff;border-radius:10px;padding:8px;box-shadow:0 1px 2px rgba(0,0,0,.12),0 8px 22px -10px rgba(0,0,0,.3);margin:1.75em 0}
 .list-card img{display:block;width:100%;height:auto;border-radius:4px}
 .about .about-back{text-align:right;margin:1.75em 0 14px}
-.about .back-btn{display:inline-block;color:var(--ink);background:#FAD771;font-weight:700;text-decoration:none;border-radius:999px;padding:9px 24px;box-shadow:var(--shadow);transition:transform .15s}
+.about .back-btn{display:inline-block;color:var(--ink);background:var(--sun-deep);font-weight:700;text-decoration:none;border-radius:999px;padding:9px 24px;box-shadow:var(--shadow);transition:transform .15s}
 .about .back-btn:hover{transform:translateY(-1px)}
 .site-foot{text-align:right;padding:28px 16px 36px}
 .site-foot a{color:var(--muted);font-weight:600;font-size:.92rem;text-decoration:underline;text-underline-offset:3px}

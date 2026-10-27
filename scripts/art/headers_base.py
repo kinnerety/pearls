@@ -3,9 +3,11 @@
 # so the right part above y~235 stays empty and the big motifs live on the left and along the bottom.
 import math, random
 W, H = 1200, 440
-INK = '#22333B'; PAPER = '#FAF7EF'; CREAM = '#F6EFD9'; SUN = '#FCF0B4'; SUN2 = '#F3E27C'
-LIME = '#E2EE9C'; SAGE = '#BEE6CA'; MIST = '#D6EBF4'; WHITE = '#FFFDF7'; BLUE = '#AFD3E3'
-TEAL = '#1C4F66'; SAND = '#F2E8CC'; SKY = '#BFDDEE'; DSAGE = '#98C4A4'; DLIME = '#D6DE8A'; DYEL = '#FAD771'
+# The palette (Kinneret, 27.10.2026): 8 colours + ink + white. The old darker tints (DSAGE, DLIME, MIST, BLUE) now point at the same
+# palette colours; depth comes from the paper shadow and the patterns, not from extra tints.
+INK = '#22333B'; PAPER = '#FAF7EF'; CREAM = '#F2E8CC'; SUN = '#FCF0B4'; SUN2 = '#FAD771'
+LIME = '#E8F2B2'; SAGE = '#CBEBD5'; MIST = '#DDEEF6'; WHITE = '#FFFFFF'; BLUE = '#FAF7EF'   # BLUE = the wave lines on water (off-white, her pick)
+TEAL = '#1C4F66'; SAND = '#F2E8CC'; SKY = '#DDEEF6'; DSAGE = '#CBEBD5'; DLIME = '#E8F2B2'; DYEL = '#FAD771'
 
 def smooth(t):
     t = max(0.0, min(1.0, t)); return t * t * (3 - 2 * t)
@@ -53,6 +55,7 @@ def defs(extra=''):
 <filter id="paper" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#3a3a2a" flood-opacity=".3"/></filter>
 <filter id="paperS" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.2" flood-color="#3a3a2a" flood-opacity=".6"/></filter>
 <pattern id="dw" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(12)"><circle cx="2.5" cy="2.5" r="1.5" fill="{WHITE}"/><circle cx="8" cy="8" r="1.5" fill="{WHITE}"/></pattern>
+<pattern id="dp" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(12)"><circle cx="2.5" cy="2.5" r="1.6" fill="{PAPER}"/><circle cx="8" cy="8" r="1.6" fill="{PAPER}"/></pattern>
 <pattern id="di" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(-8)"><circle cx="3" cy="3" r="1.7" fill="{INK}"/><circle cx="9" cy="9" r="1.7" fill="{INK}"/></pattern>
 <pattern id="wv" width="80" height="42" patternUnits="userSpaceOnUse">{waves}</pattern>
 <pattern id="ww" width="80" height="42" patternUnits="userSpaceOnUse">{wavesW}</pattern>

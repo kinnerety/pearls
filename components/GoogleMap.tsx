@@ -19,10 +19,10 @@ const GAP = 26, PAD = 8;
 // a quiet base map in the site's palette; businesses, bus stops and road shields hidden so only our places stand out
 const STYLES: google.maps.MapTypeStyle[] = [
   { stylers: [{ saturation: -30 }] },
-  { featureType: 'landscape', elementType: 'geometry', stylers: [{ color: '#F6F1E2' }] },
-  { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#CFE6EF' }] },
+  { featureType: 'landscape', elementType: 'geometry', stylers: [{ color: '#FAF7EF' }] },
+  { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#DDEEF6' }] },
   { featureType: 'poi', stylers: [{ visibility: 'off' }] },
-  { featureType: 'poi.park', elementType: 'geometry', stylers: [{ visibility: 'on' }, { color: '#DDEBCB' }] },
+  { featureType: 'poi.park', elementType: 'geometry', stylers: [{ visibility: 'on' }, { color: '#E8F2B2' }] },
   { featureType: 'transit', stylers: [{ visibility: 'off' }] },
   { featureType: 'road', elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
 ];
