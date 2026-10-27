@@ -125,11 +125,12 @@ export const TEXT_DEFAULTS = {
   'suggest.email': { label: 'הצעת פנינה: אפשר לשלוח מייל?', text: 'אם יהיו לנו שאלות על הפנינה, אפשר לשלוח לך מייל? רק לצורך זה, מבטיחים!', multi: true },
   'suggest.email.yes': { label: 'הצעת פנינה: "כן" למייל', text: 'בטח' },
   'suggest.email.ask': { label: 'הצעת פנינה: מה נפתח אחרי "כן" (לפני השדה למייל)', text: 'תודה! מה המייל שלך?' },
-  'suggest.email.no': { label: 'הצעת פנינה: "לא" למייל', text: "בשביל מה יש צ'אטים? תשאלו אותם" },
+  'suggest.email.no': { label: 'הצעת פנינה: "לא" למייל', text: "לא, בשביל מה יש צ'אטים?" },
   'suggest.agree': { label: 'הצעת פנינה: תיבת הסימון', text: "ידוע לי שצוות 'פנינים ישראליות' עובר על הפנינים ומחליט איזו מהן להעלות, אז לא בטוח שההמלצה שלי תעלה לאתר", multi: true },
   'suggest.send': { label: 'הצעת פנינה: הכפתור', text: 'שליחה' },
   'suggest.done.title': { label: 'הצעת פנינה: הודעת ההצלחה, הכותרת', text: 'תודה רבה!' },
   'suggest.done.text': { label: 'הצעת פנינה: הודעת ההצלחה, הטקסט', multi: true, text: 'זה ממש לא מובן מאליו שהשקעת זמן כדי לשתף עם כולנו פנינה ישראלית.\nאנחנו מעלים פנינים חדשות במרוכז בערך כל שבועיים.' },
+  'suggest.done.button': { label: 'הצעת פנינה: הכפתור בהודעת ההצלחה', text: 'חזרה לגלריית הפנינים' },
   // the "report a mistake" form: a first proposal, waiting for Kinneret's wording
   'report.title': { label: 'טופס דיווח על טעות: הכותרת', text: 'מצאת טעות? תודה שסיפרת לנו!' },
   'report.place': { label: 'דיווח על טעות: שאלה 1', text: 'באיזו פנינה מדובר?' },
@@ -143,6 +144,7 @@ export const TEXT_DEFAULTS = {
   'report.send': { label: 'דיווח על טעות: הכפתור', text: 'שליחה' },
   'report.done.title': { label: 'דיווח על טעות: הודעת ההצלחה, הכותרת', text: 'תודה רבה!' },
   'report.done.text': { label: 'דיווח על טעות: הודעת ההצלחה, הטקסט', multi: true, text: 'נבדוק ונתקן בהקדם.' },
+  'report.done.button': { label: 'דיווח על טעות: הכפתור בהודעת ההצלחה', text: 'חזרה לגלריית הפנינים' },
   'about.link': { label: 'הקישור לעמוד "אודות" בתחתית העמודים', text: 'אודות' },
 } satisfies Record<string, TextDef>;
 

@@ -226,7 +226,12 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .check-pop .once{display:flex;gap:8px;align-items:flex-start;text-align:right;font-size:.85rem;line-height:1.45;color:var(--muted);margin:0 0 16px;cursor:pointer}
 .check-pop .once input{margin-top:3px;accent-color:var(--ink);flex:none}
 /* the popup forms: suggest a pearl / report a mistake (components/Forms.tsx), the same paper sheet as the check popup, longer and scrolling */
-.form-pop{border:0;padding:0;background:transparent;width:min(540px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain}
+.form-pop{border:0;padding:0;background:transparent;width:min(620px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain;
+  /* the scrollbar on the right and light (Kinneret 27.10): the scrolling box is ltr, the sheet inside is rtl */
+  direction:ltr;scrollbar-width:thin;scrollbar-color:#BFDDEE transparent}
+.form-pop::-webkit-scrollbar{width:8px}
+.form-pop::-webkit-scrollbar-thumb{background:#BFDDEE;border-radius:8px}
+.form-pop::-webkit-scrollbar-track{background:transparent}
 .form-pop::backdrop{background:rgba(34,51,59,.35)}
 .form-pop .sheet{position:relative;background:var(--sheet);border-radius:10px 26px 12px 22px/22px 12px 26px 10px;box-shadow:var(--shadow);padding:20px 26px 24px;direction:rtl;color:var(--ink)}
 .form-pop .sheet::before{content:"";position:absolute;inset:0 0 auto 0;height:110px;border-radius:inherit;background:var(--mist);opacity:.7}
@@ -254,11 +259,11 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .form-pop .agree input{margin-top:4px;accent-color:var(--ink);flex:none}
 .form-pop .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .form-pop .err{background:var(--sun);border-radius:10px;padding:6px 12px;font-weight:600;margin:0 0 12px;text-align:center}
-.form-pop .send{display:block;margin:0 auto;font:inherit;font-weight:700;border:0;background:var(--ink);color:var(--sheet);border-radius:999px;padding:8px 34px;cursor:pointer}
+.form-pop .send{display:block;width:fit-content;text-decoration:none;margin:0 auto;font:inherit;font-weight:700;border:0;background:var(--ink);color:var(--sheet);border-radius:999px;padding:8px 34px;cursor:pointer}
 .form-pop .send:hover:not(:disabled){background:var(--sun-deep);color:var(--ink)}
 .form-pop .send:disabled{opacity:.6;cursor:wait}
 .form-pop .done{position:relative;text-align:center}
-.form-pop .done p{margin:0 0 10px;line-height:1.6}
+.form-pop .done p{margin:0;line-height:1.6}
 .form-pop .done .send{margin-top:18px}
 @media (max-width:480px){.form-pop .sheet{padding:18px 16px 20px}.form-pop h2{font-size:1.25rem}}
 @media (max-width:1100px){.main{grid-template-columns:230px minmax(0,1fr)}.main[data-panel="closed"]{grid-template-columns:46px minmax(0,1fr)}}

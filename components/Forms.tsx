@@ -26,8 +26,11 @@ export default function Forms({ texts, places }: { texts: Texts; places: PlaceRe
       const a = (e.target as Element | null)?.closest?.('a[href^="#"]');
       if (a && open(a.getAttribute('href') || '')) e.preventDefault();
     };
+    // a click before the page finished loading only changes the address
+    const onHash = () => { if (open(decodeURIComponent(location.hash))) history.replaceState(null, '', location.pathname + location.search); };
     document.addEventListener('click', onClick);
-    return () => document.removeEventListener('click', onClick);
+    window.addEventListener('hashchange', onHash);
+    return () => { document.removeEventListener('click', onClick); window.removeEventListener('hashchange', onHash); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -94,13 +97,13 @@ function Popup({ kind, ref_, texts, art, view, children }: {
       onClose={() => { if (state === 'done') setState('form'); setError(''); }}
       onClick={e => { if (e.target === e.currentTarget) e.currentTarget.close(); }}>
       <div className="sheet">
-        <button type="button" className="x" aria-label="סגירה" onClick={() => ref_.current?.close()}>×</button>
+        {state !== 'done' && <button type="button" className="x" aria-label="סגירה" onClick={() => ref_.current?.close()}>×</button>}
         <svg className="pic" viewBox={view} aria-hidden="true" dangerouslySetInnerHTML={{ __html: art }} />
         {state === 'done' ? (
           <div className="done" role="status">
             <h2 id={`${kind}-title`}>{t('done.title')}</h2>
             {t('done.text').split('\n').filter(Boolean).map((l, i) => <p key={i}>{l}</p>)}
-            <button type="button" className="send" onClick={() => ref_.current?.close()}>סגירה</button>
+            <a className="send" href="/">{t('done.button')}</a>
           </div>
         ) : (
           <form onSubmit={submit}>
