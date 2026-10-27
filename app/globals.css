@@ -14,14 +14,17 @@ body{margin:0;overflow-x:clip;background:var(--paper);color:var(--ink);font-fami
 .wrap{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 header{position:relative;margin-inline:calc(50% - 50vw);min-height:300px;overflow:hidden}
 /* natural 1200:440 ratio so wide screens see the whole illustration (sun and sky included); only beyond ~2600px does it start trimming the sky */
-:root{--hero:clamp(300px,36.67vw,960px)}
+:root{--hero:clamp(300px,36.67vw,960px);--h1fs:clamp(2.4rem,6vw,4.4rem)}
 .hero-art{display:block;width:100%;height:var(--hero)}
 /* the title sits on the illustration: the subtitle's baseline stays ~5mm above the hills (which start at 224/440 of the picture's height under the title), whatever the screen width */
-header .title{position:absolute;bottom:calc(var(--hero) * 0.491 + 5mm);right:max(24px,calc(50vw - 616px));max-width:min(440px,60%)}
-h1{font-family:var(--display);font-weight:900;font-size:clamp(2.4rem,6vw,4.4rem);line-height:.95;margin:0;letter-spacing:-.01em;text-wrap:balance}
+/* the title's middle sits at the height of the hoopoe's beak (31.1% of the picture, Kinneret 27.10) */
+header .title{position:absolute;top:calc(var(--hero) * 0.311 - var(--h1fs) * 0.475);right:max(24px,calc(50vw - 616px));max-width:min(440px,60%);isolation:isolate}
+/* falling leaves around the title and a few behind it; 100 viewBox units = one title font-size */
+header .title .leaves{position:absolute;z-index:-1;pointer-events:none;top:calc(var(--h1fs) * -0.9);right:calc(var(--h1fs) * -0.6);width:calc(var(--h1fs) * 8.07);height:calc(var(--h1fs) * 2.6);overflow:visible}
+h1{font-family:var(--display);font-weight:900;font-size:var(--h1fs);line-height:.95;margin:0;letter-spacing:-.01em;text-wrap:balance}
 .lede{margin:10px 0 0;color:var(--muted);max-width:36ch;font-size:clamp(.95rem,1.6vw,1.1rem)}
 .sketch-note{display:inline-block;margin-top:12px;font-size:.8rem;font-weight:600;color:var(--ink);background:var(--sun);padding:3px 12px;border-radius:999px;box-shadow:var(--shadow);transform:rotate(-2deg)}
-@media (max-width:640px){header .title{position:static;padding:20px 24px 0;max-width:none}header{display:flex;flex-direction:column-reverse}.hero-art{height:220px}}
+@media (max-width:640px){header .title{position:relative;top:auto;right:auto;padding:34px 24px 0;max-width:none}header .title .leaves{top:calc(34px - var(--h1fs) * 0.9);right:calc(24px - var(--h1fs) * 0.6)}header{display:flex;flex-direction:column-reverse}.hero-art{height:220px}}
 
 .filters{position:relative;display:flex;flex-direction:column;gap:12px;background:var(--sheet);border-radius:6px 22px 8px 18px/18px 8px 22px 6px;padding:20px 22px;box-shadow:var(--shadow);margin-top:-36px;z-index:1}
 .frow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
