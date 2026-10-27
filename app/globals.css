@@ -315,6 +315,9 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 /* the original list: a screenshot in a card, opens full size */
 .list-card{display:block;align-self:center;width:min(100%,640px);background:#fff;border-radius:10px;padding:8px;box-shadow:0 1px 2px rgba(0,0,0,.12),0 8px 22px -10px rgba(0,0,0,.3);margin:1.75em 0}
 .list-card img{display:block;width:100%;height:auto;border-radius:4px}
+.about .about-back{text-align:center;margin-top:1.75em}
+.about .back-btn{display:inline-block;color:var(--ink);background:#FAD771;font-weight:700;text-decoration:none;border-radius:999px;padding:9px 24px;box-shadow:var(--shadow);transition:transform .15s}
+.about .back-btn:hover{transform:translateY(-1px)}
 .site-foot{text-align:right;padding:28px 16px 36px}
 .site-foot a{color:var(--muted);font-weight:600;font-size:.92rem;text-decoration:underline;text-underline-offset:3px}
 .site-foot a:hover{color:var(--ink)}
