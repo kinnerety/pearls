@@ -39,3 +39,8 @@
 .adm-table tr[aria-busy] td{opacity:.7}
 .adm-preview{white-space:pre-wrap;background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;margin:0;font-size:.9rem}
 @media (max-width:640px){.adm-table th:nth-child(3),.adm-table td:nth-child(3),.adm-table th:nth-child(7),.adm-table td:nth-child(7),.adm-table th:nth-child(8),.adm-table td:nth-child(8),.adm-table th:nth-child(9),.adm-table td:nth-child(9){display:none}}
+
+/* the about page's questions and answers (/admin/about) */
+.adm-faq{display:flex;flex-direction:column;gap:10px}
+.adm-faq-item{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--paper)}
+.adm-faq-item b{font-size:.85rem;color:var(--muted)}

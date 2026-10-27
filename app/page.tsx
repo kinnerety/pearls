@@ -3,6 +3,7 @@ import { getPlaces, getTexts } from '@/lib/store';
 import { SITE_URL, slugOf } from '@/lib/slug';
 import Hero from '@/components/Hero';
 import Explorer from '@/components/Explorer';
+import SiteFoot from '@/components/SiteFoot';
 
 // pninim-il.co.il is the one official address, so the backup vercel.app address doesn't count as a second site
 export const metadata: Metadata = { alternates: { canonical: '/' } };
@@ -21,6 +22,7 @@ export default async function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <Hero />
       <Explorer places={places} texts={texts} />
+      <SiteFoot label={texts['about.link']} />
     </div>
   );
 }

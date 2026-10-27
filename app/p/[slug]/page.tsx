@@ -12,6 +12,7 @@ import PlaceMap from '@/components/PlaceMap';
 import ShareButton from '@/components/ShareButton';
 import { shareText } from '@/lib/share';
 import { TextsProvider } from '@/components/TextsContext';
+import SiteFoot from '@/components/SiteFoot';
 import { isApprox } from '@/lib/geo';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -93,6 +94,7 @@ export default async function PlacePage({ params }: Props) {
           <TextsProvider texts={texts}><div className="list">{near.map(o => <PlaceCard key={o.id} p={o} />)}</div></TextsProvider>
         </section>
       )}
+      <SiteFoot label={texts['about.link']} />
     </div>
   );
 }
