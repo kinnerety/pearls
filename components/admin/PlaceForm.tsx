@@ -90,7 +90,7 @@ export default function PlaceForm({ initial, hidden: hidden0, updatedAt }: { ini
 
       <section className="adm-card">
         <h2>מיקום</h2>
-        <p className="adm-hint">אפשר לחפש כתובת או שם מקום, ללחוץ על המפה, או לגרור את הנקודה. בלי מיקום מדויק, הנקודה תוצג באתר כ"מיקום משוער, בתוך היישוב".</p>
+        <p className="adm-hint">אפשר לחפש כתובת או שם מקום, ללחוץ על המפה, או לגרור את הנקודה. בלי מיקום מדויק, הנקודה תוצג במרכז היישוב.</p>
         <div className="adm-row">
           <input value={q} onChange={e => setQ(e.target.value)} placeholder="כתובת או שם המקום" onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); search(q || `${p.name} ${p.town}`); } }} />
           <button type="button" className="adm-btn" disabled={busy} onClick={() => search(q || `${p.name} ${p.town}`)}>חיפוש מיקום</button>
