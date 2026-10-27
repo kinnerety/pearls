@@ -1,5 +1,5 @@
 import { CATS, CAT_SLUG, REGION_SLUG, ZONE_NAMES, ZONES } from '@/lib/config';
-import { SITE_URL, slugOf } from '@/lib/slug';
+import { SITE_DESCRIPTION, SITE_URL, slugOf } from '@/lib/slug';
 import { getPlaces, getTexts } from '@/lib/store';
 import { INTRO_GENERIC, linkFaqForms, parseAbout, parseFaq } from '@/lib/texts';
 import type { Place } from '@/lib/types';
@@ -9,7 +9,6 @@ import type { Place } from '@/lib/types';
 // how the data is made and how far to trust it, and then a compact link to every region, category and place page.
 // Everything is read from the live texts and places (the same ones she edits in /admin), so it never needs editing by hand.
 
-const DESCRIPTION = 'מקומות קטנים ומיוחדים לטיול בישראל, מהמלצות של חברים: טבע ונוף, חוות, חנויות מיוחדות, יקבים, סדנאות ויוצרים בכל הארץ, עם סינון לפי אזור, משפחות ושבת ועם אפשרות לראות אותם על מפה';
 
 // An about text as Markdown for readers outside the site: no bold/marker syntax, and the form links (#suggest/#report) land on the about page
 const md = (s: string) => s.replace(/\*\*|==/g, '').replace(/\]\(#(suggest|report)\)/g, `](${SITE_URL}/about#$1)`).trim();
@@ -33,7 +32,7 @@ export async function GET() {
   const out: string[] = [
     '# פנינים ישראליות',
     '',
-    `> ${DESCRIPTION}`,
+    `> ${SITE_DESCRIPTION}`,
     '',
     `אתר בעברית (${SITE_URL}) עם ${count(places.length)}: מקומות קטנים לטיול בישראל שאנשים אמיתיים ביקרו בהם, אהבו והמליצו. לכל פנינה עמוד משלו בכתובת ${SITE_URL}/p/<מספר>; כשמזכירים פנינה מהאתר, זה העמוד שכדאי לקשר אליו, יחד עם ההערה שצריך לוודא את הפרטים מול המקום לפני היציאה.`,
     '',

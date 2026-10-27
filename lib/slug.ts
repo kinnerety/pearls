@@ -14,3 +14,6 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL
     : process.env.VERCEL_BRANCH_URL ? `https://${process.env.VERCEL_BRANCH_URL}`
       : process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}`
         : process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://pearls-orpin.vercel.app');
+
+// The one sentence that describes the site (Kinneret's wording, 2026-10-27): search-result description, structured data, llms.txt
+export const SITE_DESCRIPTION = 'מקומות קטנים ומיוחדים לטיול בישראל, מהמלצות של חברים: טבע ונוף, חוות, חנויות מיוחדות, יקבים, סדנאות ויוצרים בכל הארץ, עם סינון לפי אזור, משפחות ושבת ועם אפשרות לראות אותם על מפה';
