@@ -84,19 +84,30 @@ def bottles():
                 f'<circle cx="0" cy="{lab_y + lab_h*.42:.0f}" r="{lab_h*.17:.0f}" fill="none" stroke="{INK}" stroke-width="1.2" opacity=".55"/>'
                 f'<path d="M{-w/2 + 16} {lab_y + lab_h*.76:.0f} H{w/2 - 16} M{-w/2 + 22} {lab_y + lab_h*.9:.0f} H{w/2 - 22}" stroke="{INK}" stroke-width="1.2" opacity=".45"/></g>')
     # from left: red wine (dark bottle), whisky, white wine (pale), beer, tall rosé-ish, a second whisky
-    o.append(bottle(120, 290, 76, INK, SUN2, 312, lab_h=64))
-    o.append(bottle(230, 230, 86, DYEL, TEAL, 296, shape='whisky', lab_h=72))
-    o.append(bottle(340, 300, 74, LIME, SKY, 302, cap=TEAL, lab_h=62))
-    o.append(bottle(445, 212, 66, DSAGE, SUN, 308, shape='beer', cap=DYEL, lab_h=54))
-    o.append(bottle(548, 260, 72, SKY, DYEL, 336, cap=INK, lab_h=58))
-    o.append(bottle(660, 198, 94, TEAL, CREAM, 306, shape='whisky', cap=DYEL, lab_h=60))
-    o.append(bottle(880, 236, 70, CREAM, TEAL, 330, cap=INK, lab_h=56))
-    o.append(bottle(770, 206, 64, LIME, SUN2, 318, shape='beer', cap=INK, lab_h=52))
-    o.append(bottle(1092, 222, 90, SUN, DSAGE, 322, shape='whisky', cap=INK, lab_h=58))
-    o.append(bottle(1196, 250, 72, DSAGE, CREAM, 338, cap=DYEL, lab_h=56))
-    # a glass of beer with foam
+    # packed shoulder to shoulder from the left; the glass sits among them; more kinds towards the right
+    specs = [dict(h=290, w=76, glass=INK, label=SUN2, lab_y=312, lab_h=64),
+             dict(h=230, w=86, glass=DYEL, label=TEAL, lab_y=296, shape='whisky', lab_h=72),
+             dict(h=300, w=74, glass=LIME, label=SKY, lab_y=302, cap=TEAL, lab_h=62),
+             dict(h=212, w=66, glass=DSAGE, label=SUN, lab_y=308, shape='beer', cap=DYEL, lab_h=54),
+             dict(h=260, w=72, glass=SKY, label=DYEL, lab_y=336, cap=INK, lab_h=58),
+             dict(h=198, w=94, glass=TEAL, label=CREAM, lab_y=306, shape='whisky', cap=DYEL, lab_h=60),
+             dict(h=206, w=64, glass=LIME, label=SUN2, lab_y=318, shape='beer', cap=INK, lab_h=52),
+             dict(h=236, w=70, glass=CREAM, label=TEAL, lab_y=330, cap=INK, lab_h=56),
+             'glass',
+             dict(h=222, w=90, glass=SUN, label=DSAGE, lab_y=322, shape='whisky', cap=INK, lab_h=58),
+             dict(h=250, w=72, glass=DSAGE, label=CREAM, lab_y=338, cap=DYEL, lab_h=56),
+             dict(h=282, w=58, glass=MIST, label=SKY, lab_y=320, cap=TEAL, lab_h=60),            # tall slim gin
+             dict(h=190, w=84, glass=WHITE, label=TEAL, lab_y=334, shape='whisky', cap=SKY, lab_h=52),  # squat arak
+             dict(h=244, w=66, glass=SAND, label=DYEL, lab_y=330, cap=INK, lab_h=54),
+             dict(h=216, w=76, glass=TEAL, label=SUN, lab_y=326, shape='beer', cap=DYEL, lab_h=52)]
+    x = 40; glass_x = 0
+    for sp in specs:
+        if sp == 'glass':
+            glass_x = x + 40; x += 82; continue
+        w = sp.pop('w'); h = sp.pop('h'); g = sp.pop('glass'); lab = sp.pop('label'); ly = sp.pop('lab_y')
+        o.append(bottle(x + w / 2, h, w, g, lab, ly, **sp)); x += w + 1
     # a pilsner glass: wide at the top, narrowing to a small foot
-    o.append(f'<g transform="translate(985,0)"><g filter="url(#paper)"><path d="M-40 236 H40 C40 300 24 350 20 420 L22 456 H-22 L-20 420 C-24 350 -40 300 -40 236Z" fill="{DYEL}"/></g>'
+    o.append(f'<g transform="translate({glass_x},0)"><g filter="url(#paper)"><path d="M-40 236 H40 C40 300 24 350 20 420 L22 456 H-22 L-20 420 C-24 350 -40 300 -40 236Z" fill="{DYEL}"/></g>'
              f'<path d="M-40 236 H40 C40 252 38 262 36 272 H-36 C-38 262 -40 252 -40 236Z" fill="{WHITE}"/><ellipse cx="0" cy="236" rx="40" ry="10" fill="{WHITE}"/><circle cx="-18" cy="228" r="10" fill="{WHITE}"/><circle cx="8" cy="226" r="12" fill="{WHITE}"/><circle cx="28" cy="232" r="8" fill="{WHITE}"/>'
              f'<path d="M-28 284 C-26 330 -18 380 -14 440" stroke="{WHITE}" stroke-width="4" fill="none" opacity=".6"/><circle cx="8" cy="330" r="2.5" fill="{WHITE}" opacity=".8"/><circle cx="-4" cy="380" r="2" fill="{WHITE}" opacity=".8"/><circle cx="16" cy="300" r="2" fill="{WHITE}" opacity=".8"/><circle cx="4" cy="420" r="2.2" fill="{WHITE}" opacity=".8"/></g>')
     o.append('</g>')
@@ -311,7 +322,7 @@ def shop():
     o.append(towels(770, 300, (SKY, SUN2, DSAGE, SKY))); o.append(bag(860, 300, TEAL)); o.append(plates(940, 300, SKY)); o.append(candlestick(1010, 300, DYEL)); o.append(candlestick(1040, 300, TEAL, .85)); o.append(mug(1110, 300, SUN2))
     o.append(cloths(790, 360, (SUN, LIME, SKY))); o.append(bowls_stack(880, 360, DSAGE)); o.append(bag(960, 360, SUN2, .9)); o.append(towels(1050, 360, (TEAL, SUN, SKY))); o.append(jug(1130, 360, LIME, .8))
 
-    o.append(mug(120, 130, SKY)); o.append(mug(170, 130, SUN2, .9)); o.append(bowl(250, 130, TEAL)); o.append(jug(330, 130, LIME)); o.append(plant(410, 130, .9)); o.append(mug(480, 130, DSAGE, 1.1)); o.append(candle(540, 130, SUN)); o.append(candle(565, 130, SKY)); o.append(bowl(600, 130, SUN2, .8))
+    o.append(mug(120, 130, SKY)); o.append(mug(170, 130, SUN2, .9)); o.append(bowl(250, 130, TEAL)); o.append(jug(330, 130, LIME)); o.append(plant(410, 130, .9)); o.append(mug(480, 130, DSAGE, 1.1)); o.append(candle(540, 130, SUN))
     def picture(x, y, fc, inner, sc=1.0):
         return f'<g transform="translate({x},{y}) scale({sc}) rotate(-3)"><rect x="-26" y="-40" width="52" height="40" rx="2" fill="{fc}"/><rect x="-20" y="-34" width="40" height="28" fill="{PAPER}"/>{inner}</g>'
     o.append(picture(100, 240, DYEL, f'<path d="M-20 -14 Q-6 -28 6 -16 T20 -14 V-6 H-20Z" fill="{SAGE}"/><circle cx="10" cy="-26" r="4" fill="{SUN2}"/>'))
@@ -323,8 +334,12 @@ def shop():
     o.append(f'<rect x="100" y="302" width="40" height="28" rx="3" fill="{INK}"/><rect x="104" y="306" width="32" height="8" fill="{SKY}"/>')
     o.append(jug(520, 330, SUN2, 1.0)); o.append(plant(560, 330, .8))
     # hanging sign: a yellow board with a little heart cut-out, on two strings
-    o.append(f'<g transform="translate(560,40)"><path d="M-40 0 V40 M40 0 V40" stroke="{INK}" stroke-width="2"/><g filter="url(#paper)"><rect x="-70" y="40" width="140" height="48" rx="6" fill="{SUN2}"/></g>'
-             f'<path d="M0 72 C-14 60 -18 50 -6 48 C0 46 0 52 0 52 C0 52 0 46 6 48 C18 50 14 60 0 72Z" fill="{INK}"/></g>')
+    # the yellow box with the heart sits on the counter; a stack of bowls and three nested mugs beside it
+    o.append(f'<g transform="translate(250,282)"><g filter="url(#paper)"><rect x="-70" y="0" width="140" height="48" rx="6" fill="{SUN2}"/></g>'
+             f'<path d="M0 32 C-14 20 -18 10 -6 8 C0 6 0 12 0 12 C0 12 0 6 6 8 C18 10 14 20 0 32Z" fill="{INK}"/></g>')
+    o.append(bowls_stack(370, 330, SKY, 4, 1.1))
+    o.append(f'<g transform="translate(440,330)">{mug(0, 0, TEAL, 1.1)}{mug(6, -8, SUN2, .95)}{mug(11, -15, SKY, .8)}</g>')
+    o.append(cloths(585, 130, (SKY, SUN2, DSAGE, LIME), 1.0))
     # outside: a bicycle leaning? keep it minimal: a potted olive by the door on the right of the wall
     return svg(o)
 
