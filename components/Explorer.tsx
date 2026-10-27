@@ -115,7 +115,7 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
   // back to the whole site from a region/category page (Kinneret, 27.10.2026: not "all the pearls in this region"; labelled "כל הפנינים בכל האזורים" / "...בכל הקטגוריות")
   const allLink = <a className="chip all home" href="/"><Illo k="acorn" />{scope?.kind === 'cat' ? 'כל הפנינים בכל הקטגוריות' : 'כל הפנינים בכל האזורים'}{total != null && <span className="n">{total}</span>}</a>;
   // top-left of the region panel: opens the suggest-a-pearl form (Kinneret, 27.10.2026; the acorn to the right of the text)
-  const recommend = <a className="recommend" href="#suggest"><svg className="illo" viewBox="0 0 64 64" aria-hidden="true" dangerouslySetInnerHTML={{ __html: FAVICON_ACORN }} />המלצה על פנינה</a>;
+  const recommend = <a className="recommend" href="#suggest"><svg className="fav" viewBox="0 0 64 64" aria-hidden="true" dangerouslySetInnerHTML={{ __html: FAVICON_ACORN }} />להמליץ על פנינה</a>;
   // the region clouds: on the home page and on category pages (Kinneret, 27.10.2026: "דווקא שם זה חשוב"); a region page has no use for them
   const clouds = (
         <div className="clouds" id="f-region">
