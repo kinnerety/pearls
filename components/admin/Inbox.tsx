@@ -39,6 +39,7 @@ export default function Inbox({ subs, places }: { subs: Submission[]; places: { 
                   <h2>{d.name}</h2>
                   <dl>
                     <dt>מה זה</dt><dd>{d.what}</dd>
+                    {d.link && <><dt>קישור</dt><dd>{/^https?:\/\//i.test(d.link) ? <a href={d.link} target="_blank" rel="noopener" dir="ltr">{d.link}</a> : <span dir="ltr">{d.link}</span>}</dd></>}
                     <dt>איפה</dt><dd>{d.where}</dd>
                     {d.love && <><dt>מה אהבו</dt><dd>{d.love}</dd></>}
                     {d.shabbat && <><dt>פתוח בשבת</dt><dd>{ANSWER[d.shabbat] || d.shabbat}</dd></>}

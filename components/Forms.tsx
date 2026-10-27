@@ -39,6 +39,7 @@ export default function Forms({ texts }: { texts: Texts }) {
           <Field q={texts['suggest.name']} hint={texts['suggest.name.hint']}><input name="name" required maxLength={120} /></Field>
           <Field q={texts['suggest.what']} hint={texts['suggest.what.hint']}><input name="what" required maxLength={200} /></Field>
         </div>
+        <Field q={texts['suggest.link']} hint={texts['suggest.link.hint']}><input name="link" inputMode="url" dir="ltr" maxLength={300} /></Field>
         <Field q={texts['suggest.where']} hint={texts['suggest.where.hint']}><input name="where" required maxLength={200} /></Field>
         <Field q={texts['suggest.love']} hint={texts['suggest.love.hint']}><textarea name="love" rows={3} maxLength={2000} /></Field>
         <Choices q={texts['suggest.shabbat']} name="shabbat" options={texts['suggest.choices']} />
