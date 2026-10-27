@@ -19,10 +19,10 @@ const GAP = 26, PAD = 8;
 // a quiet base map in the site's palette; businesses, bus stops and road shields hidden so only our places stand out
 const STYLES: google.maps.MapTypeStyle[] = [
   { stylers: [{ saturation: -30 }] },
-  { featureType: 'landscape', elementType: 'geometry', stylers: [{ color: '#F6F1E2' }] },
-  { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#CFE6EF' }] },
+  { featureType: 'landscape', elementType: 'geometry', stylers: [{ color: '#FAF7EF' }] },
+  { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#BFDDEE' }] },
   { featureType: 'poi', stylers: [{ visibility: 'off' }] },
-  { featureType: 'poi.park', elementType: 'geometry', stylers: [{ visibility: 'on' }, { color: '#DDEBCB' }] },
+  { featureType: 'poi.park', elementType: 'geometry', stylers: [{ visibility: 'on' }, { color: '#E8F2B2' }] },
   { featureType: 'transit', stylers: [{ visibility: 'off' }] },
   { featureType: 'road', elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
 ];
@@ -161,7 +161,7 @@ export default function GoogleMap({ items, zoom, apiKey, onFail }: Props) {
       if (dead || !box.current) return;
       const { MarkerLayer, CardPopup } = overlays(maps, core);
       const m = new maps.Map(box.current, {
-        styles: STYLES, backgroundColor: '#DDEEF6', clickableIcons: false, gestureHandling: 'cooperative',
+        styles: STYLES, backgroundColor: '#BFDDEE', clickableIcons: false, gestureHandling: 'cooperative',
         mapTypeControl: false, streetViewControl: false, fullscreenControl: false, zoomControl: true, maxZoom: 18,
       });
       m.fitBounds(ISRAEL, 0);

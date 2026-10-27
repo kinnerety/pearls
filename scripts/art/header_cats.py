@@ -78,7 +78,7 @@ def bottles():
         else:  # beer: short neck
             body = f'<path d="M{-w/2} 470 V{top + 44} C{-w/2} {top + 30} {-w*.2:.1f} {top + 26} {-w*.2:.1f} {top + 14} V{top} H{w*.2:.1f} V{top + 14} C{w*.2:.1f} {top + 26} {w/2} {top + 30} {w/2} {top + 44} V470Z"'
             capd = f'<rect x="{-w*.24:.1f}" y="{top - 3}" width="{w*.48:.1f}" height="9" rx="1.5" fill="{cap}"/>'
-        return (f'<g transform="translate({x},0)"><g filter="url(#paper)"><path {body} fill="{glass}"/></g>{capd}'
+        return (f'<g transform="translate({x},0)"><g filter="url(#paper)">{body} fill="{glass}"/></g>{capd}'
                 f'<path d="M{-w/2 + 5} {top + h*neck + 36} V{466}" stroke="{WHITE}" stroke-width="3" opacity=".55"/>'
                 f'<rect x="{-w/2 + 7}" y="{lab_y}" width="{w - 14}" height="{lab_h}" rx="3" fill="{label}" filter="url(#paperS)"/>'
                 f'<circle cx="0" cy="{lab_y + lab_h*.42:.0f}" r="{lab_h*.17:.0f}" fill="none" stroke="{INK}" stroke-width="1.2" opacity=".55"/>'

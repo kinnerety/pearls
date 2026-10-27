@@ -3,9 +3,11 @@
 # so the right part above y~235 stays empty and the big motifs live on the left and along the bottom.
 import math, random
 W, H = 1200, 440
-INK = '#22333B'; PAPER = '#FAF7EF'; CREAM = '#F6EFD9'; SUN = '#FCF0B4'; SUN2 = '#F3E27C'
-LIME = '#E2EE9C'; SAGE = '#BEE6CA'; MIST = '#D6EBF4'; WHITE = '#FFFDF7'; BLUE = '#AFD3E3'
-TEAL = '#1C4F66'; SAND = '#F2E8CC'; SKY = '#BFDDEE'; DSAGE = '#98C4A4'; DLIME = '#D6DE8A'; DYEL = '#FAD771'
+# The palette (Kinneret, 27.10.2026): 8 colours + ink + white. The old darker tints (DSAGE, DLIME, MIST, BLUE) now point at the same
+# palette colours; depth comes from the paper shadow and the patterns, not from extra tints.
+INK = '#22333B'; PAPER = '#FAF7EF'; CREAM = '#F2E8CC'; SUN = '#FCF0B4'; SUN2 = '#FAD771'
+LIME = '#E8F2B2'; SAGE = '#CBEBD5'; MIST = '#BFDDEE'; WHITE = '#FFFFFF'; BLUE = '#FAF7EF'   # BLUE = the wave lines on water (off-white, her pick)
+TEAL = '#1C4F66'; SAND = '#F2E8CC'; SKY = '#BFDDEE'; DSAGE = '#CBEBD5'; DLIME = '#E8F2B2'; DYEL = '#FAD771'
 
 def smooth(t):
     t = max(0.0, min(1.0, t)); return t * t * (3 - 2 * t)

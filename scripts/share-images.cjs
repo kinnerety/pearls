@@ -8,9 +8,9 @@ const path = require('path');
 const src = fs.readFileSync(path.join(__dirname, '../lib/illo.ts'), 'utf8');
 const ILLO = eval('(' + src.slice(src.indexOf('{', src.indexOf('ILLO'))).replace(/;\s*$/, '') + ')');
 const CATS = [
-  ['טבע ונוף', 'valley', '#BFE3C9'], ['משהו לאכול', 'bread', '#F3E3B8'], ['יקבים, מבשלות ומזקקות', 'wine', '#FAE59A'], ['סדנאות', 'apron', '#CFE6F2'],
-  ['סיורים ומפגשים', 'finjan', '#DFEBA0'], ['חקלאות', 'tractor', '#FAE59A'], ['בעלי חיים', 'hedgehog', '#BFE3C9'],
-  ['יוצרים וחנויות', 'stand', '#CFE6F2'], ['תרבות', 'tile', '#DFEBA0'], ['עגלות קפה', 'coffee', '#FAE59A'], ['אתרי אינטרנט', 'almond', '#CFE6F2'],
+  ['טבע ונוף', 'valley', '#CBEBD5'], ['משהו לאכול', 'bread', '#F2E8CC'], ['יקבים, מבשלות ומזקקות', 'wine', '#FCF0B4'], ['סדנאות', 'apron', '#BFDDEE'],
+  ['סיורים ומפגשים', 'finjan', '#E8F2B2'], ['חקלאות', 'tractor', '#FCF0B4'], ['בעלי חיים', 'hedgehog', '#CBEBD5'],
+  ['יוצרים וחנויות', 'stand', '#BFDDEE'], ['תרבות', 'tile', '#E8F2B2'], ['עגלות קפה', 'coffee', '#FCF0B4'], ['אתרי אינטרנט', 'almond', '#BFDDEE'],
 ];
 const out = process.argv[2] || path.join(__dirname, '../public/share');
 (async () => {
@@ -23,7 +23,7 @@ const out = process.argv[2] || path.join(__dirname, '../public/share');
       document.body.innerHTML = `
       <div id="card" style="position:relative;width:1080px;height:1080px;overflow:hidden;background:${bg};font-family:var(--display);direction:rtl">
         <svg width="1080" height="1080" style="position:absolute;inset:0;opacity:.55"><defs><pattern id="d" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(12)"><circle cx="6" cy="6" r="3" fill="#fff"/><circle cx="19" cy="19" r="3" fill="#fff"/></pattern></defs><rect width="1080" height="1080" fill="url(#d)"/></svg>
-        <div style="position:absolute;left:50%;top:440px;width:640px;height:600px;transform:translate(-50%,-50%) rotate(-3deg);background:#FFFDF7;border-radius:46% 54% 50% 50%/52% 46% 54% 48%;box-shadow:0 4px 0 rgba(60,55,30,.08),0 22px 40px -16px rgba(60,55,30,.45)"></div>
+        <div style="position:absolute;left:50%;top:440px;width:640px;height:600px;transform:translate(-50%,-50%) rotate(-3deg);background:#FFFFFF;border-radius:46% 54% 50% 50%/52% 46% 54% 48%;box-shadow:0 4px 0 rgba(60,55,30,.08),0 22px 40px -16px rgba(60,55,30,.45)"></div>
         <svg class="illo" viewBox="0 0 64 64" style="position:absolute;left:50%;top:440px;width:430px;height:430px;transform:translate(-50%,-50%)">${svg}</svg>
         <div style="position:absolute;left:0;right:0;top:770px;text-align:center">
           <div style="margin-top:60px;font-weight:900;font-size:92px;line-height:1;color:#22333B">פנינים ישראליות</div>
