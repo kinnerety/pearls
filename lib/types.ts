@@ -19,6 +19,10 @@ export type Place = {
   pick: boolean;
   /** Kinneret checked the details herself (after an AI gathered them). Admin only, never shown on the site. */
   checked?: boolean;
+  /** When Kinneret approved the place (ISO date). Existing places got the launch date. For a future "new pearls" filter. */
+  approved_at?: string;
+  /** Recommender's name, when the suggester asked to be credited (form). Stored only; not shown yet. */
+  credit?: string;
   tags: string[];
   ctags: string[];
   hours?: string;
