@@ -163,15 +163,16 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
                   n={places.filter(p => matches(p, st, 'cat') && p.cats.includes(k)).length}><Illo k={CAT_ILLO[k]} />{k}</Chip>
               ))}
             </div>}
-            {hide === 'cat' && <div className="grp" id="f-home">{allLink}</div>}
+            {/* a category page has no category chips, so (Kinneret, 27.10.2026) no "עוד העדפות" heading either: the home link and the three preferences side by side, the note under them */}
             <div className="grp" id="f-pref">
-              <span className="flabel">עוד העדפות</span>
-              <p className="fnote">{texts['prefs.note']}</p>
+              {hide === 'cat' ? allLink : <span className="flabel">עוד העדפות</span>}
+              {hide !== 'cat' && <p className="fnote">{texts['prefs.note']}</p>}
               {PREFS.map(k => {
                 const on = st.prefs.includes(k), n = places.filter(p => matches(p, st) && hasPref(p, k)).length;
                 if (!n && !on) return null;
                 return <Chip key={k} pressed={on} n={n} onClick={() => togglePref(k, on)}>{PREF_LABEL[k]}</Chip>;
               })}
+              {hide === 'cat' && <p className="fnote under">{texts['prefs.note']}</p>}
             </div>
           </div>
         </aside>

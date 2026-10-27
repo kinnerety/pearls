@@ -73,7 +73,7 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .qmini .qbox button svg{width:13px;height:13px}
 /* the way back to the whole site from a region/category page */
 a.chip.home{display:inline-block;text-decoration:none;line-height:1.5}
-#f-home{margin-bottom:6px}
+.side .fnote.under{margin:6px 0 0}
 .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
 .bar .now{display:flex;align-items:center;gap:10px}
 .bar .now .blob{width:56px;height:56px;display:grid;place-items:center;transition:transform .3s}
