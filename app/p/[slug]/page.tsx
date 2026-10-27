@@ -84,7 +84,6 @@ export default async function PlacePage({ params }: Props) {
       {p.lat != null && (
         <section className="mapbox place-map" aria-label="מפה">
           <PlaceMap p={p} />
-          {isApprox(p) && <div className="legend"><span>{texts['place.approx']}</span></div>}
         </section>
       )}
       {near.length > 0 && (
