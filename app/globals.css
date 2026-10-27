@@ -240,6 +240,9 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .form-pop .pic{position:relative;display:block;width:200px;height:88px;margin:0 auto 8px}
 .form-pop h2{position:relative;font-family:var(--display);font-weight:900;font-size:1.45rem;line-height:1.25;margin:0 0 18px;text-align:center;text-wrap:balance}
 .form-pop .field{display:flex;flex-direction:column;gap:2px;margin:0 0 16px;border:0;padding:0;min-width:0}
+.form-pop .two{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.form-pop .two .field{grid-template-rows:subgrid;grid-row:span 3;display:grid}
+@media (max-width:480px){.form-pop .two{grid-template-columns:1fr}.form-pop .two .field{display:flex}}
 .form-pop .field legend{padding:0;margin-bottom:2px}
 .form-pop .field b{font-weight:700;font-size:1rem}
 .form-pop .field small{display:block;color:var(--muted);font-size:.85rem;line-height:1.45;margin-bottom:4px}

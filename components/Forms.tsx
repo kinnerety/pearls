@@ -37,8 +37,11 @@ export default function Forms({ texts, places }: { texts: Texts; places: PlaceRe
   return (
     <>
       <Popup kind="suggest" ref_={refs.suggest} texts={texts} art={ACORN_REST_SVG} view="0 28 160 70">
-        <Field q={texts['suggest.name']} hint={texts['suggest.name.hint']}><input name="name" required maxLength={120} /></Field>
-        <Field q={texts['suggest.what']} hint={texts['suggest.what.hint']}><input name="what" required maxLength={200} /></Field>
+        {/* the name and "what is it" side by side, to keep the form shorter (Kinneret 27.10) */}
+        <div className="two">
+          <Field q={texts['suggest.name']} hint={texts['suggest.name.hint']}><input name="name" required maxLength={120} /></Field>
+          <Field q={texts['suggest.what']} hint={texts['suggest.what.hint']}><input name="what" required maxLength={200} /></Field>
+        </div>
         <Field q={texts['suggest.where']} hint={texts['suggest.where.hint']}><input name="where" required maxLength={200} /></Field>
         <Field q={texts['suggest.love']} hint={texts['suggest.love.hint']}><textarea name="love" rows={3} maxLength={2000} /></Field>
         <Choices q={texts['suggest.shabbat']} name="shabbat" options={texts['suggest.choices']} />
