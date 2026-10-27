@@ -2,6 +2,7 @@ import { CATS, CAT_SLUG, REGION_SLUG, ZONE_NAMES, ZONES } from '@/lib/config';
 import { catIntro, regionIntro } from '@/lib/intros';
 import { SITE_URL, slugOf } from '@/lib/slug';
 import { getPlaces, getTexts } from '@/lib/store';
+import { INTRO_GENERIC } from '@/lib/texts';
 import type { Place } from '@/lib/types';
 
 // /llms.txt: a plain-Markdown guide to the site for AI assistants and search engines (llmstxt.org):
@@ -10,6 +11,8 @@ import type { Place } from '@/lib/types';
 
 const DESCRIPTION = 'מקומות קטנים ומיוחדים לטיול בישראל, מהמלצות של חברים: טבע ונוף, חוות, חנויות מיוחדות, יקבים, סדנאות ויוצרים בכל הארץ, עם סינון לפי אזור, משפחות ושבת ועם אפשרות לראות אותם על מפה';
 
+// Kinneret's own intro for a page; the generic default says nothing specific, so AI engines get the automatic summary instead
+const own = (t?: string) => (t?.trim() && t.trim() !== INTRO_GENERIC ? t.trim() : '');
 const firstSentence = (s: string) => (s.match(/^[^.!?]*[.!?]/)?.[0] ?? s).trim();
 const line = (p: Place) => {
   const facts = [p.town, p.region.join(', '), p.cats.join(', ')].filter(Boolean).join(' · ');
@@ -41,14 +44,14 @@ export async function GET() {
     out.push(`### ${z}`, '');
     for (const r of ZONES[z]) {
       const slug = REGION_SLUG[r], here = places.filter(p => p.region.includes(r));
-      out.push(`- [פנינים ב${r}](${SITE_URL}/region/${slug}): ${texts[`intro.region.${slug}`]?.trim() || regionIntro(r, here)}`);
+      out.push(`- [פנינים ב${r}](${SITE_URL}/region/${slug}): ${own(texts[`intro.region.${slug}`]) || regionIntro(r, here)}`);
     }
     out.push('');
   }
   out.push('## לפי קטגוריה', '');
   for (const c of CATS) {
     const slug = CAT_SLUG[c], here = places.filter(p => p.cats.includes(c));
-    out.push(`- [${c}](${SITE_URL}/category/${slug}): ${texts[`intro.cat.${slug}`]?.trim() || catIntro(c, here)}`);
+    out.push(`- [${c}](${SITE_URL}/category/${slug}): ${own(texts[`intro.cat.${slug}`]) || catIntro(c, here)}`);
   }
   out.push('', '## כל הפנינים', '', 'שורה לכל פנינה: שם, יישוב, אזור, קטגוריות, ותיאור קצר. בעמוד הפנינה יש את התיאור המלא, הקישור לאתר של המקום והמפה.', '');
   for (const p of places) out.push(line(p));
