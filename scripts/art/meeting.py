@@ -3,7 +3,7 @@ in an earthen farm shop), for the About page. Writes meeting_<variant>.svg (inne
 import sys, math
 
 INK = '#22333B'; CREAM = '#F2E8CC'; YEL = '#FAD771'; LIME = '#D6DE8A'; SAGE = '#98C4A4'
-TEAL = '#1C4F66'; LBLUE = '#BFDDEE'; WAVE = '#AFD3E3'; OFF = '#FAF7EF'; WHITE = '#FFFDF7'
+TEAL = '#1C4F66'; LBLUE = '#DDEEF6'; WAVE = '#AFD3E3'; OFF = '#FAF7EF'; WHITE = '#FFFDF7'
 BLUE = '#5E9CC9'; SAND = '#EADBB0'; WOOD = '#E3CF9B'; JEANS = '#9CC3DE'; JEANS2 = '#86B3D4'
 
 W, H = 900, 600

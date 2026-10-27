@@ -8,9 +8,9 @@ const path = require('path');
 const src = fs.readFileSync(path.join(__dirname, '../lib/illo.ts'), 'utf8');
 const ILLO = eval('(' + src.slice(src.indexOf('{', src.indexOf('ILLO'))).replace(/;\s*$/, '') + ')');
 const CATS = [
-  ['טבע ונוף', 'valley', '#CBEBD5'], ['משהו לאכול', 'bread', '#F2E8CC'], ['יקבים, מבשלות ומזקקות', 'wine', '#FCF0B4'], ['סדנאות', 'apron', '#BFDDEE'],
+  ['טבע ונוף', 'valley', '#CBEBD5'], ['משהו לאכול', 'bread', '#F2E8CC'], ['יקבים, מבשלות ומזקקות', 'wine', '#FCF0B4'], ['סדנאות', 'apron', '#DDEEF6'],
   ['סיורים ומפגשים', 'finjan', '#E8F2B2'], ['חקלאות', 'tractor', '#FCF0B4'], ['בעלי חיים', 'hedgehog', '#CBEBD5'],
-  ['יוצרים וחנויות', 'stand', '#BFDDEE'], ['תרבות', 'tile', '#E8F2B2'], ['עגלות קפה', 'coffee', '#FCF0B4'], ['אתרי אינטרנט', 'almond', '#BFDDEE'],
+  ['יוצרים וחנויות', 'stand', '#DDEEF6'], ['תרבות', 'tile', '#E8F2B2'], ['עגלות קפה', 'coffee', '#FCF0B4'], ['אתרי אינטרנט', 'almond', '#DDEEF6'],
 ];
 const out = process.argv[2] || path.join(__dirname, '../public/share');
 (async () => {

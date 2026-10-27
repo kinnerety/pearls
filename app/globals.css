@@ -3,7 +3,7 @@
   color-scheme:light;
   /* the palette (Kinneret, 27.10.2026): 8 colours + ink + white, nothing else in the UI. Secondary text and hairlines are the ink at an opacity, not extra colours. */
   --paper:#FAF7EF; --sheet:#FFFFFF; --cream:#F2E8CC; --sun:#FCF0B4; --sun-deep:#FAD771;
-  --lime:#E8F2B2; --sage:#CBEBD5; --mist:#BFDDEE; --teal:#1C4F66;
+  --lime:#E8F2B2; --sage:#CBEBD5; --mist:#DDEEF6; --teal:#1C4F66;
   --ink:#22333B; --muted:rgba(34,51,59,.65); --line:rgba(34,51,59,.15);
   --shadow:0 1px 0 rgba(60,55,30,.06),0 6px 14px -6px rgba(60,55,30,.28);
   --display:var(--font-display),"Frank Ruhl Libre","David Libre",Georgia,serif;
@@ -257,7 +257,7 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 /* the popup forms: suggest a pearl / report a mistake (components/Forms.tsx), the same paper sheet as the check popup, longer and scrolling */
 .form-pop{border:0;padding:0;background:transparent;width:min(620px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain;
   /* the scrollbar on the right and light (Kinneret 27.10): the scrolling box is ltr, the sheet inside is rtl */
-  direction:ltr;scrollbar-width:thin;scrollbar-color:#BFDDEE transparent}
+  direction:ltr;scrollbar-width:thin;scrollbar-color:#DDEEF6 transparent}
 .form-pop::-webkit-scrollbar{width:8px}
 .form-pop::-webkit-scrollbar-thumb{background:var(--mist);border-radius:8px}
 .form-pop::-webkit-scrollbar-track{background:transparent}

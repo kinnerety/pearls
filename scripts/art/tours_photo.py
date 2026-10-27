@@ -12,7 +12,7 @@ CROP = (20, 130, 1770, 780)  # the street and its pavement, without the empty ma
 def h(c): return np.array([int(c[i:i + 2], 16) for i in (1, 3, 5)], float)
 # (colour in her picture, palette colour it moves to); shades around each colour move by the same amount
 ANCHORS = [
-    ((172, 212, 244), h('#BFDDEE')),   # light blue walls and glass
+    ((172, 212, 244), h('#DDEEF6')),   # light blue walls and glass
     ((140, 188, 220), h('#8FBAD0')),   # darker blue
     ((252, 220, 132), h('#FAD771')),   # yellow building
     ((28, 76, 92), h('#1C4F66')),      # dark doors, signs, lamp

@@ -6,8 +6,8 @@ W, H = 1200, 440
 # The palette (Kinneret, 27.10.2026): 8 colours + ink + white. The old darker tints (DSAGE, DLIME, MIST, BLUE) now point at the same
 # palette colours; depth comes from the paper shadow and the patterns, not from extra tints.
 INK = '#22333B'; PAPER = '#FAF7EF'; CREAM = '#F2E8CC'; SUN = '#FCF0B4'; SUN2 = '#FAD771'
-LIME = '#E8F2B2'; SAGE = '#CBEBD5'; MIST = '#BFDDEE'; WHITE = '#FFFFFF'; BLUE = '#FAF7EF'   # BLUE = the wave lines on water (off-white, her pick)
-TEAL = '#1C4F66'; SAND = '#F2E8CC'; SKY = '#BFDDEE'; DSAGE = '#CBEBD5'; DLIME = '#E8F2B2'; DYEL = '#FAD771'
+LIME = '#E8F2B2'; SAGE = '#CBEBD5'; MIST = '#DDEEF6'; WHITE = '#FFFFFF'; BLUE = '#FAF7EF'   # BLUE = the wave lines on water (off-white, her pick)
+TEAL = '#1C4F66'; SAND = '#F2E8CC'; SKY = '#DDEEF6'; DSAGE = '#CBEBD5'; DLIME = '#E8F2B2'; DYEL = '#FAD771'
 
 def smooth(t):
     t = max(0.0, min(1.0, t)); return t * t * (3 - 2 * t)
