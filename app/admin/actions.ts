@@ -5,6 +5,7 @@ import { deletePlace, patchPlace, savePlace, saveTexts } from '@/lib/store';
 import { CATS } from '@/lib/config';
 import type { Texts } from '@/lib/texts';
 import { checkPlace } from '@/lib/validate';
+import { getDraft } from '@/lib/drafts';
 import type { Place } from '@/lib/types';
 
 export async function login(_: string | null, form: FormData): Promise<string | null> {
@@ -46,6 +47,18 @@ export async function quickSave(id: number, q: QuickPatch): Promise<{ ok: true }
 export async function saveSiteTexts(t: Partial<Texts>): Promise<{ ok: true } | { ok: false; errors: string[] }> {
   await requireAdmin();
   try { await saveTexts(t); return { ok: true }; }
+  catch (e) { return { ok: false, errors: [(e as Error).message] }; }
+}
+
+/** A draft from data/drafts/ (gathered from a link by Claude) goes into Neon as a regular place, not yet checked by hand. */
+export async function publishDraft(key: string): Promise<SaveResult> {
+  await requireAdmin();
+  const d = getDraft(key);
+  if (!d) return { ok: false, errors: ['הטיוטה לא נמצאה'] };
+  const place: Place = { ...d.place, id: 0, checked: false };
+  const errors = checkPlace(place);
+  if (errors.length) return { ok: false, errors };
+  try { return { ok: true, id: await savePlace(place, false) }; }
   catch (e) { return { ok: false, errors: [(e as Error).message] }; }
 }
 
