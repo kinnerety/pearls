@@ -1,6 +1,6 @@
 // 18 small regions, always visible, grouped into 4 clouds. Never merged (Kinneret, 2026-10-16).
 export const ZONES: Record<string, string[]> = {
-  'צפון': ['גולן', 'גליל עליון', 'גליל מערבי', 'גליל תחתון', 'עמק הירדן ובית שאן', 'עמק יזרעאל', 'חיפה והכרמל'],
+  'צפון': ['רמת הגולן', 'גליל עליון', 'גליל מערבי', 'גליל תחתון', 'עמק הירדן ובית שאן', 'עמק יזרעאל', 'חיפה והכרמל'],
   'מרכז': ['פרדס חנה-בנימינה-זיכרון', 'שרון', 'תל אביב', 'השפלה'],
   'ירושלים והאזור': ['ירושלים', 'שפלת יהודה והרי יהודה', 'מדבר יהודה וים המלח'],
   'דרום': ['נגב - החצי הצפוני', 'נגב מערבי', 'נגב - החצי הדרומי', 'ערבה'],
@@ -17,7 +17,7 @@ export const CAT_ILLO: Record<string, string> = {
 };
 // English addresses for the region and category pages (Kinneret, 2026-10-27: Hebrew in a URL turns into %D7%... when shared)
 export const REGION_SLUG: Record<string, string> = {
-  'גולן': 'golan', 'גליל עליון': 'upper-galilee', 'גליל מערבי': 'western-galilee', 'גליל תחתון': 'lower-galilee',
+  'רמת הגולן': 'golan', 'גליל עליון': 'upper-galilee', 'גליל מערבי': 'western-galilee', 'גליל תחתון': 'lower-galilee',
   'עמק הירדן ובית שאן': 'jordan-valley-beit-shean', 'עמק יזרעאל': 'jezreel-valley', 'חיפה והכרמל': 'haifa-carmel',
   'פרדס חנה-בנימינה-זיכרון': 'pardes-hanna-binyamina-zichron', 'שרון': 'sharon', 'תל אביב': 'tel-aviv', 'השפלה': 'shfela',
   'ירושלים': 'jerusalem', 'שפלת יהודה והרי יהודה': 'judean-hills', 'מדבר יהודה וים המלח': 'judean-desert-dead-sea',
