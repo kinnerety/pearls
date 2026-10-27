@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound, permanentRedirect } from 'next/navigation';
-import { CAT_ILLO, ZONE_NAMES } from '@/lib/config';
+import { CAT_ILLO, CAT_SLUG, REGION_SLUG, ZONE_NAMES } from '@/lib/config';
 import { zonesOf } from '@/lib/filters';
 import { SITE_URL, idOfSlug, slugOf } from '@/lib/slug';
 import { getPlace, getPlaces, getTexts } from '@/lib/store';
@@ -68,10 +68,10 @@ export default async function PlacePage({ params }: Props) {
         </div>
         <h1>{p.name}</h1>
         <div className="where">
-          {p.town || ''}{p.town ? ' · ' : ''}{p.region.join(', ')}
+          {p.town || ''}{p.town ? ' · ' : ''}{p.region.map((r, i) => <span key={r}>{i > 0 && ', '}<Link href={`/region/${REGION_SLUG[r]}`}>{r}</Link></span>)}
           {zonesOf(p).map(z => <span key={z} className={`cat zone z${ZONE_NAMES.indexOf(z)}`}>{z}</span>)}
         </div>
-        <div className="cats">{p.cats.map(c => <Link key={c} href={`/?cat=${encodeURIComponent(c)}`} className="cat">{c}</Link>)}</div>
+        <div className="cats">{p.cats.map(c => <Link key={c} href={`/category/${CAT_SLUG[c]}`} className="cat">{c}</Link>)}</div>
         <p className="lead">{p.descr}</p>
         {p.note && <p className="note">{p.note}</p>}
         <p className="check">{texts['place.check']}</p>

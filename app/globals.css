@@ -15,6 +15,10 @@ body{margin:0;overflow-x:clip;background:var(--paper);color:var(--ink);font-fami
 header{position:relative;margin-inline:calc(50% - 50vw);min-height:300px;overflow:hidden}
 /* natural 1200:440 ratio so wide screens see the whole illustration (sun and sky included); only beyond ~2600px does it start trimming the sky */
 :root{--hero:clamp(300px,36.67vw,960px);--h1fs:clamp(2.4rem,6vw,4.4rem)}
+/* region/category pages with a long title ("פנינים בשפלת יהודה והרי יהודה"): a smaller title so it still sits beside the hoopoe */
+header.long{--h1fs:clamp(2rem,4.8vw,3.5rem)}
+header.long2{--h1fs:clamp(1.7rem,3.9vw,2.9rem)}
+header.long2 .title{top:calc(var(--hero) * 0.311 - var(--h1fs) * 1.05)}
 .hero-art{display:block;width:100%;height:var(--hero)}
 /* the title sits on the illustration: the subtitle's baseline stays ~5mm above the hills (which start at 224/440 of the picture's height under the title), whatever the screen width */
 /* the title's middle sits at the height of the hoopoe's beak (31.1% of the picture, Kinneret 27.10) */
@@ -61,6 +65,9 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .chip.all{white-space:nowrap;max-width:100%;padding-inline:9px;overflow:hidden;text-overflow:ellipsis} .chip.all .illo{margin-inline-end:3px}
 
 .divider{display:block;width:min(560px,90%);height:44px;margin:0 auto}
+/* the way back to the whole site from a region/category page */
+a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-space:normal;text-align:right}
+.side .fnote.under{margin:6px 0 0}
 .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
 .bar .now{display:flex;align-items:center;gap:10px}
 .bar .now .blob{width:56px;height:56px;display:grid;place-items:center;transition:transform .3s}
@@ -68,7 +75,12 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .bar .now .blob.pop{transform:rotate(-8deg) scale(1.1)}
 .count{font-family:var(--display);font-weight:900;font-size:1.5rem}
 .count.long{font-size:1.2rem}
-.views{display:flex;gap:4px}
+.views{display:flex;gap:4px;align-items:center}
+.views .qbar{margin-inline-end:8px;flex:1 1 140px;max-width:240px;min-width:0}
+.views .chip{white-space:nowrap}
+.views .qbar .qbox input[type=search]{max-width:none;width:100%;flex:1;font-size:.88rem;padding-block:3px}
+.views .qbar .qbox button{width:26px;height:26px}
+.views .qbar .qbox button svg{width:13px;height:13px}
 .views .chip .il{width:11px;height:20px;margin-inline-start:6px;vertical-align:-5px}
 .views .chip .il polygon{fill:var(--lime);stroke:var(--ink);stroke-width:4;stroke-linejoin:round}
 .views .chip[aria-pressed="true"] .il polygon{fill:var(--sun-deep);stroke:var(--sheet)}
@@ -139,6 +151,13 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .go:hover{background:var(--sun-deep)}
 .pick{position:absolute;top:-11px;left:54px;display:inline-flex;align-items:center;gap:4px;font-size:.76rem;font-weight:700;color:var(--ink);background:var(--sun-deep);padding:3px 10px;border-radius:999px;transform:rotate(-3deg);box-shadow:var(--shadow);z-index:1}
 .pick svg{width:11px;height:11px;fill:currentColor}
+/* the "המלצת המערכת" sticker on a card: a small yellow circle under the category icon; the rows beside it make room */
+.card .seal{position:absolute;top:50px;left:12px;width:50px;height:50px;transform:rotate(-6deg);filter:drop-shadow(0 1.5px 1.5px rgba(60,55,30,.35))}
+.card .seal svg{display:block;width:100%;height:100%}
+.card .seal circle{fill:var(--sun-deep)}
+.card .seal text{font-family:var(--body);font-weight:800;font-size:21px;fill:var(--ink);text-anchor:middle}
+.card .seal path{fill:var(--ink)}
+.card.picked .trow,.card.picked .where,.card.picked .cats{padding-left:56px}
 
 .mapbox{background:var(--sheet);border-radius:8px 24px 10px 20px/20px 10px 24px 8px;padding:14px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow)}
 #map{width:100%;height:min(78vh,760px);display:block}
@@ -204,8 +223,12 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 @media (hover:hover){.gpop-x{display:none}}
 #tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--sheet);font-size:.85rem;padding:3px 8px;border-radius:6px;z-index:5}
 .empty{grid-column:1/-1;color:var(--muted);padding:30px;text-align:center}
-.empty .blob{display:block;width:120px;height:120px;margin:0 auto 10px}
-.empty .illo{width:120px;height:120px}
+.empty .blob{display:block;width:170px;height:170px;margin:0 auto 10px}
+.empty .illo{width:170px;height:170px}
+.empty img.illo,.bar .now img.illo{object-fit:contain}
+.empty p{margin:0 auto 14px;max-width:34ch;color:var(--ink);line-height:1.5}
+.empty .suggest{display:inline-block;font-weight:700;background:var(--ink);color:var(--sheet);border-radius:999px;padding:7px 22px;text-decoration:none;box-shadow:var(--shadow)}
+.empty .suggest:hover{background:var(--sun-deep);color:var(--ink)}
 
 /* Spot illustrations as paper cut-outs: soft tints, no outlines, a shadow under every piece */
 .illo{display:block;overflow:visible}
@@ -224,6 +247,51 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .check-pop button:hover{background:var(--sun-deep);color:var(--ink)}
 .check-pop .once{display:flex;gap:8px;align-items:flex-start;text-align:right;font-size:.85rem;line-height:1.45;color:var(--muted);margin:0 0 16px;cursor:pointer}
 .check-pop .once input{margin-top:3px;accent-color:var(--ink);flex:none}
+/* the popup forms: suggest a pearl / report a mistake (components/Forms.tsx), the same paper sheet as the check popup, longer and scrolling */
+.form-pop{border:0;padding:0;background:transparent;width:min(620px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain;
+  /* the scrollbar on the right and light (Kinneret 27.10): the scrolling box is ltr, the sheet inside is rtl */
+  direction:ltr;scrollbar-width:thin;scrollbar-color:#BFDDEE transparent}
+.form-pop::-webkit-scrollbar{width:8px}
+.form-pop::-webkit-scrollbar-thumb{background:#BFDDEE;border-radius:8px}
+.form-pop::-webkit-scrollbar-track{background:transparent}
+.form-pop::backdrop{background:rgba(34,51,59,.35)}
+.form-pop .sheet{position:relative;background:var(--sheet);border-radius:10px 26px 12px 22px/22px 12px 26px 10px;box-shadow:var(--shadow);padding:20px 26px 24px;direction:rtl;color:var(--ink)}
+.form-pop .sheet::before{content:"";position:absolute;inset:0 0 auto 0;height:110px;border-radius:inherit;background:var(--mist);opacity:.7}
+.form-pop .x{position:absolute;top:10px;left:12px;z-index:1;width:34px;height:34px;border:0;border-radius:50%;background:var(--sheet);color:var(--ink);font-size:1.5rem;line-height:1;cursor:pointer;box-shadow:var(--shadow)}
+.form-pop .x:hover{background:var(--sun-deep)}
+.form-pop .pic{position:relative;display:block;width:200px;height:88px;margin:0 auto 8px}
+.form-pop img.pic{width:230px;height:auto;max-height:120px;object-fit:contain}
+.form-pop h2{position:relative;font-family:var(--display);font-weight:900;font-size:1.45rem;line-height:1.25;margin:0 0 18px;text-align:center;text-wrap:balance}
+.form-pop .field{display:flex;flex-direction:column;gap:2px;margin:0 0 16px;border:0;padding:0;min-width:0}
+.form-pop .two{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.form-pop .two .field{grid-template-rows:subgrid;grid-row:span 3;display:grid}
+@media (max-width:480px){.form-pop .two{grid-template-columns:1fr}.form-pop .two .field{display:flex}}
+.form-pop .field legend{padding:0;margin-bottom:2px}
+.form-pop .field b{font-weight:700;font-size:1rem}
+.form-pop .field small{display:block;color:var(--muted);font-size:.85rem;line-height:1.45;margin-bottom:4px}
+.form-pop input:not([type=radio]):not([type=checkbox]),.form-pop textarea{font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:7px 11px;width:100%}
+.form-pop textarea{resize:vertical;min-height:2.6em}
+.form-pop input:focus,.form-pop textarea:focus{outline:2px solid #BFDDEE;outline-offset:1px;border-color:#9FCBE3}
+.form-pop .opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.form-pop .pill{display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:.95rem;width:fit-content}
+.form-pop .pill input{accent-color:var(--ink);margin:0}
+.form-pop .opts .pill{background:var(--cream);border-radius:999px;padding:4px 14px 4px 12px}
+.form-pop .opts .pill:has(input:checked){background:var(--sun-deep)}
+.form-pop .yesno .pill{margin:4px 0}
+.form-pop .yes-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
+.form-pop .ask{display:flex;align-items:center;gap:8px;flex:1 1 220px;font-size:.92rem;font-weight:600;background:var(--sun);border-radius:12px;padding:5px 10px}
+.form-pop .ask input{flex:1;min-width:0;padding:4px 9px !important}
+.form-pop .agree{display:flex;gap:8px;align-items:flex-start;font-size:.88rem;line-height:1.5;color:var(--muted);margin:6px 0 18px;cursor:pointer}
+.form-pop .agree input{margin-top:4px;accent-color:var(--ink);flex:none}
+.form-pop .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.form-pop .err{background:var(--sun);border-radius:10px;padding:6px 12px;font-weight:600;margin:0 0 12px;text-align:center}
+.form-pop .send{display:block;width:fit-content;text-decoration:none;margin:0 auto;font:inherit;font-weight:700;border:0;background:var(--ink);color:var(--sheet);border-radius:999px;padding:8px 34px;cursor:pointer}
+.form-pop .send:hover:not(:disabled){background:var(--sun-deep);color:var(--ink)}
+.form-pop .send:disabled{opacity:.6;cursor:wait}
+.form-pop .done{position:relative;text-align:center}
+.form-pop .done p{margin:0;line-height:1.6}
+.form-pop .done .send{margin-top:18px}
+@media (max-width:480px){.form-pop .sheet{padding:18px 16px 20px}.form-pop h2{font-size:1.25rem}}
 @media (max-width:1100px){.main{grid-template-columns:230px minmax(0,1fr)}.main[data-panel="closed"]{grid-template-columns:46px minmax(0,1fr)}}
 @media (max-width:860px){
   .main,.main[data-panel="closed"]{grid-template-columns:1fr}
@@ -323,3 +391,12 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .site-foot{text-align:right;padding:28px 16px 36px}
 .site-foot a{color:var(--muted);font-weight:600;font-size:.92rem;text-decoration:underline;text-underline-offset:3px}
 .site-foot a:hover{color:var(--ink)}
+
+/* region/category index at the bottom of the home page, and the region/category links on the place page */
+.site-index{max-width:880px;margin:0 auto 14px;text-align:right;font-size:.82rem;line-height:1.9;color:var(--muted)}
+.site-index p{margin:0}
+.site-index b{font-weight:600;color:var(--ink)}
+.site-index a{color:var(--muted);text-decoration:none}
+.site-index a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.place .where a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.place .where a:hover{text-decoration-color:currentColor}
