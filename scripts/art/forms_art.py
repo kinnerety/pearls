@@ -89,11 +89,15 @@ CARAFE = (
 )
 
 def tipped_glass(x, y, rot):
-    """A flowered tumbler on its side, mouth to the right, the last of the juice running out of it."""
+    """A flowered tumbler on its side, mouth to the right. The juice left inside lies along the lower wall, its surface a
+    line that runs down to the right, into the puddle (Kinneret 27.10: the slope must fall to the right)."""
     body = 'M-7 0Q-7.5 1.5 -6 1.5L6 1.5Q7.5 1.5 7 0L11 -26L-11 -26Z'
-    return (f'<g transform="translate({x} {y}) rotate({rot})">'
-            f'<path d="{body}" fill="{GLASS}" opacity=".5"/>'
-            f'<path d="M11 -26L-11 -26L0 -19L10.5 -14Z" fill="{JUICE}"/>'
+    tf = f'translate({x} {y}) rotate({rot})'
+    return (f'<clipPath id="glass-in"><path d="{body}" transform="{tf}"/></clipPath>'
+            f'<g transform="{tf}"><path d="{body}" fill="{GLASS}" opacity=".5"/></g>'
+            # the juice, drawn in page coordinates and clipped to the glass
+            f'<path d="M{x+6} {y-2}L{x+32} {y+11.5}L{x+34} {y+18}L{x-4} {y+18}Z" fill="{JUICE}" clip-path="url(#glass-in)"/>'
+            f'<g transform="{tf}">'
             f'<path d="{body}" fill="none" stroke="{GLASS_EDGE}" stroke-width="1.6" stroke-linejoin="round"/>'
             f'<ellipse cx="0" cy="-26" rx="11" ry="2.4" fill="{GLASS}" stroke="{GLASS_EDGE}" stroke-width="1.4"/>'
             f'<path d="M-5.5 -3C-7 -10 -7.5 -16 -7 -22" fill="none" stroke="{SHEET}" stroke-width="1.4" stroke-linecap="round" opacity=".9"/>'
@@ -102,10 +106,10 @@ def tipped_glass(x, y, rot):
 
 REPORT = (
     ground(80, 86, 66, 8)
-    # the spilled juice runs from the mouth of the glass along the ground
-    + f'<path d="M121 80C128 77 142 78 149 82C153 85 145 89.5 132 89.5C122 89.5 116 86 121 80Z" fill="{JUICE}"/>'
-    + f'<ellipse cx="138" cy="85" rx="5" ry="1.4" fill="{JUICE_D}" opacity=".6"/>'
-    + CARAFE + tipped_glass(98, 74, 95)
+    # the spilled juice runs from the mouth of the glass along the table and stops well inside it (Kinneret 27.10)
+    + f'<path d="M112 80C119 77 128 78 134 82C137 85 131 89.5 122 89.5C113 89.5 107 86 112 80Z" fill="{JUICE}"/>'
+    + f'<ellipse cx="126" cy="85" rx="4" ry="1.2" fill="{JUICE_D}" opacity=".6"/>'
+    + CARAFE + tipped_glass(92, 74, 95)
 )
 
 def wrap(body):
