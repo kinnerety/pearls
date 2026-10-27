@@ -281,13 +281,17 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .about a{color:var(--ink);text-decoration:underline;text-decoration-color:#98C4A4;text-decoration-thickness:2px;text-underline-offset:3px}
 .about mark{background:linear-gradient(transparent 12%,#FAD771 12%,#FAD771 88%,transparent 88%);color:inherit;font-weight:700;padding:0 3px}
 .about figure{margin:0}
-.about-people{display:grid;grid-template-columns:1fr 1fr;gap:18px 32px;margin:10px 0 8px}
-.about-people figure{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
-.about-people img{width:min(78%,240px);height:auto;border-radius:50%}
-@media (max-width:640px){.about-people{grid-template-columns:1fr}}
-.about-art img{display:block;width:100%;height:auto;margin:6px 0 4px;border-radius:4px 18px 6px 16px/16px 6px 18px 4px;box-shadow:var(--shadow)}
+.about .gap{height:1.75em}
+.about-people{display:flex;flex-direction:column;gap:14px;margin:6px 0}
+.about-people figure{display:flex;gap:20px;align-items:center}
+.about-people figcaption{flex:0 1 46ch}
+.about-people img{flex:none;width:clamp(96px,22vw,150px);height:auto;border-radius:50%}
+/* the polaroid: a little tilted, with a shadow */
+.polaroid{align-self:center;width:min(78%,340px);transform:rotate(-3deg);margin:1.75em 0 !important}
+.polaroid img{display:block;width:100%;height:auto;box-shadow:0 2px 4px rgba(0,0,0,.12),0 14px 30px -10px rgba(40,35,20,.45)}
+.about .faq{display:flex;flex-direction:column;gap:2px}
 /* the Facebook post: live text in a Facebook-like card */
-.fb-post{align-self:center;width:min(100%,600px);background:#fff;border-radius:10px;box-shadow:0 1px 2px rgba(0,0,0,.12),0 8px 22px -10px rgba(0,0,0,.3);padding:12px 16px 4px;margin:6px 0 10px;font-family:"Segoe UI",Helvetica,Arial,sans-serif;color:#050505}
+.fb-post{align-self:center;width:min(100%,600px);background:#fff;border-radius:10px;box-shadow:0 1px 2px rgba(0,0,0,.12),0 8px 22px -10px rgba(0,0,0,.3);padding:12px 16px 4px;margin:1.75em 0;font-family:"Segoe UI",Helvetica,Arial,sans-serif;color:#050505}
 .fb-head{display:flex;align-items:center;gap:10px}
 .fb-head img{width:40px;height:40px;border-radius:50%;object-fit:cover}
 .fb-head div{display:flex;flex-direction:column;line-height:1.25}
@@ -302,7 +306,7 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .fb-reacts i{font-style:normal;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;font-size:11px;border:2px solid #fff}
 .fb-reacts .r-like{background:#1877F2}.fb-reacts .r-love{background:#F33E58;color:#fff;margin-inline-start:-6px}
 /* the original list: a screenshot in a card, opens full size */
-.list-card{display:block;align-self:center;width:min(100%,640px);background:#fff;border-radius:10px;padding:8px;box-shadow:0 1px 2px rgba(0,0,0,.12),0 8px 22px -10px rgba(0,0,0,.3);margin:6px 0 10px}
+.list-card{display:block;align-self:center;width:min(100%,640px);background:#fff;border-radius:10px;padding:8px;box-shadow:0 1px 2px rgba(0,0,0,.12),0 8px 22px -10px rgba(0,0,0,.3);margin:1.75em 0}
 .list-card img{display:block;width:100%;height:auto;border-radius:4px}
 .site-foot{text-align:right;padding:28px 16px 36px}
 .site-foot a{color:var(--muted);font-weight:600;font-size:.92rem;text-decoration:underline;text-underline-offset:3px}

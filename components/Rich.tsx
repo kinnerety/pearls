@@ -20,7 +20,8 @@ export default function Rich({ text }: { text: string }) {
   return <Fragment>{out}</Fragment>;
 }
 
-/** Every line of a text as its own paragraph */
+/** Every line of a text as its own paragraph; an empty line between them = a line of space */
 export function Paras({ text }: { text: string }) {
-  return <>{text.split('\n').map(l => l.trim()).filter(Boolean).map((l, i) => <p key={i}><Rich text={l} /></p>)}</>;
+  const lines = text.split('\n').map(l => l.trim()).join('\n').replace(/\n{3,}/g, '\n\n').trim().split('\n');
+  return <>{lines.map((l, i) => l ? <p key={i}><Rich text={l} /></p> : <div key={i} className="gap" aria-hidden="true" />)}</>;
 }

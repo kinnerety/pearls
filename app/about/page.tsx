@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SITE_URL } from '@/lib/slug';
 import { getTexts } from '@/lib/store';
-import { parseAbout, plainText } from '@/lib/texts';
+import { parseAbout, parseFaq, plainText } from '@/lib/texts';
 import { DIVIDER_SVG } from '@/components/art';
 import Rich, { Paras } from '@/components/Rich';
 
@@ -16,18 +16,12 @@ export const metadata: Metadata = {
 export default async function About() {
   const texts = await getTexts();
   const blocks = parseAbout(texts['about.main']);
-  // each question with the paragraphs after it, for the FAQ structured data
-  const faq: { q: string; a: string }[] = [];
-  for (const b of blocks) {
-    if (b.kind === 'q') faq.push({ q: plainText(b.text), a: '' });
-    else if (b.kind === 'h2') { if (faq.length) break; }
-    else if (faq.length) faq[faq.length - 1].a = (faq[faq.length - 1].a + ' ' + plainText(b.text)).trim();
-  }
+  const faq = parseFaq(texts['about.faq']);
   const jsonLd = [
     { '@context': 'https://schema.org', '@type': 'AboutPage', name: plainText(texts['about.h1']), url: `${SITE_URL}/about`, inLanguage: 'he',
       isPartOf: { '@type': 'WebSite', name: 'פנינים ישראליות', url: SITE_URL }, author: { '@type': 'Person', name: 'כנרת יפרח' } },
     ...(faq.length ? [{ '@context': 'https://schema.org', '@type': 'FAQPage',
-      mainEntity: faq.filter(f => f.a).map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }] : []),
+      mainEntity: faq.filter(f => f.a).map(f => ({ '@type': 'Question', name: plainText(f.q), acceptedAnswer: { '@type': 'Answer', text: plainText(f.a).replace(/\n/g, ' ') } })) }] : []),
   ];
   return (
     <div className="wrap place-page about-page">
@@ -36,15 +30,15 @@ export default async function About() {
       <article className="place about">
         <h1><Rich text={texts['about.h1']} /></h1>
 
-        {/* side by side on a wide screen, Kinneret first; one under the other on a phone */}
+        {/* each of us: the text on the right, the illustration beside it (Kinneret, 27.10.2026) */}
         <div className="about-people">
           <figure>
-            <img src="/about/kinneret.jpg" width={600} height={600} alt="איור של כנרת יפרח" />
             <figcaption><Paras text={texts['about.me']} /></figcaption>
+            <img src="/about/kinneret.jpg" width={600} height={600} alt="איור של כנרת יפרח" />
           </figure>
           <figure>
-            <img src="/about/matti.jpg" width={600} height={600} alt="איור של מתי" />
             <figcaption><Paras text={texts['about.matti']} /></figcaption>
+            <img src="/about/matti.jpg" width={600} height={600} alt="איור של מתי" />
           </figure>
         </div>
 
@@ -69,8 +63,8 @@ export default async function About() {
         </div>
 
         <Paras text={texts['about.trip']} />
-        <figure className="about-art">
-          <img src="/about/rish-lakish.jpg" width={1400} height={933} alt="איור: יוני, אלן ומתי טועמים שמן זית בריש לקיש, יחד עם רחל נוי מאיר" />
+        <figure className="polaroid">
+          <img src="/about/polaroid.jpg" width={640} height={960} alt="תמונת פולארויד מאוירת: יוני, אלן ומתי בטעימות בבית הבד ריש לקיש, עם רחל נוי מאיר" />
         </figure>
 
         <Paras text={texts['about.list']} />
@@ -80,7 +74,15 @@ export default async function About() {
 
         {blocks.map((b, i) => b.kind === 'h2'
           ? <h2 key={i}><Rich text={b.text} /></h2>
-          : b.kind === 'q' ? <h3 key={i}><Rich text={b.text} /></h3> : <p key={i}><Rich text={b.text} /></p>)}
+          : <p key={i}><Rich text={b.text} /></p>)}
+
+        <h2><Rich text={texts['about.faq.title']} /></h2>
+        {faq.map((f, i) => (
+          <div className="faq" key={i}>
+            <h3><Rich text={f.q} /></h3>
+            <Paras text={f.a} />
+          </div>
+        ))}
       </article>
       <svg className="divider" viewBox="0 0 560 44" aria-hidden="true" dangerouslySetInnerHTML={{ __html: DIVIDER_SVG }} />
     </div>

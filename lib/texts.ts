@@ -1,7 +1,7 @@
 // Site texts Kinneret can edit in /admin/texts (popup, map tip, notes). The defaults live here; edits are stored in Neon.
-const ABOUT_HINT = 'כל שורה היא פסקה. **מילים בין כוכביות** יוצגו מודגשות, ==בין סימני שוויון== מסומנות במרקר, ו-[מילה](https://...) הופכת לקישור.';
+const ABOUT_HINT = 'כל שורה היא פסקה, ושורה ריקה מוסיפה רווח. **מילים בין כוכביות** יוצגו מודגשות, ==בין סימני שוויון== מסומנות במרקר, ו-[מילה](https://...) הופכת לקישור.';
 
-export type TextDef = { label: string; text: string; multi?: boolean; big?: boolean; hint?: string };
+export type TextDef = { label: string; text: string; multi?: boolean; big?: boolean; hint?: string; faq?: boolean };
 
 export const TEXT_DEFAULTS = {
   'popup.title': { label: 'פופאפ "לפני שנכנסים לאוטו": הכותרת', text: 'לפני שנכנסים לאוטו' },
@@ -54,18 +54,11 @@ export const TEXT_DEFAULTS = {
       'אז איפה ביקרתםן לאחרונה והיה מרחיב לב?',
     ].join('\n'),
   },
-  'about.trip': {
-    label: 'אודות: אחרי הפוסט, עד האיור בריש לקיש', multi: true,
-    text: [
-      'ההיענות הייתה מהממת וקיבלנו כ-150 המלצות. עברתי עליהן אחת-אחת, והכנתי לנו מסלול מצפון ועד דרום. זה היה הטיול הכי כיף, מרענן ומעניין שהיה לנו אי פעם בישראל.',
-      '',
-      'הינה גרסת AI מאוירת של יוני, אלן ומתי טועמים שמן זית בריש לקיש, יחד עם רחל נוי מאיר המלכה:',
-    ].join('\n'),
-  },
+  'about.trip': { label: 'אודות: אחרי הפוסט, לפני תמונת הפולארויד', multi: true, text: 'ההיענות הייתה מהממת וקיבלנו כ-150 המלצות. עברתי עליהן אחת-אחת, והכנתי לנו מסלול מצפון ועד דרום. זה היה הטיול הכי כיף, מרענן ומעניין שהיה לנו אי פעם בישראל.' },
   'about.list': { label: 'אודות: לפני התמונה של הרשימה המקורית', multi: true, text: 'כשחזרנו מהטיול, ארגנתי את כל ההמלצות ברשימה לטובת הציבור הרחב, כדי להעביר הלאה את כל הטוב הזה ולהחזיר תודה. זה היה לפני ששמענו על AI, הכול היה ידני, והרשימה נראתה ככה:' },
   'about.main': {
-    label: 'אודות: מ"מה הן פנינים" ועד סוף השאלות והתשובות', multi: true, big: true,
-    hint: 'שורה שמתחילה ב-## היא כותרת, שורה שמתחילה ב-### היא שאלה (התשובה בשורות שאחריה).',
+    label: 'אודות: מ"מה הן פנינים" ועד השאלות והתשובות', multi: true, big: true,
+    hint: 'שורה שמתחילה ב-## היא כותרת. כל שורה אחרת היא פסקה.',
     text: [
       '## אז מה הן פנינים ישראליות?',
       'פנינים הן מקומות מעניינים, כיפיים וטעימים שמזמנים מפגש בלתי אמצעי עם הצדדים היפים של הארץ, כמו החקלאות המפוארת שלה, החי והצומח, היצירתיות, היופי, הנוף וישראלים כשהם במיטבם. יש כאן סיורים קולינריים, חוות, יקבים, נופים, תצפיות, שווקים, בתי בד, פיקניקים, סדנאות, מפגש עם חלקאים וחקלאיות, מבשלות ומזקקות, יוצרים ויוצרות, אגמים ומעיינות, חנויות מתוקות ועוד ועוד.',
@@ -80,13 +73,17 @@ export const TEXT_DEFAULTS = {
       '',
       '## האחריות היא על המטיילים והמטיילות בלבד, כלומר עליכם',
       '==זה חשוב, אז תהיו איתי רגע:==',
-      'ההמלצות שנאחנו מקבלים נבדקות רק באופן מדגמי. לכן אין לנו אפשרות לדעת בוודאות שהמקום באמת פתוח בשבת (גם אם כתוב שכן), או שהוא באמת מתאים למשפחות, או שבאמת מגישים שם גם גבינות ולא רק יין, או שגם השנה יגיעו שקנאים באוקטובר.',
+      'ההמלצות שאנחנו מקבלים נבדקות רק באופן מדגמי. לכן אין לנו אפשרות לדעת בוודאות שהמקום באמת פתוח בשבת (גם אם כתוב שכן), או שהוא באמת מתאים למשפחות, או שבאמת מגישים שם גם גבינות ולא רק יין, או שגם השנה יגיעו שקנאים באוקטובר.',
       'השילוב של המלצות אנושיות, שינויים תכופים במציאות ועבודת AI - לא מאפשר לתת ודאות.',
       'לכן המטרה של האתר היא לתת לכם ולכן **רעיונות**.',
       'מהרגע שרעיון מצא חן בעיניכם – **האחריות היא שלכם לבדוק אותו לפני שתצאו לדרך**, כדי לוודא בעצמכם שהוא בדיוק מה שרציתם, וגם לתאם אם צריך.',
       'ואם מצאתם טעות באתר, נשמח מאוד לשמוע על זה ולעדכן. כאן מדווחים',
-      '',
-      '## שאלות ותשובות',
+    ].join('\n'),
+  },
+  'about.faq.title': { label: 'אודות: הכותרת של השאלות והתשובות', text: 'שאלות ותשובות' },
+  'about.faq': {
+    label: 'אודות: שאלות ותשובות', multi: true, faq: true,
+    text: [
       "### מה זה 'פנינים ישראליות'? מה יש באתר?",
       'אוסף המלצות שנתנו אנשים אמיתיים שביקרו במקומות האלה ואהבו אותם. יש כאן חוות, יקבים ומבשלות, סדנאות, יוצרים וחנויות קטנות, פניני תרבות ועוד המון המון דברים יפים.',
       '### למי זה מיועד?',
@@ -111,14 +108,16 @@ export const TEXT_DEFAULTS = {
 export type TextKey = keyof typeof TEXT_DEFAULTS;
 export type Texts = Record<TextKey, string>;
 export const TEXT_KEYS = Object.keys(TEXT_DEFAULTS) as TextKey[];
+/** The about page's own texts get their own admin screen (/admin/about); the rest stay in /admin/texts */
+export const ABOUT_KEYS = TEXT_KEYS.filter(k => k.startsWith('about.') && k !== 'about.link');
+export const SITE_KEYS = TEXT_KEYS.filter(k => !ABOUT_KEYS.includes(k));
 export const DEFAULT_TEXTS = Object.fromEntries(TEXT_KEYS.map(k => [k, TEXT_DEFAULTS[k].text])) as Texts;
 
-/** The about page's texts: every line is a paragraph, "## " = a section heading, "### " = a question (its answer = the lines after it) */
-export type AboutBlock = { kind: 'h2' | 'q' | 'p'; text: string };
+/** The about page's main text: every line is a paragraph, "## " = a section heading */
+export type AboutBlock = { kind: 'h2' | 'p'; text: string };
 export function parseAbout(s: string): AboutBlock[] {
   return s.split('\n').map(l => l.trim()).filter(Boolean).map((line): AboutBlock =>
-    line.startsWith('### ') ? { kind: 'q', text: line.slice(4).trim() }
-    : line.startsWith('## ') ? { kind: 'h2', text: line.slice(3).trim() }
+    line.startsWith('## ') ? { kind: 'h2', text: line.slice(3).trim() }
     : { kind: 'p', text: line });
 }
 
@@ -130,3 +129,17 @@ export function splitLead(s: string): [string, string] {
   const m = /^([^:\n]{1,12}:)\s*([\s\S]*)$/.exec(s);
   return m ? [m[1], m[2]] : ['', s];
 }
+
+/** The about page's questions and answers: a "### question" line, then its answer lines */
+export type Faq = { q: string; a: string };
+export function parseFaq(s: string): Faq[] {
+  const out: Faq[] = [];
+  for (const raw of s.split('\n')) {
+    const line = raw.trim();
+    if (line.startsWith('### ')) out.push({ q: line.slice(4).trim(), a: '' });
+    else if (line && out.length) { const f = out[out.length - 1]; f.a = f.a ? f.a + '\n' + line : line; }
+  }
+  return out;
+}
+export const faqText = (items: Faq[]) => items.filter(f => f.q.trim() || f.a.trim())
+  .map(f => `### ${f.q.replace(/\s*\n\s*/g, ' ').trim()}\n${f.a.trim()}`).join('\n');

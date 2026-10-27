@@ -94,14 +94,18 @@ export async function deletePlace(id: number) {
 }
 
 /** Editable site texts (popup, map tip, notes): the defaults from lib/texts.ts, overridden by what Kinneret saved in /admin/texts. */
-export const getTexts = unstable_cache(async (): Promise<Texts> => {
-  if (!sql) return DEFAULT_TEXTS;
+// only the saved rows are cached, so a text key added in code always gets its default (an old cached object would lack it)
+const savedTexts = unstable_cache(async (): Promise<{ key: string; value: string }[]> => {
+  if (!sql) return [];
   await ensure();
-  const rows = await sql`select key, value from site_texts` as { key: string; value: string }[];
+  return await sql`select key, value from site_texts` as { key: string; value: string }[];
+}, ['texts-rows'], { tags: ['texts'] });
+
+export async function getTexts(): Promise<Texts> {
   const t: Texts = { ...DEFAULT_TEXTS };
-  for (const r of rows) if (r.key in TEXT_DEFAULTS) t[r.key as keyof Texts] = r.value;
+  for (const r of await savedTexts()) if (r.key in TEXT_DEFAULTS) t[r.key as keyof Texts] = r.value;
   return t;
-}, ['texts-v1'], { tags: ['texts'] });
+}
 
 export async function saveTexts(t: Partial<Texts>) {
   if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
