@@ -155,11 +155,12 @@ def people(mode):
     g.append(stroke_arm('M536 288 Q516 344 548 362 L594 360', c(SAGE), 19))
     g.append(stroke_arm('M586 288 Q612 326 610 352', c(SAGE), 19))
     g.append(f'<circle cx="604" cy="360" r="10" fill="{c(skins[2])}"/>')
-    g.append(f'<ellipse cx="561" cy="230" rx="25" ry="28" fill="{c(skins[2])}"/>')
-    g.append(f'<path d="M538 224 Q536 244 545 254 Q541 234 545 218z M584 224 Q586 244 577 254 Q581 234 577 218z" fill="{c("#8C7B6B")}"/>')
+    g.append(f'<circle cx="534" cy="234" r="6" fill="{c(skins[2])}"/><circle cx="588" cy="234" r="6" fill="{c(skins[2])}"/>')
+    g.append(f'<circle cx="561" cy="232" r="27" fill="{c(skins[2])}"/>')
+    g.append(f'<path d="M535 228 Q534 214 544 208 Q540 220 541 232z M587 228 Q588 214 578 208 Q582 220 581 232z" fill="{c("#8C7B6B")}"/>')
     if not sil:
-        g.append(f'<path d="M548 242 Q561 268 574 242 Q572 254 561 258 Q550 254 548 242z" fill="#B9AE9F"/>')
-    g.append(face(561, 228, 6, mode))
+        g.append(f'<path d="M540 238 Q542 262 561 264 Q580 262 582 238 Q578 250 561 252 Q544 250 540 238z" fill="#B9AE9F"/>')
+    g.append(face(561, 228, 0, mode))
     s.append(f'<g filter="url(#mp)">{"".join(g)}</g>')
 
     # P4 – woman with curly hair and a long braid, one hand to her mouth, the other reaching to P3
