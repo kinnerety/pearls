@@ -134,7 +134,7 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
 
       <div className="bar">
         <span className="now">
-          <span className={'blob' + (pop ? ' pop' : '')} id="now-illo"><Illo k={nowK} /></span>
+          <span className={'blob' + (pop ? ' pop' : '')} id="now-illo">{nowK === 'shell' ? <img className="illo" src="/art/shell.png" alt="" /> : <Illo k={nowK} />}</span>
           <span><span className={'count' + (act ? ' long' : '')} id="count">{countText(items.length, !!act, texts['empty.top'], scope)}</span> <span id="countnote" className="where" /></span>
         </span>
         <div className="views" role="group" aria-label="תצוגה">
@@ -184,7 +184,7 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
             {items.length ? items.map(p => <PlaceCard key={p.id} p={p} />)
               : <div className="empty">
                   {/* a tortoise shell, the tortoise hidden inside; the button opens the suggest-a-pearl form (Kinneret, 27.10) */}
-                  <span className="blob"><Illo k="shell" /></span>
+                  <span className="blob"><img className="illo" src="/art/shell.png" alt="" /></span>
                   <p>{texts['empty.text']}</p>
                   <a className="suggest" href="#suggest">{texts['empty.button']}</a>
                 </div>}

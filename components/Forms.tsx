@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
-import { ACORN_REST_SVG, REPORT_SVG } from './art';
+import { ACORN_REST_SVG } from './art';
 import { sendForm } from '@/app/actions';
 import type { Texts } from '@/lib/texts';
 
@@ -51,7 +51,8 @@ export default function Forms({ texts }: { texts: Texts }) {
         <label className="agree"><input type="checkbox" name="agree" value="yes" required /> {texts['suggest.agree']}</label>
       </Popup>
 
-      <Popup kind="report" ref_={refs.report} texts={texts} art={REPORT_SVG} view="0 16 160 80">
+      {/* Kinneret's own picture (27.10.2026): a carafe of juice and a tipped glass, the juice spilling out */}
+      <Popup kind="report" ref_={refs.report} texts={texts} img="/art/report-juice.png">
         {/* a plain field, no list to pick from (Kinneret 27.10) */}
         <Field q={texts['report.place']} hint={texts['report.place.hint']}><input name="place" maxLength={200} /></Field>
         <Field q={texts['report.what']} hint={texts['report.what.hint']}><textarea name="what" rows={4} required maxLength={2000} /></Field>
@@ -62,8 +63,8 @@ export default function Forms({ texts }: { texts: Texts }) {
   );
 }
 
-function Popup({ kind, ref_, texts, art, view, children }: {
-  kind: Kind; ref_: React.RefObject<HTMLDialogElement | null>; texts: Texts; art: string; view: string; children: ReactNode;
+function Popup({ kind, ref_, texts, art, view, img, children }: {
+  kind: Kind; ref_: React.RefObject<HTMLDialogElement | null>; texts: Texts; art?: string; view?: string; img?: string; children: ReactNode;
 }) {
   const [state, setState] = useState<'form' | 'sending' | 'done'>('form');
   const [error, setError] = useState('');
@@ -95,7 +96,7 @@ function Popup({ kind, ref_, texts, art, view, children }: {
       onClick={e => { if (e.target === e.currentTarget) e.currentTarget.close(); }}>
       <div className="sheet">
         {state !== 'done' && <button type="button" className="x" aria-label="סגירה" onClick={() => ref_.current?.close()}>×</button>}
-        <svg className="pic" viewBox={view} aria-hidden="true" dangerouslySetInnerHTML={{ __html: art }} />
+        {img ? <img className="pic" src={img} alt="" /> : <svg className="pic" viewBox={view} aria-hidden="true" dangerouslySetInnerHTML={{ __html: art || '' }} />}
         {state === 'done' ? (
           <div className="done" role="status">
             <h2 id={`${kind}-title`}>{t('done.title')}</h2>

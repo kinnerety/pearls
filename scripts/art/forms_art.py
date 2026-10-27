@@ -67,52 +67,7 @@ VARIANTS = {
          + acorn(84, 56, 90, 0.98) + leaf(34, 88, -170, 0.6, LIME_D) + leaf(126, 90, -14, 0.65, LIME),
 }
 
-# report a mistake (Kinneret 27.10): a carafe of orange juice and, beside it, a cute flowered glass tipped on its side with the
-# juice spilling out: something went wrong. The juice is the palette's yellow (no orange on the site).
-JUICE, JUICE_D, GLASS, GLASS_EDGE = YEL, YEL_D, '#DDEEF6', '#9FCBE3'
-
-def flower(x, y, s=1.0, petals=SHEET, heart=YEL):
-    pts = ''.join(f'<circle cx="{x + s*1.7*math.cos(k*2*math.pi/5):.1f}" cy="{y + s*1.7*math.sin(k*2*math.pi/5):.1f}" r="{s*1.1:.1f}" fill="{petals}"/>' for k in range(5))
-    return pts + f'<circle cx="{x}" cy="{y}" r="{s*0.9:.1f}" fill="{heart}"/>'
-
-CARAFE = (
-    # the glass first, the juice on it at full strength, then the outline (through the glass the juice looked washed out)
-    f'<path d="M52 40C44 50 42 66 44 78C45 84 50 86 60 86C70 86 75 84 76 78C78 66 76 50 68 40Z" fill="{GLASS}" opacity=".5"/>'
-    f'<path d="M46.5 58C45 66 44 72 44 78C45 84 50 86 60 86C70 86 75 84 76 78C76 72 75 66 73.5 58Z" fill="{JUICE}"/>'
-    f'<ellipse cx="60" cy="58" rx="13.5" ry="2.6" fill="{JUICE_D}"/>'
-    f'<path d="M52 40C44 50 42 66 44 78C45 84 50 86 60 86C70 86 75 84 76 78C78 66 76 50 68 40Z" fill="none" stroke="{GLASS_EDGE}" stroke-width="1.6"/>'
-    # neck, spout and handle
-    f'<path d="M52 40V33H68V40" fill="{GLASS}" stroke="{GLASS_EDGE}" stroke-width="1.6" stroke-linejoin="round"/>'
-    f'<path d="M52 33L47 30.5L52 36.5" fill="{GLASS}" stroke="{GLASS_EDGE}" stroke-width="1.6" stroke-linejoin="round"/>'
-    f'<path d="M76 48C88 50 88 70 76 72" fill="none" stroke="{TEAL}" stroke-width="3" stroke-linecap="round"/>'
-    f'<path d="M48 50C46.5 56 46 62 46.5 70" fill="none" stroke="{SHEET}" stroke-width="1.6" stroke-linecap="round" opacity=".9"/>'
-)
-
-def tipped_glass(x, y, rot, juice):
-    """A flowered tumbler on its side, mouth to the right. `juice` is one page-coordinate path: what is left inside lies
-    along the lower wall and runs out through the mouth onto the table in one unbroken pour (Kinneret's pick, 27.10)."""
-    body = 'M-7 0Q-7.5 1.5 -6 1.5L6 1.5Q7.5 1.5 7 0L11 -26L-11 -26Z'
-    tf = f'translate({x} {y}) rotate({rot})'
-    return (f'<g transform="{tf}"><path d="{body}" fill="{GLASS}" opacity=".5"/></g>'
-            f'<path d="{juice}" fill="{JUICE}"/>'
-            f'<g transform="{tf}">'
-            f'<path d="{body}" fill="none" stroke="{GLASS_EDGE}" stroke-width="1.6" stroke-linejoin="round"/>'
-            f'<ellipse cx="0" cy="-26" rx="11" ry="2.4" fill="none" stroke="{GLASS_EDGE}" stroke-width="1.4"/>'
-            f'<path d="M-5.5 -3C-7 -10 -7.5 -16 -7 -22" fill="none" stroke="{SHEET}" stroke-width="1.4" stroke-linecap="round" opacity=".9"/>'
-            + flower(-1.5, -8, 1.0, SAGE) + flower(4.5, -16, 0.9, LIME) + flower(-4.5, -18.5, 0.8, '#BFDDEE')
-            + '</g>')
-
-# the glass pivots at (92,74), turned 95 degrees: its lower wall runs from (91.6,81) to the mouth's lower corner (116.9,87.2),
-# the mouth from there up to (118.9,65.3). The juice: surface from (93,75.5) down to the mouth, out of it, the puddle on the
-# table, and back along the lower wall.
-JUICE_PATH = ('M93 75.5L116.5 84.8C121 85.6 127 79.6 133 82C137 85 131 89.5 122 89.5C118.5 89.5 117.2 88.6 116.9 87.4'
-              'L91.6 81Z')
-
-REPORT = (
-    ground(80, 86, 66, 8)
-    + CARAFE + tipped_glass(92, 74, 95, JUICE_PATH)
-    + f'<ellipse cx="127" cy="85.5" rx="4" ry="1.2" fill="{JUICE_D}" opacity=".6"/>'
-)
+# (the report form's picture is Kinneret's own: public/art/report-juice.png; the tortoise shell of the empty gallery is public/art/shell.png)
 
 def wrap(body):
     return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{VIEW}">{body}</svg>'
@@ -121,4 +76,3 @@ if __name__ == '__main__':
     out = sys.argv[1] if len(sys.argv) > 1 else '.'
     for k, b in VARIANTS.items():
         open(os.path.join(out, f'acorn_{k}.svg'), 'w').write(wrap(b))
-    open(os.path.join(out, 'report.svg'), 'w').write(wrap(REPORT))
