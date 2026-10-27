@@ -289,10 +289,11 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .about mark{background:linear-gradient(transparent 12%,#FAD771 12%,#FAD771 88%,transparent 88%);color:inherit;font-weight:700;padding:0 3px}
 .about figure{margin:0}
 .about .gap{height:1.75em}
-.about-people{display:flex;flex-direction:column;gap:14px;margin:6px 0}
-.about-people figure{display:flex;gap:20px;align-items:center}
-.about-people figcaption{flex:0 1 46ch}
-.about-people img{flex:none;width:clamp(96px,22vw,150px);height:auto;border-radius:50%}
+/* like the table in Kinneret's Word file: one row, right to left = her text, her illustration, Matti's text, his illustration; on a phone two rows */
+.about-people{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;margin:6px 0}
+.about-people figure{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
+.about-people img{width:clamp(96px,16vw,150px);height:auto;border-radius:50%}
+@media (max-width:720px){.about-people{grid-template-columns:1fr}}
 /* the polaroid: a little tilted, with a shadow */
 .polaroid{align-self:center;width:min(78%,340px);transform:rotate(-3deg);margin:1.75em 0 !important}
 .polaroid img{display:block;width:100%;height:auto;box-shadow:0 2px 4px rgba(0,0,0,.12),0 14px 30px -10px rgba(40,35,20,.45)}
