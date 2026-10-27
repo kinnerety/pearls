@@ -30,5 +30,5 @@ export default async function RegionPage({ params }: Props) {
   const { slug } = await params;
   const d = await load(slug);
   if (!d) notFound();
-  return <Collection title={d.title} lede={d.lede} art={ZONE_HERO[zoneOf(d.region) || '']} path={`/region/${slug}`} places={d.places} texts={d.texts} hide="region" />;
+  return <Collection title={d.title} lede={d.lede} art={ZONE_HERO[zoneOf(d.region) || '']} path={`/region/${slug}`} places={d.places} texts={d.texts} scope={{ kind: 'region', name: d.region }} />;
 }

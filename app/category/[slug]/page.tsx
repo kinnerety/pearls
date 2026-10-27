@@ -30,5 +30,5 @@ export default async function CategoryPage({ params }: Props) {
   const { slug } = await params;
   const d = await load(slug);
   if (!d) notFound();
-  return <Collection title={d.cat} lede={d.lede} art={CAT_HERO[d.cat]} path={`/category/${slug}`} places={d.places} texts={d.texts} hide="cat" />;
+  return <Collection title={d.cat} lede={d.lede} art={CAT_HERO[d.cat]} path={`/category/${slug}`} places={d.places} texts={d.texts} scope={{ kind: 'cat', name: d.cat }} />;
 }

@@ -61,6 +61,15 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .chip.all{white-space:nowrap;max-width:100%;padding-inline:9px;overflow:hidden;text-overflow:ellipsis} .chip.all .illo{margin-inline-end:3px}
 
 .divider{display:block;width:min(560px,90%);height:44px;margin:0 auto}
+/* region/category pages: a small search box above the leaf divider instead of the whole "לאן מכאן" strip */
+.qmini{display:flex;justify-content:flex-start;padding:14px 4px 0}
+.qmini .qbox{flex:0 1 280px}
+.qmini .qbox input[type=search]{max-width:none;width:100%;flex:1;font-size:.88rem;padding-block:3px}
+.qmini .qbox button{width:26px;height:26px}
+.qmini .qbox button svg{width:13px;height:13px}
+/* the way back to the whole site from a region/category page */
+a.chip.home{display:inline-block;text-decoration:none;line-height:1.5}
+#f-home{padding-bottom:2px}
 .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
 .bar .now{display:flex;align-items:center;gap:10px}
 .bar .now .blob{width:56px;height:56px;display:grid;place-items:center;transition:transform .3s}

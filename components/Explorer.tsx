@@ -22,15 +22,20 @@ function Chip({ pressed, onClick, n, className = '', children }: { pressed: bool
   return <button className={('chip ' + className).trim()} aria-pressed={pressed} onClick={onClick}>{children}<span className="n">{n}</span></button>;
 }
 
-function countText(n: number, active: boolean) {
-  if (!active) return `${n} פנינים`;
-  if (n > 1) return `${n} פנינים שמתאימות להגדרות שבחרת`;
-  if (n === 1) return 'יש רק פנינה אחת שמתאימה להגדרות שבחרת';
+// A region or category page fixes one facet: the count names it ("12 פנינים באזור גולן") and the page offers a way back to all the pearls
+export type Scope = { kind: 'region' | 'cat'; name: string };
+
+function countText(n: number, active: boolean, scope?: Scope) {
+  const where = scope ? (scope.kind === 'region' ? ` באזור ${scope.name}` : ` בקטגוריה '${scope.name}'`) : '';
+  if (!active) return n === 1 ? `פנינה אחת${where}` : `${n} פנינים${where}`;
+  if (n > 1) return `${n} פנינים${where} שמתאימות להגדרות שבחרת`;
+  if (n === 1) return `יש רק פנינה אחת${where} שמתאימה להגדרות שבחרת`;
   return 'אין כאן פנינים שמתאימות להגדרות שבחרת, אבל זה לא אומר שאין כאלה בארץ :)';
 }
 
-// `hide`: a region page gets the places of that region and no region clouds; a category page no category chips
-export default function Explorer({ places, texts, hide }: { places: Place[]; texts: Texts; hide?: 'region' | 'cat' }) {
+// `scope`: a region page gets the places of that region and no region clouds; a category page no category chips
+export default function Explorer({ places, texts, scope }: { places: Place[]; texts: Texts; scope?: Scope }) {
+  const hide = scope?.kind;
   const [st, setSt] = useState<FilterState>(EMPTY);
   const [ready, setReady] = useState(false);
   const [view, setView] = useState<'list' | 'map'>('list');
@@ -84,18 +89,24 @@ export default function Explorer({ places, texts, hide }: { places: Place[]; tex
 
   const open = panel === 'open';
 
+  const qform = (
+    <form className="qbox" id="f-qform" role="search" onSubmit={e => { e.preventDefault(); document.querySelector('.bar')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}>
+      <input type="search" id="f-q" placeholder="חיפוש: יישוב, שם, גבינות..." aria-label="חיפוש" value={st.q}
+        onChange={e => { const q = e.target.value; update(s => ({ ...s, q: q.trim() ? q : '' })); }} />
+      <button type="submit" aria-label="חיפוש"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.4" /><path d="M15.5 15.5L21 21" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" /></svg></button>
+    </form>
+  );
+  // back to the whole site from a region/category page (Kinneret, 27.10.2026: not "all the pearls in this region")
+  const allLink = <a className="chip all home" href="/"><Illo k="acorn" />לכל הפנינים</a>;
+
   return (
     <TextsProvider texts={texts}>
-      <section className="filters" aria-label="לאן מכאן">
+      {scope ? <div className="qmini">{qform}</div> : <section className="filters" aria-label="לאן מכאן">
         <div className="ftop">
           <span className="flabel">לאן מכאן</span>
-          <form className="qbox" id="f-qform" role="search" onSubmit={e => { e.preventDefault(); document.querySelector('.bar')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}>
-            <input type="search" id="f-q" placeholder="חיפוש: יישוב, שם, גבינות..." aria-label="חיפוש" value={st.q}
-              onChange={e => { const q = e.target.value; update(s => ({ ...s, q: q.trim() ? q : '' })); }} />
-            <button type="submit" aria-label="חיפוש"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.4" /><path d="M15.5 15.5L21 21" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" /></svg></button>
-          </form>
+          {qform}
         </div>
-        {hide !== 'region' && <div className="clouds" id="f-region">
+        <div className="clouds" id="f-region">
           {Object.keys(ZONES).map((g, gi) => (
             <div className="cloud" key={g}>
               <span className="gname"><Illo k={ZONE_ILLO[g]} />{g}</span>
@@ -106,15 +117,15 @@ export default function Explorer({ places, texts, hide }: { places: Place[]; tex
               {gi === 0 && st.regions.length > 0 && <Chip className="sm clear" pressed={false} n="" onClick={() => update(s => ({ ...s, regions: [] }))}>נקה בחירה</Chip>}
             </div>
           ))}
-        </div>}
-      </section>
+        </div>
+      </section>}
 
       <svg className="divider" viewBox="0 0 560 44" aria-hidden="true" dangerouslySetInnerHTML={{ __html: DIVIDER_SVG }} />
 
       <div className="bar">
         <span className="now">
           <span className={'blob' + (pop ? ' pop' : '')} id="now-illo"><Illo k={nowK} /></span>
-          <span><span className={'count' + (act ? ' long' : '')} id="count">{countText(items.length, !!act)}</span> <span id="countnote" className="where" /></span>
+          <span><span className={'count' + (act ? ' long' : '')} id="count">{countText(items.length, !!act, scope)}</span> <span id="countnote" className="where" /></span>
         </span>
         <div className="views" role="group" aria-label="תצוגה">
           <button className="chip" aria-pressed={view === 'list'} onClick={() => setView('list')}>גלריית פנינים</button>
@@ -137,13 +148,14 @@ export default function Explorer({ places, texts, hide }: { places: Place[]; tex
           <div className="body">
             {hide !== 'cat' && <div className="grp" id="f-cat">
               <span className="flabel">מה יבוא טוב עכשיו</span>
-              {/* "all": pressed when no category is chosen; clicking it clears the categories and the preferences */}
-              <Chip className="all" pressed={!st.cats.length} onClick={() => update(s => ({ ...s, cats: [], prefs: [] }))} n={places.filter(p => matches(p, { ...st, cats: [], prefs: [] })).length}><Illo k="acorn" />{st.regions.length === 0 ? 'כל הפנינים' : st.regions.length === 1 ? 'כל הפנינים באזור שבחרת' : 'כל הפנינים באזורים שבחרת'}</Chip>
+              {/* "all": pressed when no category is chosen; clicking it clears the categories and the preferences. On a region page it leads home instead */}
+              {scope ? allLink : <Chip className="all" pressed={!st.cats.length} onClick={() => update(s => ({ ...s, cats: [], prefs: [] }))} n={places.filter(p => matches(p, { ...st, cats: [], prefs: [] })).length}><Illo k="acorn" />{st.regions.length === 0 ? 'כל הפנינים' : st.regions.length === 1 ? 'כל הפנינים באזור שבחרת' : 'כל הפנינים באזורים שבחרת'}</Chip>}
               {CATS.map(k => (
                 <Chip key={k} pressed={st.cats.includes(k)} onClick={() => update(s => ({ ...s, cats: s.cats.includes(k) ? s.cats.filter(c => c !== k) : [...s.cats, k] }))}
                   n={places.filter(p => matches(p, st, 'cat') && p.cats.includes(k)).length}><Illo k={CAT_ILLO[k]} />{k}</Chip>
               ))}
             </div>}
+            {hide === 'cat' && <div className="grp" id="f-home">{allLink}</div>}
             <div className="grp" id="f-pref">
               <span className="flabel">עוד העדפות</span>
               <p className="fnote">{texts['prefs.note']}</p>

@@ -2,12 +2,12 @@ import { SITE_URL, slugOf } from '@/lib/slug';
 import type { Place } from '@/lib/types';
 import type { Texts } from '@/lib/texts';
 import Hero from './Hero';
-import Explorer from './Explorer';
+import Explorer, { type Scope } from './Explorer';
 import SiteFoot from './SiteFoot';
 
 // A region or category page: its own header, the same gallery/map as the home page (minus the facet the page already fixes), and the footer
-export default function Collection({ title, lede, art, path, places, texts, hide }:
-  { title: string; lede: string; art?: string; path: string; places: Place[]; texts: Texts; hide: 'region' | 'cat' }) {
+export default function Collection({ title, lede, art, path, places, texts, scope }:
+  { title: string; lede: string; art?: string; path: string; places: Place[]; texts: Texts; scope: Scope }) {
   const jsonLd = {
     '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, description: lede, url: `${SITE_URL}${path}`, inLanguage: 'he',
     isPartOf: { '@type': 'WebSite', name: 'פנינים ישראליות', url: SITE_URL },
@@ -18,7 +18,7 @@ export default function Collection({ title, lede, art, path, places, texts, hide
     <div className="wrap">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <Hero title={title} lede={lede} art={art} />
-      <Explorer places={places} texts={texts} hide={hide} />
+      <Explorer places={places} texts={texts} scope={scope} />
       <SiteFoot label={texts['about.link']} />
     </div>
   );
