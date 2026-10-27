@@ -101,6 +101,10 @@ export const TEXT_DEFAULTS = {
       'לנו, [דרך כאן](#report)',
     ].join('\n'),
   },
+  // the gallery when no pearl matches the filters (Kinneret's wording, 27.10.2026)
+  'empty.top': { label: 'כשאין תוצאות: השורה למעלה (ליד האיור הקטן)', text: 'אין לנו פנינים שמתאימות להגדרות שבחרת' },
+  'empty.text': { label: 'כשאין תוצאות: הטקסט מתחת לשריון הצב', text: 'אין כאן פנינים מתאימות, אבל אם יצא לך למצוא פנינה כזאת, נשמח להמלצה', multi: true },
+  'empty.button': { label: 'כשאין תוצאות: הכפתור (פותח את טופס ההצעה)', text: 'להמליץ על פנינה' },
   // the "suggest a pearl" form (Kinneret's wording, 27.10.2026). Each question has its line of explanation under it
   'suggest.title': { label: 'טופס הצעת פנינה: הכותרת', text: 'תודה שבחרת לשתף איתנו פנינה משלך!' },
   'suggest.name': { label: 'הצעת פנינה: שאלה 1', text: 'איך קוראים למקום?' },
