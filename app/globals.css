@@ -272,3 +272,12 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .draft-list{grid-template-columns:minmax(260px,420px)}
 .draft-meta{font-size:.9rem;color:var(--muted)} .draft-meta h2{font-size:1rem;margin:0 0 6px;color:var(--ink)}
 .draft-meta dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0} .draft-meta dt{font-weight:600} .draft-meta dd{margin:0}
+
+/* about page + the small link to it at the bottom of the public pages (Kinneret, 2026-10-27) */
+.about h1{padding-left:0}
+.about h2{font-family:var(--display);font-weight:700;font-size:1.45rem;margin:18px 0 0}
+.about h3{font-family:var(--display);font-weight:700;font-size:1.1rem;margin:12px 0 0}
+.about p{margin:0;font-size:1.05rem;line-height:1.75}
+.site-foot{text-align:center;padding:28px 16px 36px}
+.site-foot a{color:var(--muted);font-weight:600;font-size:.92rem;text-decoration:underline;text-underline-offset:3px}
+.site-foot a:hover{color:var(--ink)}

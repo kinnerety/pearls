@@ -8,6 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const places = await getPlaces();
   return [
     { url: SITE_URL, priority: 1 },
+    { url: `${SITE_URL}/about`, priority: 0.5 },
     ...places.map(p => ({ url: `${SITE_URL}/p/${encodeURIComponent(slugOf(p))}`, priority: 0.7 })),
   ];
 }

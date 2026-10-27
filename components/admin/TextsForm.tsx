@@ -25,11 +25,11 @@ export default function TextsForm({ initial }: { initial: Texts }) {
       <section className="adm-card">
         <p className="adm-hint">הטקסטים שמופיעים באתר מחוץ לכרטיסי הפנינים. שינוי נשמר רק אחרי לחיצה על "שמירה".</p>
         {TEXT_KEYS.map(k => {
-          const d = TEXT_DEFAULTS[k] as { label: string; multi?: boolean; hint?: string };
+          const d = TEXT_DEFAULTS[k] as { label: string; multi?: boolean; big?: boolean; hint?: string };
           const field = (
             <label key={k}>
               {d.label}
-              <textarea rows={d.multi ? 4 : 1} value={t[k]} onChange={e => set(k, e.target.value)} />
+              <textarea rows={d.big ? 24 : d.multi ? 4 : 1} value={t[k]} onChange={e => set(k, e.target.value)} />
               <span className="adm-row">
                 {d.hint && <span className="adm-hint">{d.hint}</span>}
                 {t[k] !== DEFAULT_TEXTS[k] && <button type="button" className="adm-btn ghost" onClick={() => set(k, DEFAULT_TEXTS[k])}>ברירת מחדל</button>}

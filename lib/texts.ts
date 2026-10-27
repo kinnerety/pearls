@@ -1,5 +1,5 @@
 // Site texts Kinneret can edit in /admin/texts (popup, map tip, notes). The defaults live here; edits are stored in Neon.
-export type TextDef = { label: string; text: string; multi?: boolean; hint?: string };
+export type TextDef = { label: string; text: string; multi?: boolean; big?: boolean; hint?: string };
 
 export const TEXT_DEFAULTS = {
   'popup.title': { label: 'פופאפ "לפני שנכנסים לאוטו": הכותרת', text: 'לפני שנכנסים לאוטו' },
@@ -26,12 +26,73 @@ export const TEXT_DEFAULTS = {
   'share.area': { label: 'שיתוף: לפני האזור (בסוגריים)', text: 'באזור' },
   'share.details': { label: 'שיתוף: לפני הקישור לאתר של המקום', text: 'לכל הפרטים:' },
   'share.site': { label: 'שיתוף: לפני הקישור לפנינה באתר שלנו', text: "מתוך האתר 'פנינים ישראליות':" },
+  'about.title': { label: 'עמוד "על האתר": הכותרת', text: 'על פנינים ישראליות' },
+  'about.body': {
+    label: 'עמוד "על האתר": הטקסט', multi: true, big: true,
+    hint: 'שורה שמתחילה ב-## היא כותרת ביניים, שורה שמתחילה ב-### היא שאלה (התשובה בשורות שאחריה). שורה ריקה בין פסקאות.',
+    text: [
+      '## איך זה התחיל',
+      'קוראים לי כנרת יפרח, ואני עומדת מאחורי האתר. הכול התחיל מסיפור אמיתי: יוני, אח של מתי בן הזוג שלי, ואשתו אלן גרים בחו"ל. בשנים טובות, בלי קורונה ובלי מלחמה, הם באים לבקר לפחות פעם בשנה או שנתיים.',
+      '',
+      'אחרי כל כך הרבה ביקורים, הם כבר ראו את כל המקומות הרגילים של ישראל. אז כשישבתי לתכנן את הביקור הבא, רציתי לקחת אותם לדברים אחרים: קטנים, מיוחדים, מעניינים, כיפיים וטעימים. מקומות שרואים בהם דברים שלא רואים בשום מקום אחר, לא בארץ ולא בעולם.',
+      '',
+      '## מה חיפשתי',
+      'יותר מכל, חיפשתי מפגשים. מפגשים עם הצדדים המעניינים של הארץ, כמו החקלאות המפוארת שלה, והחי והצומח שלה. ובעיקר המון המון מפגשים עם ישראלים, כשהם במיטבם, ממש בכל רחבי הארץ.',
+      '',
+      '## איך נולדה הרשימה',
+      'מתוך החיפוש הזה ביקשתי מחברים שימליצו לי על מקומות כאלה. ההמלצות הגיעו, ואספתי את כולן לרשימה אחת ארוכה.',
+      '',
+      'עכשיו, כשיש AI בעולם, הצלחתי עם Claude אהובי להעלות את הכול לאתר. ככה גם אחרים יכולים ליהנות מהרשימה, ובקרוב גם להוסיף פנינים משלהם.',
+      '',
+      '## מה יש כאן',
+      'פנינים מכל הארץ, מהגולן והגליל ועד הנגב: טבע ונוף, חוות וחקלאות, יקבים ומבשלות, סדנאות, יוצרים וחנויות מיוחדות, תרבות ועוד. אפשר לסנן לפי אזור, לפי מה שיבוא טוב עכשיו, לפי מה שמתאים למשפחות או פתוח בשבת, ולראות הכול על המפה.',
+      '',
+      '## לפני שנוסעים',
+      'כל ההמלצות כאן ניתנו על ידי בני אדם. את המידע על כל מקום אוסף AI, ואני בודקת אותו באופן מדגמי. לכן חשוב מאוד לבדוק אחריי לפני שנוסעים: להיכנס לאתר של המקום, לוודא שהוא עדיין פתוח וקיים, ולבדוק שעות ותיאום.',
+      '',
+      '## שאלות ותשובות',
+      '### מי ממליץ על המקומות?',
+      'חברים ומכרים: אנשים אמיתיים שהיו שם ואהבו.',
+      '',
+      '### מה זה "המלצת המערכת"?',
+      'פנינים שאני ממליצה עליהן במיוחד. הן מסומנות בכוכב, וגם אפשר לסנן לפיהן.',
+      '',
+      '### למה כתוב "מיקום משוער"?',
+      'לחלק מהמקומות אין כתובת מדויקת, אז הם מסומנים במרכז היישוב. כדי לנווט, כדאי לחפש ב-Waze את שם המקום או להיכנס לאתר שלו.',
+      '',
+      '### איך יודעים אם מקום מתאים למשפחות או פתוח בשבת?',
+      'סימנתי את זה רק כשזה כתוב במקורות. יכול להיות שיש עוד מקומות שמתאימים ולא סומנו, ולהפך, אז תמיד כדאי לבדוק.',
+      '',
+      '### מצאתי טעות, או מקום שנסגר. מה עושים?',
+      'ממש ממש מוזמנים לכתוב לי! בקרוב יהיה כאן טופס "מצאתי טעות". מקומות שנסגרו אני מורידה מהאתר.',
+      '',
+      '### אפשר להמליץ על פנינה?',
+      'בשמחה! בקרוב יהיה כאן טופס להוספת פנינים.',
+    ].join('\n'),
+  },
+  'about.link': { label: 'הקישור לעמוד "על האתר" בתחתית העמודים', text: 'על האתר ואיך הוא נולד' },
 } satisfies Record<string, TextDef>;
 
 export type TextKey = keyof typeof TEXT_DEFAULTS;
 export type Texts = Record<TextKey, string>;
 export const TEXT_KEYS = Object.keys(TEXT_DEFAULTS) as TextKey[];
 export const DEFAULT_TEXTS = Object.fromEntries(TEXT_KEYS.map(k => [k, TEXT_DEFAULTS[k].text])) as Texts;
+
+/** The about page's text: "## " = a section heading, "### " = a question (its answer = the lines after it), blank line = new paragraph */
+export type AboutBlock = { kind: 'h2' | 'q' | 'p'; text: string };
+export function parseAbout(s: string): AboutBlock[] {
+  const out: AboutBlock[] = [];
+  let open = false; // a paragraph is still collecting lines
+  for (const raw of s.split('\n')) {
+    const line = raw.trim();
+    if (!line) { open = false; continue; }
+    if (line.startsWith('### ')) { out.push({ kind: 'q', text: line.slice(4).trim() }); open = false; }
+    else if (line.startsWith('## ')) { out.push({ kind: 'h2', text: line.slice(3).trim() }); open = false; }
+    else if (open) out[out.length - 1].text += ' ' + line;
+    else { out.push({ kind: 'p', text: line }); open = true; }
+  }
+  return out;
+}
 
 /** "חשוב: ..." → the word before the colon in bold */
 export function splitLead(s: string): [string, string] {
