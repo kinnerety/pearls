@@ -67,16 +67,45 @@ VARIANTS = {
          + acorn(84, 56, 90, 0.98) + leaf(34, 88, -170, 0.6, LIME_D) + leaf(126, 90, -14, 0.65, LIME),
 }
 
-# report a mistake: a folded paper map with a pin and a magnifying glass
+# report a mistake (Kinneret 27.10): a carafe of orange juice and, beside it, a cute flowered glass tipped on its side with the
+# juice spilling out: something went wrong. The juice is the palette's yellow (no orange on the site).
+JUICE, JUICE_D, GLASS, GLASS_EDGE = YEL, YEL_D, '#DDEEF6', '#9FCBE3'
+
+def flower(x, y, s=1.0, petals=SHEET, heart=YEL):
+    pts = ''.join(f'<circle cx="{x + s*1.7*math.cos(k*2*math.pi/5):.1f}" cy="{y + s*1.7*math.sin(k*2*math.pi/5):.1f}" r="{s*1.1:.1f}" fill="{petals}"/>' for k in range(5))
+    return pts + f'<circle cx="{x}" cy="{y}" r="{s*0.9:.1f}" fill="{heart}"/>'
+
+CARAFE = (
+    # the glass first, the juice on it at full strength, then the outline (through the glass the juice looked washed out)
+    f'<path d="M52 40C44 50 42 66 44 78C45 84 50 86 60 86C70 86 75 84 76 78C78 66 76 50 68 40Z" fill="{GLASS}" opacity=".5"/>'
+    f'<path d="M46.5 58C45 66 44 72 44 78C45 84 50 86 60 86C70 86 75 84 76 78C76 72 75 66 73.5 58Z" fill="{JUICE}"/>'
+    f'<ellipse cx="60" cy="58" rx="13.5" ry="2.6" fill="{JUICE_D}"/>'
+    f'<path d="M52 40C44 50 42 66 44 78C45 84 50 86 60 86C70 86 75 84 76 78C78 66 76 50 68 40Z" fill="none" stroke="{GLASS_EDGE}" stroke-width="1.6"/>'
+    # neck, spout and handle
+    f'<path d="M52 40V33H68V40" fill="{GLASS}" stroke="{GLASS_EDGE}" stroke-width="1.6" stroke-linejoin="round"/>'
+    f'<path d="M52 33L47 30.5L52 36.5" fill="{GLASS}" stroke="{GLASS_EDGE}" stroke-width="1.6" stroke-linejoin="round"/>'
+    f'<path d="M76 48C88 50 88 70 76 72" fill="none" stroke="{TEAL}" stroke-width="3" stroke-linecap="round"/>'
+    f'<path d="M48 50C46.5 56 46 62 46.5 70" fill="none" stroke="{SHEET}" stroke-width="1.6" stroke-linecap="round" opacity=".9"/>'
+)
+
+def tipped_glass(x, y, rot):
+    """A flowered tumbler on its side, mouth to the right, the last of the juice running out of it."""
+    body = 'M-7 0Q-7.5 1.5 -6 1.5L6 1.5Q7.5 1.5 7 0L11 -26L-11 -26Z'
+    return (f'<g transform="translate({x} {y}) rotate({rot})">'
+            f'<path d="{body}" fill="{GLASS}" opacity=".5"/>'
+            f'<path d="M11 -26L-11 -26L0 -19L10.5 -14Z" fill="{JUICE}"/>'
+            f'<path d="{body}" fill="none" stroke="{GLASS_EDGE}" stroke-width="1.6" stroke-linejoin="round"/>'
+            f'<ellipse cx="0" cy="-26" rx="11" ry="2.4" fill="{GLASS}" stroke="{GLASS_EDGE}" stroke-width="1.4"/>'
+            f'<path d="M-5.5 -3C-7 -10 -7.5 -16 -7 -22" fill="none" stroke="{SHEET}" stroke-width="1.4" stroke-linecap="round" opacity=".9"/>'
+            + flower(-1.5, -8, 1.0, SAGE) + flower(4.5, -16, 0.9, LIME) + flower(-4.5, -18.5, 0.8, '#BFDDEE')
+            + '</g>')
+
 REPORT = (
     ground(80, 86, 66, 8)
-    + '<path d="M28 30L58 22L90 30L122 22V78L90 86L58 78L28 86Z" fill="#DDEEF6"/>'
-    + '<path d="M58 22V78L90 86V30Z" fill="#CBE3EF"/>'
-    + '<path d="M34 70C46 60 52 66 62 56S80 46 92 52S112 44 118 38" fill="none" stroke="#98C4A4" stroke-width="4" stroke-linecap="round"/>'
-    + '<path d="M36 44c6-4 10 2 16-2" fill="none" stroke="#FFFDF7" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 3"/>'
-    + '<path d="M74 52c-6-7-9-11-9-15a9 9 0 0 1 18 0c0 4-3 8-9 15Z" fill="#1C4F66"/><circle cx="74" cy="37" r="3.4" fill="#FAD771"/>'
-    + '<circle cx="104" cy="56" r="15" fill="#FFFDF7" opacity=".55"/><circle cx="104" cy="56" r="15" fill="none" stroke="#FAD771" stroke-width="5"/>'
-    + '<path d="M115 67L130 82" stroke="#1C4F66" stroke-width="7" stroke-linecap="round"/>'
+    # the spilled juice runs from the mouth of the glass along the ground
+    + f'<path d="M121 80C128 77 142 78 149 82C153 85 145 89.5 132 89.5C122 89.5 116 86 121 80Z" fill="{JUICE}"/>'
+    + f'<ellipse cx="138" cy="85" rx="5" ry="1.4" fill="{JUICE_D}" opacity=".6"/>'
+    + CARAFE + tipped_glass(98, 74, 95)
 )
 
 def wrap(body):

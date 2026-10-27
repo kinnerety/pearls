@@ -5,19 +5,16 @@ import { sendForm } from '@/app/actions';
 import type { Texts } from '@/lib/texts';
 
 // The two popup forms: "suggest a pearl" (Kinneret's wording, 27.10.2026) and "report a mistake".
-// Any link to #suggest or #report on the page opens them (#report-<id> picks that pearl); so does opening the page with that hash.
+// Any link to #suggest or #report on the page opens them; so does opening the page with that hash.
 type Kind = 'suggest' | 'report';
-type PlaceRef = { id: number; name: string };
 
-export default function Forms({ texts, places }: { texts: Texts; places: PlaceRef[] }) {
+export default function Forms({ texts }: { texts: Texts }) {
   const refs = { suggest: useRef<HTMLDialogElement>(null), report: useRef<HTMLDialogElement>(null) };
-  const [place, setPlace] = useState('');
 
   useEffect(() => {
     const open = (hash: string) => {
-      const m = /^#(suggest|report)(?:-(\d+))?$/.exec(hash);
+      const m = /^#(suggest|report)$/.exec(hash);
       if (!m) return false;
-      if (m[2]) setPlace(places.find(p => p.id === +m[2])?.name || '');
       refs[m[1] as Kind].current?.showModal();
       return true;
     };
@@ -55,11 +52,8 @@ export default function Forms({ texts, places }: { texts: Texts; places: PlaceRe
       </Popup>
 
       <Popup kind="report" ref_={refs.report} texts={texts} art={REPORT_SVG} view="0 16 160 80">
-        <Field q={texts['report.place']} hint={texts['report.place.hint']}>
-          <input name="place" list="report-places" maxLength={200} value={place} onChange={e => setPlace(e.target.value)} />
-          <datalist id="report-places">{places.map(p => <option key={p.id} value={p.name} />)}</datalist>
-          <input type="hidden" name="place_id" value={places.find(p => p.name === place.trim())?.id ?? ''} />
-        </Field>
+        {/* a plain field, no list to pick from (Kinneret 27.10) */}
+        <Field q={texts['report.place']} hint={texts['report.place.hint']}><input name="place" maxLength={200} /></Field>
         <Field q={texts['report.what']} hint={texts['report.what.hint']}><textarea name="what" rows={4} required maxLength={2000} /></Field>
         <YesNo q={texts['report.email']} name="email_ok" yes={texts['report.email.yes']} no={texts['report.email.no']}
           ask={texts['report.email.ask']} input={<input name="email" type="email" required dir="ltr" maxLength={120} autoComplete="email" />} />

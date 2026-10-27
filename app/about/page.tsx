@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SITE_URL } from '@/lib/slug';
-import { getPlaces, getTexts } from '@/lib/store';
+import { getTexts } from '@/lib/store';
 import { linkFaqForms, linkForms, parseAbout, parseFaq, plainText } from '@/lib/texts';
 import { DIVIDER_SVG } from '@/components/art';
 import Rich, { Paras } from '@/components/Rich';
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 // Kinneret's own text and pictures (27.10.2026); every text on the page is edited in /admin/texts ("about.*")
 export default async function About() {
-  const [texts, places] = await Promise.all([getTexts(), getPlaces()]);
+  const texts = await getTexts();
   const blocks = parseAbout(linkForms(texts['about.main']));
   const faq = linkFaqForms(parseFaq(texts['about.faq']));
   const jsonLd = [
@@ -85,7 +85,7 @@ export default async function About() {
           </div>
         ))}
       </article>
-      <Forms texts={texts} places={places.map(p => ({ id: p.id, name: p.name })).sort((a, b) => a.name.localeCompare(b.name, 'he'))} />
+      <Forms texts={texts} />
       <svg className="divider" viewBox="0 0 560 44" aria-hidden="true" dangerouslySetInnerHTML={{ __html: DIVIDER_SVG }} />
     </div>
   );

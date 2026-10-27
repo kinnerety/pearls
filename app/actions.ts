@@ -10,7 +10,7 @@ const FIELDS: Record<SubmissionKind, { keys: string[]; required: string[] }> = {
     keys: ['name', 'what', 'where', 'love', 'shabbat', 'family', 'more', 'credit', 'credit_name', 'email_ok', 'email', 'agree'],
     required: ['name', 'what', 'where', 'agree'],
   },
-  report: { keys: ['place', 'place_id', 'what', 'email_ok', 'email'], required: ['what'] },
+  report: { keys: ['place', 'what', 'email_ok', 'email'], required: ['what'] },
 };
 
 export type SendResult = { ok: true } | { ok: false; error: string };

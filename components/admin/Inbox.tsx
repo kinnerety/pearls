@@ -27,7 +27,7 @@ export default function Inbox({ subs, places }: { subs: Submission[]; places: { 
       {!list.length && <p className="adm-hint">אין כאן כלום כרגע.</p>}
       <div className="adm-inbox">
         {list.map(r => {
-          const d = r.data, place = d.place_id ? places.find(p => p.id === +d.place_id) : undefined;
+          const d = r.data, place = d.place ? places.find(p => p.name.trim() === d.place.trim()) : undefined;
           return (
             <article key={r.id} className="adm-card adm-sub" data-done={r.status === 'done' || undefined}>
               <div className="adm-sub-head">

@@ -103,7 +103,7 @@ export const TEXT_DEFAULTS = {
     ].join('\n'),
   },
   // the "suggest a pearl" form (Kinneret's wording, 27.10.2026). Each question has its line of explanation under it
-  'suggest.title': { label: 'טופס הצעת פנינה: הכותרת', text: 'תודה שבחרת לשתף איתנו פנינה משלך' },
+  'suggest.title': { label: 'טופס הצעת פנינה: הכותרת', text: 'תודה שבחרת לשתף איתנו פנינה משלך!' },
   'suggest.name': { label: 'הצעת פנינה: שאלה 1', text: 'איך קוראים למקום?' },
   'suggest.name.hint': { label: 'הצעת פנינה: ההסבר לשאלה 1', text: 'אם אין לו שם - אז רק מה זה, 3-5 מילים' },
   'suggest.what': { label: 'הצעת פנינה: שאלה 2', text: 'מה זה בדיוק?' },
@@ -131,19 +131,19 @@ export const TEXT_DEFAULTS = {
   'suggest.done.title': { label: 'הצעת פנינה: הודעת ההצלחה, הכותרת', text: 'תודה רבה!' },
   'suggest.done.text': { label: 'הצעת פנינה: הודעת ההצלחה, הטקסט', multi: true, text: 'זה ממש לא מובן מאליו שהשקעת זמן כדי לשתף עם כולנו פנינה ישראלית.\nאנחנו מעלים פנינים חדשות במרוכז בערך כל שבועיים.' },
   'suggest.done.button': { label: 'הצעת פנינה: הכפתור בהודעת ההצלחה', text: 'חזרה לגלריית הפנינים' },
-  // the "report a mistake" form: a first proposal, waiting for Kinneret's wording
+  // the "report a mistake" form (Kinneret's wording, 27.10.2026 afternoon)
   'report.title': { label: 'טופס דיווח על טעות: הכותרת', text: 'מצאת טעות? תודה שסיפרת לנו!' },
   'report.place': { label: 'דיווח על טעות: שאלה 1', text: 'באיזו פנינה מדובר?' },
-  'report.place.hint': { label: 'דיווח על טעות: ההסבר לשאלה 1', text: 'אפשר להתחיל להקליד את השם ולבחור מהרשימה. אם הטעות לא קשורה לפנינה מסוימת, אפשר להשאיר ריק', multi: true },
+  'report.place.hint': { label: 'דיווח על טעות: ההסבר לשאלה 1', text: 'אם הטעות לא קשורה לפנינה מסוימת, אפשר להשאיר ריק' },
   'report.what': { label: 'דיווח על טעות: שאלה 2', text: 'מה לא נכון?' },
   'report.what.hint': { label: 'דיווח על טעות: ההסבר לשאלה 2', text: 'למשל: המקום נסגר, השעות השתנו, הקישור לא עובד, המיקום על המפה לא נכון', multi: true },
   'report.email': { label: 'דיווח על טעות: אפשר לשלוח מייל?', text: 'אם יהיו לנו שאלות, אפשר לשלוח לך מייל? רק לצורך זה, מבטיחים!', multi: true },
   'report.email.yes': { label: 'דיווח על טעות: "כן" למייל', text: 'בטח' },
   'report.email.ask': { label: 'דיווח על טעות: מה נפתח אחרי "כן"', text: 'תודה! מה המייל שלך?' },
-  'report.email.no': { label: 'דיווח על טעות: "לא" למייל', text: 'לא צריך' },
+  'report.email.no': { label: 'דיווח על טעות: "לא" למייל', text: 'לא, תודה' },
   'report.send': { label: 'דיווח על טעות: הכפתור', text: 'שליחה' },
   'report.done.title': { label: 'דיווח על טעות: הודעת ההצלחה, הכותרת', text: 'תודה רבה!' },
-  'report.done.text': { label: 'דיווח על טעות: הודעת ההצלחה, הטקסט', multi: true, text: 'נבדוק ונתקן בהקדם.' },
+  'report.done.text': { label: 'דיווח על טעות: הודעת ההצלחה, הטקסט', multi: true, text: 'נבדוק את העניין ונתקן בהקדם את מה שצריך.\nזה לא מובן מאליו שהשקעת זמן בלספר לנו על זה, אנחנו מאוד מעריכים את זה' },
   'report.done.button': { label: 'דיווח על טעות: הכפתור בהודעת ההצלחה', text: 'חזרה לגלריית הפנינים' },
   'about.link': { label: 'הקישור לעמוד "אודות" בתחתית העמודים', text: 'אודות' },
 } satisfies Record<string, TextDef>;
