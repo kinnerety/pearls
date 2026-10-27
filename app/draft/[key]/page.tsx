@@ -6,7 +6,6 @@ import { getTexts } from '@/lib/store';
 import PlaceCard from '@/components/PlaceCard';
 import PlaceMap from '@/components/PlaceMap';
 import { TextsProvider } from '@/components/TextsContext';
-import { isApprox } from '@/lib/geo';
 
 // A draft pearl, exactly as its card and map pin will look on the site, for Kinneret to check before it is added.
 // Not linked from anywhere and not indexed.
@@ -28,7 +27,6 @@ export default async function DraftPage({ params }: Props) {
       {p.lat != null && (
         <section className="mapbox place-map" aria-label="מפה">
           <PlaceMap p={p} />
-          {isApprox(p) && <div className="legend"><span>{texts['place.approx']}</span></div>}
         </section>
       )}
       <section className="draft-meta">

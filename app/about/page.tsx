@@ -84,6 +84,7 @@ export default async function About() {
             <Paras text={f.a} />
           </div>
         ))}
+        <p className="about-back"><Link href="/" className="back-btn">{texts['about.back']}</Link></p>
       </article>
       <Forms texts={texts} />
       <svg className="divider" viewBox="0 0 560 44" aria-hidden="true" dangerouslySetInnerHTML={{ __html: DIVIDER_SVG }} />
