@@ -217,7 +217,8 @@ def jerusalem():
     r = random.Random(11)
     for k in range(13):
         spots.append((360 + k * 26 + r.uniform(-12, 12), 52 + abs(k - 6) * 9 + r.uniform(-8, 8), r.uniform(.9, 1.5)))
-    o.append(f'<g class="hd-birds">{birds(spots)}</g>')
+    for k, (bx, by, sz) in enumerate(spots):
+        o.append(f'<g class="hd-bird" style="--d:{r.uniform(0, 1.1):.2f}s;--dx:{r.uniform(-90, 90):.0f}px;--dy:{-200 - r.uniform(0, 160):.0f}px">{birds([(bx, by, sz)])}</g>')
     return svg(o)
 
 def acacia(x, gy, sc=1.0, fill=LIME, flip=False):
