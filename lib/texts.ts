@@ -26,7 +26,7 @@ export const TEXT_DEFAULTS = {
   'share.area': { label: 'שיתוף: לפני האזור (בסוגריים)', text: 'באזור' },
   'share.details': { label: 'שיתוף: לפני הקישור לאתר של המקום', text: 'לכל הפרטים:' },
   'share.site': { label: 'שיתוף: לפני הקישור לפנינה באתר שלנו', text: "מתוך האתר 'פנינים ישראליות':" },
-  'about.title': { label: 'עמוד "על האתר": הכותרת', text: 'על פנינים ישראליות' },
+  'about.title': { label: 'עמוד "אודות": הכותרת', text: 'אודות' },
   'about.body': {
     label: 'עמוד "על האתר": הטקסט', multi: true, big: true,
     hint: 'שורה שמתחילה ב-## היא כותרת ביניים, שורה שמתחילה ב-### היא שאלה (התשובה בשורות שאחריה). שורה ריקה בין פסקאות.',
@@ -70,7 +70,7 @@ export const TEXT_DEFAULTS = {
       'יופי! בקרוב יהיה כאן טופס להוספת פנינים.',
     ].join('\n'),
   },
-  'about.link': { label: 'הקישור לעמוד "על האתר" בתחתית העמודים', text: 'על האתר ואיך הוא נולד' },
+  'about.link': { label: 'הקישור לעמוד "אודות" בתחתית העמודים', text: 'אודות' },
 } satisfies Record<string, TextDef>;
 
 export type TextKey = keyof typeof TEXT_DEFAULTS;
