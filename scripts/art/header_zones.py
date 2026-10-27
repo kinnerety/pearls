@@ -31,16 +31,17 @@ def north():
     p5 = wave(372, 16, 1.0, 3.0, x0=-30, x1=700, taper=.35, drop=450)
     o.append(layer(p5, DSAGE, 'cl', .9))
     # the stream: born on the dark ridge, winding down and widening to the bottom edge
-    c = bezier((566, 297), (470, 322), (690, 372), (500, 476), 60)
-    wd = [3 + 44 * (i / (len(c) - 1)) ** 1.5 for i in range(len(c))]
-    o.append(ribbon(c, wd, MIST, 'wv'))
+    # the stream appears from under the dark hill's lower edge, never over it
+    c = bezier((560, 326), (430, 372), (720, 396), (520, 476), 60)
+    wd = [10 + 36 * (i / (len(c) - 1)) ** 1.4 for i in range(len(c))]
+    # clipped to the lime and sage hills, so it shows only below the dark hill's edge
+    o.append(f'<clipPath id="rc"><path d="{path(p4)}"/><path d="{path(p5)}"/></clipPath><g clip-path="url(#rc)">{ribbon(c, wd, MIST, "wv")}</g>')
     o.append(oak(1110, 458, .95, LIME))
     o.append(oak(735, 420, .5, SAGE))
     o.append(oak(120, 456, 1.08, SAGE))
     o.append(oak(250, 470, .62, LIME, flip=True))
     o.append(eagle(250, 92, 1.25, -8))
     o.append(eagle(470, 58, .62, 6))
-    o.append(floating_leaves(8, (40, 30, 600, 170), 3))
     return svg(o)
 
 def helicopter(x, y, sc=1.0):
@@ -96,41 +97,62 @@ def palm(x, gy, sc=1.0, lean=0):
     fr = ''.join(f'<path transform="rotate({a})" d="M0 0 C14 -6 30 -4 42 6 C30 0 16 0 0 4Z" fill="{INK}"/>' for a in (-200, -160, -120, -60, -20, 20))
     return f'<g transform="translate({x},{gy}) scale({sc})"><path d="M-3 0 C-2 -30 {lean*.6} -60 {lean} -88 L{lean+5} -88 C{lean*.6+5} -60 4 -30 4 0Z" fill="{INK}"/><g transform="translate({lean+2},-88)">{fr}</g></g>'
 
+def surfer(x, y, sc=1.0, woman=False, flip=False):
+    """Standing on a board on a small wave; the woman wears a full (yellow) swimsuit and a ponytail."""
+    suit = f'<path d="M-6 -40 C-6 -43 6 -43 6 -40 L5 -24 L-5 -24Z" fill="{SUN2}"/>' if woman else f'<path d="M-6 -27 L6 -27 L5 -21 L-5 -21Z" fill="{SUN2}"/>'
+    hair = f'<path d="M4 -54 C10 -56 14 -50 12 -44" stroke="{INK}" stroke-width="3" fill="none" stroke-linecap="round"/>' if woman else ''
+    f = ' scale(-1,1)' if flip else ''
+    return (f'<g transform="translate({x},{y}) scale({sc}){f}">'
+            f'<path d="M-30 10 C-10 18 10 18 30 10 C40 6 36 -2 24 0 C8 4 -8 4 -26 0 C-36 -2 -40 6 -30 10Z" fill="{WHITE}" filter="url(#paperS)"/>'
+            f'<path d="M-34 4 C-12 8 12 8 36 2 C40 0 38 -4 30 -4 L-26 -3 C-36 -3 -38 2 -34 4Z" fill="{SUN2}" filter="url(#paperS)"/>'
+            f'<path d="M-8 -3 L-6 -22 M10 -3 L7 -22" stroke="{INK}" stroke-width="3.8" stroke-linecap="round"/>'
+            f'<circle cx="0" cy="-50" r="6" fill="{INK}"/>{hair}'
+            f'<path d="M-7 -41 C-7 -44 7 -44 7 -41 L6 -20 L-6 -20Z" fill="{INK}"/>{suit}'
+            f'<path d="M-6 -38 L-22 -30 M6 -38 L20 -46" stroke="{INK}" stroke-width="3.4" stroke-linecap="round" fill="none"/></g>')
+
+def sunbather(x, y, sc=1.0, woman=False, towel=SKY):
+    """Seen from above: a striped towel with a person lying on it, head to the left."""
+    stripes = ''.join(f'<path d="M{-44 + k*11} -20 V20" stroke="{WHITE}" stroke-width="3.5"/>' for k in range(9))
+    body = (f'<circle cx="-30" cy="0" r="7" fill="{INK}"/>'
+            f'<path d="M-22 -7 L28 -6 L40 -4 L40 4 L28 6 L-22 7Z" fill="{INK}"/>'
+            f'<path d="M-20 -8 C-10 -14 -2 -14 6 -11 L6 -6 M-20 8 C-10 14 -2 14 6 11" stroke="{INK}" stroke-width="3.2" fill="none" stroke-linecap="round"/>')
+    if woman:
+        hair = f'<path d="M-36 -4 C-46 -8 -50 2 -42 6" stroke="{INK}" stroke-width="3.2" fill="none" stroke-linecap="round"/>'
+        wear = f'<path d="M-12 -7 L-6 -7 L-6 -1 L-12 -1Z M-12 1 L-6 1 L-6 7 L-12 7Z" fill="{SUN2}"/><path d="M14 -6 L22 -6 L22 6 L14 6Z" fill="{SUN2}"/>'
+    else:
+        hair = ''
+        wear = f'<path d="M12 -6 L26 -6 L26 6 L12 6Z" fill="{SKY if towel != SKY else SUN2}"/>'
+    return (f'<g transform="translate({x},{y}) scale({sc}) rotate(-5)"><g filter="url(#paperS)"><rect x="-48" y="-22" width="96" height="44" rx="3" fill="{towel}"/></g>{stripes}{body}{hair}{wear}</g>')
+
+def shrubs(xs, pts, dy=6):
+    return ''.join(''.join(f'<path d="M{tx} {ground_at(pts, tx) + dy:.0f} q{d*3} -12 {d*9} -22" stroke="{TEAL}" stroke-width="2" fill="none" stroke-linecap="round"/>' for d in (-1, -.4, .3, 1)) for tx in xs)
+
 def center():
     o = []
     o.append(sun(200, 150, 64, SUN2))
     o.append(f'<g filter="url(#paper)"><path d="M-30 238 Q300 234 600 238 T1230 236 V470 H-30Z" fill="{MIST}"/></g><path d="M-30 238 Q300 234 600 238 T1230 236 V470 H-30Z" fill="url(#wv)"/>')
     near = wave(286, 4, 3, 0.4)
     o.append(layer(near, SKY, 'ww', .8))
-    # kurkar cliff on the left, with two palms
-    cliff = wave(262, 10, 1.0, 1.0, x0=-30, x1=330, taper=.3, drop=380)
-    o.append(layer(cliff, SUN, 'sa', .9))
-    o.append(palm(70, ground_at(cliff, 70) + 4, .9, 8))
-    o.append(palm(118, ground_at(cliff, 118) + 4, .7, -6))
-    o.append(swimmer(420, 304, arm=1)); o.append(swimmer(470, 316, ring=True, arm=0)); o.append(swimmer(560, 300, arm=-1)); o.append(swimmer(640, 312, arm=0))
-    o.append(helicopter(470, 96, .95))
+    o.append(swimmer(610, 304, arm=1)); o.append(swimmer(700, 316, ring=True, arm=0))
+    o.append(surfer(300, 318, .9, woman=True))
+    o.append(surfer(430, 300, .8, flip=True))
+    o.append(helicopter(470, 96, .48))
     sand = wave(352, 14, 1.0, 2.6)
     shore = [(x, y - 7) for x, y in sand]
     o.append(f'<path d="M{shore[0][0]},{shore[0][1]:.1f} ' + ' '.join('L%.1f,%.1f' % p for p in shore) + f'" stroke="{WHITE}" stroke-width="9" fill="none" stroke-linecap="round" filter="url(#paperS)"/>')
     o.append(layer(sand, SAND, 'di', .28))
     o.append(lifeguard(780, ground_at(sand, 780) + 26, .95))
-    o.append(f'<g transform="translate(600,{ground_at(sand, 600) + 62:.0f}) rotate(-4)" filter="url(#paperS)"><rect x="-34" y="-9" width="68" height="18" rx="2" fill="{SKY}"/><path d="M-34 -3 H34 M-34 3 H34" stroke="{WHITE}" stroke-width="2.4"/></g>')
+    o.append(sunbather(380, ground_at(sand, 380) + 60, 1.0, woman=True, towel=SKY))
+    o.append(sunbather(500, ground_at(sand, 500) + 66, 1.0, woman=False, towel=SUN))
     o.append(umbrella(560, ground_at(sand, 560) + 86, 1.15))
-    for px, flip, pr in [(330, False, 30), (455, True, -30)]:
-        g = ground_at(sand, px) + 52
-        o.append(person(px, g, 1.0, 'reach', flip))
-        hx = px + (15 if not flip else -15); o.append(paddle(hx, g - 54, pr))
-    o.append(f'<circle cx="392" cy="{ground_at(sand, 392) - 4:.0f}" r="3.2" fill="{SUN2}" stroke="{INK}" stroke-width="1"/>')
     fd = wave(398, 14, 1.0, 0.6, x0=-30, x1=300, taper=.4, drop=470)
     o.append(layer(fd, SAGE, 'cl', .9))
-    for tx in (40, 90, 150):
-        ty = ground_at(fd, tx) + 6
-        o.append(''.join(f'<path d="M{tx} {ty} q{d*3} -12 {d*9} -22" stroke="{TEAL}" stroke-width="2" fill="none" stroke-linecap="round"/>' for d in (-1, -.4, .3, 1)))
+    o.append(shrubs((40, 150), fd))
+    o.append(umbrella(96, ground_at(fd, 96) + 60, .8))
     dune = wave(398, 16, 1.0, 1.4, x0=900, x1=W + 30, taper=.4, drop=470)
     o.append(layer(dune, DLIME, 'st', .9))
-    for tx in (1000, 1040, 1100, 1150):
-        ty = ground_at(dune, tx) + 6
-        o.append(''.join(f'<path d="M{tx} {ty} q{d*3} -12 {d*9} -22" stroke="{TEAL}" stroke-width="2" fill="none" stroke-linecap="round"/>' for d in (-1, -.4, .3, 1)))
+    o.append(shrubs((1000, 1150), dune))
+    o.append(umbrella(1080, ground_at(dune, 1080) + 56, .8))
     return svg(o)
 
 def olive(x, gy, sc=1.0, fill=SAGE, seed=1, flip=False):
@@ -154,15 +176,15 @@ def terraces(pts, n, color, sw=1.6, step=12, clip='tc'):
     return f'<clipPath id="{clip}"><path d="{d}"/></clipPath><g clip-path="url(#{clip})" fill="none" stroke="{color}" stroke-width="{sw}" stroke-linecap="round">{lines}</g>'
 
 def spring(x, gy, sc=1.0):
-    R = 'M-120 2 L-114 -30 L-96 -44 L-90 -70 L-62 -78 L-44 -98 L-14 -92 L6 -102 L30 -88 L54 -90 L66 -66 L86 -56 L92 -24 L100 2Z'
-    rock = (f'<g filter="url(#paper)"><path d="{R}" fill="{SAND}"/></g><path d="{R}" fill="url(#sa)"/>'
-            f'<path d="M-38 -16 C-44 -30 -40 -52 -26 -58 C-12 -62 0 -50 0 -36 C2 -26 -2 -18 -4 -16Z" fill="{INK}"/>')
-    water = (f'<path d="M-24 -30 C-26 -18 -30 -8 -34 4 L-6 4 C-10 -8 -14 -18 -16 -30Z" fill="{MIST}"/>'
-             f'<path d="M-22 -26 C-22 -16 -26 -6 -28 2 M-18 -26 C-17 -16 -15 -6 -12 2" stroke="{WHITE}" stroke-width="1.6" fill="none"/>')
-    pool = (f'<g filter="url(#paper)"><ellipse cx="-20" cy="16" rx="96" ry="22" fill="{SKY}"/></g><ellipse cx="-20" cy="16" rx="96" ry="22" fill="url(#ww)"/>'
-            f'<ellipse cx="-20" cy="10" rx="18" ry="5" fill="none" stroke="{WHITE}" stroke-width="2"/><ellipse cx="-20" cy="10" rx="34" ry="9" fill="none" stroke="{WHITE}" stroke-width="1.4" opacity=".8"/>')
-    stones = ''.join(f'<ellipse cx="{sx}" cy="{sy}" rx="{rx}" ry="{ry}" fill="{CREAM}" filter="url(#paperS)"/>' for sx, sy, rx, ry in [(-118, 18, 14, 9), (70, 22, 16, 9), (-96, 34, 10, 6), (50, 36, 12, 7)])
-    return f'<g transform="translate({x},{gy}) scale({sc})">{rock}{water}{pool}{stones}</g>'
+    """A still spring pool ringed with stones, water lilies of light, no visible source."""
+    pool = (f'<g filter="url(#paper)"><path d="M-120 0 C-120 -30 -70 -44 -10 -42 C50 -40 100 -26 102 0 C104 24 60 40 -8 40 C-72 40 -120 26 -120 0Z" fill="{SKY}"/></g>'
+            f'<path d="M-120 0 C-120 -30 -70 -44 -10 -42 C50 -40 100 -26 102 0 C104 24 60 40 -8 40 C-72 40 -120 26 -120 0Z" fill="url(#ww)"/>'
+            f'<ellipse cx="-14" cy="-2" rx="16" ry="5" fill="none" stroke="{WHITE}" stroke-width="2"/><ellipse cx="-14" cy="-2" rx="32" ry="10" fill="none" stroke="{WHITE}" stroke-width="1.4" opacity=".8"/>'
+            f'<ellipse cx="46" cy="14" rx="10" ry="3.4" fill="none" stroke="{WHITE}" stroke-width="1.6"/>')
+    stones = ''.join(f'<ellipse cx="{sx}" cy="{sy}" rx="{rx}" ry="{ry}" fill="{CREAM}" filter="url(#paperS)"/>' for sx, sy, rx, ry in
+                     [(-124, -6, 15, 9), (-84, -38, 14, 8), (-30, -46, 12, 7), (30, -44, 14, 8), (80, -30, 13, 8), (108, 4, 14, 9), (-110, 30, 12, 7), (-50, 42, 14, 8), (20, 44, 12, 7), (80, 36, 14, 8)])
+    reeds = ''.join(f'<path d="M{rx} {ry} q{d*2} -14 {d*5} -30" stroke="{DSAGE}" stroke-width="2" fill="none" stroke-linecap="round"/>' for rx, ry in [(-96, -30), (96, -20)] for d in (-1, -.3, .5, 1.1))
+    return f'<g transform="translate({x},{gy}) scale({sc})">{stones}{pool}{reeds}</g>'
 
 def stone_house(x, gy, sc=1.0):
     return (f'<g transform="translate({x - 23*sc:.0f},{gy - 40*sc:.0f}) scale({sc})" filter="url(#paper)"><rect x="0" y="12" width="46" height="28" fill="{CREAM}"/>'
@@ -171,8 +193,6 @@ def stone_house(x, gy, sc=1.0):
 def jerusalem():
     o = []
     o.append(sun(210, 150, 60, SUN2))
-    p1 = wave(236, 16, 1.5, 2.2)
-    o.append(layer(p1, MIST, 'wv'))
     p2 = wave(250, 34, 1.1, 0.4, x0=-30, x1=900, taper=.3, drop=380)
     o.append(f'<g filter="url(#paper)"><path d="{path(p2)}" fill="{LIME}"/></g>' + terraces(p2, 12, WHITE, 2, 13, 'tc1'))
     p3 = wave(318, 20, 1.4, 3.6)
@@ -185,7 +205,7 @@ def jerusalem():
     o.append(f'<g filter="url(#paper)"><path d="{path(p4)}" fill="{SUN}"/></g>' + terraces(p4, 8, SUN2, 1.6, 14, 'tc2'))
     p5 = wave(372, 14, 1.0, 2.8, x0=-30, x1=760, taper=.35, drop=450)
     o.append(layer(p5, SAGE, 'dw', .9))
-    o.append(spring(470, 404, 1.0))
+    o.append(spring(470, 410, 1.0))
     o.append(olive(1080, 452, 1.15, DSAGE, 3))
     o.append(olive(760, 404, .62, SAGE, 5, True))
     o.append(olive(130, 456, 1.2, DSAGE, 7, True))
@@ -214,7 +234,6 @@ def mesa(pts_top, base, fill, pattern=None, op=.9):
 def south():
     o = []
     o.append(sun(250, 140, 70, SUN2))
-    o.append(mesa([(-30, 240), (120, 236), (300, 240), (420, 234), (560, 238), (700, 244), (900, 246), (1000, 252), (1230, 248)], 470, MIST, 'wv'))
     r = random.Random(4); jag = [(470, 300)]
     x = 470
     while x < 1240:
