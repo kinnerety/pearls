@@ -1,7 +1,7 @@
 'use server';
 import { redirect } from 'next/navigation';
 import { endSession, passwordOk, requireAdmin, startSession } from '@/lib/auth';
-import { approveDraft, deletePlace, deleteSubmission, patchPlace, rejectDraft, savePlace, saveTexts, setSubmissionStatus, type SubmissionStatus } from '@/lib/store';
+import { addDraft, approveDraft, deletePlace, deleteSubmission, listSubmissions, patchPlace, rejectDraft, savePlace, saveTexts, setSubmissionStatus, type SubmissionStatus } from '@/lib/store';
 import { CATS } from '@/lib/config';
 import type { Texts } from '@/lib/texts';
 import { checkPlace } from '@/lib/validate';
@@ -88,6 +88,24 @@ export async function markSubmission(id: number, status: SubmissionStatus) {
   await requireAdmin();
   await setSubmissionStatus(id, status);
 }
+/** A visitor's suggestion becomes a draft Kinneret can edit and approve on /admin/drafts (what the daily run does with
+ * research; here as the visitor wrote it, for when she wants to handle one herself right away). */
+export async function draftFromSubmission(id: number): Promise<{ ok: true; draft_id: number } | { ok: false; error: string }> {
+  await requireAdmin();
+  const s = (await listSubmissions()).find(x => x.id === id && x.kind === 'suggest');
+  if (!s) return { ok: false, error: 'ההצעה לא נמצאה' };
+  const d = s.data;
+  const yn = (v: string | undefined) => v === 'yes' ? 'yes' : v === 'no' ? 'no' : 'unknown';
+  const place: Place = {
+    id: 0, name: (d.name || '').trim(), town: (d.where || '').trim(), region: [], types: d.what ? [d.what.trim()] : [], cats: [], link: '',
+    descr: [d.what, d.love].filter(Boolean).join('. ').trim(), lat: null, lng: null, approx: true,
+    shabbat: yn(d.shabbat) === 'yes' ? 'open' : yn(d.shabbat) === 'no' ? 'closed' : 'unknown', family: yn(d.family),
+    pick: false, checked: false, tags: [], ctags: [], ...(d.more ? { note: d.more.trim() } : {}), ...(d.credit === 'yes' && d.credit_name ? { credit: d.credit_name.trim() } : {}),
+  };
+  try { return { ok: true, draft_id: await addDraft(place, id) }; }
+  catch (e) { return { ok: false, error: (e as Error).message }; }
+}
+
 export async function removeSubmission(id: number) {
   await requireAdmin();
   await deleteSubmission(id);
