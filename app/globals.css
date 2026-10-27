@@ -131,7 +131,9 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .card h3 a:hover{text-decoration:underline;text-underline-offset:3px}
 .card .trow .zone{white-space:nowrap}
 .where{font-size:.85rem;color:var(--muted)}
-.card .where{padding-left:34px}
+/* town · region is the last item of the title row: its own line under the name, or beside the zone pill when the pill wrapped (TitleRow) */
+.card .trow .where{flex-basis:100%;margin-top:-4px}
+.card .trow[data-wrapped] .where{flex-basis:auto;margin-top:0}
 .card .badge{position:absolute;top:14px;left:14px;width:30px;height:30px}
 .card .badge .illo{width:30px;height:30px}
 .desc{margin:0;font-size:.95rem;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
@@ -161,7 +163,7 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .card .seal circle{fill:var(--sun-deep)}
 .card .seal text{font-family:var(--body);font-weight:800;font-size:21px;fill:var(--ink);text-anchor:middle}
 .card .seal path{fill:var(--ink)}
-.card.picked .trow,.card.picked .where,.card.picked .cats{padding-left:56px}
+.card.picked .trow,.card.picked .cats{padding-left:56px}
 
 .mapbox{background:var(--sheet);border-radius:8px 24px 10px 20px/20px 10px 24px 8px;padding:14px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow)}
 #map{width:100%;height:min(78vh,760px);display:block}
