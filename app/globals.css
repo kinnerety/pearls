@@ -65,12 +65,6 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .chip.all{white-space:nowrap;max-width:100%;padding-inline:9px;overflow:hidden;text-overflow:ellipsis} .chip.all .illo{margin-inline-end:3px}
 
 .divider{display:block;width:min(560px,90%);height:44px;margin:0 auto}
-/* region/category pages: a small search box above the leaf divider instead of the whole "לאן מכאן" strip */
-.qmini{display:flex;justify-content:flex-start;padding:14px 4px 0}
-.qmini .qbox{flex:0 1 280px}
-.qmini .qbox input[type=search]{max-width:none;width:100%;flex:1;font-size:.88rem;padding-block:3px}
-.qmini .qbox button{width:26px;height:26px}
-.qmini .qbox button svg{width:13px;height:13px}
 /* the way back to the whole site from a region/category page */
 a.chip.home{display:inline-block;text-decoration:none;line-height:1.5}
 .side .fnote.under{margin:6px 0 0}
@@ -81,7 +75,12 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.5}
 .bar .now .blob.pop{transform:rotate(-8deg) scale(1.1)}
 .count{font-family:var(--display);font-weight:900;font-size:1.5rem}
 .count.long{font-size:1.2rem}
-.views{display:flex;gap:4px}
+.views{display:flex;gap:4px;align-items:center}
+.views .qbar{margin-inline-end:8px;flex:1 1 140px;max-width:240px;min-width:0}
+.views .chip{white-space:nowrap}
+.views .qbar .qbox input[type=search]{max-width:none;width:100%;flex:1;font-size:.88rem;padding-block:3px}
+.views .qbar .qbox button{width:26px;height:26px}
+.views .qbar .qbox button svg{width:13px;height:13px}
 .views .chip .il{width:11px;height:20px;margin-inline-start:6px;vertical-align:-5px}
 .views .chip .il polygon{fill:var(--lime);stroke:var(--ink);stroke-width:4;stroke-linejoin:round}
 .views .chip[aria-pressed="true"] .il polygon{fill:var(--sun-deep);stroke:var(--sheet)}

@@ -73,7 +73,9 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
   };
 
   // scenario picture: what you're looking for right now
-  const nowK = !items.length ? 'hedgehog' : st.prefs.includes('המלצת המערכת') ? 'almond' : st.prefs.includes('למשפחות') ? 'hammock'
+  // on a region/category page the picture is the page's own icon (zone / category), Kinneret 27.10.2026
+  const scopeK = scope && (scope.kind === 'cat' ? CAT_ILLO[scope.name] : ZONE_ILLO[Object.keys(ZONES).find(z => ZONES[z].includes(scope.name)) || '']);
+  const nowK = !items.length ? 'hedgehog' : scopeK ? scopeK : st.prefs.includes('המלצת המערכת') ? 'almond' : st.prefs.includes('למשפחות') ? 'hammock'
     : st.prefs.includes('פתוח בשבת') ? 'table' : st.cats.length ? CAT_ILLO[st.cats[0]]
     : st.regions.length === 1 ? ZONE_ILLO[Object.keys(ZONES).find(z => ZONES[z].includes(st.regions[0]))!] : st.q ? 'trail' : 'bench';
   const [pop, setPop] = useState(false);
@@ -97,8 +99,8 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
       <button type="submit" aria-label="חיפוש"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.4" /><path d="M15.5 15.5L21 21" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" /></svg></button>
     </form>
   );
-  // back to the whole site from a region/category page (Kinneret, 27.10.2026: not "all the pearls in this region")
-  const allLink = <a className="chip all home" href="/"><Illo k="acorn" />לכל הפנינים{total != null && <span className="n">{total}</span>}</a>;
+  // back to the whole site from a region/category page (Kinneret, 27.10.2026: not "all the pearls in this region"; labelled "כל הפנינים", no ל)
+  const allLink = <a className="chip all home" href="/"><Illo k="acorn" />כל הפנינים{total != null && <span className="n">{total}</span>}</a>;
   // the region clouds: on the home page and on category pages (Kinneret, 27.10.2026: "דווקא שם זה חשוב"); a region page has no use for them
   const clouds = (
         <div className="clouds" id="f-region">
@@ -118,8 +120,8 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
   return (
     <TextsProvider texts={texts}>
       {scope ? <>
+        {/* region/category pages (Kinneret, 27.10.2026): no "לאן מכאן" strip; the leaves sit right under the clouds (category) or the header (region) and the search box beside the view buttons */}
         {hide === 'cat' && <section className="filters" aria-label="לפי אזור">{clouds}</section>}
-        <div className="qmini">{qform}</div>
       </> : <section className="filters" aria-label="לאן מכאן">
         <div className="ftop">
           <span className="flabel">לאן מכאן</span>
@@ -136,6 +138,7 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
           <span><span className={'count' + (act ? ' long' : '')} id="count">{countText(items.length, !!act, scope)}</span> <span id="countnote" className="where" /></span>
         </span>
         <div className="views" role="group" aria-label="תצוגה">
+          {scope && <div className="qbar">{qform}</div>}
           <button className="chip" aria-pressed={view === 'list'} onClick={() => setView('list')}>גלריית פנינים</button>
           <button className="chip mapbtn" aria-pressed={view === 'map'} onClick={() => setView('map')}>
             על המפה<svg className="il" viewBox={FULL.join(' ')} aria-hidden="true"><polygon points={poly(OUTLINE)} /></svg>
