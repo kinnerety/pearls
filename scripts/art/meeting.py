@@ -159,8 +159,13 @@ def people(mode):
     g.append(f'<circle cx="561" cy="232" r="27" fill="{c(skins[2])}"/>')
     g.append(f'<path d="M535 228 Q534 214 544 208 Q540 220 541 232z M587 228 Q588 214 578 208 Q582 220 581 232z" fill="{c("#8C7B6B")}"/>')
     if not sil:
-        g.append(f'<path d="M540 238 Q542 262 561 264 Q580 262 582 238 Q578 250 561 252 Q544 250 540 238z" fill="#B9AE9F"/>')
+        pass
     g.append(face(561, 228, 0, mode))
+    if not sil:
+        # French beard (moustache + goatee) in the colour of his hair
+        g.append('<path d="M549 237 Q554 229 561 232 Q568 229 573 237 Q567 233.5 561 235 Q555 233.5 549 237z" fill="#8C7B6B"/>'
+                 '<path d="M550 236 Q549 246 555 250 M572 236 Q573 246 567 250" stroke="#8C7B6B" stroke-width="2.6" fill="none" stroke-linecap="round"/>'
+                 '<path d="M553 249 Q561 247 569 249 Q568 259 561 261 Q554 259 553 249z" fill="#8C7B6B"/>')
     s.append(f'<g filter="url(#mp)">{"".join(g)}</g>')
 
     # P4 – woman with curly hair and a long braid, one hand to her mouth, the other reaching to P3
