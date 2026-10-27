@@ -10,6 +10,7 @@ import Illo from '@/components/Illo';
 import PlaceCard from '@/components/PlaceCard';
 import PlaceMap from '@/components/PlaceMap';
 import ShareButton from '@/components/ShareButton';
+import { shareText } from '@/lib/share';
 import { TextsProvider } from '@/components/TextsContext';
 import { isApprox } from '@/lib/geo';
 
@@ -75,7 +76,7 @@ export default async function PlacePage({ params }: Props) {
         <p className="check">{texts['place.check']}</p>
         <div className="actions">
           {/* share on the right, the site link on the left, no Waze (Kinneret, 2026-10-26: locations are often town-level) */}
-          <ShareButton title={p.name} text={`${p.name}${p.town ? ' ב' + p.town : ''} · פנינים ישראליות`} />
+          <ShareButton title={p.name} text={shareText(p, SITE_URL, texts)} />
           {p.link && <a className="go" href={p.link} target="_blank" rel="noopener">לאתר ←</a>}
         </div>
       </article>
