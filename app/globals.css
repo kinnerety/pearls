@@ -114,7 +114,6 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .card h3 a{color:inherit;text-decoration:none}
 .card h3 a:hover{text-decoration:underline;text-underline-offset:3px}
 .card .trow .zone{white-space:nowrap}
-.where .approx{color:var(--muted);opacity:.85}
 .where{font-size:.85rem;color:var(--muted)}
 .card .where{padding-left:34px}
 .card .badge{position:absolute;top:14px;left:14px;width:30px;height:30px}
@@ -281,6 +280,8 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .draft-meta dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0} .draft-meta dt{font-weight:600} .draft-meta dd{margin:0}
 
 /* about page + the small link to it at the bottom of the public pages (Kinneret, 2026-10-27) */
+/* the text is as wide as the picture of the original list (640px); the rest is margin (Kinneret, 27.10.2026) */
+.place.about{padding-inline:max(28px,calc((100% - 640px) / 2))}
 .about h1{padding-left:0;font-size:clamp(1.9rem,4.6vw,2.8rem);line-height:1.1}
 .about h2{font-family:var(--display);font-weight:700;font-size:1.45rem;margin:22px 0 0}
 .about h3{font-family:var(--display);font-weight:700;font-size:1.1rem;margin:12px 0 0}
@@ -289,10 +290,11 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .about mark{background:linear-gradient(transparent 12%,#FAD771 12%,#FAD771 88%,transparent 88%);color:inherit;font-weight:700;padding:0 3px}
 .about figure{margin:0}
 .about .gap{height:1.75em}
-.about-people{display:flex;flex-direction:column;gap:14px;margin:6px 0}
-.about-people figure{display:flex;gap:20px;align-items:center}
-.about-people figcaption{flex:0 1 46ch}
-.about-people img{flex:none;width:clamp(96px,22vw,150px);height:auto;border-radius:50%}
+/* like the table in Kinneret's Word file: one row, right to left = her text, her illustration, Matti's text, his illustration; on a phone two rows */
+.about-people{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;margin:6px 0}
+.about-people figure{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
+.about-people img{width:clamp(96px,16vw,150px);height:auto;border-radius:50%}
+@media (max-width:720px){.about-people{grid-template-columns:1fr}}
 /* the polaroid: a little tilted, with a shadow */
 .polaroid{align-self:center;width:min(78%,340px);transform:rotate(-3deg);margin:1.75em 0 !important}
 .polaroid img{display:block;width:100%;height:auto;box-shadow:0 2px 4px rgba(0,0,0,.12),0 14px 30px -10px rgba(40,35,20,.45)}
@@ -315,6 +317,9 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 /* the original list: a screenshot in a card, opens full size */
 .list-card{display:block;align-self:center;width:min(100%,640px);background:#fff;border-radius:10px;padding:8px;box-shadow:0 1px 2px rgba(0,0,0,.12),0 8px 22px -10px rgba(0,0,0,.3);margin:1.75em 0}
 .list-card img{display:block;width:100%;height:auto;border-radius:4px}
+.about .about-back{text-align:right;margin:1.75em 0 14px}
+.about .back-btn{display:inline-block;color:var(--ink);background:#FAD771;font-weight:700;text-decoration:none;border-radius:999px;padding:9px 24px;box-shadow:var(--shadow);transition:transform .15s}
+.about .back-btn:hover{transform:translateY(-1px)}
 .site-foot{text-align:right;padding:28px 16px 36px}
 .site-foot a{color:var(--muted);font-weight:600;font-size:.92rem;text-decoration:underline;text-underline-offset:3px}
 .site-foot a:hover{color:var(--ink)}
