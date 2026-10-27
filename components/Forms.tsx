@@ -15,7 +15,10 @@ export default function Forms({ texts }: { texts: Texts }) {
     const open = (hash: string) => {
       const m = /^#(suggest|report)$/.exec(hash);
       if (!m) return false;
-      refs[m[1] as Kind].current?.showModal();
+      const d = refs[m[1] as Kind].current;
+      if (!d) return false;
+      d.showModal();
+      d.focus(); // focus the popup itself, not the close button (no ring around the X on open)
       return true;
     };
     open(decodeURIComponent(location.hash));
@@ -39,6 +42,7 @@ export default function Forms({ texts }: { texts: Texts }) {
           <Field q={texts['suggest.name']} hint={texts['suggest.name.hint']}><input name="name" required maxLength={120} /></Field>
           <Field q={texts['suggest.what']} hint={texts['suggest.what.hint']}><input name="what" required maxLength={200} /></Field>
         </div>
+        <Field q={texts['suggest.link']} hint={texts['suggest.link.hint']}><input name="link" inputMode="url" dir="ltr" maxLength={300} /></Field>
         <Field q={texts['suggest.where']} hint={texts['suggest.where.hint']}><input name="where" required maxLength={200} /></Field>
         <Field q={texts['suggest.love']} hint={texts['suggest.love.hint']}><textarea name="love" rows={3} maxLength={2000} /></Field>
         <Choices q={texts['suggest.shabbat']} name="shabbat" options={texts['suggest.choices']} />
@@ -91,7 +95,7 @@ function Popup({ kind, ref_, texts, art, view, img, children }: {
   }
 
   return (
-    <dialog className="form-pop" id={`${kind}-pop`} aria-labelledby={`${kind}-title`} ref={ref_}
+    <dialog tabIndex={-1} className="form-pop" id={`${kind}-pop`} aria-labelledby={`${kind}-title`} ref={ref_}
       onClose={() => { if (state === 'done') setState('form'); setError(''); }}
       onClick={e => { if (e.target === e.currentTarget) e.currentTarget.close(); }}>
       <div className="sheet">
