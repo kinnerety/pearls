@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Fragment } from 'react';
 import Link from 'next/link';
 import { SITE_URL } from '@/lib/slug';
 import { getTexts } from '@/lib/store';
@@ -29,7 +30,7 @@ export default async function About() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <nav className="crumbs"><Link href="/" className="sign"><span>לכל הפנינים</span></Link></nav>
       <article className="place about">
-        <h1><Rich text={texts['about.h1']} /></h1>
+        <h1>{texts['about.h1'].split('\n').map((l, i) => <Fragment key={i}>{i > 0 && <br />}<Rich text={l} /></Fragment>)}</h1>
 
         {/* each of us: the text on the right, the illustration beside it (Kinneret, 27.10.2026) */}
         <div className="about-people">
