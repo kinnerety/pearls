@@ -1,8 +1,8 @@
 import type { Place } from './types';
 
-// /p/<id>-<name>: the id is the stable key, the name is only there to make the link readable
-export const slugOf = (p: Pick<Place, 'id' | 'name'>) =>
-  `${p.id}-${p.name.replace(/["'`׳״.,:;!?()[\]{}|/\\]+/g, ' ').trim().replace(/\s+/g, '-').replace(/-+/g, '-').slice(0, 60).replace(/-$/, '')}`;
+// /p/<id>: the number alone (Kinneret, 2026-10-27: a Hebrew name turned into %D7%... when the link was shared).
+// Older /p/<id>-<name> links still work: the page reads the number and redirects to the short address.
+export const slugOf = (p: Pick<Place, 'id'>) => String(p.id);
 export const idOfSlug = (slug: string) => parseInt(decodeURIComponent(slug), 10);
 
 // Absolute base for og:image / canonical links. Production uses the production domain (or NEXT_PUBLIC_SITE_URL once
