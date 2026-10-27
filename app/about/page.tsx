@@ -34,6 +34,7 @@ export default async function About() {
       <nav className="crumbs"><Link href="/" className="sign"><span>לכל הפנינים</span></Link></nav>
       <article className="place about">
         <h1>{texts['about.title']}</h1>
+        <img className="about-art" src="/about/meeting.svg" width={900} height={600} alt="איור: ארבעה חברים צוחקים סביב שולחן עם בקבוקי שמן זית, בחנות קטנה עם קירות אדמה" />
         {blocks.map((b, i) => b.kind === 'h2'
           ? <h2 key={i}>{b.text}</h2>
           : b.kind === 'q' ? <h3 key={i}>{b.text}</h3> : <p key={i}>{b.text}</p>)}

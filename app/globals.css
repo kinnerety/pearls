@@ -278,6 +278,7 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .about h2{font-family:var(--display);font-weight:700;font-size:1.45rem;margin:18px 0 0}
 .about h3{font-family:var(--display);font-weight:700;font-size:1.1rem;margin:12px 0 0}
 .about p{margin:0;font-size:1.05rem;line-height:1.75}
+.about .about-art{display:block;width:100%;height:auto;margin:6px 0 4px;border-radius:4px 18px 6px 16px/16px 6px 18px 4px;box-shadow:var(--shadow)}
 .site-foot{text-align:right;padding:28px 16px 36px}
 .site-foot a{color:var(--muted);font-weight:600;font-size:.92rem;text-decoration:underline;text-underline-offset:3px}
 .site-foot a:hover{color:var(--ink)}
