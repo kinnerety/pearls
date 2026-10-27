@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { adminConfigured, isAdmin } from '@/lib/auth';
-import { allPlaces, hasDb } from '@/lib/store';
+import { allPlaces, hasDb, listSubmissions } from '@/lib/store';
 import Login from '@/components/admin/Login';
 import AdminList from '@/components/admin/AdminList';
 import { logout } from './actions';
@@ -16,7 +16,8 @@ export default async function AdminHome() {
     );
   }
   if (!(await isAdmin())) return <Login />;
-  const places = await allPlaces();
+  const [places, subs] = await Promise.all([allPlaces(), listSubmissions()]);
+  const fresh = subs.filter(s => s.status === 'new').length;
   return (
     <>
       <div className="adm-top">
@@ -27,6 +28,7 @@ export default async function AdminHome() {
           <Link className="adm-btn ghost" href="/admin/about">עמוד אודות</Link>
           <Link className="adm-btn ghost" href="/admin/intros">דפי אזור וקטגוריה</Link>
           <Link className="adm-btn ghost" href="/admin/drafts">טיוטות מקישורים</Link>
+          <Link className={fresh ? 'adm-btn' : 'adm-btn ghost'} href="/admin/inbox">הצעות ודיווחים{fresh ? ` (${fresh} חדשים)` : ''}</Link>
           <Link className="adm-btn ghost" href="/" target="_blank">לאתר</Link>
           <form action={logout}><button className="adm-btn ghost">יציאה</button></form>
         </div>

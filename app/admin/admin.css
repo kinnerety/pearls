@@ -44,3 +44,11 @@
 .adm-faq{display:flex;flex-direction:column;gap:10px}
 .adm-faq-item{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--paper)}
 .adm-faq-item b{font-size:.85rem;color:var(--muted)}
+/* suggestions and mistake reports from the site's forms (/admin/inbox) */
+.adm-inbox{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.adm-sub[data-done]{opacity:.7}
+.adm-sub-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.adm-sub h2{margin:0}
+.adm-sub dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:.95rem}
+.adm-sub dt{font-weight:700;color:var(--muted)}
+.adm-sub dd{margin:0;white-space:pre-wrap}

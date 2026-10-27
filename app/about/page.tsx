@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SITE_URL } from '@/lib/slug';
 import { getTexts } from '@/lib/store';
-import { parseAbout, parseFaq, plainText } from '@/lib/texts';
+import { linkFaqForms, linkForms, parseAbout, parseFaq, plainText } from '@/lib/texts';
 import { DIVIDER_SVG } from '@/components/art';
 import Rich, { Paras } from '@/components/Rich';
+import Forms from '@/components/Forms';
 
 export const metadata: Metadata = {
   title: 'אודות | פנינים ישראליות',
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
 // Kinneret's own text and pictures (27.10.2026); every text on the page is edited in /admin/texts ("about.*")
 export default async function About() {
   const texts = await getTexts();
-  const blocks = parseAbout(texts['about.main']);
-  const faq = parseFaq(texts['about.faq']);
+  const blocks = parseAbout(linkForms(texts['about.main']));
+  const faq = linkFaqForms(parseFaq(texts['about.faq']));
   const jsonLd = [
     { '@context': 'https://schema.org', '@type': 'AboutPage', name: plainText(texts['about.h1']), url: `${SITE_URL}/about`, inLanguage: 'he',
       isPartOf: { '@type': 'WebSite', name: 'פנינים ישראליות', url: SITE_URL }, author: { '@type': 'Person', name: 'כנרת יפרח' } },
@@ -85,6 +86,7 @@ export default async function About() {
         ))}
         <p className="about-back"><Link href="/" className="back-btn">{texts['about.back']}</Link></p>
       </article>
+      <Forms texts={texts} />
       <svg className="divider" viewBox="0 0 560 44" aria-hidden="true" dangerouslySetInnerHTML={{ __html: DIVIDER_SVG }} />
     </div>
   );

@@ -4,6 +4,7 @@ import type { Texts } from '@/lib/texts';
 import Hero from './Hero';
 import Explorer, { type Scope } from './Explorer';
 import SiteFoot from './SiteFoot';
+import Forms from './Forms';
 
 // A region or category page: its own header, the same gallery/map as the home page (minus the facet the page already fixes), and the footer
 export default function Collection({ title, lede, art, path, places, texts, scope, total }:
@@ -20,6 +21,8 @@ export default function Collection({ title, lede, art, path, places, texts, scop
       <Hero title={title} lede={lede} art={art} />
       <Explorer places={places} texts={texts} scope={scope} total={total} />
       <SiteFoot label={texts['about.link']} />
+      {/* the suggest-a-pearl popup, for the empty gallery's button */}
+      <Forms texts={texts} />
     </div>
   );
 }
