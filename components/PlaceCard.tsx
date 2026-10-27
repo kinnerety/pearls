@@ -4,7 +4,6 @@ import { zonesOf } from '@/lib/filters';
 import Link from 'next/link';
 import Illo from './Illo';
 import CardShare from './CardShare';
-import { isApprox } from '@/lib/geo';
 import { slugOf } from '@/lib/slug';
 
 const STAR = 'M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z';
@@ -20,7 +19,7 @@ export default function PlaceCard({ p }: { p: Place }) {
           <h3>{p.id ? <Link href={`/p/${encodeURIComponent(slugOf(p))}`}>{p.name}</Link> : p.name}</h3>
           {zonesOf(p).map(z => <span key={z} className={`cat zone z${ZONE_NAMES.indexOf(z)}`}>{z}</span>)}
         </div>
-        <div className="where">{p.town || ''}{p.town ? ' · ' : ''}{p.region.join(', ')}{isApprox(p) && p.lat != null && <span className="approx"> · מיקום משוער</span>}</div>
+        <div className="where">{p.town || ''}{p.town ? ' · ' : ''}{p.region.join(', ')}</div>
       </div>
       {/* one row of pills: the yellow families pill first (rightmost), then the green ones (Shabbat, categories) */}
       <div className="cats">

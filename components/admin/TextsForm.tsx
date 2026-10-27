@@ -9,7 +9,7 @@ import type { Place } from '@/lib/types';
 const SAMPLE = { id: 0, name: 'שם הפנינה', town: '', region: ['גליל עליון'], cats: [], types: [], tags: [], ctags: [], link: 'https://example.co.il', descr: 'המשפט הראשון של התיאור. ועוד משפט.', lat: null, lng: null, approx: true, shabbat: 'unknown', family: 'unknown', pick: false } satisfies Place;
 
 // One field per site text (popup, map tip, notes). "ברירת מחדל" puts the original wording back in the field.
-export default function TextsForm({ initial, keys = TEXT_KEYS, hint = 'הטקסטים שמופיעים באתר מחוץ לכרטיסי הפנינים. שינוי נשמר רק אחרי לחיצה על "שמירה".' }: { initial: Texts; keys?: TextKey[]; hint?: string }) {
+export default function TextsForm({ initial, keys = TEXT_KEYS, hint = 'הטקסטים שמופיעים באתר מחוץ לכרטיסי הפנינים. שינוי נשמר רק אחרי לחיצה על "שמירה".', placeholders = {} }: { initial: Texts; keys?: TextKey[]; hint?: string; placeholders?: Partial<Record<TextKey, string>> }) {
   const [faqReset, setFaqReset] = useState(0);
   const [t, setT] = useState<Texts>(initial);
   const [msg, setMsg] = useState('');
@@ -37,7 +37,7 @@ export default function TextsForm({ initial, keys = TEXT_KEYS, hint = 'הטקס�
           const field = (
             <label key={k}>
               {d.label}
-              <textarea rows={d.big ? 24 : d.multi ? 4 : 1} value={t[k]} onChange={e => set(k, e.target.value)} />
+              <textarea rows={d.big ? 24 : d.multi ? 4 : 1} value={t[k]} placeholder={placeholders[k]} onChange={e => set(k, e.target.value)} />
               <span className="adm-row">
                 {d.hint && <span className="adm-hint">{d.hint}</span>}
                 {t[k] !== DEFAULT_TEXTS[k] && <button type="button" className="adm-btn ghost" onClick={() => set(k, DEFAULT_TEXTS[k])}>ברירת מחדל</button>}

@@ -3,7 +3,15 @@ const ABOUT_HINT = 'כל שורה היא פסקה, ושורה ריקה מוסי�
 
 export type TextDef = { label: string; text: string; multi?: boolean; big?: boolean; hint?: string; faq?: boolean };
 
-export const TEXT_DEFAULTS = {
+import { CATS, CAT_SLUG, REGIONS, REGION_SLUG } from './config';
+
+// One intro line per region and per category page; empty = the automatic sentence (lib/intros.ts). Kinneret edits them in /admin/intros.
+const INTRO_DEFAULTS = Object.fromEntries([
+  ...REGIONS.map(r => [`intro.region.${REGION_SLUG[r]}`, { label: `פנינים ב${r}`, text: '', multi: true }]),
+  ...CATS.map(c => [`intro.cat.${CAT_SLUG[c]}`, { label: c, text: '', multi: true }]),
+]) as Record<`intro.${string}`, TextDef>;
+
+const FIXED_DEFAULTS = {
   'popup.title': { label: 'פופאפ "לפני שנכנסים לאוטו": הכותרת', text: 'לפני שנכנסים לאוטו' },
   'popup.text': { label: 'פופאפ: הטקסט', text: 'חשוב להיכנס לאתר או לפרופיל של המקום ולוודא שהוא באמת מתאים לך. ההמלצות מגיעות מאנשים אמיתיים, אבל הפרטים נאספים על ידי AI', multi: true },
   'popup.once': { label: 'פופאפ: תיבת הסימון', text: 'לא להציג לי שוב את ההודעה הזאת עד הפעם הבאה' },
@@ -22,7 +30,6 @@ export const TEXT_DEFAULTS = {
     ].join('\n'),
   },
   'place.check': { label: 'עמוד הפנינה (הדף שהשיתוף מוביל אליו): ההערה בקופסה', text: 'לפני שנוסעים: ההמלצות מגיעות מאנשים אמיתיים, אבל הפרטים נאספים על ידי AI. כדאי להיכנס לאתר או לפרופיל של המקום ולבדוק שעות ותיאום.', multi: true },
-  'place.approx': { label: 'עמוד הפנינה: מתחת למפה כשהמיקום משוער', text: 'מיקום משוער, בתוך היישוב. פרטי הגעה מדויקים באתר המקום' },
   'share.open': { label: 'שיתוף פנינה: הפתיחה', text: "מעניין אותי לבדוק את '{שם}'.", hint: '{שם} יוחלף בשם הפנינה' },
   'share.short': { label: 'שיתוף: לפני המשפט הראשון של התיאור', text: 'בקצרה:' },
   'share.area': { label: 'שיתוף: לפני האזור (בסוגריים)', text: 'באזור' },
@@ -102,15 +109,18 @@ export const TEXT_DEFAULTS = {
       'לנו, דרך כאן',
     ].join('\n'),
   },
+  'about.back': { label: 'אודות: הכפתור בתחתית העמוד', text: 'חזרה לגלריית הפנינים' },
   'about.link': { label: 'הקישור לעמוד "אודות" בתחתית העמודים', text: 'אודות' },
 } satisfies Record<string, TextDef>;
 
-export type TextKey = keyof typeof TEXT_DEFAULTS;
+export type TextKey = keyof typeof FIXED_DEFAULTS | `intro.region.${string}` | `intro.cat.${string}`;
+export const TEXT_DEFAULTS: Record<TextKey, TextDef> = { ...INTRO_DEFAULTS, ...FIXED_DEFAULTS };
 export type Texts = Record<TextKey, string>;
 export const TEXT_KEYS = Object.keys(TEXT_DEFAULTS) as TextKey[];
 /** The about page's own texts get their own admin screen (/admin/about); the rest stay in /admin/texts */
 export const ABOUT_KEYS = TEXT_KEYS.filter(k => k.startsWith('about.') && k !== 'about.link');
-export const SITE_KEYS = TEXT_KEYS.filter(k => !ABOUT_KEYS.includes(k));
+export const INTRO_KEYS = TEXT_KEYS.filter(k => k.startsWith('intro.'));
+export const SITE_KEYS = TEXT_KEYS.filter(k => !ABOUT_KEYS.includes(k) && !INTRO_KEYS.includes(k));
 export const DEFAULT_TEXTS = Object.fromEntries(TEXT_KEYS.map(k => [k, TEXT_DEFAULTS[k].text])) as Texts;
 
 /** The about page's main text: every line is a paragraph, "## " = a section heading */
