@@ -10,7 +10,10 @@ const body = Assistant({ subsets: ['hebrew', 'latin'], weight: ['400', '600', '7
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: 'פנינים ישראליות',
-  description: 'מקומות קטנים ומיוחדים מהמלצות של חברים: טבע, אוכל, סדנאות ויוצרים בכל הארץ.',
+  // the sentence search results show under the title (Kinneret's wording, 2026-10-27): says in plain words what people search for (trips, places in Israel)
+  description: 'מקומות קטנים ומיוחדים לטיול בישראל, מהמלצות של חברים: טבע ונוף, חוות, חנויות מיוחדות, יקבים, סדנאות ויוצרים בכל הארץ, עם סינון לפי אזור, משפחות ושבת ועם אפשרות לראות אותם על מפה',
+  // proves to Google Search Console (account kinneret@drafttt.co.il) that the site is Kinneret's
+  verification: { google: 'AGdNMcuWajpwXubzXC3KvokLG5WinRlZrdmh_f1Jrcc' },
   openGraph: { title: 'פנינים ישראליות', description: 'מקומות קטנים ומיוחדים מהמלצות של חברים', locale: 'he_IL', type: 'website' },
 };
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: '#FAF7EF' };

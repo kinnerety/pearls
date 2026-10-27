@@ -10,6 +10,7 @@ import Illo from '@/components/Illo';
 import PlaceCard from '@/components/PlaceCard';
 import PlaceMap from '@/components/PlaceMap';
 import ShareButton from '@/components/ShareButton';
+import { shareText } from '@/lib/share';
 import { TextsProvider } from '@/components/TextsContext';
 import { isApprox } from '@/lib/geo';
 
@@ -43,6 +44,11 @@ export default async function PlacePage({ params }: Props) {
   const jsonLd = {
     '@context': 'https://schema.org', '@type': 'TouristAttraction', name: p.name, description: p.descr,
     url: `${SITE_URL}/p/${slugOf(p)}`, ...(p.link ? { sameAs: p.link } : {}),
+    // categories, regions and the positive facts from the card, so an AI assistant can answer "a winery in the Shfela open on Shabbat"
+    keywords: [...p.cats, ...p.region, ...(p.family === 'yes' ? ['גם למשפחות'] : []), ...(p.shabbat === 'open' ? ['פתוח בשבת'] : [])].join(', '),
+    containedInPlace: p.region.map(r => ({ '@type': 'Place', name: r })),
+    ...(p.hours ? { openingHours: p.hours } : {}),
+    isPartOf: { '@type': 'WebSite', name: 'פנינים ישראליות', url: SITE_URL },
     address: { '@type': 'PostalAddress', addressLocality: p.town, addressCountry: 'IL', ...(p.address ? { streetAddress: p.address } : {}) },
     ...(p.lat != null && !isApprox(p) ? { geo: { '@type': 'GeoCoordinates', latitude: p.lat, longitude: p.lng } } : {}),
   };
@@ -70,7 +76,7 @@ export default async function PlacePage({ params }: Props) {
         <p className="check">{texts['place.check']}</p>
         <div className="actions">
           {/* share on the right, the site link on the left, no Waze (Kinneret, 2026-10-26: locations are often town-level) */}
-          <ShareButton title={p.name} text={`${p.name}${p.town ? ' ב' + p.town : ''} · פנינים ישראליות`} />
+          <ShareButton title={p.name} text={shareText(p, SITE_URL, texts)} />
           {p.link && <a className="go" href={p.link} target="_blank" rel="noopener">לאתר ←</a>}
         </div>
       </article>
