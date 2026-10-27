@@ -26,6 +26,7 @@ export default async function AdminHome() {
           <Link className="adm-btn" href="/admin/new">+ פנינה חדשה</Link>
           <Link className="adm-btn ghost" href="/admin/texts">טקסטים של האתר</Link>
           <Link className="adm-btn ghost" href="/admin/about">עמוד אודות</Link>
+          <Link className="adm-btn ghost" href="/admin/intros">דפי אזור וקטגוריה</Link>
           <Link className="adm-btn ghost" href="/admin/drafts">טיוטות מקישורים</Link>
           <Link className={fresh ? 'adm-btn' : 'adm-btn ghost'} href="/admin/inbox">הצעות ודיווחים{fresh ? ` (${fresh} חדשים)` : ''}</Link>
           <Link className="adm-btn ghost" href="/" target="_blank">לאתר</Link>

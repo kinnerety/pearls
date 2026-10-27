@@ -27,7 +27,7 @@ export function matches(p: Place, st: FilterState, skip?: 'region' | 'cat'): boo
 export const activeCount = (st: FilterState) => st.regions.length + st.cats.length + st.prefs.length + (st.q ? 1 : 0);
 export const zonesOf = (p: Place) => Object.keys(ZONES).filter(z => ZONES[z].some(r => p.region.includes(r)));
 
-// Filters live in the URL so a filtered view can be shared: ?region=גולן|ערבה&cat=סדנאות|תרבות&pref=...&q=...
+// Filters live in the URL so a filtered view can be shared: ?region=רמת הגולן|ערבה&cat=סדנאות|תרבות&pref=...&q=...
 // ('|' and not ',' because a category name can contain a comma: "יקבים, מבשלות ומזקקות")
 export function fromSearch(search: string): FilterState {
   const u = new URLSearchParams(search);

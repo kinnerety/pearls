@@ -15,6 +15,10 @@ body{margin:0;overflow-x:clip;background:var(--paper);color:var(--ink);font-fami
 header{position:relative;margin-inline:calc(50% - 50vw);min-height:300px;overflow:hidden}
 /* natural 1200:440 ratio so wide screens see the whole illustration (sun and sky included); only beyond ~2600px does it start trimming the sky */
 :root{--hero:clamp(300px,36.67vw,960px);--h1fs:clamp(2.4rem,6vw,4.4rem)}
+/* region/category pages with a long title ("פנינים בשפלת יהודה והרי יהודה"): a smaller title so it still sits beside the hoopoe */
+header.long{--h1fs:clamp(2rem,4.8vw,3.5rem)}
+header.long2{--h1fs:clamp(1.7rem,3.9vw,2.9rem)}
+header.long2 .title{top:calc(var(--hero) * 0.311 - var(--h1fs) * 1.05)}
 .hero-art{display:block;width:100%;height:var(--hero)}
 /* the title sits on the illustration: the subtitle's baseline stays ~5mm above the hills (which start at 224/440 of the picture's height under the title), whatever the screen width */
 /* the title's middle sits at the height of the hoopoe's beak (31.1% of the picture, Kinneret 27.10) */
@@ -61,6 +65,9 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .chip.all{white-space:nowrap;max-width:100%;padding-inline:9px;overflow:hidden;text-overflow:ellipsis} .chip.all .illo{margin-inline-end:3px}
 
 .divider{display:block;width:min(560px,90%);height:44px;margin:0 auto}
+/* the way back to the whole site from a region/category page */
+a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-space:normal;text-align:right}
+.side .fnote.under{margin:6px 0 0}
 .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
 .bar .now{display:flex;align-items:center;gap:10px}
 .bar .now .blob{width:56px;height:56px;display:grid;place-items:center;transition:transform .3s}
@@ -68,7 +75,12 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .bar .now .blob.pop{transform:rotate(-8deg) scale(1.1)}
 .count{font-family:var(--display);font-weight:900;font-size:1.5rem}
 .count.long{font-size:1.2rem}
-.views{display:flex;gap:4px}
+.views{display:flex;gap:4px;align-items:center}
+.views .qbar{margin-inline-end:8px;flex:1 1 140px;max-width:240px;min-width:0}
+.views .chip{white-space:nowrap}
+.views .qbar .qbox input[type=search]{max-width:none;width:100%;flex:1;font-size:.88rem;padding-block:3px}
+.views .qbar .qbox button{width:26px;height:26px}
+.views .qbar .qbox button svg{width:13px;height:13px}
 .views .chip .il{width:11px;height:20px;margin-inline-start:6px;vertical-align:-5px}
 .views .chip .il polygon{fill:var(--lime);stroke:var(--ink);stroke-width:4;stroke-linejoin:round}
 .views .chip[aria-pressed="true"] .il polygon{fill:var(--sun-deep);stroke:var(--sheet)}
@@ -370,3 +382,12 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .site-foot{text-align:right;padding:28px 16px 36px}
 .site-foot a{color:var(--muted);font-weight:600;font-size:.92rem;text-decoration:underline;text-underline-offset:3px}
 .site-foot a:hover{color:var(--ink)}
+
+/* region/category index at the bottom of the home page, and the region/category links on the place page */
+.site-index{max-width:880px;margin:0 auto 14px;text-align:right;font-size:.82rem;line-height:1.9;color:var(--muted)}
+.site-index p{margin:0}
+.site-index b{font-weight:600;color:var(--ink)}
+.site-index a{color:var(--muted);text-decoration:none}
+.site-index a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.place .where a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.place .where a:hover{text-decoration-color:currentColor}

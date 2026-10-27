@@ -23,7 +23,7 @@ export default async function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <Hero />
       <Explorer places={places} texts={texts} />
-      <SiteFoot label={texts['about.link']} />
+      <SiteFoot label={texts['about.link']} index />
       {/* the suggest-a-pearl popup, opened by the button of the empty gallery */}
       <Forms texts={texts} />
     </div>
