@@ -21,6 +21,9 @@ header{position:relative;margin-inline:calc(50% - 50vw);min-height:300px;overflo
 header .title{position:absolute;top:calc(var(--hero) * 0.311 - var(--h1fs) * 0.475);right:max(24px,calc(50vw - 616px));max-width:min(440px,60%);isolation:isolate}
 /* falling leaves around the title and a few behind it; 100 viewBox units = one title font-size */
 header .title .leaves{position:absolute;z-index:-1;pointer-events:none;top:calc(var(--h1fs) * -0.9);right:calc(var(--h1fs) * -0.6);width:calc(var(--h1fs) * 8.07);height:calc(var(--h1fs) * 2.6);overflow:visible}
+header .title .leaves .lf{animation:leafin 2.8s cubic-bezier(.25,.6,.35,1) both}
+@keyframes leafin{0%{transform:translate(var(--dx),var(--dy)) rotate(var(--rot));opacity:0}12%{opacity:1}55%{transform:translate(calc(var(--dx) * .3),calc(var(--dy) * .15 + 10px)) rotate(calc(var(--rot) * .25))}100%{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){header .title .leaves .lf{animation:none}}
 h1{font-family:var(--display);font-weight:900;font-size:var(--h1fs);line-height:.95;margin:0;letter-spacing:-.01em;text-wrap:balance}
 .lede{margin:10px 0 0;color:var(--muted);max-width:36ch;font-size:clamp(.95rem,1.6vw,1.1rem)}
 .sketch-note{display:inline-block;margin-top:12px;font-size:.8rem;font-weight:600;color:var(--ink);background:var(--sun);padding:3px 12px;border-radius:999px;box-shadow:var(--shadow);transform:rotate(-2deg)}
