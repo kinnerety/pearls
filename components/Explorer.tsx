@@ -25,12 +25,12 @@ function Chip({ pressed, onClick, n, className = '', children }: { pressed: bool
 // A region or category page fixes one facet: the count names it ("12 פנינים באזור גולן") and the page offers a way back to all the pearls
 export type Scope = { kind: 'region' | 'cat'; name: string };
 
-function countText(n: number, active: boolean, scope?: Scope) {
+function countText(n: number, active: boolean, empty: string, scope?: Scope) {
   const where = scope ? (scope.kind === 'region' ? ` באזור ${scope.name}` : ` בקטגוריה '${scope.name}'`) : '';
   if (!active) return n === 1 ? `פנינה אחת${where}` : `${n} פנינים${where}`;
   if (n > 1) return `${n} פנינים${where} שמתאימות להגדרות שבחרת`;
   if (n === 1) return `יש רק פנינה אחת${where} שמתאימה להגדרות שבחרת`;
-  return 'אין כאן פנינים שמתאימות להגדרות שבחרת, אבל זה לא אומר שאין כאלה בארץ :)';
+  return empty;   // Kinneret's wording for the empty gallery (lib/texts.ts, 'empty.top')
 }
 
 // `scope`: a region page gets the places of that region and no region clouds; a category page no category chips
@@ -85,7 +85,7 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
   // scenario picture: what you're looking for right now
   // on a region/category page the picture is the page's own icon (zone / category), Kinneret 27.10.2026
   const scopeK = scope && (scope.kind === 'cat' ? CAT_ILLO[scope.name] : ZONE_ILLO[Object.keys(ZONES).find(z => ZONES[z].includes(scope.name)) || '']);
-  const nowK = !items.length ? 'hedgehog' : scopeK ? scopeK : st.prefs.includes('המלצת המערכת') ? 'almond' : st.prefs.includes('למשפחות') ? 'hammock'
+  const nowK = !items.length ? 'shell' : scopeK ? scopeK : st.prefs.includes('המלצת המערכת') ? 'almond' : st.prefs.includes('למשפחות') ? 'hammock'
     : st.prefs.includes('פתוח בשבת') ? 'table' : st.cats.length ? CAT_ILLO[st.cats[0]]
     : st.regions.length === 1 ? ZONE_ILLO[Object.keys(ZONES).find(z => ZONES[z].includes(st.regions[0]))!] : st.q ? 'trail' : 'bench';
   const [pop, setPop] = useState(false);
@@ -144,8 +144,8 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
 
       <div className="bar">
         <span className="now">
-          <span className={'blob' + (pop ? ' pop' : '')} id="now-illo"><Illo k={nowK} /></span>
-          <span><span className={'count' + (act ? ' long' : '')} id="count">{countText(items.length, !!act, scope)}</span> <span id="countnote" className="where" /></span>
+          <span className={'blob' + (pop ? ' pop' : '')} id="now-illo">{nowK === 'shell' ? <img className="illo" src="/art/shell.png" alt="" /> : <Illo k={nowK} />}</span>
+          <span><span className={'count' + (act ? ' long' : '')} id="count">{countText(items.length, !!act, texts['empty.top'], scope)}</span> <span id="countnote" className="where" /></span>
         </span>
         <div className="views" role="group" aria-label="תצוגה">
           {scope && <div className="qbar">{qform}</div>}
@@ -192,7 +192,12 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
         <div className="content">
           <div className="list" id="list">
             {items.length ? items.map(p => <PlaceCard key={p.id} p={p} />)
-              : <div className="empty"><span className="blob"><Illo k="hedgehog" /></span>אין פנינים שמתאימות לכל הסינונים. נסו להסיר אחד מהם.</div>}
+              : <div className="empty">
+                  {/* a tortoise shell, the tortoise hidden inside; the button opens the suggest-a-pearl form (Kinneret, 27.10) */}
+                  <span className="blob"><img className="illo" src="/art/shell.png" alt="" /></span>
+                  <p>{texts['empty.text']}</p>
+                  <a className="suggest" href="#suggest">{texts['empty.button']}</a>
+                </div>}
           </div>
           <aside className="mapbox">
             <MapHelp texts={texts} />
