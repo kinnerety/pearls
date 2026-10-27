@@ -16,7 +16,7 @@ async function load(slug: string) {
   const [all, texts] = await Promise.all([getPlaces(), getTexts()]);
   const places = all.filter(p => p.region.includes(region));
   const lede = texts[`intro.region.${slug}`]?.trim() || regionIntro(region, places);
-  return { region, places, texts, lede, title: `פנינים ב${region}` };
+  return { total: all.length, region, places, texts, lede, title: `פנינים ב${region}` };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -30,5 +30,5 @@ export default async function RegionPage({ params }: Props) {
   const { slug } = await params;
   const d = await load(slug);
   if (!d) notFound();
-  return <Collection title={d.title} lede={d.lede} art={ZONE_HERO[zoneOf(d.region) || '']} path={`/region/${slug}`} places={d.places} texts={d.texts} scope={{ kind: 'region', name: d.region }} />;
+  return <Collection title={d.title} lede={d.lede} art={ZONE_HERO[zoneOf(d.region) || '']} path={`/region/${slug}`} places={d.places} texts={d.texts} total={d.total} scope={{ kind: 'region', name: d.region }} />;
 }

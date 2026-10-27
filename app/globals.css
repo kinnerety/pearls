@@ -15,6 +15,10 @@ body{margin:0;overflow-x:clip;background:var(--paper);color:var(--ink);font-fami
 header{position:relative;margin-inline:calc(50% - 50vw);min-height:300px;overflow:hidden}
 /* natural 1200:440 ratio so wide screens see the whole illustration (sun and sky included); only beyond ~2600px does it start trimming the sky */
 :root{--hero:clamp(300px,36.67vw,960px);--h1fs:clamp(2.4rem,6vw,4.4rem)}
+/* region/category pages with a long title ("פנינים בשפלת יהודה והרי יהודה"): a smaller title so it still sits beside the hoopoe */
+header.long{--h1fs:clamp(2rem,4.8vw,3.5rem)}
+header.long2{--h1fs:clamp(1.7rem,3.9vw,2.9rem)}
+header.long2 .title{top:calc(var(--hero) * 0.311 - var(--h1fs) * 1.05)}
 .hero-art{display:block;width:100%;height:var(--hero)}
 /* the title sits on the illustration: the subtitle's baseline stays ~5mm above the hills (which start at 224/440 of the picture's height under the title), whatever the screen width */
 /* the title's middle sits at the height of the hoopoe's beak (31.1% of the picture, Kinneret 27.10) */
@@ -69,7 +73,7 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .qmini .qbox button svg{width:13px;height:13px}
 /* the way back to the whole site from a region/category page */
 a.chip.home{display:inline-block;text-decoration:none;line-height:1.5}
-#f-home{padding-bottom:2px}
+#f-home{margin-bottom:6px}
 .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
 .bar .now{display:flex;align-items:center;gap:10px}
 .bar .now .blob{width:56px;height:56px;display:grid;place-items:center;transition:transform .3s}

@@ -16,7 +16,7 @@ async function load(slug: string) {
   const [all, texts] = await Promise.all([getPlaces(), getTexts()]);
   const places = all.filter(p => p.cats.includes(cat));
   const lede = texts[`intro.cat.${slug}`]?.trim() || catIntro(cat, places);
-  return { cat, places, texts, lede };
+  return { total: all.length, cat, places, texts, lede };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -30,5 +30,5 @@ export default async function CategoryPage({ params }: Props) {
   const { slug } = await params;
   const d = await load(slug);
   if (!d) notFound();
-  return <Collection title={d.cat} lede={d.lede} art={CAT_HERO[d.cat]} path={`/category/${slug}`} places={d.places} texts={d.texts} scope={{ kind: 'cat', name: d.cat }} />;
+  return <Collection title={d.cat} lede={d.lede} art={CAT_HERO[d.cat]} path={`/category/${slug}`} places={d.places} texts={d.texts} total={d.total} scope={{ kind: 'cat', name: d.cat }} />;
 }

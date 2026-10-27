@@ -34,7 +34,8 @@ function countText(n: number, active: boolean, scope?: Scope) {
 }
 
 // `scope`: a region page gets the places of that region and no region clouds; a category page no category chips
-export default function Explorer({ places, texts, scope }: { places: Place[]; texts: Texts; scope?: Scope }) {
+// `total`: how many pearls the whole site has, shown on the "לכל הפנינים" link so it reads as a way back to the home page
+export default function Explorer({ places, texts, scope, total }: { places: Place[]; texts: Texts; scope?: Scope; total?: number }) {
   const hide = scope?.kind;
   const [st, setSt] = useState<FilterState>(EMPTY);
   const [ready, setReady] = useState(false);
@@ -97,15 +98,9 @@ export default function Explorer({ places, texts, scope }: { places: Place[]; te
     </form>
   );
   // back to the whole site from a region/category page (Kinneret, 27.10.2026: not "all the pearls in this region")
-  const allLink = <a className="chip all home" href="/"><Illo k="acorn" />לכל הפנינים</a>;
-
-  return (
-    <TextsProvider texts={texts}>
-      {scope ? <div className="qmini">{qform}</div> : <section className="filters" aria-label="לאן מכאן">
-        <div className="ftop">
-          <span className="flabel">לאן מכאן</span>
-          {qform}
-        </div>
+  const allLink = <a className="chip all home" href="/"><Illo k="acorn" />לכל הפנינים{total != null && <span className="n">{total}</span>}</a>;
+  // the region clouds: on the home page and on category pages (Kinneret, 27.10.2026: "דווקא שם זה חשוב"); a region page has no use for them
+  const clouds = (
         <div className="clouds" id="f-region">
           {Object.keys(ZONES).map((g, gi) => (
             <div className="cloud" key={g}>
@@ -118,6 +113,19 @@ export default function Explorer({ places, texts, scope }: { places: Place[]; te
             </div>
           ))}
         </div>
+  );
+
+  return (
+    <TextsProvider texts={texts}>
+      {scope ? <>
+        {hide === 'cat' && <section className="filters" aria-label="לפי אזור">{clouds}</section>}
+        <div className="qmini">{qform}</div>
+      </> : <section className="filters" aria-label="לאן מכאן">
+        <div className="ftop">
+          <span className="flabel">לאן מכאן</span>
+          {qform}
+        </div>
+        {clouds}
       </section>}
 
       <svg className="divider" viewBox="0 0 560 44" aria-hidden="true" dangerouslySetInnerHTML={{ __html: DIVIDER_SVG }} />

@@ -6,8 +6,8 @@ import Explorer, { type Scope } from './Explorer';
 import SiteFoot from './SiteFoot';
 
 // A region or category page: its own header, the same gallery/map as the home page (minus the facet the page already fixes), and the footer
-export default function Collection({ title, lede, art, path, places, texts, scope }:
-  { title: string; lede: string; art?: string; path: string; places: Place[]; texts: Texts; scope: Scope }) {
+export default function Collection({ title, lede, art, path, places, texts, scope, total }:
+  { title: string; lede: string; art?: string; path: string; places: Place[]; texts: Texts; scope: Scope; total: number }) {
   const jsonLd = {
     '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, description: lede, url: `${SITE_URL}${path}`, inLanguage: 'he',
     isPartOf: { '@type': 'WebSite', name: 'פנינים ישראליות', url: SITE_URL },
@@ -18,7 +18,7 @@ export default function Collection({ title, lede, art, path, places, texts, scop
     <div className="wrap">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <Hero title={title} lede={lede} art={art} />
-      <Explorer places={places} texts={texts} scope={scope} />
+      <Explorer places={places} texts={texts} scope={scope} total={total} />
       <SiteFoot label={texts['about.link']} />
     </div>
   );
