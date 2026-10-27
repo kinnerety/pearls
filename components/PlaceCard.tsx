@@ -10,9 +10,19 @@ const STAR = 'M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-
 
 export default function PlaceCard({ p }: { p: Place }) {
   return (
-    <article className="card" data-id={p.id}>
-      {p.pick && <span className="pick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={STAR} /></svg>המלצת המערכת</span>}
+    <article className={p.pick ? 'card picked' : 'card'} data-id={p.id}>
       <span className="badge"><Illo k={CAT_ILLO[p.cats[0]] || 'bench'} /></span>
+      {/* round "המלצת המערכת" sticker under the category icon (Kinneret, 27.10) */}
+      {p.pick && (
+        <span className="seal" role="img" aria-label="המלצת המערכת">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <circle cx="50" cy="50" r="48" />
+            <text x="50" y="33">המלצת</text>
+            <text x="50" y="54">המערכת</text>
+            <path d={STAR} transform="translate(37.4 58) scale(1.05)" />
+          </svg>
+        </span>
+      )}
       <div>
         <div className="trow">
           {/* the name opens the place's own page (Kinneret, 2026-10-27); a draft (id 0) has no page yet */}
