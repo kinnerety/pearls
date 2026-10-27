@@ -14,13 +14,13 @@ def h(c): return np.array([int(c[i:i + 2], 16) for i in (1, 3, 5)], float)
 ANCHORS = [
     ((172, 212, 244), h('#DDEEF6')),   # light blue walls and glass
     ((140, 188, 220), h('#8FBAD0')),   # darker blue
-    ((252, 220, 132), h('#FAD771')),   # yellow building
+    ((252, 220, 132), h('#FCF0B4')),   # yellow building: the soft yellow (Kinneret 27.10 evening)
     ((28, 76, 92), h('#1C4F66')),      # dark doors, signs, lamp
     ((20, 60, 76), h('#173F52')),
     ((236, 226, 203), h('#F2E8CC')),   # pavement
     ((252, 244, 220), h('#F2E8CC')),   # cream building
-    ((180, 220, 188), h('#CBEBD5')),   # light green
-    ((148, 196, 164), h('#CBEBD5')),   # green
+    ((180, 220, 188), h('#CBEBD5')),   # light green (tree, awning) -> sage
+    ((148, 196, 164), h('#E8F2B2')),   # green (potted plants) -> lime (Kinneret 27.10 evening: lime and sage)
     ((255, 255, 255), h('#FFFFFF')),
 ]
 src = np.array([a for a, _ in ANCHORS], float); delta = np.array([b - np.array(a, float) for a, b in ANCHORS])

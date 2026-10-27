@@ -55,6 +55,7 @@ def defs(extra=''):
 <filter id="paper" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#3a3a2a" flood-opacity=".3"/></filter>
 <filter id="paperS" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.2" flood-color="#3a3a2a" flood-opacity=".6"/></filter>
 <pattern id="dw" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(12)"><circle cx="2.5" cy="2.5" r="1.5" fill="{WHITE}"/><circle cx="8" cy="8" r="1.5" fill="{WHITE}"/></pattern>
+<pattern id="dp" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(12)"><circle cx="2.5" cy="2.5" r="1.6" fill="{PAPER}"/><circle cx="8" cy="8" r="1.6" fill="{PAPER}"/></pattern>
 <pattern id="di" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(-8)"><circle cx="3" cy="3" r="1.7" fill="{INK}"/><circle cx="9" cy="9" r="1.7" fill="{INK}"/></pattern>
 <pattern id="wv" width="80" height="42" patternUnits="userSpaceOnUse">{waves}</pattern>
 <pattern id="ww" width="80" height="42" patternUnits="userSpaceOnUse">{wavesW}</pattern>

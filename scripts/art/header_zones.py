@@ -144,19 +144,15 @@ def center():
     sand = wave(352, 14, 1.0, 2.6)
     shore = [(x, y - 7) for x, y in sand]
     o.append(f'<path d="M{shore[0][0]},{shore[0][1]:.1f} ' + ' '.join('L%.1f,%.1f' % p for p in shore) + f'" stroke="{WHITE}" stroke-width="9" fill="none" stroke-linecap="round" filter="url(#paperS)"/>')
-    o.append(layer(sand, SAND, 'di', .28))
+    o.append(layer(sand, SAND, 'dp', 1))   # dots in the light off-white (Kinneret 27.10 evening)
     o.append(lifeguard(780, ground_at(sand, 780) + 26, .95))
-    o.append(sunbather(400, ground_at(sand, 400) + 64, 1.0, woman=True, towel=SKY))
-    o.append(sunbather(508, ground_at(sand, 508) + 64, 1.0, woman=False, towel=SUN))
+    # the man and the woman on their towels, one above the other, to the right of the lifeguard hut (Kinneret 27.10 evening)
+    o.append(sunbather(950, ground_at(sand, 950) + 40, .8, woman=True, towel=SKY))
+    o.append(sunbather(950, ground_at(sand, 950) + 80, .8, woman=False, towel=SUN))
     o.append(umbrella(560, ground_at(sand, 560) + 86, 1.15))
-    fd = wave(398, 14, 1.0, 0.6, x0=-30, x1=300, taper=.4, drop=470)
-    o.append(layer(fd, SAGE, 'cl', .9))
-    o.append(shrubs((40, 150), fd))
-    o.append(umbrella(96, ground_at(fd, 96) + 60, .8, TEAL))
-    dune = wave(398, 16, 1.0, 1.4, x0=900, x1=W + 30, taper=.4, drop=470)
-    o.append(layer(dune, DLIME, 'st', .9))
-    o.append(shrubs((1000, 1150), dune))
-    o.append(umbrella(1080, ground_at(dune, 1080) + 56, .8, DSAGE))
+    # no lime/sage patches and no shrubs on the sand (Kinneret 27.10 evening); the two side umbrellas stand on the sand
+    o.append(umbrella(96, ground_at(sand, 96) + 78, .8, TEAL))
+    o.append(umbrella(1080, ground_at(sand, 1080) + 90, .8, DSAGE))
     return svg(o)
 
 def olive(x, gy, sc=1.0, fill=SAGE, seed=1, flip=False):
@@ -259,8 +255,6 @@ def south():
     o.append(acacia(150, 452, 1.15, LIME))
     o.append(acacia(660, 392, .6, DLIME, True))
     o.append(acacia(1090, 456, 1.05, DLIME, True))
-    for bx, by in [(300, 430), (360, 446)]:
-        o.append(f'<ellipse cx="{bx}" cy="{by}" rx="16" ry="6" fill="{CREAM}" filter="url(#paperS)"/>')
     return svg(o)
 
 if __name__ == '__main__':
