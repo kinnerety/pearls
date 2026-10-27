@@ -99,8 +99,8 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
       <button type="submit" aria-label="חיפוש"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.4" /><path d="M15.5 15.5L21 21" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" /></svg></button>
     </form>
   );
-  // back to the whole site from a region/category page (Kinneret, 27.10.2026: not "all the pearls in this region"; labelled "כל הפנינים", no ל)
-  const allLink = <a className="chip all home" href="/"><Illo k="acorn" />כל הפנינים{total != null && <span className="n">{total}</span>}</a>;
+  // back to the whole site from a region/category page (Kinneret, 27.10.2026: not "all the pearls in this region"; labelled "כל הפנינים בכל האזורים" / "...בכל הקטגוריות")
+  const allLink = <a className="chip all home" href="/"><Illo k="acorn" />{scope?.kind === 'cat' ? 'כל הפנינים בכל הקטגוריות' : 'כל הפנינים בכל האזורים'}{total != null && <span className="n">{total}</span>}</a>;
   // the region clouds: on the home page and on category pages (Kinneret, 27.10.2026: "דווקא שם זה חשוב"); a region page has no use for them
   const clouds = (
         <div className="clouds" id="f-region">

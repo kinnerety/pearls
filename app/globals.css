@@ -66,7 +66,7 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 
 .divider{display:block;width:min(560px,90%);height:44px;margin:0 auto}
 /* the way back to the whole site from a region/category page */
-a.chip.home{display:inline-block;text-decoration:none;line-height:1.5}
+a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-space:normal;text-align:right}
 .side .fnote.under{margin:6px 0 0}
 .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
 .bar .now{display:flex;align-items:center;gap:10px}
