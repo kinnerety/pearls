@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useState, useTransition } from 'react';
-import { markSubmission, removeSubmission } from '@/app/admin/actions';
+import { draftFromSubmission, markSubmission, removeSubmission } from '@/app/admin/actions';
 import type { Submission } from '@/lib/store';
 
 const ANSWER: Record<string, string> = { yes: 'כן', no: 'לא', unknown: 'לא יודעים' };
@@ -31,7 +31,7 @@ export default function Inbox({ subs, places }: { subs: Submission[]; places: { 
           return (
             <article key={r.id} className="adm-card adm-sub" data-done={r.status === 'done' || undefined}>
               <div className="adm-sub-head">
-                <span className="adm-tag">{r.kind === 'suggest' ? 'הצעת פנינה' : 'דיווח על טעות'}</span>
+                <span className={`adm-tag ${r.kind}`}>{r.kind === 'suggest' ? 'הצעת פנינה' : 'דיווח על טעות'}</span>
                 <span className="adm-hint">{when(r.created_at)}</span>
               </div>
               {r.kind === 'suggest' ? (
@@ -59,9 +59,17 @@ export default function Inbox({ subs, places }: { subs: Submission[]; places: { 
                 </>
               )}
               <div className="adm-row">
+                {r.status === 'drafted' && <Link className="adm-btn" href="/admin/drafts">טיוטה מוכנה, לעריכה ואישור →</Link>}
+                {r.status === 'new' && r.kind === 'suggest' && (
+                  // the suggestion becomes a draft on "פנינים חדשות לאישור", where she edits it and approves it
+                  <button type="button" className="adm-btn" disabled={busy} onClick={() => start(async () => {
+                    const res = await draftFromSubmission(r.id);
+                    if (res.ok) setRows(rs => rs.map(x => x.id === r.id ? { ...x, status: 'drafted' } : x)); else alert(res.error);
+                  })}>להפוך לטיוטה לעריכה</button>
+                )}
                 {r.status === 'new'
-                  ? <button type="button" className="adm-btn" disabled={busy} onClick={() => mark(r.id, 'done')}>טופל ✓</button>
-                  : <button type="button" className="adm-btn ghost" disabled={busy} onClick={() => mark(r.id, 'new')}>החזרה לחדשים</button>}
+                  ? <button type="button" className={r.kind === 'suggest' ? 'adm-btn ghost' : 'adm-btn'} disabled={busy} onClick={() => mark(r.id, 'done')}>{r.kind === 'suggest' ? 'לא מתאים, לסגור' : 'טופל ✓'}</button>
+                  : r.status === 'done' && <button type="button" className="adm-btn ghost" disabled={busy} onClick={() => mark(r.id, 'new')}>החזרה לחדשים</button>}
                 <button type="button" className="adm-btn ghost" disabled={busy} onClick={() => del(r.id)}>מחיקה</button>
               </div>
             </article>
