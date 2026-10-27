@@ -476,15 +476,15 @@ def street_extras(gy):
     Flat shapes in the same style as her picture (no paper filter, dark teal lines)."""
     o = []
     # bench (green slats, dark frame)
-    bx = 890
+    bx = 852   # close to the tree (Kinneret 16:27)
     o.append(f'<g transform="translate({bx},{gy})">'
              f'<path d="M-50 0 V-22 M50 0 V-22 M-46 -22 V-50 M46 -22 V-50 M-56 -26 H-44 M44 -26 H56" stroke="{TEAL}" stroke-width="4" stroke-linecap="round"/>'
              f'<rect x="-58" y="-28" width="116" height="7" rx="2" fill="{DSAGE}"/>'
              f'<rect x="-54" y="-52" width="108" height="7" rx="2" fill="{DSAGE}"/><rect x="-54" y="-41" width="108" height="7" rx="2" fill="{DSAGE}"/></g>')
     # yellow Vespa, facing right
-    vx = 1012
+    vx = 985
     wheel = lambda cx: f'<circle cx="{cx}" cy="-13" r="13" fill="{TEAL}"/><circle cx="{cx}" cy="-13" r="5" fill="{SAND}"/>'
-    o.append(f'<g transform="translate({vx},{gy})">{wheel(-36)}{wheel(40)}'
+    o.append(f'<g transform="translate({vx},{gy}) scale(-1,1)">{wheel(-36)}{wheel(40)}'  # flipped: faces left (Kinneret 16:27)
              f'<path d="M-62 -18 C-66 -56 -24 -62 -2 -44 L-2 -20 Z" fill="{DYEL}"/>'
              f'<rect x="-12" y="-26" width="40" height="7" rx="3" fill="{DYEL}"/>'
              f'<path d="M20 -20 L30 -22 C40 -50 38 -70 33 -80 L25 -80 C29 -62 27 -42 18 -26 Z" fill="{DYEL}"/>'
@@ -493,18 +493,16 @@ def street_extras(gy):
              f'<path d="M20 -84 H44" stroke="{TEAL}" stroke-width="4" stroke-linecap="round"/>'
              f'<circle cx="36" cy="-76" r="5" fill="{WHITE}" stroke="{TEAL}" stroke-width="2"/>'
              f'<path d="M-40 -32 C-30 -40 -18 -40 -12 -34" stroke="{WHITE}" stroke-width="2.5" fill="none" opacity=".7"/></g>')
-    # round Tel Aviv poster column with blank posters and a little dome
-    cx = 1135
-    posters = ''.join(f'<rect x="{x}" y="{y}" width="{w}" height="{hh}" fill="{c}"/>' for x, y, w, hh, c in [
+    # round Tel Aviv poster column with blank posters: wide and low, flat top (Kinneret 16:27: 50% wider, a bit lower, no dome)
+    cx = 1128; k, v = 1.5, 0.82
+    posters = ''.join(f'<rect x="{x * k:.0f}" y="{y * v:.0f}" width="{w * k:.0f}" height="{hh * v:.0f}" fill="{c}"/>' for x, y, w, hh, c in [
         (-26, -138, 24, 34, SKY), (0, -140, 24, 26, DYEL), (-22, -98, 30, 38, DSAGE), (10, -108, 16, 46, WHITE),
         (-26, -54, 20, 34, DYEL), (-2, -56, 26, 30, SKY)])
     o.append(f'<g transform="translate({cx},{gy})">'
-             f'<rect x="-28" y="-150" width="56" height="140" fill="{CREAM}"/>{posters}'
-             f'<rect x="12" y="-150" width="16" height="140" fill="{TEAL}" opacity=".08"/>'
-             f'<rect x="-33" y="-10" width="66" height="10" rx="2" fill="{TEAL}"/>'
-             f'<rect x="-32" y="-158" width="64" height="9" rx="2" fill="{TEAL}"/>'
-             f'<path d="M-26 -158 C-26 -180 26 -180 26 -158 Z" fill="{TEAL}"/>'
-             f'<circle cx="0" cy="-178" r="4" fill="{TEAL}"/></g>')
+             f'<rect x="-42" y="-123" width="84" height="113" fill="{CREAM}"/>{posters}'
+             f'<rect x="18" y="-123" width="24" height="113" fill="{TEAL}" opacity=".08"/>'
+             f'<rect x="-47" y="-10" width="94" height="10" rx="2" fill="{TEAL}"/>'
+             f'<rect x="-46" y="-131" width="92" height="9" rx="2" fill="{TEAL}"/></g>')
     return ''.join(o)
 
 if __name__ == '__main__':
