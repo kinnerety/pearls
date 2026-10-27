@@ -125,15 +125,18 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .card{position:relative;background:var(--sheet);border-radius:4px 18px 6px 16px/16px 6px 18px 4px;padding:20px 18px 16px;display:flex;flex-direction:column;gap:8px;min-width:0;box-shadow:var(--shadow);transition:transform .2s}
 .card:nth-child(3n+2){transform:rotate(.4deg)} .card:nth-child(3n){transform:rotate(-.35deg)}
 .card:hover{transform:translateY(-3px) rotate(0)}
-.card .trow{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;padding-left:34px}
+/* title row = one inline flow: the name, the zone pill right after its last word, then town · region (TitleRow) */
+.card .trow{line-height:1.2;padding-left:34px}
 .card h3{font-family:var(--display);font-weight:700;font-size:1.3rem;line-height:1.2;margin:0}
+.card .trow h3{display:inline}
 .card h3 a{color:inherit;text-decoration:none}
 .card h3 a:hover{text-decoration:underline;text-underline-offset:3px}
-.card .trow .zone{white-space:nowrap}
+.card .trow .zone{white-space:nowrap;display:inline-block;vertical-align:.25em;margin-inline-start:8px}
+.card .trow .zone+.zone{margin-inline-start:4px}
 .where{font-size:.85rem;color:var(--muted)}
-/* town · region is the last item of the title row: its own line under the name, or beside the zone pill when the pill wrapped (TitleRow) */
-.card .trow .where{flex-basis:100%;margin-top:-4px}
-.card .trow[data-wrapped] .where{flex-basis:auto;margin-top:0}
+/* town · region: its own line under the title, or beside the zone pill when the pill had to start a line of its own (Kinneret, 27.10) */
+.card .trow .where{display:block;margin-top:4px}
+.card .trow[data-wrapped] .where{display:inline-block;margin:0;margin-inline-start:8px;vertical-align:.25em}
 .card .badge{position:absolute;top:14px;left:14px;width:30px;height:30px}
 .card .badge .illo{width:30px;height:30px}
 .desc{margin:0;font-size:.95rem;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
