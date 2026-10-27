@@ -23,7 +23,7 @@
 ## החלטות מוצר (מחייבות)
 
 - **אזורים:** 18 אזורים קטנים, תמיד גלויים, **לעולם לא ממוזגים ולא מוסתרים**. מקובצים ויזואלית ל-4 "עננים": צפון / מרכז / ירושלים והאזור / דרום, אבל הסינון הוא לפי האזור הקטן. האזורים הקטנים הם לב הזהות של הפרויקט.
-- **קטגוריות (11):** טבע ונוף, אוכל ושתייה, יקבים, מבשלות ומזקקות, סדנאות, סיורים ומפגשים, חקלאות, בעלי חיים, יוצרים וחנויות, תרבות, עגלות קפה, אתרי אינטרנט. (שאלה פתוחה: האם עגלות קפה נשארות קטגוריה נפרדת.) "יקבים, מבשלות ומזקקות" הופרדה מ"אוכל ושתייה" ב-25.10.2026 (כנרת): אייקון כוס יין; "אוכל ושתייה" קיבלה אייקון כיכר לחם עם חריצים על קרש (כנרת בחרה 25.10 בלילה מתוך 6 הצעות; הלחם החצי-פרוס לא היה ברור). **אפשר לבחור כמה קטגוריות יחד** (OR). בכתובת ה-URL הרשימות מופרדות ב-`|` (לא פסיק, כי שם הקטגוריה מכיל פסיק).
+- **קטגוריות (11):** טבע ונוף, משהו לאכול (עד 27.10.2026 "אוכל ושתייה"; כנרת שינתה את השם, הנתונים ב-Neon הוסבו אוטומטית ב-`ensure()`), יקבים, מבשלות ומזקקות, סדנאות, סיורים ומפגשים, חקלאות, בעלי חיים, יוצרים וחנויות, תרבות, עגלות קפה, אתרי אינטרנט. (שאלה פתוחה: האם עגלות קפה נשארות קטגוריה נפרדת.) "יקבים, מבשלות ומזקקות" הופרדה מ"אוכל ושתייה" ב-25.10.2026 (כנרת): אייקון כוס יין; "אוכל ושתייה" קיבלה אייקון כיכר לחם עם חריצים על קרש (כנרת בחרה 25.10 בלילה מתוך 6 הצעות; הלחם החצי-פרוס לא היה ברור). **אפשר לבחור כמה קטגוריות יחד** (OR). בכתובת ה-URL הרשימות מופרדות ב-`|` (לא פסיק, כי שם הקטגוריה מכיל פסיק).
 - **תגיות על הכרטיס — רק עובדות חיוביות וידועות:** "גם למשפחות", "פתוח בשבת". כשלא ידוע או שלילי — לא מציגים כלום. ("סגור בשבת" הוסר מהכרטיס כי אין לו פילטר.) לא כותבים "בתיאום מראש" למקום מסוים; יש הערה כללית באתר לבדוק תמיד.
 - **"עוד העדפות" בפאנל הסינון:** רק שלוש: גם למשפחות / פתוח בשבת / המלצת המערכת. מתחת לכותרת משפט קטן (בלי "חשוב:", כנרת 25.10): "יכול להיות שיש עוד פנינים שמתאימות למשפחות או פתוחות בשבת ולא סווגו ככאלה, ולהפך".
 - **כותרת פאנל הקטגוריות: "מה יבוא טוב עכשיו"** (לא "מה עושים"). **אפשר לבחור כמה קטגוריות יחד** (כנרת, 25.10.2026 ערב; כמו באזורים: פנינה מתאימה אם היא באחת מהקטגוריות שנבחרו; בכתובת `?cat=א|ב`). הצ'יפ הראשון הוא **"כל הפנינים"** עם אייקון בלוט, נבחר כברירת מחדל, והוא גם הדרך לנקות את סינון הקטגוריה וההעדפות (לא את האזורים). כשנבחר אזור הוא נקרא **"כל הפנינים באזור שבחרת"**, וכשנבחרו כמה: **"כל הפנינים באזורים שבחרת"**.
@@ -78,11 +78,20 @@ Technical notes for Claude:
 - **כללי האיסוף (כנרת, 27.10.2026):** אם חסר מידע, מחפשים עוד באינטרנט (על כל פנינה יש בדרך כלל עוד מקורות). מצפורים/תצפיות/טבע פתוח = "פתוח בשבת" ו"גם למשפחות" אלא אם נאמר אחרת. עונתיות, צפיפות, "לוודא שעות" והגבלות אחרות נכנסות לסטריפ הצהוב (`note`), לא לתקציר. השם לא ירמוז שהמבקרים עושים משהו שהם לא עושים (לא "האכלת השקנאים" אלא "צפייה בשקנאים"). קטגוריה עיקרית = `cats[0]`, מוצעת לכנרת לאישור. מיקום: קואורדינטות ממקור (קישור Waze/Google בכתבה) = `precision: "exact"`, אחרת מרכז היישוב = `"town"`. `evidence` ואימיילים לא נכנסים לקובץ.
 - הפנינה הראשונה שנוספה כך: "צפייה בשקנאים במצפור ויקר" (PR #11).
 
+## טופסי הצעת פנינה ודיווח על טעות (27.10.2026)
+
+- שני פופאפים (`components/Forms.tsx`, מוצגים בעמוד האודות): כל קישור ל-`#suggest` או ל-`#report` פותח אותם (`#report-<id>` בוחר פנינה), וגם כניסה לדף עם ה-hash הזה. בעמוד האודות הביטויים "להצעת פנינה", "כאן מדווחים" ו"דרך כאן" הופכים לקישורים אוטומטית (`linkForms`/`linkFaqForms` ב-`lib/texts.ts`).
+- נוסח טופס ההצעה הוא של כנרת, מילה במילה (מפתחות `suggest.*`); טופס הדיווח (`report.*`) הוא הצעה של Claude עד שהיא תכתוב נוסח. כל הטקסטים נערכים ב-`/admin/forms`.
+- איורים: `scripts/art/forms_art.py` (בלוט הפאביקון שוכב על הצד בין עלי אלון; מפה עם זכוכית מגדלת) → `ACORN_REST_SVG`/`REPORT_SVG` ב-`components/art.ts`.
+- שמירה: טבלת Neon `submissions` (kind, data jsonb, status new/done, ip = hash בלבד). ספאם: שדה נסתר, מינימום 4 שניות, עד 3 קישורים, עד 8 שליחות בשעה מאותה כתובת (`app/actions.ts`). בניהול: `/admin/inbox` "הצעות ודיווחים" (טופל / מחיקה). מיילים ושמות ממליצים לא עולים לאתר; "המלצה של [שם]" רק למי שבחר "כן".
+- השלב הבא (לא נבנה): ריצה יומית שהופכת הצעות לטיוטות עם הסקיל `add-pearl`, ודף אישור אחד עם כרטיסים ומפה.
+
 ## GEO / מנועי חיפוש ו-AI (27.10.2026)
 
 - Audit + staged plan (Hebrew Claude Doc): https://claude.ai/artifact/6MUQicsCtZotrypmcy6w3K. Thread "בדיקת GEO ותוכנית שיפור לאתר".
 - Done (PR #13): sitemap with all place pages, card name → place page, `canonical` on home, JSON-LD on home (WebSite + ItemList) and richer `TouristAttraction` on place pages, new meta description, Google Search Console verification tag in `app/layout.tsx`.
-- **Google Search Console account = kinneret@drafttt.co.il** (not kinnerety@gmail.com). Next: Bing Webmaster (import from GSC). Later stages: about page, region/category pages, `llms.txt`, IndexNow, monthly AI-referrer report.
+- **Google Search Console account = kinneret@drafttt.co.il** (not kinnerety@gmail.com). Bing Webmaster imported from GSC (27.10). Done since: `/p/<id>` numeric URLs (PR #14), meta description in her wording (PR #15), about page (PR #16/#18). Later stages: `llms.txt`, IndexNow, monthly AI-referrer report.
+- **דפי אזור וקטגוריה (27.10.2026):** `/region/<slug>` (18) ו-`/category/<slug>` (11), כתובות באנגלית (`REGION_SLUG`/`CAT_SLUG` ב-`lib/config.ts`, כנרת: "השמות יהיו באנגלית"). כל דף = `components/Collection.tsx`: אותו `Hero` עם כותרת משלו ("פנינים בגולן" / שם הקטגוריה), אותו `Explorer` (גלריה + מפה + שאר הפילטרים; הפילטר של הדף עצמו מוסתר, `hide`), JSON-LD `CollectionPage`. **משפט הפתיחה** אוטומטי (`lib/intros.ts`: "12 פנינים בגולן: טבע ונוף, יקבים ועוד") אלא אם כנרת כתבה משלה ב-`/admin/intros` ("דפי אזור וקטגוריה", מפתחות `intro.region.*` / `intro.cat.*` ב-`lib/texts.ts`). **איורי ההדר** לפי ענן ולפי קטגוריה: `lib/headers.ts` (`ZONE_HERO`/`CAT_HERO`, inner SVG ל-viewBox 0 0 1200 440; מפתח חסר = הדר של עמוד הבית), ממולא בשרשור "עיצוב האדרים לדפי אזור וקטגוריה". קישורים: אינדקס בתחתית עמוד הבית ("לפי אזור: …", "לפי קטגוריה: …", `SiteFoot index`), שם האזור והקטגוריות בעמוד הפנינה, ו-`sitemap.xml`. כששם קטגוריה משתנה: לעדכן `lib/config.ts`, `data/places.json`, `scripts/share-images.cjs`, להוסיף הסבה ב-`ensure()` **ולהעלות את מפתח ה-cache של `getPlaces`** (`places-vN`), אחרת ה-Data Cache של Vercel ממשיך להגיש את השם הישן.
 
 ## מי אחראי על מה (שרשורים)
 
@@ -90,6 +99,7 @@ Technical notes for Claude:
 - **"שדרוג ממשק הניהול"** — owns `/admin` (since 26.10.2026); admin requests go there.
 - **"החלפת המפה לגוגל מפות בעברית"** — map-view feedback goes there.
 - **"חיבור הדומיין לאתר"** — domain/DNS (done 25.10.2026).
+- **"עיצוב האדרים לדפי אזור וקטגוריה"** — draws `ZONE_HERO`/`CAT_HERO` in `lib/headers.ts` (generator `scripts/art/header_zones.py`); the pages themselves belong to the GEO thread.
 - **"עיצוב האתר"** — owns the sketch (`site-sketch/template.html`) and published the sketch artifact. The sketch is **frozen** since M1; design changes are made in the repo and reviewed via Preview.
 - **"מאגר הפנינים: קריאה ובדיקה"** — owned `/mnt/project-files/data/` before launch (place checks, merging Kinneret's marks); place data now lives in Neon via `/admin`. Convention: a card marked "סיימתי" with no change = she accepts Claude's recommendation; when she writes "ערכתי", pull her edits into the data.
 - Rules for checking places: every link is actually checked (incl. FB/IG); search for the place's own website first. Shabbat only from what is written, else unknown. Families = Kinneret's call.

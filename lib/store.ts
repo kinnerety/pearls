@@ -21,6 +21,8 @@ function ensure() {
     await sql`create table if not exists places (id integer primary key, data jsonb not null, hidden boolean not null default false, updated_at timestamptz not null default now())`;
     await sql`create table if not exists site_texts (key text primary key, value text not null, updated_at timestamptz not null default now())`;
     await sql`create table if not exists edits_log (id serial primary key, place_id integer not null, at timestamptz not null default now(), action text not null, before jsonb, after jsonb)`;
+    // category renamed "אוכל ושתייה" → "משהו לאכול" (Kinneret, 2026-10-27); a no-op once every row carries the new name
+    await sql`update places set data = replace(data::text, '"אוכל ושתייה"', '"משהו לאכול"')::jsonb where data::text like '%"אוכל ושתייה"%'`;
     const [{ n }] = await sql`select count(*)::int as n from places` as { n: number }[];
     if (n === 0) {
       for (const p of seed as Place[]) await sql`insert into places (id, data) values (${p.id}, ${JSON.stringify(p)}::jsonb) on conflict do nothing`;
@@ -42,7 +44,7 @@ export async function allPlaces(): Promise<StoredPlace[]> {
 export const getPlaces = unstable_cache(async (): Promise<Place[]> => {
   const all = await allPlaces();
   return all.filter(p => !p.hidden).map(({ hidden, updated_at, checked, ...p }) => p);
-}, ['places-v1'], { tags: ['places'] });
+}, ['places-v2'], { tags: ['places'] });
 
 export async function getPlace(id: number) {
   return (await getPlaces()).find(p => p.id === id);

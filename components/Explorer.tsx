@@ -29,7 +29,8 @@ function countText(n: number, active: boolean) {
   return 'אין כאן פנינים שמתאימות להגדרות שבחרת, אבל זה לא אומר שאין כאלה בארץ :)';
 }
 
-export default function Explorer({ places, texts }: { places: Place[]; texts: Texts }) {
+// `hide`: a region page gets the places of that region and no region clouds; a category page no category chips
+export default function Explorer({ places, texts, hide }: { places: Place[]; texts: Texts; hide?: 'region' | 'cat' }) {
   const [st, setSt] = useState<FilterState>(EMPTY);
   const [ready, setReady] = useState(false);
   const [view, setView] = useState<'list' | 'map'>('list');
@@ -94,7 +95,7 @@ export default function Explorer({ places, texts }: { places: Place[]; texts: Te
             <button type="submit" aria-label="חיפוש"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.4" /><path d="M15.5 15.5L21 21" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" /></svg></button>
           </form>
         </div>
-        <div className="clouds" id="f-region">
+        {hide !== 'region' && <div className="clouds" id="f-region">
           {Object.keys(ZONES).map((g, gi) => (
             <div className="cloud" key={g}>
               <span className="gname"><Illo k={ZONE_ILLO[g]} />{g}</span>
@@ -105,7 +106,7 @@ export default function Explorer({ places, texts }: { places: Place[]; texts: Te
               {gi === 0 && st.regions.length > 0 && <Chip className="sm clear" pressed={false} n="" onClick={() => update(s => ({ ...s, regions: [] }))}>נקה בחירה</Chip>}
             </div>
           ))}
-        </div>
+        </div>}
       </section>
 
       <svg className="divider" viewBox="0 0 560 44" aria-hidden="true" dangerouslySetInnerHTML={{ __html: DIVIDER_SVG }} />
@@ -134,7 +135,7 @@ export default function Explorer({ places, texts }: { places: Place[]; texts: Te
             {act > 0 && !open && <span className="on">{act}</span>}
           </button>
           <div className="body">
-            <div className="grp" id="f-cat">
+            {hide !== 'cat' && <div className="grp" id="f-cat">
               <span className="flabel">מה יבוא טוב עכשיו</span>
               {/* "all": pressed when no category is chosen; clicking it clears the categories and the preferences */}
               <Chip className="all" pressed={!st.cats.length} onClick={() => update(s => ({ ...s, cats: [], prefs: [] }))} n={places.filter(p => matches(p, { ...st, cats: [], prefs: [] })).length}><Illo k="acorn" />{st.regions.length === 0 ? 'כל הפנינים' : st.regions.length === 1 ? 'כל הפנינים באזור שבחרת' : 'כל הפנינים באזורים שבחרת'}</Chip>
@@ -142,7 +143,7 @@ export default function Explorer({ places, texts }: { places: Place[]; texts: Te
                 <Chip key={k} pressed={st.cats.includes(k)} onClick={() => update(s => ({ ...s, cats: s.cats.includes(k) ? s.cats.filter(c => c !== k) : [...s.cats, k] }))}
                   n={places.filter(p => matches(p, st, 'cat') && p.cats.includes(k)).length}><Illo k={CAT_ILLO[k]} />{k}</Chip>
               ))}
-            </div>
+            </div>}
             <div className="grp" id="f-pref">
               <span className="flabel">עוד העדפות</span>
               <p className="fnote">{texts['prefs.note']}</p>
