@@ -36,7 +36,7 @@ const FIXED_DEFAULTS = {
   'share.details': { label: 'שיתוף: לפני הקישור לאתר של המקום', text: 'לכל הפרטים:' },
   'share.site': { label: 'שיתוף: לפני הקישור לפנינה באתר שלנו', text: "מתוך האתר 'פנינים ישראליות':" },
   // the about page (/about), Kinneret's own text (27.10.2026). Every line is a paragraph; **bold**, ==marker==, [word](link)
-  'about.h1': { label: 'עמוד "אודות": הכותרת', text: "מי מאחורי 'פנינים ישראליות', ובעיקר למה" },
+  'about.h1': { label: 'עמוד "אודות": הכותרת', text: "מי מאחורי 'פנינים\u00A0ישראליות',\nובעיקר למה", multi: true, hint: 'שורה חדשה = ירידת שורה בכותרת' },
   'about.me': { label: 'אודות: הפסקה ליד האיור שלך', text: 'היי, אני כנרת יפרח :) כותבת ב[דראפט](http://www.drafttt.co.il), חובבת מסלולים מישוריים ומעגליים שלאורכם נחל ובסופם עגלת קפה.', multi: true, hint: ABOUT_HINT },
   'about.matti': { label: 'אודות: הפסקה ליד האיור של מתי', text: "וזה מתי, בנזוגי כפרה עליו. כולם חושבים שהוא הצ'ייסר, אבל הוא לא. הוא [אומן](https://kinnerety.wixstudio.com/turntable) וגם מבשל מעולה.", multi: true },
   'about.story': {
