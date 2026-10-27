@@ -91,12 +91,12 @@ def bottles():
              dict(h=212, w=66, glass=DSAGE, label=SUN, lab_y=308, shape='beer', cap=DYEL, lab_h=54),
              dict(h=260, w=72, glass=SKY, label=DYEL, lab_y=336, cap=INK, lab_h=58),
              dict(h=198, w=94, glass=TEAL, label=CREAM, lab_y=306, shape='whisky', cap=DYEL, lab_h=60),
-             dict(h=206, w=64, glass=LIME, label=SUN2, lab_y=318, shape='beer', cap=INK, lab_h=52),
+             dict(h=282, w=58, glass=MIST, label=SKY, lab_y=320, cap=TEAL, lab_h=60),            # tall slim gin
              dict(h=236, w=70, glass=CREAM, label=TEAL, lab_y=330, cap=INK, lab_h=56),
              'glass',
              dict(h=222, w=90, glass=SUN, label=DSAGE, lab_y=322, shape='whisky', cap=INK, lab_h=58),
              dict(h=250, w=72, glass=DSAGE, label=CREAM, lab_y=338, cap=DYEL, lab_h=56),
-             dict(h=282, w=58, glass=MIST, label=SKY, lab_y=320, cap=TEAL, lab_h=60),            # tall slim gin
+             dict(h=206, w=64, glass=LIME, label=SUN2, lab_y=318, shape='beer', cap=INK, lab_h=52),  # (swapped with the tall gin: Kinneret, the tall one under the title touched it)
              dict(h=190, w=84, glass=WHITE, label=TEAL, lab_y=334, shape='whisky', cap=SKY, lab_h=52),  # squat arak
              dict(h=244, w=66, glass=SAND, label=DYEL, lab_y=330, cap=INK, lab_h=54),
              dict(h=216, w=76, glass=TEAL, label=SUN, lab_y=326, shape='beer', cap=DYEL, lab_h=52)]
@@ -322,7 +322,7 @@ def shop():
     o.append(towels(770, 300, (SKY, SUN2, DSAGE, SKY))); o.append(bag(860, 300, TEAL)); o.append(plates(940, 300, SKY)); o.append(candlestick(1010, 300, DYEL)); o.append(candlestick(1040, 300, TEAL, .85)); o.append(mug(1110, 300, SUN2))
     o.append(cloths(790, 360, (SUN, LIME, SKY))); o.append(bowls_stack(880, 360, DSAGE)); o.append(bag(960, 360, SUN2, .9)); o.append(towels(1050, 360, (TEAL, SUN, SKY))); o.append(jug(1130, 360, LIME, .8))
 
-    o.append(mug(120, 130, SKY)); o.append(mug(170, 130, SUN2, .9)); o.append(bowl(250, 130, TEAL)); o.append(jug(330, 130, LIME)); o.append(plant(410, 130, .9)); o.append(mug(480, 130, DSAGE, 1.1)); o.append(candle(540, 130, SUN))
+    o.append(mug(110, 130, SKY)); o.append(mug(160, 130, SUN2, .9)); o.append(bowl(240, 130, TEAL)); o.append(jug(320, 130, LIME)); o.append(plant(400, 130, .9)); o.append(mug(465, 130, DSAGE, 1.1)); o.append(candle(520, 130, SUN))
     def picture(x, y, fc, inner, sc=1.0):
         return f'<g transform="translate({x},{y}) scale({sc}) rotate(-3)"><rect x="-26" y="-40" width="52" height="40" rx="2" fill="{fc}"/><rect x="-20" y="-34" width="40" height="28" fill="{PAPER}"/>{inner}</g>'
     o.append(picture(100, 240, DYEL, f'<path d="M-20 -14 Q-6 -28 6 -16 T20 -14 V-6 H-20Z" fill="{SAGE}"/><circle cx="10" cy="-26" r="4" fill="{SUN2}"/>'))
@@ -338,8 +338,8 @@ def shop():
     o.append(f'<g transform="translate(250,282)"><g filter="url(#paper)"><rect x="-70" y="0" width="140" height="48" rx="6" fill="{SUN2}"/></g>'
              f'<path d="M0 32 C-14 20 -18 10 -6 8 C0 6 0 12 0 12 C0 12 0 6 6 8 C18 10 14 20 0 32Z" fill="{INK}"/></g>')
     o.append(bowls_stack(370, 330, SKY, 4, 1.1))
-    o.append(f'<g transform="translate(440,330)">{mug(0, 0, TEAL, 1.1)}{mug(6, -8, SUN2, .95)}{mug(11, -15, SKY, .8)}</g>')
-    o.append(cloths(585, 130, (SKY, SUN2, DSAGE, LIME), 1.0))
+    o.append(f'<g transform="translate(440,330)">{mug(0, 0, TEAL)}{mug(0, -19, SUN2)}{mug(0, -38, SKY)}</g>')  # three mugs stacked one inside the other, standing on the counter
+    o.append(cloths(568, 130, (SKY, SUN2, DSAGE, LIME), 1.0))
     # outside: a bicycle leaning? keep it minimal: a potted olive by the door on the right of the wall
     return svg(o)
 
