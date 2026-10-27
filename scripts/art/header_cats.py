@@ -463,6 +463,13 @@ def street():
     o.append(f'<g transform="translate(660,0)"><path d="M0 404 V250" stroke="{INK}" stroke-width="5" stroke-linecap="round"/><path d="M-12 250 H12" stroke="{INK}" stroke-width="4" stroke-linecap="round"/><path d="M-10 250 L-8 226 H8 L10 250Z" fill="{SUN2}"/><rect x="-14" y="404" width="28" height="6" rx="2" fill="{INK}"/></g>')
     return svg(o)
 
+def street_image(href='/headers/tours.webp'):
+    """"סיורים ומפגשים" = Kinneret's own street picture (2026-10-27), recoloured by tours_photo.py.
+    Only placed: shrunk to the left so the title has its sky on the right, and the pavement continues to the right edge."""
+    s = 0.47; w, h = 1750 * s, 650 * s; x0, y0 = 0, 438 - 646 * s
+    pave = f'<rect x="{x0 + 1690 * s:.0f}" y="{y0 + 621 * s:.1f}" width="{1210 - x0 - 1690 * s:.0f}" height="{25 * s:.1f}" fill="{SAND}"/>'
+    return pave + f'<image href="{href}" x="{x0}" y="{y0:.1f}" width="{w:.1f}" height="{h:.1f}" preserveAspectRatio="none"/>'
+
 if __name__ == '__main__':
     import sys
     open(sys.argv[2], 'w').write(globals()[sys.argv[1]]())

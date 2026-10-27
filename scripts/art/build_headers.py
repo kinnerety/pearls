@@ -8,7 +8,7 @@ import header_zones as z, header_cats as c
 
 ZONES = {'צפון': z.north, 'מרכז': z.center, 'ירושלים והאזור': z.jerusalem, 'דרום': z.south}
 CATS = {'טבע ונוף': c.nature, 'משהו לאכול': c.table_scene, 'יקבים, מבשלות ומזקקות': c.bottles, 'סדנאות': c.carpentry,
-        'סיורים ומפגשים': c.street, 'חקלאות': c.agriculture, 'בעלי חיים': c.animals, 'יוצרים וחנויות': c.shop,
+        'סיורים ומפגשים': c.street_image, 'חקלאות': c.agriculture, 'בעלי חיים': c.animals, 'יוצרים וחנויות': c.shop,
         'תרבות': c.culture, 'עגלות קפה': c.coffee_cart}
 
 def rec(d):
