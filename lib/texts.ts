@@ -102,6 +102,7 @@ export const TEXT_DEFAULTS = {
       'לנו, דרך כאן',
     ].join('\n'),
   },
+  'about.back': { label: 'אודות: הכפתור בתחתית העמוד', text: 'חזרה לגלריית הפנינים' },
   'about.link': { label: 'הקישור לעמוד "אודות" בתחתית העמודים', text: 'אודות' },
 } satisfies Record<string, TextDef>;
 
