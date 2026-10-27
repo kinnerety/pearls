@@ -58,6 +58,7 @@ export default function Inbox({ subs, places }: { subs: Submission[]; places: { 
                 </>
               )}
               <div className="adm-row">
+                {r.status === 'drafted' && <Link className="adm-btn ghost" href="/admin/drafts">הפכה לטיוטה, לאישור →</Link>}
                 {r.status === 'new'
                   ? <button type="button" className="adm-btn" disabled={busy} onClick={() => mark(r.id, 'done')}>טופל ✓</button>
                   : <button type="button" className="adm-btn ghost" disabled={busy} onClick={() => mark(r.id, 'new')}>החזרה לחדשים</button>}

@@ -1,11 +1,10 @@
 'use server';
 import { redirect } from 'next/navigation';
 import { endSession, passwordOk, requireAdmin, startSession } from '@/lib/auth';
-import { deletePlace, deleteSubmission, patchPlace, savePlace, saveTexts, setSubmissionStatus, type SubmissionStatus } from '@/lib/store';
+import { approveDraft, deletePlace, deleteSubmission, patchPlace, rejectDraft, savePlace, saveTexts, setSubmissionStatus, type SubmissionStatus } from '@/lib/store';
 import { CATS } from '@/lib/config';
 import type { Texts } from '@/lib/texts';
 import { checkPlace } from '@/lib/validate';
-import { getDraft } from '@/lib/drafts';
 import type { Place } from '@/lib/types';
 
 export async function login(_: string | null, form: FormData): Promise<string | null> {
@@ -50,16 +49,19 @@ export async function saveSiteTexts(t: Partial<Texts>): Promise<{ ok: true } | {
   catch (e) { return { ok: false, errors: [(e as Error).message] }; }
 }
 
-/** A draft from data/drafts/ (gathered from a link by Claude) goes into Neon as a regular place, not yet checked by hand. */
-export async function publishDraft(key: string): Promise<SaveResult> {
+/** Kinneret approved a draft on /admin/drafts (after editing it or as is): it becomes a regular place. */
+export async function acceptDraft(id: number, p: Place): Promise<SaveResult> {
   await requireAdmin();
-  const d = getDraft(key);
-  if (!d) return { ok: false, errors: ['הטיוטה לא נמצאה'] };
-  const place: Place = { ...d.place, id: 0, checked: false };
-  const errors = checkPlace(place);
+  const errors = checkPlace(p);
   if (errors.length) return { ok: false, errors };
-  try { return { ok: true, id: await savePlace(place, false) }; }
+  try { return { ok: true, id: await approveDraft(id, p) }; }
   catch (e) { return { ok: false, errors: [(e as Error).message] }; }
+}
+
+export async function declineDraft(id: number): Promise<{ ok: true } | { ok: false; error: string }> {
+  await requireAdmin();
+  try { await rejectDraft(id); return { ok: true }; }
+  catch (e) { return { ok: false, error: (e as Error).message }; }
 }
 
 export async function remove(id: number) {

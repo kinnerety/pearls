@@ -52,3 +52,14 @@
 .adm-sub dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:.95rem}
 .adm-sub dt{font-weight:700;color:var(--muted)}
 .adm-sub dd{margin:0;white-space:pre-wrap}
+
+/* /admin/drafts: each new pearl as its real card, the map and the hidden fields beside it */
+.adm-drafts{display:flex;flex-direction:column;gap:18px}
+.adm-draft-body{display:grid;grid-template-columns:minmax(260px,400px) 1fr;gap:18px;align-items:start}
+@media (max-width:760px){.adm-draft-body{grid-template-columns:1fr}}
+.adm-draft .draft-list{grid-template-columns:1fr}
+.adm-draft-side{display:flex;flex-direction:column;gap:10px;min-width:0}
+.adm-draft-map{padding:8px} .adm-draft-map #map{height:220px}
+.adm-draft-meta{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:.9rem} .adm-draft-meta dt{font-weight:700;color:var(--muted)} .adm-draft-meta dd{margin:0;white-space:pre-wrap}
+.adm-draft-from summary{cursor:pointer;font-weight:600;font-size:.9rem}
+.adm-draft-done{opacity:.75}

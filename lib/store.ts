@@ -21,6 +21,7 @@ function ensure() {
     await sql`create table if not exists places (id integer primary key, data jsonb not null, hidden boolean not null default false, updated_at timestamptz not null default now())`;
     await sql`create table if not exists site_texts (key text primary key, value text not null, updated_at timestamptz not null default now())`;
     await sql`create table if not exists submissions (id serial primary key, kind text not null, data jsonb not null, status text not null default 'new', ip text, created_at timestamptz not null default now())`;
+    await sql`create table if not exists drafts (id serial primary key, data jsonb not null, submission_id integer, status text not null default 'pending', created_at timestamptz not null default now(), decided_at timestamptz)`;
     await sql`create table if not exists edits_log (id serial primary key, place_id integer not null, at timestamptz not null default now(), action text not null, before jsonb, after jsonb)`;
     // category renamed "אוכל ושתייה" → "משהו לאכול" (Kinneret, 2026-10-27); a no-op once every row carries the new name
     await sql`update places set data = replace(data::text, '"אוכל ושתייה"', '"משהו לאכול"')::jsonb where data::text like '%"אוכל ושתייה"%'`;
@@ -30,6 +31,8 @@ function ensure() {
     if (n === 0) {
       for (const p of seed as Place[]) await sql`insert into places (id, data) values (${p.id}, ${JSON.stringify(p)}::jsonb) on conflict do nothing`;
     }
+    // every place carries its approval date (the launch day for the ones that were there before the field existed)
+    await sql`update places set data = data || '{"approved_at":"2026-10-25"}'::jsonb where not (data ? 'approved_at')`;
   })().catch(e => { ready = null; throw e; }));
 }
 
@@ -64,6 +67,7 @@ export async function savePlace(p: Place, hidden: boolean): Promise<number> {
   const clean: Place = { ...p, ctags: canonTags(p.tags) };
   let id = clean.id;
   if (!id) {
+    clean.approved_at ||= new Date().toISOString().slice(0, 10);
     const [{ next }] = await sql`select coalesce(max(id), 0) + 1 as next from places` as { next: number }[];
     id = clean.id = next;
     await sql`insert into places (id, data, hidden) values (${id}, ${JSON.stringify(clean)}::jsonb, ${hidden})`;
@@ -125,7 +129,7 @@ export async function saveTexts(t: Partial<Texts>) {
 
 /** What visitors send from the two popup forms: "suggest" (a new pearl) or "report" (a mistake). Admin only. */
 export type SubmissionKind = 'suggest' | 'report';
-export type SubmissionStatus = 'new' | 'done';
+export type SubmissionStatus = 'new' | 'drafted' | 'done';
 export type Submission = { id: number; kind: SubmissionKind; data: Record<string, string>; status: SubmissionStatus; created_at: string };
 
 /** Saves a form, unless the same sender (a hash of the address) already sent too many in the last hour. */
@@ -154,4 +158,65 @@ export async function deleteSubmission(id: number) {
   if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
   await ensure();
   await sql`delete from submissions where id = ${id}`;
+}
+
+/** Pearls gathered by Claude (from a link, or from a visitor's suggestion by the daily run) that wait for Kinneret's
+ * approval on /admin/drafts. Approving saves a regular place; rejecting keeps the row for the record. */
+export type DraftStatus = 'pending' | 'approved' | 'rejected';
+export type DraftRow = { id: number; data: Place; submission_id: number | null; status: DraftStatus; created_at: string; decided_at: string | null; place_id?: number };
+
+export async function listDrafts(status?: DraftStatus): Promise<DraftRow[]> {
+  if (!sql) return [];
+  await ensure();
+  const rows = status
+    ? await sql`select id, data, submission_id, status, created_at, decided_at from drafts where status = ${status} order by created_at`
+    : await sql`select id, data, submission_id, status, created_at, decided_at from drafts order by created_at desc`;
+  return rows as DraftRow[];
+}
+
+export async function getDraftRow(id: number): Promise<DraftRow | undefined> {
+  if (!sql) return undefined;
+  await ensure();
+  const [row] = await sql`select id, data, submission_id, status, created_at, decided_at from drafts where id = ${id}` as DraftRow[];
+  return row;
+}
+
+export async function addDraft(place: Place, submissionId: number | null): Promise<number> {
+  if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
+  await ensure();
+  const clean: Place = { ...place, id: 0, checked: false, ctags: canonTags(place.tags || []) };
+  const [{ id }] = await sql`insert into drafts (data, submission_id) values (${JSON.stringify(clean)}::jsonb, ${submissionId}) returning id` as { id: number }[];
+  if (submissionId) await sql`update submissions set status = 'drafted' where id = ${submissionId} and status = 'new'`;
+  return id;
+}
+
+/** A pending draft with the same name as an existing place or another pending draft (so the daily run never doubles). */
+export async function draftExists(name: string): Promise<boolean> {
+  if (!sql) return false;
+  await ensure();
+  const n = name.trim();
+  const [a] = await sql`select count(*)::int as n from drafts where status = 'pending' and trim(data->>'name') = ${n}` as { n: number }[];
+  const [b] = await sql`select count(*)::int as n from places where trim(data->>'name') = ${n}` as { n: number }[];
+  return a.n + b.n > 0;
+}
+
+/** Kinneret approved (possibly after editing): the draft becomes a real place. */
+export async function approveDraft(id: number, place: Place): Promise<number> {
+  if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
+  await ensure();
+  const row = await getDraftRow(id);
+  if (!row) throw new Error('הטיוטה לא נמצאה');
+  const placeId = await savePlace({ ...place, id: 0, checked: false }, false);
+  await sql`update drafts set status = 'approved', decided_at = now(), data = data || ${JSON.stringify({ place_id: placeId })}::jsonb where id = ${id}`;
+  if (row.submission_id) await sql`update submissions set status = 'done' where id = ${row.submission_id}`;
+  return placeId;
+}
+
+export async function rejectDraft(id: number) {
+  if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
+  await ensure();
+  const row = await getDraftRow(id);
+  if (!row) throw new Error('הטיוטה לא נמצאה');
+  await sql`update drafts set status = 'rejected', decided_at = now() where id = ${id}`;
+  if (row.submission_id) await sql`update submissions set status = 'done' where id = ${row.submission_id}`;
 }
