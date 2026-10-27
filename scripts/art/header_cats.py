@@ -387,14 +387,14 @@ def garden_meeting():
     # the fence runs along the front, with the gate open on the left
     fence = []
     r = random.Random(2)
-    def picket(x, h, w=18, base=470):
-        return f'<path d="M{x-w/2} {base} V{base-h+8} L{x} {base-h} L{x+w/2} {base-h+8} V{base}Z" fill="{WHITE}" stroke="{SAND}" stroke-width="1.2" filter="url(#paperS)"/>'
+    def picket(x, h, w=18, base=470, shadow=True):
+        return f'<path d="M{x-w/2} {base} V{base-h+8} L{x} {base-h} L{x+w/2} {base-h+8} V{base}Z" fill="{WHITE}" stroke="{SAND}" stroke-width="1.2"{' filter="url(#paperS)"' if shadow else ''}/>'
     for x in range(20, 170, 28):
         fence.append(picket(x, 104 + r.uniform(-4, 4)))
     fence.append(f'<path d="M4 398 H172 M4 440 H172" stroke="{DYEL}" stroke-width="7" stroke-linecap="round"/>')
     fence.append(f'<rect x="172" y="346" width="14" height="130" rx="2" fill="{INK}"/>')
     # the open gate, swung inward along the path
-    gate = ''.join(picket(x, 92 - x * .12, 16, 0) for x in range(10, 140, 24)) + f'<path d="M0 -60 H140 M0 -20 H140" stroke="{DYEL}" stroke-width="6" stroke-linecap="round"/>'
+    gate = ''.join(picket(x, 92 - x * .12, 16, 0, False) for x in range(10, 140, 24)) + f'<path d="M0 -60 H140 M0 -20 H140" stroke="{DYEL}" stroke-width="6" stroke-linecap="round"/>'
     fence.append(f'<g transform="translate(186,470) skewY(-24) scale(.92,1)">{gate}</g>')
     fence.append(f'<rect x="338" y="346" width="14" height="130" rx="2" fill="{INK}"/>')
     for x in range(380, 1240, 28):
