@@ -6,7 +6,7 @@ export type TextDef = { label: string; text: string; multi?: boolean; big?: bool
 import { CATS, CAT_SLUG, REGIONS, REGION_SLUG } from './config';
 
 // One intro line per region and per category page; all start with Kinneret's generic sentence (2026-10-27) and she edits each in /admin/intros
-export const INTRO_GENERIC = 'אוסף המלצות שנתנו אנשים אמיתיים שביקרו במקומות האלה ואהבו אותם';
+export const INTRO_GENERIC = 'המלצות שנתנו אנשים אמיתיים שביקרו ואהבו';
 const INTRO_DEFAULTS = Object.fromEntries([
   ...REGIONS.map(r => [`intro.region.${REGION_SLUG[r]}`, { label: `פנינים ב${r}`, text: INTRO_GENERIC, multi: true }]),
   ...CATS.map(c => [`intro.cat.${CAT_SLUG[c]}`, { label: c, text: INTRO_GENERIC, multi: true }]),
