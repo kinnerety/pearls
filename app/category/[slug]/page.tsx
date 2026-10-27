@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { CATS, CAT_OF_SLUG, CAT_SLUG } from '@/lib/config';
 import { CAT_HERO } from '@/lib/headers';
-import { catIntro } from '@/lib/intros';
 import { getPlaces, getTexts } from '@/lib/store';
+import { INTRO_GENERIC } from '@/lib/texts';
 import Collection from '@/components/Collection';
 
 // /category/<english slug>: one page per category ("wineries in Israel")
@@ -15,7 +15,7 @@ async function load(slug: string) {
   if (!cat) return null;
   const [all, texts] = await Promise.all([getPlaces(), getTexts()]);
   const places = all.filter(p => p.cats.includes(cat));
-  const lede = texts[`intro.cat.${slug}`]?.trim() || catIntro(cat, places);
+  const lede = texts[`intro.cat.${slug}`]?.trim() || INTRO_GENERIC;
   return { total: all.length, cat, places, texts, lede };
 }
 

@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { REGIONS, REGION_OF_SLUG, REGION_SLUG, zoneOf } from '@/lib/config';
 import { ZONE_HERO } from '@/lib/headers';
-import { regionIntro } from '@/lib/intros';
 import { getPlaces, getTexts } from '@/lib/store';
+import { INTRO_GENERIC } from '@/lib/texts';
 import Collection from '@/components/Collection';
 
 // /region/<english slug>: one page per small region, so search engines and AI assistants can answer "what to see in the Golan"
@@ -15,7 +15,7 @@ async function load(slug: string) {
   if (!region) return null;
   const [all, texts] = await Promise.all([getPlaces(), getTexts()]);
   const places = all.filter(p => p.region.includes(region));
-  const lede = texts[`intro.region.${slug}`]?.trim() || regionIntro(region, places);
+  const lede = texts[`intro.region.${slug}`]?.trim() || INTRO_GENERIC;
   return { total: all.length, region, places, texts, lede, title: `פנינים ב${region}` };
 }
 
