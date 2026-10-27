@@ -15,7 +15,10 @@ export default function Forms({ texts }: { texts: Texts }) {
     const open = (hash: string) => {
       const m = /^#(suggest|report)$/.exec(hash);
       if (!m) return false;
-      refs[m[1] as Kind].current?.showModal();
+      const d = refs[m[1] as Kind].current;
+      if (!d) return false;
+      d.showModal();
+      d.focus(); // focus the popup itself, not the close button (no ring around the X on open)
       return true;
     };
     open(decodeURIComponent(location.hash));
@@ -92,7 +95,7 @@ function Popup({ kind, ref_, texts, art, view, img, children }: {
   }
 
   return (
-    <dialog className="form-pop" id={`${kind}-pop`} aria-labelledby={`${kind}-title`} ref={ref_}
+    <dialog tabIndex={-1} className="form-pop" id={`${kind}-pop`} aria-labelledby={`${kind}-title`} ref={ref_}
       onClose={() => { if (state === 'done') setState('form'); setError(''); }}
       onClick={e => { if (e.target === e.currentTarget) e.currentTarget.close(); }}>
       <div className="sheet">
