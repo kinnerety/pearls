@@ -468,7 +468,44 @@ def street_image(href='/headers/tours.webp'):
     Only placed: shrunk to the left so the title has its sky on the right, and the pavement continues to the right edge."""
     s = 0.47; w, h = 1750 * s, 650 * s; x0, y0 = 0, 438 - 646 * s
     pave = f'<rect x="{x0 + 1690 * s:.0f}" y="{y0 + 621 * s:.1f}" width="{1210 - x0 - 1690 * s:.0f}" height="{25 * s:.1f}" fill="{SAND}"/>'
-    return pave + f'<image href="{href}" x="{x0}" y="{y0:.1f}" width="{w:.1f}" height="{h:.1f}" preserveAspectRatio="none"/>'
+    img = f'<image href="{href}" x="{x0}" y="{y0:.1f}" width="{w:.1f}" height="{h:.1f}" preserveAspectRatio="none"/>'
+    return pave + img + street_extras(round(y0 + 621 * s + 1))
+
+def street_extras(gy):
+    """Kinneret 16:23: to the right of the tree a bench, then a yellow Vespa, then a round Tel Aviv poster column.
+    Flat shapes in the same style as her picture (no paper filter, dark teal lines)."""
+    o = []
+    # bench (green slats, dark frame)
+    bx = 890
+    o.append(f'<g transform="translate({bx},{gy})">'
+             f'<path d="M-50 0 V-22 M50 0 V-22 M-46 -22 V-50 M46 -22 V-50 M-56 -26 H-44 M44 -26 H56" stroke="{TEAL}" stroke-width="4" stroke-linecap="round"/>'
+             f'<rect x="-58" y="-28" width="116" height="7" rx="2" fill="{DSAGE}"/>'
+             f'<rect x="-54" y="-52" width="108" height="7" rx="2" fill="{DSAGE}"/><rect x="-54" y="-41" width="108" height="7" rx="2" fill="{DSAGE}"/></g>')
+    # yellow Vespa, facing right
+    vx = 1012
+    wheel = lambda cx: f'<circle cx="{cx}" cy="-13" r="13" fill="{TEAL}"/><circle cx="{cx}" cy="-13" r="5" fill="{SAND}"/>'
+    o.append(f'<g transform="translate({vx},{gy})">{wheel(-36)}{wheel(40)}'
+             f'<path d="M-62 -18 C-66 -56 -24 -62 -2 -44 L-2 -20 Z" fill="{DYEL}"/>'
+             f'<rect x="-12" y="-26" width="40" height="7" rx="3" fill="{DYEL}"/>'
+             f'<path d="M20 -20 L30 -22 C40 -50 38 -70 33 -80 L25 -80 C29 -62 27 -42 18 -26 Z" fill="{DYEL}"/>'
+             f'<path d="M24 -16 C28 -34 52 -34 56 -16 Z" fill="{DYEL}"/>'
+             f'<rect x="-50" y="-61" width="40" height="9" rx="4.5" fill="{TEAL}"/>'
+             f'<path d="M20 -84 H44" stroke="{TEAL}" stroke-width="4" stroke-linecap="round"/>'
+             f'<circle cx="36" cy="-76" r="5" fill="{WHITE}" stroke="{TEAL}" stroke-width="2"/>'
+             f'<path d="M-40 -32 C-30 -40 -18 -40 -12 -34" stroke="{WHITE}" stroke-width="2.5" fill="none" opacity=".7"/></g>')
+    # round Tel Aviv poster column with blank posters and a little dome
+    cx = 1135
+    posters = ''.join(f'<rect x="{x}" y="{y}" width="{w}" height="{hh}" fill="{c}"/>' for x, y, w, hh, c in [
+        (-26, -138, 24, 34, SKY), (0, -140, 24, 26, DYEL), (-22, -98, 30, 38, DSAGE), (10, -108, 16, 46, WHITE),
+        (-26, -54, 20, 34, DYEL), (-2, -56, 26, 30, SKY)])
+    o.append(f'<g transform="translate({cx},{gy})">'
+             f'<rect x="-28" y="-150" width="56" height="140" fill="{CREAM}"/>{posters}'
+             f'<rect x="12" y="-150" width="16" height="140" fill="{TEAL}" opacity=".08"/>'
+             f'<rect x="-33" y="-10" width="66" height="10" rx="2" fill="{TEAL}"/>'
+             f'<rect x="-32" y="-158" width="64" height="9" rx="2" fill="{TEAL}"/>'
+             f'<path d="M-26 -158 C-26 -180 26 -180 26 -158 Z" fill="{TEAL}"/>'
+             f'<circle cx="0" cy="-178" r="4" fill="{TEAL}"/></g>')
+    return ''.join(o)
 
 if __name__ == '__main__':
     import sys
