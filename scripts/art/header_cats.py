@@ -50,11 +50,11 @@ def table_scene():
     # cheese plate: a round white paper, a wheel with a wedge cut, four wedges, a soft log, grapes, two crackers
     grapes = ''.join(f'<circle cx="{gx}" cy="{gy}" r="4" fill="{TEAL}"/>' for gx, gy in [(50,-10),(58,-6),(44,-4),(52,0),(60,2),(56,-14),(48,-16)])
     fg.append(f'<g transform="translate(-40,-2)"><ellipse cx="0" cy="0" rx="86" ry="18" fill="{WHITE}" filter="url(#paperS)"/>'
-              f'<ellipse cx="-50" cy="-8" rx="20" ry="7" fill="{SUN}"/><path d="M-50 -16 L-50 -8 L-32 -11Z" fill="{WHITE}"/><ellipse cx="-50" cy="-16" rx="20" ry="7" fill="{SUN2}"/><path d="M-50 -16 L-32 -19 L-32 -11 L-50 -8Z" fill="{SUN}"/>'
+              f'<ellipse cx="-34" cy="-8" rx="20" ry="7" fill="{SUN}"/><path d="M-34 -16 L-34 -8 L-16 -11Z" fill="{WHITE}"/><ellipse cx="-34" cy="-16" rx="20" ry="7" fill="{SUN2}"/><path d="M-34 -16 L-16 -19 L-16 -11 L-34 -8Z" fill="{SUN}"/>'
               f'<path d="M-22 -4 L6 -22 L10 -4Z" fill="{DYEL}"/><path d="M-6 0 L26 -16 L30 0Z" fill="{SUN}"/><path d="M8 -8 L34 -24 L38 -8Z" fill="{SUN2}"/>'
               f'<path d="M12 6 L40 -2 L42 6 L14 12Z" fill="{WHITE}" stroke="{SAND}" stroke-width="1.2"/>'
               f'<circle cx="0" cy="-14" r="1.6" fill="{WHITE}"/><circle cx="24" cy="-14" r="1.4" fill="{WHITE}"/>'
-              f'<rect x="-76" y="2" width="22" height="7" rx="2" fill="{DYEL}"/><rect x="-70" y="8" width="22" height="7" rx="2" fill="{SUN2}"/>{grapes}</g>')
+              f'<rect x="-58" y="2" width="22" height="7" rx="2" fill="{DYEL}"/><rect x="-52" y="8" width="22" height="7" rx="2" fill="{SUN2}"/>{grapes}</g>')
     for gx in (96, 140):
         fg.append(f'<g transform="translate({gx},6)"><path d="M-14 -66 C-14 -42 -8 -32 0 -30 C8 -32 14 -42 14 -66Z" fill="{SKY}" opacity=".75"/>'
                   f'<path d="M-13 -50 C-12 -38 -7 -32 0 -30 C7 -32 12 -38 13 -50Z" fill="{TEAL}"/>'
@@ -84,12 +84,16 @@ def bottles():
                 f'<circle cx="0" cy="{lab_y + lab_h*.42:.0f}" r="{lab_h*.17:.0f}" fill="none" stroke="{INK}" stroke-width="1.2" opacity=".55"/>'
                 f'<path d="M{-w/2 + 16} {lab_y + lab_h*.76:.0f} H{w/2 - 16} M{-w/2 + 22} {lab_y + lab_h*.9:.0f} H{w/2 - 22}" stroke="{INK}" stroke-width="1.2" opacity=".45"/></g>')
     # from left: red wine (dark bottle), whisky, white wine (pale), beer, tall rosé-ish, a second whisky
-    o.append(bottle(120, 290, 76, INK, SUN2, 300, lab_h=64))
+    o.append(bottle(120, 290, 76, INK, SUN2, 312, lab_h=64))
     o.append(bottle(230, 230, 86, DYEL, TEAL, 296, shape='whisky', lab_h=72))
     o.append(bottle(340, 300, 74, LIME, SKY, 302, cap=TEAL, lab_h=62))
     o.append(bottle(445, 212, 66, DSAGE, SUN, 308, shape='beer', cap=DYEL, lab_h=54))
-    o.append(bottle(548, 260, 72, SKY, DYEL, 300, cap=INK, lab_h=58))
+    o.append(bottle(548, 260, 72, SKY, DYEL, 336, cap=INK, lab_h=58))
     o.append(bottle(660, 198, 94, TEAL, CREAM, 306, shape='whisky', cap=DYEL, lab_h=60))
+    o.append(bottle(880, 236, 70, CREAM, TEAL, 330, cap=INK, lab_h=56))
+    o.append(bottle(985, 206, 64, LIME, SUN2, 318, shape='beer', cap=INK, lab_h=52))
+    o.append(bottle(1092, 222, 90, SUN, DSAGE, 322, shape='whisky', cap=INK, lab_h=58))
+    o.append(bottle(1196, 250, 72, DSAGE, CREAM, 338, cap=DYEL, lab_h=56))
     # a glass of beer with foam
     o.append(f'<g transform="translate(770,0)"><g filter="url(#paper)"><path d="M-36 470 L-30 320 H30 L36 470Z" fill="{DYEL}"/></g>'
              f'<path d="M-30 320 H30 V336 H-31Z" fill="{WHITE}"/><ellipse cx="0" cy="320" rx="30" ry="9" fill="{WHITE}"/><circle cx="-14" cy="314" r="8" fill="{WHITE}"/><circle cx="8" cy="312" r="10" fill="{WHITE}"/><circle cx="22" cy="318" r="7" fill="{WHITE}"/>'
@@ -129,8 +133,7 @@ def carpentry():
              f'{"".join(f"<path transform=\"translate({cx},{cy}) rotate({ca})\" d=\"M0 0 C10 -16 24 -12 16 2 C12 10 0 8 0 0Z\" fill=\"{SUN2}\"/>" for cx, cy, ca in [(140,-16,10),(166,-10,-20),(190,-20,40),(210,-6,80)])}'
              f'<path d="M-120 -26 h40 M-90 -32 h26" stroke="{INK}" stroke-width="1.4" opacity=".4"/></g>')
     # sawdust pile and a few curls on the floor
-    o.append(f'<ellipse cx="1030" cy="446" rx="60" ry="10" fill="{SUN}" filter="url(#paperS)"/><ellipse cx="1030" cy="440" rx="34" ry="12" fill="{SUN2}"/>')
-    o.append(''.join(f'<path transform="translate({cx},{cy}) rotate({ca})" d="M0 0 C10 -16 24 -12 16 2 C12 10 0 8 0 0Z" fill="{SUN2}"/>' for cx, cy, ca in [(640,450,15),(700,462,-30),(1110,456,50)]))
+    o.append(''.join(f'<path transform="translate({cx},{cy}) rotate({ca})" d="M0 0 C10 -16 24 -12 16 2 C12 10 0 8 0 0Z" fill="{SUN2}"/>' for cx, cy, ca in [(640,450,15),(700,462,-30)]))
     return svg(o)
 
 def finjan(x, y, sc=1.0):
@@ -248,7 +251,6 @@ def animals():
     o.append(layer(wave(318, 6, 1.0, 2.2), WHITE, None))
     o.append(layer(wave(328, 6, 1.0, 2.8), MIST, 'wv'))
     # salt mounds in the far pond
-    o.append(''.join(f'<path d="M{x-26} 258 Q{x} 232 {x+26} 258Z" fill="{WHITE}" filter="url(#paperS)"/>' for x in (900, 980, 1050)))
     r = random.Random(9)
     birds_ = []
     for k, x in enumerate([120, 190, 250, 330, 400, 470, 560, 640, 720, 800]):
@@ -281,9 +283,29 @@ def shop():
         return f'<g transform="translate({x},{y}) scale({sc})"><path d="M-16 0 L-12 -26 H12 L16 0Z" fill="{SKY}"/><g transform="translate(0,-26)">{leaves}</g></g>'
     def candle(x, y, c):
         return f'<g transform="translate({x},{y})"><rect x="-8" y="-34" width="16" height="34" rx="2" fill="{c}"/><path d="M0 -34 V-40" stroke="{INK}" stroke-width="1.6"/><path d="M0 -40 C-4 -46 4 -50 0 -54 C2 -48 -2 -46 0 -40Z" fill="{SUN2}"/></g>'
+    def plates(x, y, c, n=5, sc=1.0):
+        return f'<g transform="translate({x},{y}) scale({sc})">' + ''.join(f'<path d="M-30 {-4 - k*7} H30 L26 {-k*7} H-26Z" fill="{c if k % 2 else WHITE}"/>' for k in range(n)) + '</g>'
+    def bowls_stack(x, y, c, n=3, sc=1.0):
+        return f'<g transform="translate({x},{y}) scale({sc})">' + ''.join(f'<path d="M-22 {-12 - k*9} C-22 {-2 - k*9} -10 {-k*9} 0 {-k*9} C10 {-k*9} 22 {-2 - k*9} 22 {-12 - k*9}Z" fill="{c}"/><ellipse cx="0" cy="{-12 - k*9}" rx="22" ry="4" fill="{WHITE}"/>' for k in range(n)) + '</g>'
+    def towels(x, y, cols, sc=1.0):
+        return f'<g transform="translate({x},{y}) scale({sc})">' + ''.join(f'<rect x="-28" y="{-12 - k*12}" width="56" height="11" rx="3" fill="{c}"/><path d="M-20 {-6 - k*12} H20" stroke="{WHITE}" stroke-width="1.6" opacity=".8"/>' for k, c in enumerate(cols)) + '</g>'
+    def cloths(x, y, cols, sc=1.0):
+        return f'<g transform="translate({x},{y}) scale({sc})">' + ''.join(f'<rect x="-34" y="{-8 - k*8}" width="68" height="7" rx="2" fill="{c}"/><path d="M-30 {-4 - k*8} H30" stroke="{INK}" stroke-width="1" opacity=".25" stroke-dasharray="3 3"/>' for k, c in enumerate(cols)) + '</g>'
+    def bag(x, y, c, sc=1.0):
+        return f'<g transform="translate({x},{y}) scale({sc})"><path d="M-10 -40 C-10 -58 10 -58 10 -40" stroke="{INK}" stroke-width="3" fill="none"/><path d="M-22 -42 H22 L26 0 H-26Z" fill="{c}"/><path d="M-14 -24 H14" stroke="{WHITE}" stroke-width="2.5" opacity=".9"/></g>'
+    def candlestick(x, y, c, sc=1.0):
+        return f'<g transform="translate({x},{y}) scale({sc})"><path d="M-10 0 H10 L6 -6 H-6Z" fill="{c}"/><path d="M0 -6 V-30" stroke="{c}" stroke-width="5"/><path d="M-7 -30 H7 L5 -38 H-5Z" fill="{c}"/><rect x="-3.5" y="-58" width="7" height="20" fill="{WHITE}"/><path d="M0 -58 C-3 -64 3 -68 0 -72 C2 -66 -2 -64 0 -58Z" fill="{SUN2}"/></g>'
+    def stool(x, y, sc=1.0):
+        return f'<g transform="translate({x},{y}) scale({sc})"><rect x="-26" y="-6" width="52" height="8" rx="3" fill="{DYEL}"/><path d="M-20 2 L-24 34 M20 2 L24 34 M-20 18 H20" stroke="{INK}" stroke-width="3.5" stroke-linecap="round"/></g>'
     o.append(shelf(130)); o.append(shelf(240))
+    # a second unit on the right, below the title: two shelves and a stool
+    o.append(f'<g filter="url(#paper)"><rect x="690" y="280" width="500" height="120" rx="10" fill="{CREAM}"/></g>')
+    o.append(shelf(300, 720, 440)); o.append(shelf(360, 720, 440))
+    o.append(towels(770, 300, (SKY, SUN2, DSAGE, SKY))); o.append(bag(860, 300, TEAL)); o.append(plates(940, 300, SKY)); o.append(candlestick(1010, 300, DYEL)); o.append(candlestick(1040, 300, TEAL, .85)); o.append(mug(1110, 300, SUN2))
+    o.append(cloths(790, 360, (SUN, LIME, SKY))); o.append(bowls_stack(880, 360, DSAGE)); o.append(bag(960, 360, SUN2, .9)); o.append(towels(1050, 360, (TEAL, SUN, SKY))); o.append(jug(1130, 360, LIME, .8))
+    o.append(stool(1060, 452, 1.0)); o.append(bowls_stack(1060, 446, SKY, 2, .9)); o.append(stool(860, 456, 1.0)); o.append(plates(860, 450, SUN2, 4, .9))
     o.append(mug(120, 130, SKY)); o.append(mug(170, 130, SUN2, .9)); o.append(bowl(250, 130, TEAL)); o.append(jug(330, 130, LIME)); o.append(plant(410, 130, .9)); o.append(mug(480, 130, DSAGE, 1.1)); o.append(candle(540, 130, SUN)); o.append(candle(565, 130, SKY)); o.append(bowl(600, 130, SUN2, .8))
-    o.append(bowl(120, 240, SUN)); o.append(bowl(120, 232, SKY, .85)); o.append(jug(210, 240, TEAL, 1.1)); o.append(mug(290, 240, SUN2)); o.append(mug(330, 240, LIME)); o.append(plant(410, 240, 1.1)); o.append(bowl(500, 240, DSAGE)); o.append(jug(580, 240, SKY, .9))
+    o.append(plates(110, 240, SKY, 6)); o.append(bowls_stack(180, 240, SUN2, 4)); o.append(cloths(260, 240, (LIME, SKY, SUN, DSAGE))); o.append(jug(330, 240, TEAL, 1.0)); o.append(plant(400, 240, 1.0)); o.append(towels(470, 240, (SUN2, TEAL, SKY))); o.append(candlestick(530, 240, TEAL)); o.append(bag(590, 240, DSAGE, .9))
     # counter with a little cash box and a vase
     o.append(f'<g filter="url(#paper)"><rect x="60" y="330" width="560" height="70" rx="6" fill="{TEAL}"/></g><rect x="60" y="330" width="560" height="14" fill="{DYEL}"/>')
     o.append(f'<rect x="100" y="302" width="40" height="28" rx="3" fill="{INK}"/><rect x="104" y="306" width="32" height="8" fill="{SKY}"/>')
@@ -312,13 +334,14 @@ def culture():
                 f'<g filter="url(#paper)"><rect x="{-w/2 - 12}" y="-12" width="{w + 24}" height="{h + 24}" rx="4" fill="{fc}"/></g><rect x="{-w/2}" y="0" width="{w}" height="{h}" fill="{PAPER}"/>{inner}</g>')
     # three small landscapes in frames: hills, a cypress, an ibex sign
     p1 = (f'<path d="M-70 60 Q-30 20 0 48 T70 44 V90 H-70Z" fill="{SAGE}"/><path d="M-70 70 Q-20 50 10 70 T70 66 V90 H-70Z" fill="{INK}"/><circle cx="34" cy="26" r="12" fill="{SUN2}"/>')
-    p2 = (f'<path d="M-50 100 Q0 60 50 100Z" fill="{LIME}"/><path d="M0 -4 C8 20 10 60 0 92 C-10 60 -8 20 0 -4Z" fill="{DSAGE}"/><path d="M0 0 V90" stroke="{WHITE}" stroke-width="1.6"/>')
+    p2 = (f'<path d="M-50 150 V124 Q0 96 50 124 V150Z" fill="{LIME}"/><path d="M0 24 C8 46 10 90 0 128 C-10 90 -8 46 0 24Z" fill="{DSAGE}"/><path d="M0 28 V126" stroke="{WHITE}" stroke-width="1.6"/>')
     p3 = (f'<rect x="-80" y="0" width="160" height="60" fill="{SKY}"/><path d="M-80 60 Q0 34 80 60 V70 H-80Z" fill="{SUN}"/>' + ibex(10, 60, .7))
     o.append(frame(160, 150, 140, 90, DYEL, p1))
     o.append(frame(330, 120, 100, 150, INK, p2))
     o.append(frame(560, 170, 160, 70, TEAL, p3))
     # a wooden bench below the paintings
-    o.append(f'<g transform="translate(360,400)"><path d="M-160 0 H160 V12 H-160Z" fill="{DYEL}"/><path d="M-140 12 V48 M140 12 V48 M-140 36 H140" stroke="{INK}" stroke-width="5" stroke-linecap="round"/></g>')
+    o.append(f'<g transform="translate(360,372)"><g filter="url(#paper)"><rect x="-170" y="-40" width="340" height="12" rx="3" fill="{DYEL}"/><rect x="-170" y="-22" width="340" height="10" rx="3" fill="{DYEL}"/><rect x="-176" y="0" width="352" height="16" rx="3" fill="{DYEL}"/></g>'
+             f'<path d="M-150 -46 V0 M150 -46 V0" stroke="{INK}" stroke-width="5" stroke-linecap="round"/><path d="M-150 16 L-158 70 M150 16 L158 70 M-120 16 L-116 70 M120 16 L116 70" stroke="{INK}" stroke-width="6" stroke-linecap="round"/></g>')
     return svg(o)
 
 def coffee_cart():
@@ -334,7 +357,7 @@ def coffee_cart():
     o.append(f'<g transform="translate({cx},{cy})">'
              # wheels and body
              f'<circle cx="-110" cy="-20" r="28" fill="{INK}"/><circle cx="-110" cy="-20" r="14" fill="{SUN2}"/><circle cx="-110" cy="-20" r="5" fill="{INK}"/>'
-             f'<path d="M100 -40 L150 -8" stroke="{INK}" stroke-width="5" stroke-linecap="round"/><path d="M118 -8 L118 -2" stroke="{INK}" stroke-width="4"/>'
+             f'<circle cx="90" cy="-20" r="28" fill="{INK}"/><circle cx="90" cy="-20" r="14" fill="{SUN2}"/><circle cx="90" cy="-20" r="5" fill="{INK}"/>'
              f'<g filter="url(#paper)"><rect x="-150" y="-130" width="270" height="92" rx="6" fill="{SKY}"/></g><rect x="-150" y="-130" width="270" height="12" fill="{WHITE}"/>'
              f'<path d="M-130 -100 H-70 M-130 -84 H-90 M-130 -68 H-80" stroke="{WHITE}" stroke-width="3" stroke-linecap="round"/>'
              # counter top with a coffee machine and two cups
@@ -348,59 +371,81 @@ def coffee_cart():
              + ''.join(f'<path d="M{-178 + k*40.75:.0f} -196 Q{-168 + k*40.75:.0f} -182 {-158 + k*40.75:.0f} -196Z" fill="{SUN2 if k % 2 else WHITE}"/>' for k in range(8)) +
              ''.join(f'<rect x="{-170 + k*77.5:.0f}" y="-220" width="38" height="24" fill="{WHITE}"/>' for k in range(0, 4)) +
              # chalkboard leaning on the cart
-             f'<g transform="translate(170,-10) rotate(-6)"><rect x="-30" y="-70" width="60" height="70" rx="3" fill="{INK}"/><rect x="-24" y="-64" width="48" height="58" fill="{TEAL}"/><path d="M-14 -50 H14 M-16 -40 H10 M-12 -30 H16 M-16 -20 H6" stroke="{WHITE}" stroke-width="2" stroke-linecap="round"/></g>'
-             # two stools
-             f'<g transform="translate(-230,0)"><rect x="-22" y="-44" width="44" height="8" rx="3" fill="{DYEL}"/><path d="M-16 -36 L-20 0 M16 -36 L20 0 M0 -36 V0" stroke="{INK}" stroke-width="3.5" stroke-linecap="round"/></g>'
-             f'<g transform="translate(-290,-4)"><rect x="-22" y="-44" width="44" height="8" rx="3" fill="{DYEL}"/><path d="M-16 -36 L-20 0 M16 -36 L20 0 M0 -36 V0" stroke="{INK}" stroke-width="3.5" stroke-linecap="round"/></g>'
              '</g>')
+    # small round tables with two chairs each, on both sides of the cart
+    def cafe_set(x, y, sc=1.0):
+        chair = lambda dx, flip: (f'<g transform="translate({dx},0) scale({-1 if flip else 1},1)"><path d="M-14 0 V-30 M14 0 V-30 M-14 -30 H14" stroke="{INK}" stroke-width="3" stroke-linecap="round"/><rect x="-14" y="-28" width="28" height="7" fill="{TEAL}"/>'
+                                 f'<rect x="-16" y="-4" width="32" height="8" rx="2" fill="{SKY}"/><path d="M-12 4 L-14 30 M12 4 L14 30" stroke="{INK}" stroke-width="3" stroke-linecap="round"/></g>')
+        return (f'<g transform="translate({x},{y}) scale({sc})">{chair(-58, False)}{chair(58, True)}'
+                f'<path d="M0 -4 V30 M-16 30 H16" stroke="{INK}" stroke-width="4" stroke-linecap="round"/><g filter="url(#paperS)"><ellipse cx="0" cy="-6" rx="42" ry="9" fill="{DYEL}"/></g>'
+                f'<g transform="translate(-8,-8)"><rect x="-7" y="-12" width="14" height="12" rx="2" fill="{WHITE}"/><path d="M7 -9 C13 -9 13 -3 7 -3" stroke="{WHITE}" stroke-width="2.4" fill="none"/></g>'
+                f'<g transform="translate(14,-8)"><rect x="-7" y="-12" width="14" height="12" rx="2" fill="{SUN2}"/><path d="M7 -9 C13 -9 13 -3 7 -3" stroke="{SUN2}" stroke-width="2.4" fill="none"/></g></g>')
+    o.append(cafe_set(180, 418, 1.0)); o.append(cafe_set(800, 426, 1.05)); o.append(cafe_set(1000, 404, .85))
     return svg(o)
 
 def garden_meeting():
-    """A wooden garden fence with its gate open, a path leading to a yard where low tables wait with fruit and glasses of water."""
-    o = [sun(230, 150, 66, SUN2)]
-    o.append(layer(wave(246, 18, 1.2, 0.8), MIST, 'wv'))
-    o.append(layer(wave(276, 24, 1.0, 2.4, x0=-30, x1=860, taper=.3, drop=400), SAGE, 'dw'))
-    lawn = wave(322, 10, 1.0, 1.0)
+    """Close-up: a wooden garden gate standing open on the left, a short path, and a porch with a low table and chairs of all shapes."""
+    o = []
+    o.append(layer(wave(236, 14, 1.2, 0.8), MIST, 'wv'))
+    o.append(layer(wave(262, 20, 1.0, 2.4, x0=-30, x1=900, taper=.3, drop=400), SAGE, 'dw'))
+    lawn = wave(300, 8, 1.0, 1.0)
     o.append(layer(lawn, LIME, 'st', .9))
-    o.append(layer(wave(392, 8, 1.0, 2.0), DSAGE, 'cl', .9))
-    # trees of the yard behind the fence
-    o.append(oak(1080, 420, .8, SAGE)); o.append(olive(300, 372, .7, DSAGE, 4, True))
-    # the path: from the gate at the bottom-left up to the yard
-    c = bezier((262, 478), (330, 430), (470, 400), (560, 392), 50)
-    o.append(ribbon(c, [34 - 14 * (i / 50) for i in range(51)], CREAM))
-    o.append(''.join(f'<ellipse cx="{x:.0f}" cy="{y:.0f}" rx="7" ry="3" fill="{SAND}"/>' for x, y in c[4::8]))
-    # low tables with fruit and glasses, and chairs around them
-    def low_table(x, y, sc=1.0):
-        fruit = (f'<g transform="translate(-26,-8)"><ellipse cx="0" cy="0" rx="22" ry="6" fill="{WHITE}"/><circle cx="-8" cy="-6" r="5" fill="{DYEL}"/><circle cx="4" cy="-7" r="5" fill="{SUN2}"/><circle cx="12" cy="-4" r="4" fill="{DSAGE}"/><circle cx="-2" cy="-12" r="4" fill="{DYEL}"/><path d="M-8 -11 L-6 -15" stroke="{INK}" stroke-width="1.2"/></g>'
-                 f'<g transform="translate(22,-6)"><circle cx="0" cy="-4" r="6" fill="{DYEL}"/><circle cx="12" cy="-4" r="6" fill="{SUN2}"/><path d="M0 -10 L2 -15 M12 -10 L14 -15" stroke="{INK}" stroke-width="1.2"/></g>')
-        glasses = ''.join(f'<path d="M{gx-5} -2 L{gx-4} -16 H{gx+4} L{gx+5} -2Z" fill="{SKY}" opacity=".9"/><path d="M{gx-3} -10 H{gx+3}" stroke="{WHITE}" stroke-width="1.6"/>' for gx in (40, 54, -56))
-        return (f'<g transform="translate({x},{y}) scale({sc})"><path d="M-60 0 L-62 30 M60 0 L62 30 M-40 0 L-42 30 M40 0 L42 30" stroke="{INK}" stroke-width="3.5" stroke-linecap="round"/>'
-                f'<g filter="url(#paperS)"><path d="M-70 -4 H70 L66 6 H-66Z" fill="{DYEL}"/></g>{fruit}{glasses}</g>')
-    def chair(x, y, sc=1.0, flip=False, back=True):
+    o.append(olive(1090, 346, .9, DSAGE, 6))
+    # the porch: a plank deck with a low wall at its back
+    o.append(f'<g filter="url(#paper)"><path d="M380 350 H1230 V470 H380Z" fill="{SAND}"/></g>')
+    o.append(''.join(f'<path d="M380 {364 + k*18} H1230" stroke="{CREAM}" stroke-width="2.5"/>' for k in range(6)))
+    o.append(f'<path d="M380 350 H1230" stroke="{DYEL}" stroke-width="8"/><path d="M370 350 V470" stroke="{DYEL}" stroke-width="6"/>')
+    # string of little bulbs above the porch
+    o.append(f'<path d="M400 236 Q700 300 1000 236" stroke="{INK}" stroke-width="1.6" fill="none"/>')
+    o.append(''.join(f'<path d="M{x} {y} V{y + 8}" stroke="{INK}" stroke-width="1.4"/><circle cx="{x}" cy="{y + 13}" r="5" fill="{SUN2}"/>' for x, y in [(460, 250), (540, 262), (620, 270), (700, 273), (780, 270), (860, 262), (940, 250)]))
+    # the short path from the gate to the porch
+    o.append(f'<g filter="url(#paperS)"><path d="M150 470 C200 440 300 420 380 400 L380 470Z" fill="{CREAM}"/></g>')
+    o.append(''.join(f'<ellipse cx="{x}" cy="{y}" rx="12" ry="5" fill="{SAND}"/>' for x, y in [(220, 452), (280, 438), (340, 424)]))
+    # chairs of all kinds around a low table
+    def wicker(x, y, sc=1.0, flip=False):
         f = ' scale(-1,1)' if flip else ''
-        b = f'<path d="M-14 0 V-26 M14 0 V-26 M-14 -26 H14" stroke="{INK}" stroke-width="3" stroke-linecap="round"/><rect x="-14" y="-24" width="28" height="6" fill="{TEAL}"/>' if back else ''
-        return f'<g transform="translate({x},{y}) scale({sc}){f}">{b}<rect x="-16" y="-2" width="32" height="8" rx="2" fill="{SKY}"/><path d="M-12 6 L-14 28 M12 6 L14 28" stroke="{INK}" stroke-width="3" stroke-linecap="round"/></g>'
-    for tx, ty, sc in [(720, 330, 1.1), (980, 352, 1.3), (560, 366, 1.2)]:
-        o.append(chair(tx - 92 * sc, ty + 4, sc)); o.append(chair(tx + 92 * sc, ty + 4, sc, flip=True))
-        o.append(chair(tx - 10, ty - 30 * sc, sc * .8, back=False))
-        o.append(low_table(tx, ty, sc))
-    # the fence runs along the front, with the gate open on the left
-    fence = []
-    r = random.Random(2)
-    def picket(x, h, w=18, base=470, shadow=True):
-        return f'<path d="M{x-w/2} {base} V{base-h+8} L{x} {base-h} L{x+w/2} {base-h+8} V{base}Z" fill="{WHITE}" stroke="{SAND}" stroke-width="1.2"{' filter="url(#paperS)"' if shadow else ''}/>'
-    for x in range(20, 170, 28):
-        fence.append(picket(x, 104 + r.uniform(-4, 4)))
-    fence.append(f'<path d="M4 398 H172 M4 440 H172" stroke="{DYEL}" stroke-width="7" stroke-linecap="round"/>')
-    fence.append(f'<rect x="172" y="346" width="14" height="130" rx="2" fill="{INK}"/>')
-    # the open gate, swung inward along the path
-    gate = ''.join(picket(x, 92 - x * .12, 16, 0, False) for x in range(10, 140, 24)) + f'<path d="M0 -60 H140 M0 -20 H140" stroke="{DYEL}" stroke-width="6" stroke-linecap="round"/>'
-    fence.append(f'<g transform="translate(186,470) skewY(-24) scale(.92,1)">{gate}</g>')
-    fence.append(f'<rect x="338" y="346" width="14" height="130" rx="2" fill="{INK}"/>')
-    for x in range(380, 1240, 28):
-        fence.append(picket(x, 104 + r.uniform(-4, 4)))
-    fence.append(f'<path d="M366 398 H1230 M366 440 H1230" stroke="{DYEL}" stroke-width="7" stroke-linecap="round"/>')
-    o.append(''.join(fence))
+        return (f'<g transform="translate({x},{y}) scale({sc}){f}"><path d="M-40 -80 C-40 -110 40 -110 40 -80 L36 -20 L-36 -20Z" fill="{SAGE}" filter="url(#paperS)"/>'
+                f'<path d="M-30 -92 C-30 -100 30 -100 30 -92 M-32 -76 H32 M-34 -60 H34 M-34 -44 H34" stroke="{WHITE}" stroke-width="2" fill="none"/>'
+                f'<rect x="-44" y="-22" width="88" height="14" rx="4" fill="{DSAGE}"/><path d="M-36 -8 L-38 20 M36 -8 L38 20" stroke="{INK}" stroke-width="4" stroke-linecap="round"/></g>')
+    def wooden(x, y, sc=1.0, flip=False):
+        f = ' scale(-1,1)' if flip else ''
+        return (f'<g transform="translate({x},{y}) scale({sc}){f}"><path d="M-22 0 V-96 M22 0 V-96" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>'
+                f'<rect x="-22" y="-92" width="44" height="9" rx="2" fill="{DYEL}"/><rect x="-22" y="-74" width="44" height="9" rx="2" fill="{DYEL}"/><rect x="-22" y="-56" width="44" height="9" rx="2" fill="{DYEL}"/>'
+                f'<rect x="-28" y="-36" width="56" height="10" rx="3" fill="{DYEL}"/><path d="M-22 -26 V10 M22 -26 V10" stroke="{INK}" stroke-width="5" stroke-linecap="round"/></g>')
+    def plastic(x, y, sc=1.0, flip=False):
+        """the white garden chair every Israeli porch has"""
+        f = ' scale(-1,1)' if flip else ''
+        return (f'<g transform="translate({x},{y}) scale({sc}){f}"><path d="M-24 -30 L-20 -92 C-20 -98 20 -98 20 -92 L24 -30Z" fill="{WHITE}" stroke="{SAND}" stroke-width="1.4"/>'
+                f'<path d="M-14 -84 V-40 M0 -86 V-40 M14 -84 V-40" stroke="{SAND}" stroke-width="1.6"/>'
+                f'<path d="M-30 -32 H30 L32 -18 H-32Z" fill="{WHITE}" stroke="{SAND}" stroke-width="1.4"/><path d="M-26 -18 L-30 14 M26 -18 L30 14 M-30 -60 L-38 -40 L-30 -32 M30 -60 L38 -40 L30 -32" stroke="{WHITE}" stroke-width="5" stroke-linecap="round"/>'
+                f'<path d="M-26 -18 L-30 14 M26 -18 L30 14" stroke="{SAND}" stroke-width="1.2"/></g>')
+    def stool(x, y, sc=1.0):
+        return f'<g transform="translate({x},{y}) scale({sc})"><ellipse cx="0" cy="-30" rx="22" ry="7" fill="{TEAL}"/><path d="M-18 -26 L-22 10 M18 -26 L22 10 M0 -24 V12" stroke="{INK}" stroke-width="4" stroke-linecap="round"/></g>'
+    def bench(x, y, sc=1.0):
+        return (f'<g transform="translate({x},{y}) scale({sc})"><rect x="-70" y="-30" width="140" height="10" rx="3" fill="{SKY}"/><path d="M-56 -20 L-60 14 M56 -20 L60 14 M-56 0 H56" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>'
+                f'<rect x="-40" y="-40" width="26" height="12" rx="4" fill="{SUN2}"/><rect x="-10" y="-40" width="26" height="12" rx="4" fill="{DSAGE}"/></g>')
+    def low_table(x, y, sc=1.0):
+        fruit = ''.join(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{c}"/>' for cx, cy, r, c in [(-14, -14, 8, DYEL), (0, -16, 8, SUN2), (14, -13, 7, DSAGE), (-6, -22, 7, DYEL), (8, -23, 6, SUN2)])
+        glasses = ''.join(f'<path d="M{gx-6} -4 L{gx-5} -24 H{gx+5} L{gx+6} -4Z" fill="{SKY}" opacity=".9"/><path d="M{gx-4} -14 H{gx+4}" stroke="{WHITE}" stroke-width="2"/>' for gx in (-60, -44, 52))
+        return (f'<g transform="translate({x},{y}) scale({sc})"><path d="M-80 0 L-84 36 M80 0 L84 36 M-50 0 L-52 36 M50 0 L52 36" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/>'
+                f'<g filter="url(#paperS)"><path d="M-96 -6 H96 L90 8 H-90Z" fill="{DYEL}"/></g>'
+                f'<ellipse cx="0" cy="-8" rx="34" ry="9" fill="{WHITE}"/>{fruit}{glasses}'
+                f'<g transform="translate(70,-6)"><path d="M-8 0 L-6 -20 H6 L8 0Z" fill="{SKY}"/><path d="M-10 -20 H10" stroke="{TEAL}" stroke-width="3"/><path d="M6 -16 L16 -22" stroke="{TEAL}" stroke-width="3" stroke-linecap="round"/></g></g>')
+    o.append(wooden(620, 366, .95)); o.append(plastic(1000, 368, .95, True)); o.append(bench(810, 364, 1.0))
+    o.append(low_table(810, 400, 1.0))
+    o.append(wicker(520, 424, .95)); o.append(plastic(1120, 426, .95, True)); o.append(stool(690, 428, .85)); o.append(stool(950, 432, .9))
+    # a potted plant by the wall and a cat asleep on the deck
+    o.append(f'<g transform="translate(430,350)"><path d="M-18 0 L-14 -34 H14 L18 0Z" fill="{SKY}"/>' + ''.join(f'<path transform="translate(0,-34) rotate({a})" d="M0 0 C8 -18 12 -34 0 -50 C-12 -34 -8 -18 0 0Z" fill="{DSAGE if a % 2 else SAGE}"/>' for a in (-45, -22, 0, 22, 45)) + '</g>')
+    # the gate on the left, big and open: two posts and the swung gate
+    r = random.Random(5)
+    def picket(x, h, w=22, base=470, shadow=True):
+        return f'<path d="M{x-w/2} {base} V{base-h+10} L{x} {base-h} L{x+w/2} {base-h+10} V{base}Z" fill="{WHITE}" stroke="{SAND}" stroke-width="1.4"{' filter="url(#paperS)"' if shadow else ''}/>'
+    fence = ''.join(picket(x, 150 + r.uniform(-5, 5), 22, 444) for x in range(16, 100, 32)) + f'<path d="M0 326 H106 M0 404 H106" stroke="{DYEL}" stroke-width="9" stroke-linecap="round"/>'
+    fence += f'<rect x="106" y="262" width="20" height="190" rx="3" fill="{INK}"/><circle cx="116" cy="258" r="12" fill="{INK}"/>'
+    # the gate swings toward us: its free end is nearer, so bigger and lower
+    gate = ''.join(picket(x, 150 + x * .22, 22 + x * .06, 0, False) for x in range(12, 170, 30)) + f'<path d="M0 -112 L170 -132 M0 -36 L170 -26" stroke="{DYEL}" stroke-width="8" stroke-linecap="round"/><path d="M0 -36 L170 -132" stroke="{DYEL}" stroke-width="6" stroke-linecap="round"/>'
+    fence += f'<g transform="translate(128,440) skewY(8)">{gate}</g>'
+    o.append(fence)
     return svg(o)
 
 if __name__ == '__main__':
