@@ -18,7 +18,7 @@ export default function Collection({ title, lede, art, path, places, texts, scop
   return (
     <div className="wrap">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
-      <Hero title={title} lede={lede} art={art} />
+      <Hero title={title} lede={lede} art={art} motion={scope.kind === 'region' ? 'art' : 'none'} />
       <Explorer places={places} texts={texts} scope={scope} total={total} />
       <SiteFoot label={texts['about.link']} />
       {/* the suggest-a-pearl popup, for the empty gallery's button */}
