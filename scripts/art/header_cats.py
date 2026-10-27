@@ -336,7 +336,7 @@ def shop():
     o.append(candlestick(215, 240, SKY, .9)); o.append(candlestick(240, 240, SUN, 1.0)); o.append(candlestick(265, 240, TEAL, .8))
     o.append(f'<g transform="translate(300,240)"><rect x="-10" y="-26" width="20" height="26" rx="3" fill="{SKY}"/>' + ''.join(f'<path d="M0 -26 L{dx} -44" stroke="{DSAGE}" stroke-width="2"/><circle cx="{dx}" cy="-46" r="4" fill="{c}"/>' for dx, c in [(-10, SUN), (0, SUN), (10, SUN)]) + '</g>'); o.append(jug(330, 240, TEAL, 1.0)); o.append(plant(400, 240, 1.0)); o.append(towels(470, 240, (SUN, TEAL, SKY))); o.append(candlestick(530, 240, TEAL)); o.append(bag(590, 240, DSAGE, .9))
     # counter with a little cash box and a vase
-    o.append(f'<g filter="url(#paper)"><rect x="60" y="330" width="560" height="70" rx="6" fill="{TEAL}"/></g><rect x="60" y="330" width="560" height="14" fill="{SUN}"/>')
+    o.append(f'<g filter="url(#paper)"><rect x="60" y="330" width="560" height="70" rx="6" fill="{TEAL}"/></g><rect x="60" y="330" width="560" height="14" fill="{SHELF}"/>')   # the counter top is a shelf too (Kinneret 27.10)
     o.append(f'<rect x="100" y="302" width="40" height="28" rx="3" fill="{INK}"/><rect x="104" y="306" width="32" height="8" fill="{SKY}"/>')
     o.append(jug(520, 330, SUN, 1.0)); o.append(plant(560, 330, .8))
     # hanging sign: a yellow board with a little heart cut-out, on two strings
@@ -350,30 +350,25 @@ def shop():
     return svg(o)
 
 def culture():
-    """Paintings hanging on a wall of Armenian tiles."""
+    """Paintings on a plain wall, above a wainscot of Armenian tiles (Kinneret 27.10 evening: tiles only on the lower half, no bench)."""
     o = []
-    # tiled wall: a grid of blue-and-white tiles with a simple flower motif, as paper cutouts
     tile = (f'<rect x="0" y="0" width="60" height="60" fill="{WHITE}"/><rect x="2" y="2" width="56" height="56" rx="4" fill="none" stroke="{SKY}" stroke-width="2"/>'
             f'<circle cx="30" cy="30" r="7" fill="{SUN2}"/>' + ''.join(f'<ellipse transform="translate(30,30) rotate({a})" cx="0" cy="-16" rx="5" ry="9" fill="{SAGE}"/>' for a in (0, 60, 120, 180, 240, 300)) +
             ''.join(f'<path transform="translate(30,30) rotate({a})" d="M0 -27 C4 -24 4 -20 0 -18 C-4 -20 -4 -24 0 -27Z" fill="{SKY}"/>' for a in (30, 90, 150, 210, 270, 330)) +
             ''.join(f'<circle cx="{cx}" cy="{cy}" r="2.6" fill="{SKY}"/>' for cx, cy in [(8,8),(52,8),(8,52),(52,52)]))
-    o.append(f'<pattern id="tl" width="60" height="60" patternUnits="userSpaceOnUse">{tile}</pattern>')
-    o.append(f'<g filter="url(#paper)"><rect x="-30" y="-10" width="1260" height="480" fill="{WHITE}"/></g><rect x="-30" y="-10" width="1260" height="480" fill="url(#tl)"/>')
-    # the title needs calm behind it: a paper panel on the right
-    o.append(f'<g filter="url(#paper)"><rect x="680" y="60" width="580" height="230" rx="12" fill="{PAPER}" opacity=".94"/></g>')
+    o.append(f'<pattern id="tl" width="60" height="60" patternUnits="userSpaceOnUse" patternTransform="translate(0,230)">{tile}</pattern>')
+    # the tiled wainscot: from y=230 down, three and a half rows of tiles
+    o.append(f'<g filter="url(#paper)"><rect x="-30" y="230" width="1260" height="240" fill="{WHITE}"/></g><rect x="-30" y="230" width="1260" height="240" fill="url(#tl)"/>')
     def frame(x, y, w, h, fc, inner):
-        return (f'<g transform="translate({x},{y})">'   # no hanging wires (Kinneret 27.10 evening)
+        return (f'<g transform="translate({x},{y})">'
                 f'<g filter="url(#paper)"><rect x="{-w/2 - 12}" y="-12" width="{w + 24}" height="{h + 24}" rx="4" fill="{fc}"/></g><rect x="{-w/2}" y="0" width="{w}" height="{h}" fill="{PAPER}"/>{inner}</g>')
-    # three small landscapes in frames: hills, a cypress, an ibex sign
+    # three small landscapes in frames on the plain wall above the tiles: hills, a cypress, an ibex sign
     p1 = (f'<path d="M-70 60 Q-30 20 0 48 T70 44 V90 H-70Z" fill="{SAGE}"/><path d="M-70 70 Q-20 50 10 70 T70 66 V90 H-70Z" fill="{INK}"/><circle cx="34" cy="26" r="12" fill="{SUN2}"/>')
     p2 = (f'<path d="M-50 150 V124 Q0 96 50 124 V150Z" fill="{LIME}"/><path d="M0 24 C8 46 10 90 0 128 C-10 90 -8 46 0 24Z" fill="{DSAGE}"/><path d="M0 28 V126" stroke="{WHITE}" stroke-width="1.6"/>')
     p3 = (f'<rect x="-80" y="0" width="160" height="60" fill="{SKY}"/><path d="M-80 60 Q0 34 80 60 V70 H-80Z" fill="{SUN}"/>' + ibex(10, 60, .7))
-    o.append(frame(160, 150, 140, 90, DYEL, p1))
-    o.append(frame(330, 120, 100, 150, INK, p2))
-    o.append(frame(560, 170, 160, 70, TEAL, p3))
-    # a wooden bench below the paintings
-    o.append(f'<g transform="translate(360,372)"><g filter="url(#paper)"><rect x="-170" y="-40" width="340" height="12" rx="3" fill="{DYEL}"/><rect x="-170" y="-22" width="340" height="10" rx="3" fill="{DYEL}"/><rect x="-176" y="0" width="352" height="16" rx="3" fill="{DYEL}"/></g>'
-             f'<path d="M-150 -46 V0 M150 -46 V0" stroke="{INK}" stroke-width="5" stroke-linecap="round"/><path d="M-150 16 L-158 70 M150 16 L158 70 M-120 16 L-116 70 M120 16 L116 70" stroke="{INK}" stroke-width="6" stroke-linecap="round"/></g>')
+    o.append(frame(160, 96, 140, 90, DYEL, p1))
+    o.append(frame(330, 48, 100, 150, INK, p2))
+    o.append(frame(560, 112, 160, 70, TEAL, p3))
     return svg(o)
 
 def coffee_cart():
