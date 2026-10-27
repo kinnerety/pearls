@@ -7,7 +7,7 @@ import { addSubmission, type SubmissionKind } from '@/lib/store';
 // to fill the form, few links, and at most a few sends an hour from the same address (kept only as a hash).
 const FIELDS: Record<SubmissionKind, { keys: string[]; required: string[] }> = {
   suggest: {
-    keys: ['name', 'what', 'where', 'love', 'shabbat', 'family', 'more', 'credit', 'credit_name', 'email_ok', 'email', 'agree'],
+    keys: ['name', 'what', 'link', 'where', 'love', 'shabbat', 'family', 'more', 'credit', 'credit_name', 'email_ok', 'email', 'agree'],
     required: ['name', 'what', 'where', 'agree'],
   },
   report: { keys: ['place', 'what', 'email_ok', 'email'], required: ['what'] },
