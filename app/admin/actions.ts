@@ -1,7 +1,7 @@
 'use server';
 import { redirect } from 'next/navigation';
 import { endSession, passwordOk, requireAdmin, startSession } from '@/lib/auth';
-import { deletePlace, patchPlace, savePlace, saveTexts } from '@/lib/store';
+import { deletePlace, deleteSubmission, patchPlace, savePlace, saveTexts, setSubmissionStatus, type SubmissionStatus } from '@/lib/store';
 import { CATS } from '@/lib/config';
 import type { Texts } from '@/lib/texts';
 import { checkPlace } from '@/lib/validate';
@@ -79,4 +79,14 @@ export async function geocode(q: string): Promise<GeoHit[]> {
   if (!r.ok) return [];
   const res = await r.json() as { display_name: string; lat: string; lon: string; category?: string; class?: string; type: string }[];
   return res.map(x => ({ name: x.display_name.split(',').slice(0, 3).join(','), lat: +x.lat, lng: +x.lon, kind: (x.category || x.class) === 'place' || (x.category || x.class) === 'boundary' ? 'town' : 'exact' }));
+}
+
+/** A suggestion or a mistake report from the site's forms: marked as handled (or back to new), or deleted */
+export async function markSubmission(id: number, status: SubmissionStatus) {
+  await requireAdmin();
+  await setSubmissionStatus(id, status);
+}
+export async function removeSubmission(id: number) {
+  await requireAdmin();
+  await deleteSubmission(id);
 }

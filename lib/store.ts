@@ -20,6 +20,7 @@ function ensure() {
   return (ready ??= (async () => {
     await sql`create table if not exists places (id integer primary key, data jsonb not null, hidden boolean not null default false, updated_at timestamptz not null default now())`;
     await sql`create table if not exists site_texts (key text primary key, value text not null, updated_at timestamptz not null default now())`;
+    await sql`create table if not exists submissions (id serial primary key, kind text not null, data jsonb not null, status text not null default 'new', ip text, created_at timestamptz not null default now())`;
     await sql`create table if not exists edits_log (id serial primary key, place_id integer not null, at timestamptz not null default now(), action text not null, before jsonb, after jsonb)`;
     const [{ n }] = await sql`select count(*)::int as n from places` as { n: number }[];
     if (n === 0) {
@@ -116,4 +117,37 @@ export async function saveTexts(t: Partial<Texts>) {
   }
   revalidateTag('texts');
   revalidatePath('/', 'layout');
+}
+
+/** What visitors send from the two popup forms: "suggest" (a new pearl) or "report" (a mistake). Admin only. */
+export type SubmissionKind = 'suggest' | 'report';
+export type SubmissionStatus = 'new' | 'done';
+export type Submission = { id: number; kind: SubmissionKind; data: Record<string, string>; status: SubmissionStatus; created_at: string };
+
+/** Saves a form, unless the same sender (a hash of the address) already sent too many in the last hour. */
+export async function addSubmission(kind: SubmissionKind, data: Record<string, string>, ip: string): Promise<boolean> {
+  if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
+  await ensure();
+  const [{ n }] = await sql`select count(*)::int as n from submissions where ip = ${ip} and created_at > now() - interval '1 hour'` as { n: number }[];
+  if (n >= 8) return false;
+  await sql`insert into submissions (kind, data, ip) values (${kind}, ${JSON.stringify(data)}::jsonb, ${ip})`;
+  return true;
+}
+
+export async function listSubmissions(): Promise<Submission[]> {
+  if (!sql) return [];
+  await ensure();
+  return await sql`select id, kind, data, status, created_at from submissions order by created_at desc` as Submission[];
+}
+
+export async function setSubmissionStatus(id: number, status: SubmissionStatus) {
+  if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
+  await ensure();
+  await sql`update submissions set status = ${status} where id = ${id}`;
+}
+
+export async function deleteSubmission(id: number) {
+  if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
+  await ensure();
+  await sql`delete from submissions where id = ${id}`;
 }
