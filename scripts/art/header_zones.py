@@ -12,6 +12,9 @@ def eagle(x, y, sc=1.0, rot=0):
             f'<path d="M-6,4 L-10,24 C-4,27 4,27 10,24 L6,4Z" fill="{INK}"/><ellipse cx="0" cy="2" rx="8" ry="15" fill="{INK}"/>'
             f'<path d="M-6,-10 C-4,-14 4,-14 6,-10 C4,-7 -4,-7 -6,-10Z" fill="{CREAM}"/><circle cx="0" cy="-17" r="5" fill="{INK}"/><path d="M-1.5,-21 L0,-25 L1.5,-21Z" fill="{SUN2}"/></g>')
 
+def paper_cloud(x, y, sc=1.0):
+    return (f'<g transform="translate({x},{y}) scale({sc})" filter="url(#paper)"><path d="M-70 18 C-82 18 -84 -2 -66 -4 C-66 -22 -40 -28 -30 -14 C-22 -32 10 -34 18 -12 C36 -16 46 2 36 12 C44 18 36 24 26 22 L-60 22Z" fill="{WHITE}"/></g>')
+
 def ink_oak(x, y, s):
     return f'<path transform="translate({x},{y}) scale({s})" d="M-2 0 L-2 -8 C-12 -8 -14 -16 -8 -20 C-10 -28 0 -32 4 -26 C10 -30 18 -24 14 -18 C20 -14 16 -6 6 -8 L2 -8 L2 0Z" fill="{INK}"/>'
 
@@ -32,14 +35,15 @@ def north():
     o.append(layer(p5, DSAGE, 'cl', .9))
     # the stream: born on the dark ridge, winding down and widening to the bottom edge
     # the stream appears from under the dark hill's lower edge, never over it
-    c = bezier((560, 326), (430, 372), (720, 396), (520, 476), 60)
-    wd = [10 + 36 * (i / (len(c) - 1)) ** 1.4 for i in range(len(c))]
-    # clipped to the lime and sage hills, so it shows only below the dark hill's edge
-    o.append(f'<clipPath id="rc"><path d="{path(p4)}"/><path d="{path(p5)}"/></clipPath><g clip-path="url(#rc)">{ribbon(c, wd, MIST, "wv")}</g>')
+    # born on the dark ridge (clipped to the dark hill and the two hills in front, so it never shows beyond the ridge line)
+    c = bezier((566, ground_at(p3, 566) - 2), (470, 322), (690, 372), (500, 476), 60)
+    wd = [3 + 44 * (i / (len(c) - 1)) ** 1.5 for i in range(len(c))]
+    o.append(f'<clipPath id="rc"><path d="{path(p3)}"/><path d="{path(p4)}"/><path d="{path(p5)}"/></clipPath><g clip-path="url(#rc)">{ribbon(c, wd, MIST, "wv")}</g>')
     o.append(oak(1110, 458, .95, LIME))
     o.append(oak(735, 420, .5, SAGE))
     o.append(oak(120, 456, 1.08, SAGE))
     o.append(oak(250, 470, .62, LIME, flip=True))
+    o.append(f'<g class="hd-cloud">{paper_cloud(640, 62, 1.0)}</g><g class="hd-cloud hd-cloud2">{paper_cloud(800, 40, .7)}</g>')
     o.append(eagle(250, 92, 1.25, -8))
     o.append(eagle(470, 58, .62, 6))
     return svg(o)
@@ -84,13 +88,13 @@ def lifeguard(x, gy, sc=1.0):
     flag = f'<path d="M-50 -112 V-150" stroke="{INK}" stroke-width="2.4"/><path d="M-50 -150 C-60 -154 -68 -144 -80 -148 L-80 -132 C-68 -128 -60 -138 -50 -134Z" fill="{WHITE}" filter="url(#paperS)"/>'
     return f'<g transform="translate({x},{gy}) scale({sc})">{legs}{ladder}{hut}{flag}</g>'
 
-def umbrella(x, gy, sc=1.0):
+def umbrella(x, gy, sc=1.0, col=SUN2):
     segs = ''
     for k in range(6):
         a0 = math.pi + k * math.pi / 6; a1 = a0 + math.pi / 6
         segs += f'<path d="M0 -70 L{58*math.cos(a0):.1f} {-70 + 22*math.sin(a0):.1f} Q{58*math.cos((a0+a1)/2):.1f} {-74 + 30*math.sin((a0+a1)/2):.1f} {58*math.cos(a1):.1f} {-70 + 22*math.sin(a1):.1f}Z" fill="{SUN2 if k % 2 else WHITE}"/>'
     dome = f'<path d="M-58 -70 C-50 -104 50 -104 58 -70 Z" fill="{WHITE}"/>' + ''.join(
-        f'<path d="M{-58 + k*19.33:.1f} -70 C{-50 + k*17:.1f} -96 {-40 + k*16:.1f} -100 0 -100 C{-40 + (k+1)*16:.1f} -100 {-50 + (k+1)*17:.1f} -96 {-58 + (k+1)*19.33:.1f} -70Z" fill="{SUN2}"/>' for k in (0, 2, 4))
+        f'<path d="M{-58 + k*19.33:.1f} -70 C{-50 + k*17:.1f} -96 {-40 + k*16:.1f} -100 0 -100 C{-40 + (k+1)*16:.1f} -100 {-50 + (k+1)*17:.1f} -96 {-58 + (k+1)*19.33:.1f} -70Z" fill="{col}"/>' for k in (0, 2, 4))
     return f'<g transform="translate({x},{gy}) scale({sc}) rotate(-6)"><path d="M0 4 L0 -96" stroke="{INK}" stroke-width="3"/><g filter="url(#paper)">{dome}</g></g>'
 
 def palm(x, gy, sc=1.0, lean=0):
@@ -129,30 +133,30 @@ def shrubs(xs, pts, dy=6):
 
 def center():
     o = []
-    o.append(sun(200, 150, 64, SUN2))
+    o.append(sun(200, 236, 64, SUN2))
     o.append(f'<g filter="url(#paper)"><path d="M-30 238 Q300 234 600 238 T1230 236 V470 H-30Z" fill="{MIST}"/></g><path d="M-30 238 Q300 234 600 238 T1230 236 V470 H-30Z" fill="url(#wv)"/>')
     near = wave(286, 4, 3, 0.4)
     o.append(layer(near, SKY, 'ww', .8))
-    o.append(swimmer(610, 304, arm=1)); o.append(swimmer(700, 316, ring=True, arm=0))
+    o.append(swimmer(610, 304, arm=0)); o.append(swimmer(700, 316, ring=True, arm=0))
     o.append(surfer(300, 318, .9, woman=True))
     o.append(surfer(430, 300, .8, flip=True))
-    o.append(helicopter(470, 96, .48))
+    o.append(f'<g class="hd-heli">{helicopter(470, 96, .48)}</g>')
     sand = wave(352, 14, 1.0, 2.6)
     shore = [(x, y - 7) for x, y in sand]
     o.append(f'<path d="M{shore[0][0]},{shore[0][1]:.1f} ' + ' '.join('L%.1f,%.1f' % p for p in shore) + f'" stroke="{WHITE}" stroke-width="9" fill="none" stroke-linecap="round" filter="url(#paperS)"/>')
     o.append(layer(sand, SAND, 'di', .28))
     o.append(lifeguard(780, ground_at(sand, 780) + 26, .95))
-    o.append(sunbather(380, ground_at(sand, 380) + 60, 1.0, woman=True, towel=SKY))
-    o.append(sunbather(500, ground_at(sand, 500) + 66, 1.0, woman=False, towel=SUN))
+    o.append(sunbather(400, ground_at(sand, 400) + 64, 1.0, woman=True, towel=SKY))
+    o.append(sunbather(508, ground_at(sand, 508) + 64, 1.0, woman=False, towel=SUN))
     o.append(umbrella(560, ground_at(sand, 560) + 86, 1.15))
     fd = wave(398, 14, 1.0, 0.6, x0=-30, x1=300, taper=.4, drop=470)
     o.append(layer(fd, SAGE, 'cl', .9))
     o.append(shrubs((40, 150), fd))
-    o.append(umbrella(96, ground_at(fd, 96) + 60, .8))
+    o.append(umbrella(96, ground_at(fd, 96) + 60, .8, TEAL))
     dune = wave(398, 16, 1.0, 1.4, x0=900, x1=W + 30, taper=.4, drop=470)
     o.append(layer(dune, DLIME, 'st', .9))
     o.append(shrubs((1000, 1150), dune))
-    o.append(umbrella(1080, ground_at(dune, 1080) + 56, .8))
+    o.append(umbrella(1080, ground_at(dune, 1080) + 56, .8, DSAGE))
     return svg(o)
 
 def olive(x, gy, sc=1.0, fill=SAGE, seed=1, flip=False):
@@ -213,7 +217,7 @@ def jerusalem():
     r = random.Random(11)
     for k in range(13):
         spots.append((360 + k * 26 + r.uniform(-12, 12), 52 + abs(k - 6) * 9 + r.uniform(-8, 8), r.uniform(.9, 1.5)))
-    o.append(birds(spots))
+    o.append(f'<g class="hd-birds">{birds(spots)}</g>')
     return svg(o)
 
 def acacia(x, gy, sc=1.0, fill=LIME, flip=False):
@@ -241,7 +245,7 @@ def south():
     o.append(mesa(jag, 470, INK))
     top = [(-30, 262), (200, 258), (430, 262), (470, 264), (500, 280), (520, 300), (548, 312), (640, 316), (700, 330), (720, 470)]
     o.append(mesa(top, 470, SUN, 'sa', 1))
-    o.append(ibex(452, 263, 1.15))
+    o.append(f'<g class="hd-ibex">{ibex(452, 263, 1.15, walk=True)}</g>')
     dn = wave(338, 18, 1.0, 2.2, x0=380, x1=W + 30, taper=.3, drop=440)
     o.append(layer(dn, SAND, 'di', .3))
     ex = 900

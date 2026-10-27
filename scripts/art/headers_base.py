@@ -96,13 +96,15 @@ IBEX_BODY = (f'<path d="M-22 -30 C-24 -38 -18 -42 -10 -42 L10 -42 C16 -42 19 -44
 IBEX_KID = (f'<path d="M-16 -26 C-17 -32 -13 -34 -7 -34 L8 -34 C12 -34 14 -36 16 -39 L20 -42 L23 -40 L22 -35 C22 -33 20 -31 18 -30 L15 -27 C14 -25 12 -25 11 -25 L-13 -24 C-15 -24 -16 -25 -16 -26Z" fill="{INK}"/>'
             f'<path d="M20 -41 C19 -45 16 -46 14 -45" fill="none" stroke="{INK}" stroke-width="2" stroke-linecap="round"/>')
 
-def ibex(x, gy, sc=1.0, flip=False, kid=False):
+def ibex(x, gy, sc=1.0, flip=False, kid=False, walk=False):
     """Standing ibex with its hooves on ground line gy (page coords); faces right unless flip."""
     body = IBEX_KID if kid else IBEX_BODY
     legx = (-13, -9, 8, 12) if kid else (-19, -13, 12, 17)
     belly = -18 if kid else -22
     shift = belly - (-24 if kid else -27)
-    leg = ''.join(f'<path d="M{lx},{belly} L{lx + (1.2 if lx > 0 else -1.2)},0" stroke="{INK}" stroke-width="{2.6 if kid else 3.2}" stroke-linecap="round"/>' for lx in legx)
+    # walk=True: each leg swings from the hip (CSS class hd-leg / hd-leg2 on alternate legs)
+    cls = lambda i: f' class="hd-leg{"" if i in (0, 3) else "2"}" style="transform-box:fill-box;transform-origin:50% 0"' if walk else ''
+    leg = ''.join(f'<path{cls(i)} d="M{lx},{belly} L{lx + (1.2 if lx > 0 else -1.2)},0" stroke="{INK}" stroke-width="{2.6 if kid else 3.2}" stroke-linecap="round"/>' for i, lx in enumerate(legx))
     f = ' scale(-1,1)' if flip else ''
     return f'<g transform="translate({x},{gy}) scale({sc}){f}"><g transform="translate(0,{shift})">{body}</g>{leg}</g>'
 

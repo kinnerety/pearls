@@ -1,0 +1,14 @@
+/* Motion for the region/category page headers (one short entrance on page load, like the home leaves). Copy of the rules in app/globals.css. */
+.hd-cloud{animation:hdCloud 2.4s cubic-bezier(.25,.6,.35,1) both}
+.hd-cloud2{animation-duration:3s}
+@keyframes hdCloud{from{transform:translateX(520px);opacity:0}30%{opacity:1}to{transform:translateX(0)}}
+.hd-heli{animation:hdHeli 4.5s cubic-bezier(.3,.7,.4,1) both}
+@keyframes hdHeli{from{transform:translateX(820px)}to{transform:translateX(0)}}
+.hd-birds{animation:hdBirds 2.8s cubic-bezier(.25,.6,.35,1) both}
+@keyframes hdBirds{from{transform:translateY(-260px);opacity:0}25%{opacity:1}to{transform:translateY(0)}}
+.hd-ibex{animation:hdIbex 3.2s cubic-bezier(.3,.6,.4,1) both}
+@keyframes hdIbex{from{transform:translateX(-560px)}to{transform:translateX(0)}}
+.hd-leg{animation:hdLeg .4s ease-in-out 8 both}
+.hd-leg2{animation:hdLeg .4s ease-in-out 8 both;animation-delay:-.2s}
+@keyframes hdLeg{0%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}100%{transform:rotate(-14deg)}}
+@media (prefers-reduced-motion:reduce){.hd-cloud,.hd-heli,.hd-birds,.hd-ibex,.hd-leg,.hd-leg2{animation:none}}
