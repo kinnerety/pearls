@@ -204,8 +204,8 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 @media (hover:hover){.gpop-x{display:none}}
 #tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--sheet);font-size:.85rem;padding:3px 8px;border-radius:6px;z-index:5}
 .empty{grid-column:1/-1;color:var(--muted);padding:30px;text-align:center}
-.empty .blob{display:block;width:120px;height:120px;margin:0 auto 10px}
-.empty .illo{width:120px;height:120px}
+.empty .blob{display:block;width:170px;height:170px;margin:0 auto 10px}
+.empty .illo{width:170px;height:170px}
 .empty p{margin:0 auto 14px;max-width:34ch;color:var(--ink);line-height:1.5}
 .empty .suggest{display:inline-block;font-weight:700;background:var(--ink);color:var(--sheet);border-radius:999px;padding:7px 22px;text-decoration:none;box-shadow:var(--shadow)}
 .empty .suggest:hover{background:var(--sun-deep);color:var(--ink)}
