@@ -55,7 +55,17 @@ export default function Explorer({ places, texts }: { places: Place[]; texts: Te
     if (s !== location.search) history.replaceState(null, '', location.pathname + s);
   }, [st, view, ready]);
 
-  const items = useMemo(() => places.filter(p => matches(p, st)), [places, st]);
+  // a fresh random order on every visit and every filter change (typing in the search keeps it);
+  // the server renders the stored order, the shuffle happens after hydration
+  const [rank, setRank] = useState<Map<number, number> | null>(null);
+  const shuffleKey = JSON.stringify([st.regions, st.cats, st.prefs]);
+  useEffect(() => {
+    if (ready) setRank(new Map(places.map(p => [p.id, Math.random()])));
+  }, [ready, places, shuffleKey]);
+  const items = useMemo(() => {
+    const out = places.filter(p => matches(p, st));
+    return rank ? out.sort((a, b) => rank.get(a.id)! - rank.get(b.id)!) : out;
+  }, [places, st, rank]);
   const act = activeCount(st);
 
   const update = (f: (s: FilterState) => FilterState) => setSt(f);
