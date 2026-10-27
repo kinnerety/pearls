@@ -55,9 +55,10 @@ VIEW = '0 28 160 70'
 # the acorn lying on the ground, in profile (cap to the right, the nut's tip to the left), oak leaves around it
 VARIANTS = {
     # א: two leaves under/behind it, crossing, on a cream patch of ground
-    # (Kinneret 27.10: resting diagonally on the ground, the tip of the nut touching it, the cap up)
+    # (Kinneret 27.10: a resting acorn: the cap is wider than the nut, so the cap's rim and the nut's tip both touch the ground
+    #  on one line and the acorn leans a little; 58.5 degrees puts both on the same line)
     'a': ground(80, 80, 66, 11) + leaf(28, 78, -14, 1.05, SAGE) + leaf(132, 80, 196, 0.95, LIME_D)
-         + shadow(92, 82, 26, 3) + acorn(86, 63.5, 48, 0.98),
+         + shadow(76, 81.2, 28, 2.6) + acorn(78, 66.8, 58.5, 0.98),
     # ב: three leaves fanned out behind it like a bed
     'b': ground(80, 82, 70, 10) + leaf(76, 80, -160, 1.0, SAGE_D) + leaf(80, 80, -100, 0.85, LIME)
          + leaf(86, 80, -20, 1.0, SAGE) + shadow(80, 83, 32, 4) + acorn(80, 62, 90, 0.98),
