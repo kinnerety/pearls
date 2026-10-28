@@ -25,6 +25,8 @@ function Chip({ pressed, onClick, n, className = '', children }: { pressed: bool
 // A region or category page fixes one facet: the count names it ("12 פנינים באזור גולן") and the page offers a way back to all the pearls
 // the favicon acorn on its light-blue circle (app/icon.svg)
 const FAVICON_ACORN = `<circle cx="32" cy="32" r="31" fill="#DDEEF6"/><g transform="translate(32 31) scale(1.06) translate(-32 -33)"><path d="M19 31C18.5 48 26 58.5 32 59C38 58.5 45.5 48 45 31Z" fill="#FAD771"/><path d="M34 31C34.5 45 36 53 32 59C38 58.5 45.5 48 45 31Z" fill="#22333B" fill-opacity=".14"/><path d="M24.5 36C24.5 44 27 50 30 54" fill="none" stroke="#FCF0B4" stroke-width="2.6" stroke-linecap="round"/><path d="M30.5 58.3L32 61.8L33.5 58.3Z" fill="#1C4F66"/><path d="M14 31C14 20 21.5 13.5 32 13.5S50 20 50 31C50 33.5 48 35 45.5 35H18.5C16 35 14 33.5 14 31Z" fill="#1C4F66"/><path d="M19 22.5l4 4M25 18l4 4M31 16.5l4 4M37 18l4 4M43 22.5l3 3M18 29l3-3M23 29l4-4M29 29l4-4M35 29l4-4M41 29l4-4M47 28l1.5-1.5" stroke="#FFFFFF" stroke-opacity=".3" stroke-width="1.3" stroke-linecap="round"/><path d="M31.5 14C31 9.5 32.8 6.5 36.5 5" fill="none" stroke="#1C4F66" stroke-width="3.2" stroke-linecap="round"/></g>`;
+// the same acorn without the ring (the recommend button, Kinneret 28.10.2026)
+const ACORN_BARE = FAVICON_ACORN.replace(/^<circle[^>]*\/>/, '');
 
 export type Scope = { kind: 'region' | 'cat'; name: string };
 
@@ -114,8 +116,10 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
   );
   // back to the whole site from a region/category page (Kinneret, 27.10.2026: not "all the pearls in this region"; labelled "כל הפנינים בכל האזורים" / "...בכל הקטגוריות")
   const allLink = <a className="chip all home" href="/"><Illo k="acorn" />{scope?.kind === 'cat' ? 'כל הפנינים בכל הקטגוריות' : 'כל הפנינים בכל האזורים'}{total != null && <span className="n">{total}</span>}</a>;
-  // top-left of the region panel: opens the suggest-a-pearl form (Kinneret, 27.10.2026; the acorn to the right of the text)
-  const recommend = <a className="recommend" href="#suggest"><svg className="fav" viewBox="0 0 64 64" aria-hidden="true" dangerouslySetInnerHTML={{ __html: FAVICON_ACORN }} />להמליץ על פנינה</a>;
+  // top-left of the region panel: opens the suggest-a-pearl form (Kinneret, 27.10.2026). 28.10: the favicon acorn without its light-blue ring,
+  // tilted a little and LEFT of the text, with a soft shadow so it reads on the yellow
+  // (Kinneret chose option ד, 28.10: a big acorn peeking out of the button's left end). The small "אודות" link sits right of the button (option א)
+  const recommend = <span className="topacts"><a className="about" href="/about">{texts['about.link']}</a><a className="recommend" href="#suggest">להמליץ על פנינה<svg className="fav" viewBox="10 3 44 61" aria-hidden="true" dangerouslySetInnerHTML={{ __html: ACORN_BARE }} /></a></span>;
   // the region clouds: on the home page and on category pages (Kinneret, 27.10.2026: "דווקא שם זה חשוב"); a region page has no use for them
   const clouds = (
         <div className="clouds" id="f-region">

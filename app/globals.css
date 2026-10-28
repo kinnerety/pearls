@@ -48,11 +48,14 @@ select,input[type=search]{font:inherit;font-size:.92rem;border:1px solid var(--l
 input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 :focus-visible{outline:2px solid var(--sun-deep);outline-offset:2px}
 .regions{align-items:flex-start}
-.ftop{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.ftop{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px;padding-top:6px}
 .ftop .qbox{flex:0 1 340px}
-.recommend{margin-inline-start:auto;display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.95rem;background:var(--sun-deep);color:var(--ink);border-radius:999px;padding:5px 18px 5px 14px;text-decoration:none;box-shadow:var(--shadow);white-space:nowrap;transition:transform .15s}
+.topacts{margin-inline-start:auto;margin-inline-end:3px;display:inline-flex;align-items:center;gap:18px}
+.topacts .about{color:var(--ink);font-size:.95rem;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.topacts .about:hover{color:var(--teal)}
+.recommend{position:relative;display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.95rem;background:var(--sun-deep);color:var(--ink);border-radius:999px;padding:5px 18px 5px 40px;text-decoration:none;box-shadow:var(--shadow);white-space:nowrap;transition:transform .15s}
 .recommend:hover{transform:translateY(-1px)}
-.recommend .fav{width:26px;height:26px;flex:none;display:block}
+.recommend .fav{position:absolute;left:-8px;top:50%;width:36px;height:48px;margin-top:-26px;transform:rotate(-24deg);filter:drop-shadow(1.5px 2px 0 rgb(34 51 59/.28))}
 .ftop.end{margin-bottom:0}
 .ftop .qbox input[type=search]{max-width:none;width:100%;flex:1}
 .clouds{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;flex:1;min-width:0}
@@ -109,6 +112,8 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .side .fold .ico-top{display:none}
 .side .grp{display:flex;flex-wrap:wrap;gap:6px}
 .side .flabel{width:100%;min-width:0;margin-bottom:2px}
+/* a blank line between the category chips and "עוד העדפות" (Kinneret, 28.10.2026) */
+#f-pref > .flabel{margin-top:1.4em}
 .side .fnote{width:100%;margin:-2px 0 4px;font-size:.78rem;line-height:1.4;color:var(--muted)}
 .side .fnote b{color:var(--ink)}
 .side input[type=search]{max-width:none;width:100%;flex:none}
