@@ -13,6 +13,9 @@ export default function TitleRow({ children }: { children: React.ReactNode }) {
       const h3 = row.querySelector('h3');
       const zone = row.querySelector('.zone');
       if (!h3 || !zone) return;
+      // always measure in the plain layout: measuring in the wrapped layout (no margin before the pill)
+      // let the pill fit back on the name's line, so the attribute flipped on every resize and the cards shook
+      row.removeAttribute('data-wrapped');
       // the pill "wrapped" when it starts a line below the name's last line; when it sits at the end
       // of the name (one line or two), town · region keeps its own line under it
       const lines = h3.getClientRects();

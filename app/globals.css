@@ -137,6 +137,8 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .card .trow .zone{white-space:nowrap;display:inline-block;vertical-align:.25em;margin-inline-start:8px}
 .card .trow .zone+.zone{margin-inline-start:4px}
 .card .trow[data-wrapped] .zone:first-of-type{margin-inline-start:0}
+/* in the wrapped layout the pill always starts its own line, even where it would now fit after the name */
+.card .trow[data-wrapped] h3::after{content:"\A";white-space:pre}
 .where{font-size:.85rem;color:var(--muted)}
 /* town · region: its own line under the title, or beside the zone pill when the pill had to start a line of its own (Kinneret, 27.10) */
 .card .trow .where{display:block;margin-top:4px}
