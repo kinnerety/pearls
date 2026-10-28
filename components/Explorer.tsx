@@ -118,7 +118,8 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
   const allLink = <a className="chip all home" href="/"><Illo k="acorn" />{scope?.kind === 'cat' ? 'כל הפנינים בכל הקטגוריות' : 'כל הפנינים בכל האזורים'}{total != null && <span className="n">{total}</span>}</a>;
   // top-left of the region panel: opens the suggest-a-pearl form (Kinneret, 27.10.2026). 28.10: the favicon acorn without its light-blue ring,
   // tilted a little and LEFT of the text, with a soft shadow so it reads on the yellow
-  const recommend = <a className="recommend" href="#suggest">להמליץ על פנינה<svg className="fav" viewBox="10 3 44 61" aria-hidden="true" dangerouslySetInnerHTML={{ __html: ACORN_BARE }} /></a>;
+  // (Kinneret chose option ד, 28.10: a big acorn peeking out of the button's left end). The small "אודות" link sits right of the button (option א)
+  const recommend = <span className="topacts"><a className="about" href="/about">{texts['about.link']}</a><a className="recommend" href="#suggest">להמליץ על פנינה<svg className="fav" viewBox="10 3 44 61" aria-hidden="true" dangerouslySetInnerHTML={{ __html: ACORN_BARE }} /></a></span>;
   // the region clouds: on the home page and on category pages (Kinneret, 27.10.2026: "דווקא שם זה חשוב"); a region page has no use for them
   const clouds = (
         <div className="clouds" id="f-region">
