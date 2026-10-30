@@ -13,23 +13,24 @@ export default function MapHelp({ texts }: { texts: Texts }) {
   const box = useRef<HTMLDivElement>(null);
   const closeT = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
+  // in the admin the tip is always open for editing: no closing on an outside click, Escape or mouse-leave
   useEffect(() => {
-    if (!stuck) return;
+    if (!stuck || editing) return;
     const away = (e: Event) => { if (!box.current?.contains(e.target as Node)) { setStuck(false); setOpen(false); } };
     const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') { setStuck(false); setOpen(false); } };
     document.addEventListener('pointerdown', away);
     document.addEventListener('keydown', esc);
     return () => { document.removeEventListener('pointerdown', away); document.removeEventListener('keydown', esc); };
-  }, [stuck]);
+  }, [stuck, editing]);
 
   const enter = () => { clearTimeout(closeT.current); setOpen(true); };
-  const leave = () => { if (!stuck) closeT.current = setTimeout(() => setOpen(false), 200); };
+  const leave = () => { if (!stuck && !editing) closeT.current = setTimeout(() => setOpen(false), 200); };
 
   return (
     <div className={'maphelp' + (editing ? ' static' : '')} ref={box} onMouseEnter={enter} onMouseLeave={leave}>
       <button type="button" className="maphelp-link" aria-expanded={open} aria-controls="maphelp-tip"
         onClick={() => { if (editing) return; const s = !stuck; setStuck(s); setOpen(s); }}><T k="maphelp.link" /></button>
-      {open && (
+      {(open || editing) && (
         <div className="maphelp-tip" id="maphelp-tip" role="tooltip">
           <b className="maphelp-title"><T k="maphelp.link" /></b>
           {/* while editing the first paragraph is one piece of text; on the site the part before the colon is bold */}
