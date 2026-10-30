@@ -8,6 +8,7 @@ import { DIVIDER_SVG } from './art';
 import Illo from './Illo';
 import MapHelp from './MapHelp';
 import SideMenu from './SideMenu';
+import MobileMenu from './MobileMenu';
 import { ACORN_BARE } from './art';
 import PlaceCard from './PlaceCard';
 import { TextsProvider } from './TextsContext';
@@ -206,6 +207,7 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
         </aside>
         {/* a short menu panel under the filters (Kinneret, 30.10.2026): plain links, not chips. "ליצור קשר" waits for its form */}
         <SideMenu texts={texts} />
+        <MobileMenu texts={texts} />
         <div className="content">
           <div className="list" id="list">
             {items.length ? items.map(p => <PlaceCard key={p.id} p={p} />)
