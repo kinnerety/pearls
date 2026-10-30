@@ -8,6 +8,7 @@ import type { Place } from '@/lib/types';
 // Protected by AUTOMATION_TOKEN (Vercel env; the same value sits in the Claude cloud environment, never in chat).
 // GET  → the suggestions not yet drafted (without the sender's email)
 // GET ?places=1 → every place's name, town and location (for checking locations)
+// place.sources: [{ title, url }] = the pages Claude read; shown beside the draft on /admin/drafts/<id>, never saved with the place
 // POST { submission_id?, place } → a new pending draft on /admin/drafts
 // POST { locate: "name, town" } → Google Maps (Places) candidates for an exact location
 // PATCH { draft_id, place } → rewrite a draft that is still pending

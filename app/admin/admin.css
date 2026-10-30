@@ -39,28 +39,72 @@
 .adm-table td.adm-c input{width:18px;height:18px;accent-color:var(--ink);cursor:pointer}
 .adm-table tr[aria-busy] td{opacity:.7}
 .adm-preview{white-space:pre-wrap;background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;margin:0;font-size:.9rem}
-@media (max-width:640px){.adm-table th:nth-child(3),.adm-table td:nth-child(3),.adm-table th:nth-child(7),.adm-table td:nth-child(7),.adm-table th:nth-child(8),.adm-table td:nth-child(8),.adm-table th:nth-child(9),.adm-table td:nth-child(9){display:none}}
+@media (max-width:640px){.adm-table th:nth-child(3),.adm-table td:nth-child(3),.adm-table th:nth-child(6),.adm-table td:nth-child(6),.adm-table th:nth-child(7),.adm-table td:nth-child(7),.adm-table th:nth-child(8),.adm-table td:nth-child(8){display:none}}
 
 /* the about page's questions and answers (/admin/about) */
 .adm-faq{display:flex;flex-direction:column;gap:10px}
 .adm-faq-item{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--paper)}
 .adm-faq-item b{font-size:.85rem;color:var(--muted)}
-/* suggestions and mistake reports from the site's forms (/admin/inbox) */
-.adm-inbox{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
-.adm-sub[data-done]{opacity:.7}
-.adm-sub-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.adm-sub h2{margin:0}
-.adm-sub dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:.95rem}
-.adm-sub dt{font-weight:700;color:var(--muted)}
-.adm-sub dd{margin:0;white-space:pre-wrap}
+/* the bar on top of every admin page: the three areas (Kinneret, 30.10.2026) */
+.adm-nav{display:flex;flex-wrap:wrap;align-items:center;gap:6px;background:var(--sheet);box-shadow:var(--shadow);border-radius:999px;padding:8px 14px;margin-bottom:22px}
+.adm-nav-logo{font-family:var(--display);font-weight:900;font-size:1.15rem;color:var(--ink);text-decoration:none;margin-inline-end:10px}
+.adm-nav-tab{font-weight:700;font-size:.95rem;color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);border-radius:999px;padding:5px 16px;background:var(--sheet)}
+.adm-nav-tab:hover{background:var(--sun)}
+.adm-nav-tab[aria-current]{background:var(--ink);color:var(--sheet)}
+.adm-count{display:inline-block;min-width:1.5em;text-align:center;background:var(--sun-deep);color:var(--ink);border-radius:999px;font-size:.78rem;padding:0 6px;margin-inline-start:6px}
+.adm-nav-sp,.adm-sp{flex:1}
+.adm-nav-quiet{font:inherit;font-size:.9rem;color:var(--ink);background:none;border:0;text-decoration:underline;cursor:pointer;padding:4px 6px}
+.adm-nav form{margin:0}
+@media (max-width:640px){.adm-nav{border-radius:18px}.adm-nav-sp{display:none}}
 
-/* /admin/drafts: each new pearl as its real card, the map and the hidden fields beside it */
-.adm-drafts{display:flex;flex-direction:column;gap:18px}
-.adm-draft-body{display:grid;grid-template-columns:minmax(260px,400px) 1fr;gap:18px;align-items:start}
-@media (max-width:760px){.adm-draft-body{grid-template-columns:1fr}}
-.adm-draft .draft-list{grid-template-columns:1fr}
-.adm-draft-side{display:flex;flex-direction:column;gap:10px;min-width:0}
-.adm-draft-map{padding:8px} .adm-draft-map #map{height:220px}
-.adm-draft-meta{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:.9rem} .adm-draft-meta dt{font-weight:700;color:var(--muted)} .adm-draft-meta dd{margin:0;white-space:pre-wrap}
-.adm-draft-from summary{cursor:pointer;font-weight:600;font-size:.9rem}
-.adm-draft-done{opacity:.75}
+/* home: three doors */
+.adm-doors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.adm-door{display:flex;flex-direction:column;gap:6px;padding:26px 22px;border-radius:6px 22px 8px 18px/18px 8px 22px 6px;box-shadow:var(--shadow);color:var(--ink);text-decoration:none;border:1.5px solid transparent}
+.adm-door:hover{border-color:var(--ink)}
+.adm-door b{font-family:var(--display);font-size:1.5rem}
+.adm-door span{color:var(--muted)}
+.adm-door.d1{background:var(--sun)} .adm-door.d2{background:var(--mist)} .adm-door.d3{background:var(--sage)}
+@media (max-width:760px){.adm-doors{grid-template-columns:1fr}}
+
+.adm-area{display:flex;flex-direction:column;gap:14px}
+.adm-h1{font-family:var(--display);font-size:2rem;margin:0}
+.adm-h2{font-family:var(--display);font-size:1.2rem;margin:8px 0 0}
+.adm-toast{background:var(--sage);border-radius:12px;padding:8px 14px;font-weight:700;margin:0}
+.adm-crumb{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:.92rem;color:var(--muted)}
+.adm-crumb a{color:var(--ink);font-weight:700}
+.adm-warn{font-weight:700;background:var(--sun);border-radius:10px;padding:6px 12px;margin:8px 0 0}
+
+/* area 1: the queue of new pearls */
+.adm-queue{display:flex;flex-direction:column;gap:8px}
+.adm-qitem{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--sheet);box-shadow:var(--shadow);border-radius:14px;padding:12px 16px;color:var(--ink);text-decoration:none;border:1.5px solid transparent}
+a.adm-qitem:hover{border-color:var(--ink)}
+.adm-qitem small{display:block;color:var(--muted);font-size:.85rem}
+.adm-qitem.still{background:var(--paper);box-shadow:none;border:1px dashed var(--line)}
+/* one new pearl: the form, and beside it the card + where it came from */
+.adm-review{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,400px);gap:20px;align-items:start}
+.adm-review-side{position:sticky;top:12px;display:flex;flex-direction:column;gap:14px;max-height:calc(100vh - 24px);overflow:auto;padding-bottom:4px}
+.adm-review-side .draft-list{grid-template-columns:1fr}
+@media (max-width:900px){.adm-review{grid-template-columns:1fr}.adm-review-side{position:static;max-height:none;order:-1}}
+.adm-source dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:.92rem}
+.adm-source dt{font-weight:700;color:var(--muted)}
+.adm-source dd{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.adm-source a{color:var(--teal)}
+.adm-sources{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:4px}
+
+/* area 2: mistake reports above the list, and on the pearl's own form */
+.adm-reports{display:flex;flex-direction:column;gap:8px;background:var(--mist);border-radius:14px;padding:14px 16px}
+.adm-reports h2{font-family:var(--display);font-size:1.15rem;margin:0}
+.adm-rep{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--sheet);border-radius:10px;padding:8px 12px}
+.adm-rep > span:first-child{flex:1 1 280px;min-width:0}
+.adm-rep small{display:block;color:var(--muted);font-size:.82rem}
+.adm-report{display:flex;flex-direction:column;gap:4px;background:var(--mist);border-radius:12px;padding:10px 14px;margin:0}
+p.adm-report{flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px}
+.adm-confirm{display:flex;flex-direction:column;gap:6px;background:var(--cream);border:1.5px solid var(--ink);border-radius:12px;padding:12px 14px}
+
+/* area 3: the fixed texts, with a side menu */
+.adm-split{display:grid;grid-template-columns:210px minmax(0,1fr);gap:20px;align-items:start}
+.adm-side{position:sticky;top:12px;display:flex;flex-direction:column;gap:4px}
+.adm-side a{color:var(--ink);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600}
+.adm-side a:hover{background:var(--cream)}
+.adm-side a[aria-current]{background:var(--sage)}
+@media (max-width:760px){.adm-split{grid-template-columns:1fr}.adm-side{position:static;flex-direction:row;flex-wrap:wrap}}

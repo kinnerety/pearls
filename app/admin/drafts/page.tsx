@@ -2,33 +2,45 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { isAdmin } from '@/lib/auth';
 import { listDrafts as fileDrafts } from '@/lib/drafts';
-import { addDraft, draftExists, getTexts, listDrafts, listSubmissions } from '@/lib/store';
-import DraftReview from '@/components/admin/DraftReview';
+import { addDraft, draftExists, listDrafts, listSubmissions } from '@/lib/store';
+import Preparing from '@/components/admin/Preparing';
 
-// One page for every new pearl waiting for Kinneret: the real card + map, and approve / reject / edit per pearl.
-// Drafts come from the daily run over visitors' suggestions (API) or from a link Claude was given (data/drafts/*.json,
-// pulled into the table here so both kinds are handled the same way).
-export default async function Drafts() {
+const when = (s: string) => new Date(s).toLocaleDateString('he-IL', { timeZone: 'Asia/Jerusalem', day: 'numeric', month: 'numeric' });
+
+// Area 1, new pearls: the ones waiting for Kinneret (each opens on one screen to edit and approve), and the visitors'
+// suggestions the morning run hasn't prepared yet. Drafts from a link Claude was given (data/drafts/*.json) are pulled in here.
+export default async function Drafts({ searchParams }: { searchParams: Promise<{ ok?: string; no?: string }> }) {
   if (!(await isAdmin())) redirect('/admin');
   for (const d of fileDrafts()) if (!(await draftExists(d.place.name))) await addDraft(d.place, null);
-  const [pending, subs, texts] = await Promise.all([listDrafts('pending'), listSubmissions(), getTexts()]);
-  const bySub = new Map(subs.map(s => [s.id, s.data]));
-  const rows = pending.map(d => {
-    const s = d.submission_id ? bySub.get(d.submission_id) : undefined;
-    // the suggester's own words, for context (the email stays in the inbox only)
-    return { id: d.id, place: d.data, created_at: String(d.created_at), from: s ? { name: s.name, what: s.what, where: s.where, love: s.love, more: s.more, credit: s.credit === 'yes' ? s.credit_name : '' } : null };
-  });
+  const [pending, subs, sp] = await Promise.all([listDrafts('pending'), listSubmissions(), searchParams]);
+  const preparing = subs.filter(s => s.kind === 'suggest' && s.status === 'new')
+    .map(s => ({ id: s.id, name: s.data.name || '', where: s.data.where || '', what: s.data.what || '', created_at: String(s.created_at) }));
   return (
-    <>
+    <div className="adm-area">
+      {sp.ok && <p className="adm-toast">✓ "{sp.ok}" עלתה לאתר. {pending.length ? '' : 'זהו, עברת על כולן.'}</p>}
+      {sp.no && <p className="adm-toast">"{sp.no}" הורדה מהרשימה.</p>}
       <div className="adm-top">
-        <h1>פנינים חדשות לאישור</h1>
-        <div className="adm-row">
-          <Link className="adm-btn ghost" href="/admin">→ לרשימה</Link>
-          <Link className="adm-btn ghost" href="/admin/inbox">הצעות ודיווחים</Link>
-        </div>
+        <h1>מחכות לך ({pending.length})</h1>
+        <Link className="adm-btn ghost" href="/admin/new">+ פנינה חדשה בלי הצעה</Link>
       </div>
-      <p className="adm-hint">כל פנינה כאן נראית בדיוק כמו שתיראה באתר. "אישור" מכניס אותה לאתר כמו שהיא (בלי "נבדק ידנית"), "עריכה" פותחת אותה לתיקון לפני האישור, "דחייה" מורידה אותה מהרשימה.</p>
-      <DraftReview rows={rows} texts={texts} />
-    </>
+      {pending.length ? (
+        <div className="adm-queue">
+          {pending.map(d => (
+            <Link key={d.id} className="adm-qitem" href={`/admin/drafts/${d.id}`}>
+              <span><b>{d.data.name}</b><small>{[d.data.town, d.submission_id ? 'הצעה באתר' : 'מקישור', when(String(d.created_at))].filter(Boolean).join(' · ')}</small></span>
+              <span className="adm-tag suggest">לעריכה ואישור ←</span>
+            </Link>
+          ))}
+        </div>
+      ) : <p className="adm-hint">אין פנינים שמחכות לך כרגע.</p>}
+      <p className="adm-hint">יש לך קישור לפנינה? שלחי לי אותו בצ׳אט, והיא תופיע כאן מוכנה לעריכה.</p>
+      {preparing.length > 0 && (
+        <>
+          <h2 className="adm-h2">בהכנה ({preparing.length})</h2>
+          <p className="adm-hint">הצעות שהגיעו מהטופס באתר. כל בוקר אני כותב להן תקציר וממלא את הפרטים, ואז הן עוברות ל"מחכות לך".</p>
+          <Preparing rows={preparing} />
+        </>
+      )}
+    </div>
   );
 }
