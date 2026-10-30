@@ -24,6 +24,7 @@ header.long2 .title{top:calc(var(--hero) * 0.311 - var(--h1fs) * 1.05)}
 /* the title sits on the illustration: the subtitle's baseline stays ~5mm above the hills (which start at 224/440 of the picture's height under the title), whatever the screen width */
 /* the title's middle sits at the height of the hoopoe's beak (31.1% of the picture, Kinneret 27.10) */
 header .title{position:absolute;top:calc(var(--hero) * 0.311 - var(--h1fs) * 0.475);right:max(24px,calc(50vw - 616px));max-width:min(440px,60%);isolation:isolate}
+header:not(.long):not(.long2) .title{max-width:min(480px,60%)}
 /* falling leaves around the title and a few behind it; 100 viewBox units = one title font-size */
 header .title .leaves{position:absolute;z-index:-1;pointer-events:none;top:calc(var(--h1fs) * -0.9);right:calc(var(--h1fs) * -0.6);width:calc(var(--h1fs) * 8.07);height:calc(var(--h1fs) * 2.6);overflow:visible}
 /* the leaves rest where they first paused in the earlier version (Kinneret 27.10: "the first position is better") */
