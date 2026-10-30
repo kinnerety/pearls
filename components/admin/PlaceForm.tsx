@@ -35,7 +35,8 @@ export default function PlaceForm({ initial, hidden: hidden0, updatedAt, draftId
     const r = draftId ? await acceptDraft(draftId, place) : await save(place, hidden);
     if (!r.ok) { setErrors(r.errors); setMsg(''); return; }
     setErrors([]); setMsg('נשמר ✓ האתר מתעדכן תוך כמה שניות');
-    if (isNew) router.replace(`/admin/p/${r.id}`); else router.refresh();
+    // a draft that was just approved goes back to the list of pearls still waiting (Kinneret, 2026-10-30)
+    if (draftId) router.replace('/admin/drafts'); else if (isNew) router.replace(`/admin/p/${r.id}`); else router.refresh();
   });
 
   return (
