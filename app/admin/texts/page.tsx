@@ -32,7 +32,7 @@ export default async function SiteTexts() {
             <h2 className="adm-h2">הטיפ מעל המפה</h2>
             <MapHelp texts={texts} />
             <h2 className="adm-h2">הצ'יפ "נגישות" בפאנל הסינון</h2>
-            <p className="adm-hint">מתחת ל"עוד העדפות". לחיצה עליו באתר פותחת את ההסבר הזה.</p>
+            <p className="adm-hint">מתחת ל"עוד העדפות". לחיצה עליו באתר פותחת את הפופאפ הזה.</p>
             <AccessTip texts={texts} />
           </LiveTexts>
         ) : <div className="adm-card"><p>אין עדיין מסד נתונים מחובר, אז אי אפשר לשמור טקסטים.</p></div>}
