@@ -72,7 +72,7 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .cloud .chip[aria-pressed="true"]{background:var(--ink);color:var(--sheet);box-shadow:0 0 0 2px var(--sun-deep)}
 .cloud .chip[aria-pressed="true"]::before{content:"✓ "}
 .cloud .gname{width:100%;display:flex;align-items:center;gap:6px;font-family:var(--display);font-weight:400;font-size:1rem}
-.cloud .gname .illo{width:34px;height:34px}
+.cloud .gname .illo{width:34px;height:34px;overflow:visible}
 .chip.sm{font-size:.86rem;padding:2px 11px}
 .chip.clear{background:transparent;outline:1px dashed var(--muted)}
 .chip .illo{width:22px;height:22px;display:inline-block;vertical-align:-6px;margin-inline-end:5px}
@@ -270,7 +270,7 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 /* Spot illustrations as paper cut-outs: soft tints, no outlines, a shadow under every piece */
 .illo{display:block;overflow:visible}
 /* palette only; wood tones (.wd/.wd2) are the one illustration-only exception */
-.illo .y{fill:var(--sun-deep)} .illo .b{fill:var(--mist)} .illo .w{fill:#FFFFFF} .illo .l{fill:var(--lime)} .illo .s{fill:var(--sage)} .illo .c{fill:var(--sheet)} .illo .n{fill:var(--ink)} .illo .wd{fill:#E6C9A0} .illo .wd2{fill:#D6B27F} .illo .or{fill:var(--sun-deep)} .illo .tb{fill:var(--teal)} .illo .sq{fill:var(--sage)} .illo .rk{fill:var(--cream)} .illo .pk{fill:var(--teal)} .illo .rk2{fill:#E6C9A0}
+.illo .y{fill:var(--sun-deep)} .illo .sy{fill:var(--sun)} .illo .b{fill:var(--mist)} .illo .w{fill:#FFFFFF} .illo .l{fill:var(--lime)} .illo .s{fill:var(--sage)} .illo .c{fill:var(--sheet)} .illo .n{fill:var(--ink)} .illo .wd{fill:#E6C9A0} .illo .wd2{fill:#D6B27F} .illo .or{fill:var(--sun-deep)} .illo .tb{fill:var(--teal)} .illo .sq{fill:var(--sage)} .illo .rk{fill:var(--cream)} .illo .pk{fill:var(--teal)} .illo .rk2{fill:#E6C9A0}
 .illo .y,.illo .l,.illo .s,.illo .c,.illo .n,.illo .b,.illo .w,.illo .wd,.illo .rk,.illo .tb,.illo g.c>*,.illo g.y>*{filter:drop-shadow(0 1.2px 1px rgba(60,55,30,.3))}
 .illo .o{stroke:none}
 .illo path.o:not([class*=" "]),.illo path[fill=none]{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
