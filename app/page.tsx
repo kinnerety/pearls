@@ -30,8 +30,7 @@ export default async function Home() {
     <div className="wrap">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <Hero />
-      <Explorer places={places} texts={texts} />
-      <SiteFoot index />
+      <Explorer places={places} texts={texts} foot={<SiteFoot index menu />} />
       {/* the suggest-a-pearl popup, opened by the button of the empty gallery */}
       <Forms texts={texts} />
     </div>

@@ -4,6 +4,7 @@ import Hero from '@/components/Hero';
 import NotFound from '@/components/NotFound';
 import SiteFoot from '@/components/SiteFoot';
 import Forms from '@/components/Forms';
+import ScrollCenter from '@/components/ScrollCenter';
 
 export const metadata: Metadata = { title: 'העמוד לא נמצא | פנינים ישראליות', robots: { index: false } };
 
@@ -11,9 +12,11 @@ export const metadata: Metadata = { title: 'העמוד לא נמצא | פנינ�
 export default async function NotFoundPage() {
   const texts = await getTexts();
   return (
-    <div className="wrap">
+    <div className="wrap nfp">
       <Hero />
       <NotFound texts={texts} />
+      {/* the page opens scrolled so the card is centred (Kinneret, 30.10.2026) */}
+      <ScrollCenter id="nf" />
       <SiteFoot label={texts['about.link']} />
       {/* the suggest-a-pearl popup, opened by the recommend button */}
       <Forms texts={texts} />
