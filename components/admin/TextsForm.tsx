@@ -6,7 +6,7 @@ import { shareText } from '@/lib/share';
 import type { Place } from '@/lib/types';
 
 // A made-up place, only to show how a shared message will look with the current wording
-const SAMPLE = { id: 0, name: 'שם הפנינה', town: '', region: ['גליל עליון'], cats: [], types: [], tags: [], ctags: [], link: 'https://example.co.il', descr: 'המשפט הראשון של התיאור. ועוד משפט.', lat: null, lng: null, approx: true, shabbat: 'unknown', family: 'unknown', pick: false } satisfies Place;
+const SAMPLE = { id: 0, name: 'שם הפנינה', town: '', region: ['גליל עליון'], cats: [], types: [], tags: [], ctags: [], link: 'https://example.co.il', descr: 'התיאור המלא של הפנינה, כמו שהוא מופיע בעמוד הפנינה. כל המשפטים, לא רק הראשון.', lat: null, lng: null, approx: true, shabbat: 'unknown', family: 'unknown', pick: false } satisfies Place;
 
 // One field per site text (popup, map tip, notes). "ברירת מחדל" puts the original wording back in the field.
 // onChange + noSave: the fields are part of a bigger page (LiveTexts) that holds the values and saves them.

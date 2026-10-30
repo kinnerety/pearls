@@ -3,7 +3,7 @@ import type { Place } from '@/lib/types';
 import type { Texts } from '@/lib/texts';
 import Hero from './Hero';
 import Explorer, { type Scope } from './Explorer';
-import SiteFoot from './SiteFoot';
+import SiteFooter from './SiteFooter';
 import Forms from './Forms';
 
 // A region or category page: its own header, the same gallery/map as the home page (minus the facet the page already fixes), and the footer
@@ -19,7 +19,8 @@ export default function Collection({ title, lede, art, path, places, texts, scop
     <div className="wrap">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <Hero title={title} lede={lede} art={art} motion={scope.kind === 'region' ? 'art' : 'none'} />
-      <main id="content" className="contents"><Explorer places={places} texts={texts} scope={scope} total={total} foot={<SiteFoot menu />} /></main>
+      <main id="content" className="contents"><Explorer places={places} texts={texts} scope={scope} total={total} /></main>
+      <SiteFooter />
       {/* the suggest-a-pearl popup, for the empty gallery's button */}
       <Forms texts={texts} />
     </div>
