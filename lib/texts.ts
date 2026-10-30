@@ -142,7 +142,9 @@ const FIXED_DEFAULTS = {
   'suggest.love.hint': { label: 'הצעת פנינה: ההסבר לשאלה 4', text: 'לא חובה, אבל נשמח לדעת' },
   'suggest.shabbat': { label: 'הצעת פנינה: השאלה על שבת', text: 'ידוע לך אם המקום פתוח בשבת?' },
   'suggest.family': { label: 'הצעת פנינה: השאלה על משפחות', text: 'ידוע לך אם זה מתאים גם למשפחות?' },
-  'suggest.choices': { label: 'הצעת פנינה: התשובות לשבת ולמשפחות (שורה לכל תשובה: כן / לא / לא יודעים)', text: 'כן\nלא\nאין לי מושג', multi: true },
+  // each question has its own answers (Kinneret, 30.10.2026: they used to share one list); line 1 = yes, 2 = no, optional 3 = unknown
+  'suggest.shabbat.choices': { label: 'הצעת פנינה: התשובות על שבת (שורה לכל תשובה: פתוח / סגור / לא יודעים)', text: 'פתוח בשבת\nסגור בשבת', multi: true },
+  'suggest.family.choices': { label: 'הצעת פנינה: התשובות על משפחות (שורה לכל תשובה: מתאים / לא מתאים / לא יודעים)', text: 'מתאים\nלא מתאים', multi: true },
   'suggest.more': { label: 'הצעת פנינה: עוד משהו חשוב', text: 'יש עוד משהו שחשוב להגיד למי שמתכננים להגיע?' },
   'suggest.more.hint': { label: 'הצעת פנינה: ההסבר ל"עוד משהו חשוב"', text: 'למשל, אם זה פתוח רק יום בשבוע, או רק בעונה מסוימת, או שממש כדאי לא להגיע בסופ"ש', multi: true },
   'suggest.credit': { label: 'הצעת פנינה: לציין את הממליץ?', text: 'רוצה שנציין שקיבלנו ממך את ההמלצה?' },
