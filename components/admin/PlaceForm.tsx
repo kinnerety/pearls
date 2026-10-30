@@ -4,16 +4,26 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import type { Place } from '@/lib/types';
+import type { Texts } from '@/lib/texts';
 import { CATS, ZONES } from '@/lib/config';
 import { slugOf } from '@/lib/slug';
-import { acceptDraft, geocode, remove, save, type GeoHit } from '@/app/admin/actions';
+import { acceptDraft, declineDraft, geocode, markSubmission, remove, save, type GeoHit } from '@/app/admin/actions';
+import DraftSide, { type DraftInfo } from './DraftSide';
 
 const PinMap = dynamic(() => import('./PinMap'), { ssr: false, loading: () => <div className="adm-map" /> });
 
-// draftId: the form edits a pending draft from /admin/drafts, and saving it approves the draft (it becomes a real place)
-export default function PlaceForm({ initial, hidden: hidden0, updatedAt, draftId }: { initial: Place; hidden: boolean; updatedAt?: string; draftId?: number }) {
+export type ReportInfo = { id: number; what: string; when: string };
+
+// draft: the form edits a pending new pearl (area "פנינים חדשות"): beside it the card as it will look and its sources;
+// approving saves it as a real place and opens the next pearl in line.
+// report: a visitor's mistake report about this place, shown above the fields and marked handled on save.
+// Every save goes back to the list it came from (Kinneret, 30.10.2026).
+export default function PlaceForm({ initial, hidden, updatedAt, draft, texts, report, notice }: {
+  initial: Place; hidden: boolean; updatedAt?: string; draft?: DraftInfo; texts?: Texts; report?: ReportInfo; notice?: string;
+}) {
+  const draftId = draft?.id;
   const [p, setP] = useState<Place>(initial);
-  const [hidden, setHidden] = useState(hidden0);
+  const [closing, setClosing] = useState(false);
   const [tags, setTags] = useState(initial.tags.join(', '));
   const [types, setTypes] = useState((initial.types || []).join(', '));
   const [errors, setErrors] = useState<string[]>([]);
@@ -34,20 +44,39 @@ export default function PlaceForm({ initial, hidden: hidden0, updatedAt, draftId
     const place: Place = { ...p, tags: split(tags), types: split(types) };
     const r = draftId ? await acceptDraft(draftId, place) : await save(place, hidden);
     if (!r.ok) { setErrors(r.errors); setMsg(''); return; }
-    setErrors([]); setMsg('נשמר ✓ האתר מתעדכן תוך כמה שניות');
-    // a draft that was just approved goes back to the list of pearls still waiting (Kinneret, 2026-10-30)
-    if (draftId) router.replace('/admin/drafts'); else if (isNew) router.replace(`/admin/p/${r.id}`); else router.refresh();
+    setErrors([]); setMsg('נשמר ✓');
+    if (report) await markSubmission(report.id, 'done');
+    const ok = `?ok=${encodeURIComponent(place.name)}`;
+    if (draft) router.push(draft.next ? `/admin/drafts/${draft.next}${ok}` : `/admin/drafts${ok}`);
+    else router.push(`/admin/places${ok}`);
   });
+  // "המקום נסגר": the pearl leaves the site but stays in the list (hidden), and can come back
+  const setLive = (live: boolean) => start(async () => {
+    const r = await save({ ...p, tags: tags.split(/[,،]/).map(x => x.trim()).filter(Boolean), types: types.split(/[,،]/).map(x => x.trim()).filter(Boolean) }, !live);
+    if (!r.ok) { setErrors(r.errors); return; }
+    router.push(`/admin/places?${live ? 'back' : 'closed'}=${encodeURIComponent(p.name)}`);
+  });
+  const reject = () => { if (draft && confirm(`להוריד את "${p.name}" מהרשימה בלי להעלות לאתר?`)) start(async () => {
+    const r = await declineDraft(draft.id);
+    if (!r.ok) { setErrors([r.error]); return; }
+    const no = `?no=${encodeURIComponent(p.name)}`;
+    router.push(draft.next ? `/admin/drafts/${draft.next}${no}` : `/admin/drafts${no}`);
+  }); };
+  const back = draft || isNew ? '/admin/drafts' : '/admin/places';
 
-  return (
+  const form = (
     <div className="adm-form">
-      <div className="adm-top">
-        <h1>{draftId ? `טיוטה: ${p.name}` : isNew ? 'פנינה חדשה' : p.name || 'עריכה'}</h1>
-        <div className="adm-row">
-          <Link className="adm-btn ghost" href={draftId ? '/admin/drafts' : '/admin'}>{draftId ? '→ לפנינים החדשות' : '→ לרשימה'}</Link>
-          {!isNew && <Link className="adm-btn ghost" href={`/p/${slugOf(initial)}`} target="_blank">לדף באתר</Link>}
-        </div>
+      <div className="adm-crumb">
+        <Link href={back}>{draft ? '→ חזרה לרשימת הממתינות' : isNew ? '→ חזרה לפנינים החדשות' : '→ חזרה לפנינים באתר'}</Link>
+        {draft && draft.total > 0 && <span>פנינה {draft.pos} מתוך {draft.total}</span>}
       </div>
+      {notice && <p className="adm-toast">{notice}</p>}
+      <div className="adm-top">
+        <h1>{isNew && !draft ? 'פנינה חדשה' : p.name || 'עריכה'}</h1>
+        {!isNew && <Link className="adm-btn ghost" href={`/p/${slugOf(initial)}`} target="_blank">לראות באתר</Link>}
+      </div>
+      {hidden && <p className="adm-report">הפנינה הזאת מוסתרת מהאתר (המקום נסגר). <button type="button" className="adm-btn ghost" disabled={busy} onClick={() => setLive(true)}>להחזיר לאתר</button></p>}
+      {report && <div className="adm-report"><b>הדיווח ({new Date(report.when).toLocaleDateString('he-IL', { timeZone: 'Asia/Jerusalem' })})</b><span>{report.what}</span><span className="adm-hint">אחרי השמירה הדיווח יסומן "טופל".</span></div>}
 
       <section className="adm-card">
         <label>שם<input value={p.name} onChange={e => set('name', e.target.value)} required /></label>
@@ -86,8 +115,6 @@ export default function PlaceForm({ initial, hidden: hidden0, updatedAt, draftId
           {([['yes', 'גם למשפחות'], ['no', 'לא'], ['unknown', 'לא ידוע']] as const).map(([v, l]) => <button type="button" key={v} className="chip" aria-pressed={p.family === v} onClick={() => set('family', v)}>{l}</button>)}
         </div>
         <label className="adm-check"><input type="checkbox" checked={p.pick} onChange={e => set('pick', e.target.checked)} /> ★ המלצת המערכת</label>
-        <label className="adm-check"><input type="checkbox" checked={!!p.checked} onChange={e => set('checked', e.target.checked)} /> נבדק ידנית</label>
-        <label className="adm-check"><input type="checkbox" checked={hidden} onChange={e => setHidden(e.target.checked)} /> נסגר / להסתיר מהאתר</label>
       </section>
 
       <section className="adm-card">
@@ -109,12 +136,33 @@ export default function PlaceForm({ initial, hidden: hidden0, updatedAt, draftId
       <div className="adm-save">
         {errors.length > 0 && <ul className="adm-err">{errors.map(e => <li key={e}>{e}</li>)}</ul>}
         {msg && <p className="adm-ok">{msg}</p>}
+        {closing && (
+          <div className="adm-confirm">
+            <b>להוריד את "{p.name}" מהאתר?</b>
+            <span className="adm-hint">הפנינה לא נמחקת, רק מוסתרת. אפשר להחזיר אותה בכל רגע מהרשימה.</span>
+            <div className="adm-row">
+              <button type="button" className="adm-btn" disabled={busy} onClick={() => setLive(false)}>כן, המקום נסגר</button>
+              <button type="button" className="adm-btn ghost" onClick={() => setClosing(false)}>ביטול</button>
+            </div>
+          </div>
+        )}
         <div className="adm-row">
-          <button type="button" className="adm-btn" disabled={busy} onClick={submit}>{busy ? 'שומר...' : draftId ? 'אישור ושמירה לאתר' : 'שמירה'}</button>
-          {!isNew && <button type="button" className="adm-btn danger" disabled={busy} onClick={() => { if (confirm(`למחוק את "${p.name}" לצמיתות? (אפשר במקום זה לסמן "נסגר / להסתיר")`)) start(() => remove(p.id)); }}>מחיקה</button>}
+          <button type="button" className="adm-btn" disabled={busy} onClick={submit}>{busy ? 'שומר...' : draft ? 'אישור, לעלות לאתר' : 'שמירה'}</button>
+          {draft && <button type="button" className="adm-btn ghost" disabled={busy} onClick={reject}>לא מתאים</button>}
+          {draft && <span className="adm-hint">אחרי האישור עוברים לבאה בתור</span>}
+          <span className="adm-sp" />
+          {!isNew && !hidden && <button type="button" className="adm-btn ghost" disabled={busy} onClick={() => setClosing(true)}>המקום נסגר</button>}
+          {!isNew && <button type="button" className="adm-btn danger" disabled={busy} onClick={() => { if (confirm(`למחוק את "${p.name}" לצמיתות? בדרך כלל עדיף "המקום נסגר", שאפשר להחזיר.`)) start(() => remove(p.id)); }}>מחיקה</button>}
         </div>
         {updatedAt && <p className="adm-hint">עודכן לאחרונה: {new Date(updatedAt).toLocaleString('he-IL')}</p>}
       </div>
+    </div>
+  );
+  if (!draft) return form;
+  return (
+    <div className="adm-review">
+      {form}
+      <DraftSide p={p} info={draft} texts={texts} />
     </div>
   );
 }

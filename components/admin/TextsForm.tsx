@@ -9,13 +9,15 @@ import type { Place } from '@/lib/types';
 const SAMPLE = { id: 0, name: 'שם הפנינה', town: '', region: ['גליל עליון'], cats: [], types: [], tags: [], ctags: [], link: 'https://example.co.il', descr: 'המשפט הראשון של התיאור. ועוד משפט.', lat: null, lng: null, approx: true, shabbat: 'unknown', family: 'unknown', pick: false } satisfies Place;
 
 // One field per site text (popup, map tip, notes). "ברירת מחדל" puts the original wording back in the field.
-export default function TextsForm({ initial, keys = TEXT_KEYS, hint = 'הטקסטים שמופיעים באתר מחוץ לכרטיסי הפנינים. שינוי נשמר רק אחרי לחיצה על "שמירה".', placeholders = {} }: { initial: Texts; keys?: TextKey[]; hint?: string; placeholders?: Partial<Record<TextKey, string>> }) {
+// onChange + noSave: the fields are part of a bigger page (LiveTexts) that holds the values and saves them.
+export default function TextsForm({ initial, keys = TEXT_KEYS, hint = 'הטקסטים שמופיעים באתר מחוץ לכרטיסי הפנינים. שינוי נשמר רק אחרי לחיצה על "שמירה".', placeholders = {}, onChange, noSave }: { initial: Texts; keys?: TextKey[]; hint?: string; placeholders?: Partial<Record<TextKey, string>>; onChange?: (k: TextKey, v: string) => void; noSave?: boolean }) {
   const [faqReset, setFaqReset] = useState(0);
-  const [t, setT] = useState<Texts>(initial);
+  const [own, setT] = useState<Texts>(initial);
+  const t = noSave ? initial : own;
   const [msg, setMsg] = useState('');
   const [errors, setErrors] = useState<string[]>([]);
   const [busy, start] = useTransition();
-  const set = (k: TextKey, v: string) => { setT(x => ({ ...x, [k]: v })); setMsg(''); };
+  const set = (k: TextKey, v: string) => { setT(x => ({ ...x, [k]: v })); setMsg(''); onChange?.(k, v); };
   const submit = () => start(async () => {
     const r = await saveSiteTexts(t);
     if (!r.ok) { setErrors(r.errors); setMsg(''); return; }
@@ -53,11 +55,11 @@ export default function TextsForm({ initial, keys = TEXT_KEYS, hint = 'הטקס�
           )];
         })}
       </section>
-      <div className="adm-save">
+      {!noSave && <div className="adm-save">
         {errors.length > 0 && <ul className="adm-err">{errors.map(e => <li key={e}>{e}</li>)}</ul>}
         {msg && <p className="adm-ok">{msg}</p>}
         <div className="adm-row"><button type="button" className="adm-btn" disabled={busy} onClick={submit}>{busy ? 'שומר...' : 'שמירה'}</button></div>
-      </div>
+      </div>}
     </>
   );
 }

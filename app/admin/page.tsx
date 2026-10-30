@@ -2,8 +2,6 @@ import Link from 'next/link';
 import { adminConfigured, isAdmin } from '@/lib/auth';
 import { allPlaces, hasDb, listDrafts, listSubmissions } from '@/lib/store';
 import Login from '@/components/admin/Login';
-import AdminList from '@/components/admin/AdminList';
-import { logout } from './actions';
 
 export default async function AdminHome() {
   if (!adminConfigured() || !hasDb) {
@@ -17,23 +15,23 @@ export default async function AdminHome() {
   }
   if (!(await isAdmin())) return <Login />;
   const [places, subs, drafts] = await Promise.all([allPlaces(), listSubmissions(), listDrafts('pending')]);
-  const fresh = subs.filter(s => s.status === 'new').length;
+  const preparing = subs.filter(s => s.kind === 'suggest' && s.status === 'new').length;
+  const reports = subs.filter(s => s.kind === 'report' && s.status === 'new').length;
+  const live = places.filter(p => !p.hidden).length;
   return (
-    <>
-      <div className="adm-top">
-        <h1>ניהול הפנינים</h1>
-        <div className="adm-row">
-          <Link className="adm-btn" href="/admin/new">+ פנינה חדשה</Link>
-          <Link className="adm-btn ghost" href="/admin/texts">טקסטים של האתר</Link>
-          <Link className="adm-btn ghost" href="/admin/about">עמוד אודות</Link>
-          <Link className="adm-btn ghost" href="/admin/intros">דפי אזור וקטגוריה</Link>
-          <Link className={drafts.length ? 'adm-btn' : 'adm-btn ghost'} href="/admin/drafts">פנינים חדשות לאישור{drafts.length ? ` (${drafts.length})` : ''}</Link>
-          <Link className={fresh ? 'adm-btn' : 'adm-btn ghost'} href="/admin/inbox">הצעות ודיווחים{fresh ? ` (${fresh} חדשים)` : ''}</Link>
-          <Link className="adm-btn ghost" href="/" target="_blank">לאתר</Link>
-          <form action={logout}><button className="adm-btn ghost">יציאה</button></form>
-        </div>
-      </div>
-      <AdminList places={places} />
-    </>
+    <div className="adm-doors">
+      <Link className="adm-door d1" href="/admin/drafts">
+        <b>פנינים חדשות</b>
+        <span>{drafts.length ? `${drafts.length} מחכות לעריכה ואישור` : 'אין פנינים שמחכות לך'}{preparing ? `, ${preparing} בהכנה` : ''}</span>
+      </Link>
+      <Link className="adm-door d2" href="/admin/places">
+        <b>פנינים באתר</b>
+        <span>{live} פנינים באתר{reports ? ` · ${reports === 1 ? 'דיווח אחד' : `${reports} דיווחים`} על טעות` : ''}</span>
+      </Link>
+      <Link className="adm-door d3" href="/admin/texts">
+        <b>טקסטים קבועים</b>
+        <span>הודעות באתר, אודות, דפי אזור וקטגוריה, טפסים</span>
+      </Link>
+    </div>
   );
 }

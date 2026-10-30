@@ -70,7 +70,9 @@ function refresh() {
 export async function savePlace(p: Place, hidden: boolean): Promise<number> {
   if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
   await ensure();
-  const clean: Place = { ...p, note: cleanNote(p.note), ctags: canonTags(p.tags) };
+  // the sources Claude read stay with the draft; a place never stores them
+  const { sources: _s, ...rest } = p as Place & { sources?: unknown };
+  const clean: Place = { ...rest, note: cleanNote(p.note), ctags: canonTags(p.tags) };
   let id = clean.id;
   if (!id) {
     clean.approved_at ||= new Date().toISOString().slice(0, 10);
