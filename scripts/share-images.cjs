@@ -17,8 +17,10 @@ const CAT_SLUG = literal(cfg, 'CAT_SLUG'), CAT_ILLO = literal(cfg, 'CAT_ILLO'), 
 const CAT_BG = { 'טבע ונוף': '#CBEBD5', 'משהו לאכול': '#F2E8CC', 'יקבים, מבשלות ומזקקות': '#FCF0B4', 'סדנאות': '#DDEEF6', 'סיורים ומפגשים': '#E8F2B2', 'חקלאות': '#FCF0B4', 'בעלי חיים': '#CBEBD5', 'יוצרים וחנויות': '#DDEEF6', 'תרבות': '#E8F2B2', 'עגלות קפה': '#FCF0B4', 'אתרי אינטרנט': '#DDEEF6' };
 const ZONE = { 'צפון': ['north', '#E8F2B2'], 'מרכז': ['center', '#DDEEF6'], 'ירושלים והאזור': ['jerusalem', '#CBEBD5'], 'דרום': ['south', '#FCF0B4'] };
 
+// the finjan (סיורים ומפגשים) in dark blue instead of light blue, for the share picture (Kinneret, 30.10.2026)
+const darkFinjan = svg => svg.replaceAll('#1C4F66', '#22333B').replaceAll('#DDEEF6', '#1C4F66');
 const jobs = [
-  ...Object.entries(CAT_SLUG).map(([cat, slug]) => ({ file: `cat-${slug}.jpg`, svg: ILLO[CAT_ILLO[cat]], bg: CAT_BG[cat], label: cat })),
+  ...Object.entries(CAT_SLUG).map(([cat, slug]) => ({ file: `cat-${slug}.jpg`, svg: cat === 'סיורים ומפגשים' ? darkFinjan(ILLO[CAT_ILLO[cat]]) : ILLO[CAT_ILLO[cat]], bg: CAT_BG[cat], label: cat })),
   ...Object.entries(ZONE).map(([zone, [slug, bg]]) => ({ file: `zone-${slug}.jpg`, svg: ILLO[ZONE_ILLO[zone]], bg, label: zone })),
 ];
 const out = process.argv[2] || path.join(root, 'public/share');
@@ -43,16 +45,16 @@ html,body{margin:0;padding:0;background:${bg}}
 .dots{position:absolute;inset:0;opacity:.55}
 .blob{position:absolute;left:290px;top:315px;width:460px;height:430px;transform:translate(-50%,-50%) rotate(-3deg);background:#FFFFFF;border-radius:46% 54% 50% 50%/52% 46% 54% 48%;box-shadow:0 4px 0 rgba(60,55,30,.08),0 22px 40px -16px rgba(60,55,30,.45)}
 .icon{position:absolute;left:290px;top:315px;width:310px;height:310px;transform:translate(-50%,-50%)}
-.title{position:absolute;right:72px;top:50%;transform:translateY(-50%);text-align:right;color:#22333B;white-space:nowrap}
-.title h1{margin:0;font:400 84px/1.05 'Suez One',serif}
-.title p{margin:14px 0 0;font:600 30px/1.3 Assistant,sans-serif;color:rgba(34,51,59,.8)}
+.title{position:absolute;right:80px;top:50%;transform:translateY(-50%);text-align:right;color:#22333B;width:540px}
+.title h1{margin:0;font:400 108px/1.02 'Suez One',serif}
+.title p{margin:22px 0 0;font:600 56px/1.15 Assistant,sans-serif;color:rgba(34,51,59,.8)}
 ${ILLO_CSS}
 </style></head><body>
 <div id="card">
   <svg class="dots" width="1200" height="630"><defs><pattern id="d" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(12)"><circle cx="6" cy="6" r="3" fill="#fff"/><circle cx="19" cy="19" r="3" fill="#fff"/></pattern></defs><rect width="1200" height="630" fill="url(#d)"/></svg>
   <div class="blob"></div>
   <svg class="illo icon" viewBox="0 0 64 64">${svg}</svg>
-  <div class="title"><h1>פנינים ישראליות</h1><p>מקומות קטנים ומיוחדים מהמלצות של חברים</p></div>
+  <div class="title"><h1>פנינים<br>ישראליות</h1><p>מקומות קטנים ומיוחדים מהמלצות של חברים</p></div>
 </div></body></html>`;
 
 (async () => {
