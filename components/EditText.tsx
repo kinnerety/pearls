@@ -9,6 +9,7 @@ type Edit = { texts: Texts; set: (k: TextKey, v: string) => void } | null;
 const EditCtx = createContext<Edit>(null);
 export const EditProvider = EditCtx.Provider;
 export const useEditing = () => useContext(EditCtx) !== null;
+export const useEdit = () => useContext(EditCtx);
 
 /** One site text. `line` = one line of a multi-line text (a list item, an answer). */
 export function T({ k, line }: { k: TextKey; line?: number }) {
