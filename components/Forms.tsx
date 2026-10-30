@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'rea
 import { ACORN_REST_SVG } from './art';
 import { sendForm } from '@/app/actions';
 import type { Texts } from '@/lib/texts';
-import { T, useEditing } from './EditText';
+import { T, useEdit, useEditing } from './EditText';
 import { TextsProvider } from './TextsContext';
 import { Paras } from './Rich';
 
@@ -63,8 +63,8 @@ function SuggestFields({ texts }: { texts: Texts }) {
       <Field q={<T k="suggest.link" />} hint={<T k="suggest.link.hint" />}><input name="link" inputMode="url" dir="ltr" maxLength={300} /></Field>
       <Field q={<T k="suggest.where" />} hint={<T k="suggest.where.hint" />}><input name="where" required maxLength={200} /></Field>
       <Field q={<T k="suggest.love" />} hint={<T k="suggest.love.hint" />}><textarea name="love" rows={3} maxLength={2000} /></Field>
-      <Choices q={<T k="suggest.shabbat" />} name="shabbat" options={texts['suggest.choices']} />
-      <Choices q={<T k="suggest.family" />} name="family" options={texts['suggest.choices']} />
+      <Choices q={<T k="suggest.shabbat" />} name="shabbat" k="suggest.shabbat.choices" options={texts['suggest.shabbat.choices']} />
+      <Choices q={<T k="suggest.family" />} name="family" k="suggest.family.choices" options={texts['suggest.family.choices']} />
       <Field q={<T k="suggest.more" />} hint={<T k="suggest.more.hint" />}><textarea name="more" rows={2} maxLength={2000} /></Field>
       <YesNo q={<T k="suggest.credit" />} hint={<T k="suggest.credit.hint" />} name="credit" yes={<T k="suggest.credit.yes" />} no={<T k="suggest.credit.no" />}
         ask={<T k="suggest.credit.ask" />} input={<input name="credit_name" required maxLength={60} autoComplete="name" />} />
@@ -274,15 +274,22 @@ function Field({ q, hint, children }: { q: ReactNode; hint?: ReactNode; children
   );
 }
 
-function Choices({ q, name, options }: { q: ReactNode; name: string; options: string }) {
+/** The answers of one question, one per line of its text: yes, no, and an optional third "don't know".
+ * While editing in the admin every line shows (an emptied one disappears from the site), and a third can be added. */
+function Choices({ q, name, k, options }: { q: ReactNode; name: string; k: 'suggest.shabbat.choices' | 'suggest.family.choices'; options: string }) {
   const vals = ['yes', 'no', 'unknown'];
+  const edit = useEdit();
+  const live = edit ? edit.texts[k] : options;
+  const lines = live.split('\n').map(s => s.trim()).slice(0, 3);
+  const shown = edit ? lines : lines.filter(Boolean);
   return (
     <fieldset className="field choices">
       <legend><b>{q}</b></legend>
       <div className="opts">
-        {options.split('\n').map(s => s.trim()).filter(Boolean).slice(0, 3).map((_, i) => (
-          <Row key={i} className="pill"><input type="radio" name={name} value={vals[i]} /><span><T k="suggest.choices" line={i} /></span></Row>
+        {shown.map((_, i) => (
+          <Row key={i} className="pill"><input type="radio" name={name} value={vals[i]} /><span><T k={k} line={i} /></span></Row>
         ))}
+        {edit && lines.length < 3 && <button type="button" className="pill add" onClick={() => edit.set(k, [...lines, 'לא יודעים'].join('\n'))}>+ תשובה</button>}
       </div>
     </fieldset>
   );

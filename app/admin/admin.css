@@ -114,7 +114,8 @@ p.adm-report{flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px}
 .adm-live .form-pop.static{display:flex;flex-direction:column;gap:18px;width:min(620px,100%);max-height:none;overflow:visible;margin:0 auto}
 .adm-live .check-pop.static{margin:0 auto;width:100%}
 .adm-live .maphelp.static{align-self:flex-start;padding-bottom:0}
-.adm-live .maphelp.static .maphelp-tip{position:static;transform:none;margin-top:8px}
+.adm-live .maphelp.static .maphelp-tip,.adm-live .access.static .maphelp-tip{position:static;transform:none;margin-top:8px}
+.adm-live .access.static{align-self:flex-start}
 .adm-live .pre{white-space:pre-wrap}
 .adm-live input:not(.edt),.adm-live textarea,.adm-live .send,.adm-live .check-pop button{pointer-events:none;opacity:.85}
 .edt{display:inline;min-width:1.5em;border-radius:4px;outline:1.5px dashed transparent;outline-offset:2px;cursor:text;white-space:pre-wrap;transition:outline-color .15s}
@@ -124,3 +125,5 @@ p.adm-report{flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px}
 .edt:empty::before{content:"(ריק)";color:var(--muted)}
 .adm-changed summary{cursor:pointer;font-weight:600}
 .adm-changed ul{margin:8px 0 0;padding-inline-start:18px;display:flex;flex-direction:column;gap:6px}
+.adm-live .pill.add{font:inherit;font-size:.85rem;border:1.5px dashed var(--line);background:transparent;color:var(--muted);cursor:pointer;pointer-events:auto;opacity:1}
+.adm-live .pill.add:hover{border-color:var(--ink);color:var(--ink)}

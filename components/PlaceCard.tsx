@@ -30,7 +30,7 @@ export default function PlaceCard({ p }: { p: Place }) {
           <h3>{p.id ? <Link href={`/p/${encodeURIComponent(slugOf(p))}`}>{p.name}</Link> : p.name}</h3>
           {zonesOf(p).map(z => <span key={z} className={`cat zone z${ZONE_NAMES.indexOf(z)}`}>{z}</span>)}
           {/* the town is skipped when it is also the region's name, so Jerusalem does not read "ירושלים · ירושלים" (Kinneret, 30.10.2026) */}
-          <div className="where">{p.town && !p.region.includes(p.town) ? p.town + ' · ' : ''}{p.region.join(', ')}</div>
+          <div className="where">{p.town && !p.region.includes(p.town) ? p.town + (p.region.length ? ' · ' : '') : ''}{p.region.join(', ')}</div>
         </TitleRow>
       </div>
       {/* one row of pills: the yellow families pill first (rightmost), then the green ones (Shabbat, categories) */}
