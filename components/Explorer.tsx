@@ -143,7 +143,7 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
         {hide === 'cat' && <section className="filters" aria-label="לפי אזור"><div className="ftop end">{recommend}</div>{clouds}</section>}
       </> : <section className="filters" aria-label="לאן מכאן">
         <div className="ftop">
-          <span className="flabel">לאן מכאן</span>
+          <h2 className="flabel">לאן מכאן</h2>
           {qform}
           {recommend}
         </div>
@@ -153,10 +153,11 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
       <svg className="divider" viewBox="0 0 560 44" aria-hidden="true" dangerouslySetInnerHTML={{ __html: DIVIDER_SVG }} />
 
       <div className="bar">
-        <span className="now">
+        <div className="now">
           <span className={'blob' + (pop ? ' pop' : '')} id="now-illo">{nowK === 'shell' ? <img className="illo" src="/art/shell.png" alt="" /> : <Illo k={nowK} />}</span>
-          <span><span className={'count' + (act ? ' long' : '')} id="count">{countText(items.length, !!act, texts['empty.top'], scope)}</span> <span id="countnote" className="where" /></span>
-        </span>
+          {/* h2 so the heading order is title → count → card names (search engines and screen readers); styled like before */}
+          <div><h2 className={'count' + (act ? ' long' : '')} id="count">{countText(items.length, !!act, texts['empty.top'], scope)}</h2> <span id="countnote" className="where" /></div>
+        </div>
         <div className="views" role="group" aria-label="תצוגה">
           {scope && <div className="qbar">{qform}</div>}
           <button className="chip" aria-pressed={view === 'list'} onClick={() => setView('list')}>גלריית פנינים</button>
@@ -178,7 +179,7 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
           </button>
           <div className="body">
             {hide !== 'cat' && <div className="grp" id="f-cat">
-              <span className="flabel">מה יבוא טוב עכשיו</span>
+              <h2 className="flabel">מה יבוא טוב עכשיו</h2>
               {/* "all": pressed when no category is chosen; clicking it clears the categories and the preferences. On a region page it leads home instead */}
               {scope ? allLink : <Chip className="all" pressed={!st.cats.length} onClick={() => update(s => ({ ...s, cats: [], prefs: [] }))} n={places.filter(p => matches(p, { ...st, cats: [], prefs: [] })).length}><Illo k="acorn" />{st.regions.length === 0 ? 'כל הפנינים' : st.regions.length === 1 ? 'כל הפנינים באזור שבחרת' : 'כל הפנינים באזורים שבחרת'}</Chip>}
               {CATS.map(k => (
@@ -188,7 +189,7 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
             </div>}
             {/* a category page has no category chips, so (Kinneret, 27.10.2026) no "עוד העדפות" heading either: the home link and the three preferences side by side, the note under them */}
             <div className="grp" id="f-pref">
-              {hide === 'cat' ? allLink : <span className="flabel">עוד העדפות</span>}
+              {hide === 'cat' ? allLink : <h2 className="flabel">עוד העדפות</h2>}
               {hide !== 'cat' && <p className="fnote">{texts['prefs.note']}</p>}
               {PREFS.map(k => {
                 const on = st.prefs.includes(k), n = places.filter(p => matches(p, st) && hasPref(p, k)).length;

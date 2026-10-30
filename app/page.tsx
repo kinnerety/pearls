@@ -17,7 +17,8 @@ export default async function Home() {
   const jsonLd = [
     { '@context': 'https://schema.org', '@type': 'WebSite', name: 'פנינים ישראליות', url: SITE_URL, inLanguage: 'he',
       description: SITE_DESCRIPTION,
-      author: { '@type': 'Person', name: 'כנרת יפרח', url: `${SITE_URL}/about` },
+      author: { '@type': 'Person', name: 'כנרת יפרח', url: `${SITE_URL}/about`, sameAs: ['http://www.drafttt.co.il'],
+        description: 'כותבת בדראפט, חובבת מסלולים מישוריים ומעגליים שלאורכם נחל ובסופם עגלת קפה' },
       hasPart: [
         ...REGIONS.map(r => ({ '@type': 'CollectionPage', name: `פנינים ב${r}`, url: `${SITE_URL}/region/${REGION_SLUG[r]}` })),
         ...CATS.map(c => ({ '@type': 'CollectionPage', name: c, url: `${SITE_URL}/category/${CAT_SLUG[c]}` })),
