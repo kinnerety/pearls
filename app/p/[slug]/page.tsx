@@ -13,6 +13,7 @@ import ShareButton from '@/components/ShareButton';
 import { shareText } from '@/lib/share';
 import { TextsProvider } from '@/components/TextsContext';
 import SiteFoot from '@/components/SiteFoot';
+import Forms from '@/components/Forms';
 import { isApprox } from '@/lib/geo';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -79,6 +80,8 @@ export default async function PlacePage({ params }: Props) {
           {/* share on the right, the site link on the left, no Waze (Kinneret, 2026-10-26: locations are often town-level) */}
           <ShareButton title={p.name} text={shareText(p, SITE_URL, texts)} />
           {p.link && <a className="go" href={p.link} target="_blank" rel="noopener">לאתר ←</a>}
+          {/* left of "לאתר": opens the report form with this pearl's name already filled in (Kinneret, 30.10.2026) */}
+          <a className="mistake" href="#report" data-place={p.name}>מצאת טעות?</a>
         </div>
       </article>
       {p.lat != null && (
@@ -94,6 +97,7 @@ export default async function PlacePage({ params }: Props) {
         </section>
       )}
       <SiteFoot label={texts['about.link']} />
+      <Forms texts={texts} />
     </div>
   );
 }
