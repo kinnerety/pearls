@@ -5,7 +5,7 @@ import { CAT_SLUG } from './config';
 
 export const ZONE_SHARE: Record<string, string> = { 'צפון': 'north', 'מרכז': 'center', 'ירושלים והאזור': 'jerusalem', 'דרום': 'south' };
 
-const image = (file: string, alt: string) => ({ url: `/share/${file}.jpg`, width: 1200, height: 630, alt });
+const image = (file: string, alt: string) => ({ url: `/share/${file}.jpg`, secureUrl: `/share/${file}.jpg`, type: 'image/jpeg', width: 1200, height: 630, alt });
 /** the picture for a category (anything unknown = the "אתרי אינטרנט" picture) */
 export const catShareImage = (cat?: string) => image(`cat-${(cat && CAT_SLUG[cat]) || 'websites'}`, cat || 'פנינים ישראליות');
 /** the picture for a region cloud */
