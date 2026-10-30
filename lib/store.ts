@@ -27,6 +27,9 @@ function ensure() {
     await sql`update places set data = replace(data::text, '"אוכל ושתייה"', '"משהו לאכול"')::jsonb where data::text like '%"אוכל ושתייה"%'`;
     // region renamed "גולן" → "רמת הגולן" (Kinneret, 2026-10-27)
     await sql`update places set data = replace(data::text, '"גולן"', '"רמת הגולן"')::jsonb where data::text like '%"גולן"%'`;
+    // the yellow strip never ends with a period, and its sentences are joined with commas (Kinneret, 2026-10-30); a no-op once clean
+    await sql`update places set data = jsonb_set(data, '{note}', to_jsonb(regexp_replace(regexp_replace(data->>'note', '\\.\\s+', ', ', 'g'), '[.\\s]+$', ''))) where data->>'note' ~ '\\.'`;
+    await sql`update drafts set data = jsonb_set(data, '{note}', to_jsonb(regexp_replace(regexp_replace(data->>'note', '\\.\\s+', ', ', 'g'), '[.\\s]+$', ''))) where status = 'pending' and data->>'note' ~ '\\.'`;
     const [{ n }] = await sql`select count(*)::int as n from places` as { n: number }[];
     if (n === 0) {
       for (const p of seed as Place[]) await sql`insert into places (id, data) values (${p.id}, ${JSON.stringify(p)}::jsonb) on conflict do nothing`;
@@ -35,6 +38,9 @@ function ensure() {
     await sql`update places set data = data || '{"approved_at":"2026-10-25"}'::jsonb where not (data ? 'approved_at')`;
   })().catch(e => { ready = null; throw e; }));
 }
+
+/** The yellow strip: no final period, sentences joined with commas (Kinneret, 2026-10-30). */
+export const cleanNote = (note?: string) => note?.trim() ? note.trim().replace(/\.\s+/g, ', ').replace(/[.\s]+$/, '') : undefined;
 
 type Row = { id: number; data: Place; hidden: boolean; updated_at: string };
 const fromRow = (r: Row): StoredPlace => ({ ...r.data, id: r.id, hidden: r.hidden, updated_at: r.updated_at });
@@ -50,7 +56,7 @@ export async function allPlaces(): Promise<StoredPlace[]> {
 export const getPlaces = unstable_cache(async (): Promise<Place[]> => {
   const all = await allPlaces();
   return all.filter(p => !p.hidden).map(({ hidden, updated_at, checked, ...p }) => p);
-}, ['places-v3'], { tags: ['places'] });
+}, ['places-v4'], { tags: ['places'] });
 
 export async function getPlace(id: number) {
   return (await getPlaces()).find(p => p.id === id);
@@ -64,7 +70,7 @@ function refresh() {
 export async function savePlace(p: Place, hidden: boolean): Promise<number> {
   if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
   await ensure();
-  const clean: Place = { ...p, ctags: canonTags(p.tags) };
+  const clean: Place = { ...p, note: cleanNote(p.note), ctags: canonTags(p.tags) };
   let id = clean.id;
   if (!id) {
     clean.approved_at ||= new Date().toISOString().slice(0, 10);
@@ -184,7 +190,7 @@ export async function getDraftRow(id: number): Promise<DraftRow | undefined> {
 export async function addDraft(place: Place, submissionId: number | null): Promise<number> {
   if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
   await ensure();
-  const clean: Place = { ...place, id: 0, checked: false, ctags: canonTags(place.tags || []) };
+  const clean: Place = { ...place, id: 0, checked: false, note: cleanNote(place.note), ctags: canonTags(place.tags || []) };
   const [{ id }] = await sql`insert into drafts (data, submission_id) values (${JSON.stringify(clean)}::jsonb, ${submissionId}) returning id` as { id: number }[];
   if (submissionId) await sql`update submissions set status = 'drafted' where id = ${submissionId} and status = 'new'`;
   return id;
@@ -194,7 +200,7 @@ export async function addDraft(place: Place, submissionId: number | null): Promi
 export async function updateDraft(id: number, place: Place): Promise<boolean> {
   if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
   await ensure();
-  const clean: Place = { ...place, id: 0, checked: false, ctags: canonTags(place.tags || []) };
+  const clean: Place = { ...place, id: 0, checked: false, note: cleanNote(place.note), ctags: canonTags(place.tags || []) };
   const rows = await sql`update drafts set data = ${JSON.stringify(clean)}::jsonb where id = ${id} and status = 'pending' returning id`;
   return rows.length > 0;
 }

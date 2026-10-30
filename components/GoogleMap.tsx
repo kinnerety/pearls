@@ -12,12 +12,12 @@ import PlaceCard from './PlaceCard';
 // shorter version of a place.
 type Props = { items: Place[]; visible: boolean; zoom?: number; apiKey: string; onFail: () => void };
 
-const ISRAEL = { south: 29.45, west: 34.25, north: 33.35, east: 35.9 };
+export const ISRAEL = { south: 29.45, west: 34.25, north: 33.35, east: 35.9 };
 const STAR = 'M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z';
 const GAP = 26, PAD = 8;
 
 // a quiet base map in the site's palette; businesses, bus stops and road shields hidden so only our places stand out
-const STYLES: google.maps.MapTypeStyle[] = [
+export const STYLES: google.maps.MapTypeStyle[] = [
   { stylers: [{ saturation: -30 }] },
   { featureType: 'landscape', elementType: 'geometry', stylers: [{ color: '#FAF7EF' }] },
   { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#DDEEF6' }] },
@@ -38,7 +38,7 @@ const zoomClass = (z: number) => (z <= 8 ? 's' : z <= 9 ? 'm' : 'l');
 
 // the script is loaded once per page, in Hebrew and with Israel as the region
 let loader: Promise<void> | null = null;
-function loadGoogle(key: string) {
+export function loadGoogle(key: string) {
   if (!loader) loader = new Promise((resolve, reject) => {
     (window as unknown as Record<string, unknown>).__pninimMaps = () => resolve();
     const s = document.createElement('script');
