@@ -528,8 +528,9 @@ main.contents{display:contents}
 
 /* site footer (Kinneret, 30.10.2026, option ג): a full-width band of the dark teal paper with light text and a torn paper top edge;
    region links by cloud (dot in the cloud colour), category links, the side-menu links. The logo block is her logo. */
-.site-footer{position:relative;margin:44px calc(50% - 50vw) -48px;width:100vw;background:var(--teal);color:var(--paper);padding:34px max(16px,env(safe-area-inset-right,0px)) 40px}
-.site-footer .edge{position:absolute;left:0;right:0;bottom:100%;width:100%;height:44px;display:block;fill:var(--teal)}
+.site-footer{position:relative;margin:70px calc(50% - 50vw) -48px;width:100vw;background:var(--teal);color:var(--paper);padding:34px max(16px,env(safe-area-inset-right,0px)) 40px}
+.site-footer .edge{position:absolute;left:0;right:0;bottom:100%;width:100%;height:72px;display:block;fill:var(--teal)}
+.site-footer .edge .back{fill:color-mix(in srgb,var(--teal) 78%,var(--paper))}
 .site-footer .inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,2.2fr) minmax(0,1.1fr) minmax(0,1fr);gap:28px 36px;align-items:start}
 .site-footer .brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding-top:4px}
 .site-footer .brand .acorn{width:64px;height:64px;transform:rotate(-10deg);filter:drop-shadow(0 2px 3px rgb(0 0 0/.25))}

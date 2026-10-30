@@ -16,9 +16,10 @@ const MENU: { href: string; label: string }[] = [
 export default function SiteFooter() {
   return (
     <footer className="site-footer" aria-label="תחתית האתר">
-      <svg className="edge" viewBox="0 0 1200 44" preserveAspectRatio="none" aria-hidden="true">
-        {/* a torn, not symmetric, paper edge (Kinneret 12:51: cut deeper on the left, under "עוד באתר") */}
-        <path d="M0 44V31L38 33L72 27L118 30L160 36L205 34L248 41L292 38L330 29L368 31L410 22L452 26L498 17L540 20L586 12L628 16L672 9L716 13L760 7L806 12L852 6L898 10L944 4L990 9L1036 5L1082 11L1128 6L1166 9L1200 4V44Z" />
+      <svg className="edge" viewBox="0 0 1200 72" preserveAspectRatio="none" aria-hidden="true">
+        {/* soft rolling hills like the header's, not symmetric (Kinneret 13:00): a lighter hill behind, the footer's paper in front */}
+        <path className="back" d="M0 72V34C110 18 210 12 330 24C430 34 480 50 570 44C690 36 740 12 860 10C980 8 1080 18 1200 30V72Z" />
+        <path d="M0 72V56C90 50 170 58 260 52C370 44 420 30 520 34C640 40 700 58 800 54C900 50 960 28 1060 30C1130 32 1170 42 1200 46V72Z" />
       </svg>
       <div className="inner">
         <div className="brand">
