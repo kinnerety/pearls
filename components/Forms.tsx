@@ -127,11 +127,10 @@ export function Contact({ ref_, texts, inline = false }: { ref_?: React.RefObjec
   // the admin shows everything one after the other, so every text can be edited
   if (editing) return (
     <div className="form-pop static">
-      <div className="sheet">{head}{picker}
-        <p className="adm-hint">{names[2] || 'שאלה על פנינה'}:</p><p className="note-q pre"><T k="contact.question" /></p>
-        <p className="adm-hint">{names[3] || 'משהו אחר'}:</p><OtherFields />
-        <button className="send" disabled><T k="contact.send" /></button>
-      </div>
+      <p className="adm-hint">טופס יצירת הקשר כשבוחרים "{names[2] || 'שאלה על פנינה'}":</p>
+      <div className="sheet">{head}{picker}<p className="note-q pre"><T k="contact.question" /></p></div>
+      <p className="adm-hint">טופס יצירת הקשר כשבוחרים "{names[3] || 'משהו אחר'}" (ב"המלצה על פנינה" וב"דיווח על טעות" מופיעים הטפסים שלמעלה, עם אותם טקסטים):</p>
+      <div className="sheet">{head}<OtherFields /><button className="send" disabled><T k="contact.send" /></button></div>
       <div className="sheet"><Done prefix="contact" texts={texts} /></div>
     </div>
   );
