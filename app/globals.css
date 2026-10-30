@@ -54,8 +54,8 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .ftop{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px;padding-top:6px}
 .ftop .qbox{flex:0 1 340px}
 .topacts{margin-inline-start:auto;margin-inline-end:3px;display:inline-flex;align-items:center;gap:18px}
-.topacts .about{color:var(--ink);font-size:.95rem;font-weight:600;text-decoration:underline;text-underline-offset:3px}
-.topacts .about:hover{color:var(--teal)}
+.topacts .allreg{font:inherit;font-size:.92rem;font-weight:600;color:var(--ink);background:transparent;border:1.5px dashed rgb(34 51 59/.55);border-radius:999px;padding:4px 14px;cursor:pointer;transition:background .15s}
+.topacts .allreg:hover{background:var(--cream)}
 .recommend{position:relative;display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.95rem;background:var(--sun-deep);color:var(--ink);border-radius:999px;padding:5px 18px 5px 40px;text-decoration:none;box-shadow:var(--shadow);white-space:nowrap;transition:transform .15s}
 .recommend:hover{transform:translateY(-1px)}
 .recommend .fav{position:absolute;left:-8px;top:50%;width:36px;height:48px;margin-top:-26px;transform:rotate(-24deg);filter:drop-shadow(1.5px 2px 0 rgb(34 51 59/.28))}
@@ -74,7 +74,6 @@ input[type=search]{min-width:0;flex:1 1 180px;max-width:320px}
 .cloud .gname{width:100%;display:flex;align-items:center;gap:6px;font-family:var(--display);font-weight:400;font-size:1rem}
 .cloud .gname .illo{width:34px;height:34px;overflow:visible}
 .chip.sm{font-size:.86rem;padding:2px 11px}
-.chip.clear{background:transparent;outline:1px dashed var(--muted)}
 .chip .illo{width:22px;height:22px;display:inline-block;vertical-align:-6px;margin-inline-end:5px}
 .chip.all{white-space:nowrap;max-width:100%;padding-inline:9px;overflow:hidden;text-overflow:ellipsis} .chip.all .illo{margin-inline-end:3px}
 
