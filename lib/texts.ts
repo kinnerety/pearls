@@ -18,13 +18,14 @@ const FIXED_DEFAULTS = {
   'popup.once': { label: 'פופאפ: תיבת הסימון', text: 'לא להציג לי שוב את ההודעה הזאת עד הפעם הבאה' },
   'popup.button': { label: 'פופאפ: הכפתור', text: '100%, אבדוק גם בעצמי 👌' },
   'prefs.note': { label: 'המשפט הקטן מתחת ל"עוד העדפות"', text: 'יכול להיות שיש עוד פנינים שמתאימות למשפחות או פתוחות בשבת ולא סווגו ככאלה, ולהפך', multi: true },
-  // the light-blue "נגישות" chip under the preferences (Kinneret, 30.10.2026): not a filter, a click opens this tooltip. Her placeholder wording until she edits it in /admin/texts
+  // the light-blue "נגישות" chip under the preferences (Kinneret, 30.10.2026): not a filter, a click opens this popup (a tooltip until 30.10 afternoon). Her placeholder wording until she edits it in /admin/texts
   'access.chip': { label: 'הצ\'יפ "נגישות" בפאנל הסינון', text: 'נגישות' },
-  'access.title': { label: 'טולטיפ הנגישות: הכותרת', text: 'למה אין כאן מידע על נגישות?' },
-  'access.text': { label: 'טולטיפ הנגישות: הטקסט (כל שורה = פסקה)', multi: true, text: [
+  'access.title': { label: 'פופאפ הנגישות: הכותרת', text: 'למה אין כאן מידע על נגישות?' },
+  'access.text': { label: 'פופאפ הנגישות: הטקסט (כל שורה = פסקה)', multi: true, text: [
     'חשבנו על זה, אבל אין לנו דרך לוודא נגישות בוודאות: את הפרטים על הפנינים אוסף AI, ואנחנו לא ביקרנו בכל מקום כדי לבדוק שהנגישות מלאה ושלא השתנה שם משהו.',
     'הכי לא היינו רוצים לשלוח מישהו למקום שכתוב עליו שהוא נגיש, ובסוף הוא לא. לכן ליד כל פנינה יש קישור לאתר של המקום עצמו: כדאי להיכנס, לבדוק אם המקום נגיש לצורך הספציפי שלך, ולהחליט בעצמך.',
   ].join('\n') },
+  'access.button': { label: 'פופאפ הנגישות: הכפתור', text: 'הבנתי, תודה' },
   'maphelp.link': { label: 'הקישור מעל המפה', text: 'איך להשתמש במפה?' },
   'maphelp.important': { label: 'טיפ המפה: הפסקה הראשונה', text: 'חשוב: חלק מהפנינים ממוקמות בתוך היישוב באופן כללי, ולא במיקום מדויק ברמת הניווט לכתובת. כדי לנווט לשם, צריך להכניס ב-Waze את שם הפנינה.', multi: true, hint: 'מילה עם נקודתיים בתחילת הפסקה (כמו "חשוב:") תוצג מודגשת' },
   'maphelp.items': {

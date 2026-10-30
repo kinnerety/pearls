@@ -149,8 +149,11 @@ export default function Explorer({ places, texts, scope, total, foot }: { places
         {hide === 'cat' && <section className="filters" aria-label="לפי אזור"><div className="ftop end">{recommend}</div>{clouds}</section>}
       </> : <section className="filters" aria-label="לאן מכאן">
         <div className="ftop">
-          <h2 className="flabel">לאן מכאן</h2>
-          {qform}
+          {/* .fhead keeps the label and the search box on one row on phones (Kinneret, 30.10.2026); on a computer it is display:contents */}
+          <div className="fhead">
+            <h2 className="flabel">לאן מכאן</h2>
+            {qform}
+          </div>
           {recommend}
         </div>
         {clouds}
