@@ -6,7 +6,7 @@ import { ACORN_BARE } from './art';
 export default function NotFound({ texts }: { texts: Texts }) {
   return (
     <main className="nf" id="nf">
-      <h2 className="nf-title">{texts['notfound.title']}</h2>
+      <h2 className="nf-title" id="content" tabIndex={-1}>{texts['notfound.title']}</h2>
       <p>{texts['notfound.text'].split('\n').map((l, i) => <span key={i}>{i > 0 && <br />}{l}</span>)}</p>
       <div className="nf-row">
         <a className="recommend" href="#suggest">להמליץ על פנינה<svg className="fav" viewBox="10 3 44 61" aria-hidden="true" dangerouslySetInnerHTML={{ __html: ACORN_BARE }} /></a>

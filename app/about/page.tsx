@@ -29,6 +29,7 @@ export default async function About() {
     <div className="wrap place-page about-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <nav className="crumbs"><Link href="/" className="sign"><span>לכל הפנינים</span></Link></nav>
+      <main id="content" className="contents">
       <article className="place about">
         <h1>{texts['about.h1'].split('\n').map((l, i) => <Fragment key={i}>{i > 0 && <br />}<Rich text={l} /></Fragment>)}</h1>
 
@@ -87,6 +88,7 @@ export default async function About() {
         ))}
         <p className="about-back"><Link href="/" className="back-btn">{texts['about.back']}</Link></p>
       </article>
+      </main>
       <Forms texts={texts} />
       <svg className="divider" viewBox="0 0 560 44" aria-hidden="true" dangerouslySetInnerHTML={{ __html: DIVIDER_SVG }} />
     </div>

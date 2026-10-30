@@ -8,6 +8,7 @@ const PAGES = [
   ['/admin/about', 'עמוד אודות'],
   ['/admin/intros', 'דפי אזור וקטגוריה'],
   ['/admin/forms', 'הטפסים'],
+  ['/admin/accessibility', 'הצהרת נגישות'],
 ] as const;
 
 export default function TextsMenu() {

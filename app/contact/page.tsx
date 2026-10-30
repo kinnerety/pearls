@@ -21,7 +21,10 @@ export default async function ContactPage() {
     <div className="wrap place-page contact">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <nav className="crumbs"><Link href="/" className="sign"><span>לכל הפנינים</span></Link></nav>
-      <TextsProvider texts={texts}><Contact texts={texts} inline /></TextsProvider>
+      <main id="content" className="contents">
+        <h1 className="sr-only">ליצור קשר</h1>
+        <TextsProvider texts={texts}><Contact texts={texts} inline /></TextsProvider>
+      </main>
       <SiteFoot label={texts['about.link']} />
     </div>
   );
