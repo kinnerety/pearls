@@ -3,10 +3,11 @@ import { redirect } from 'next/navigation';
 import { isAdmin } from '@/lib/auth';
 import { getTexts, hasDb } from '@/lib/store';
 import { FORM_KEYS } from '@/lib/texts';
-import TextsForm from '@/components/admin/TextsForm';
+import LiveTexts from '@/components/admin/LiveTexts';
+import Forms from '@/components/Forms';
 import TextsMenu from '@/components/admin/TextsMenu';
 
-// The texts of the two popup forms (suggest a pearl / report a mistake), in the order they appear
+// The two popup forms (suggest a pearl / report a mistake) shown as they are on the site, every text edited in place
 export default async function FormTexts() {
   if (!(await isAdmin())) redirect('/admin');
   const texts = await getTexts();
@@ -21,8 +22,12 @@ export default async function FormTexts() {
             <Link className="adm-btn ghost" href="/about#report" target="_blank">טופס הדיווח באתר</Link>
           </div>
         </div>
-        {hasDb ? <TextsForm initial={texts} keys={FORM_KEYS} hint={'הטקסטים של טופס הצעת פנינה ושל טופס הדיווח על טעות, לפי הסדר בטופס. שינוי נשמר רק אחרי לחיצה על "שמירה".'} />
-          : <div className="adm-card"><p>אין עדיין מסד נתונים מחובר, אז אי אפשר לשמור טקסטים.</p></div>}
+        {hasDb ? (
+          <LiveTexts initial={texts} keys={FORM_KEYS}>
+            <p className="adm-hint">כל טופס מוצג פעמיים: הטופס עצמו, ואחריו ההודעה שרואים אחרי השליחה. השדות עצמם לא עובדים כאן, רק הטקסטים.</p>
+            <Forms texts={texts} />
+          </LiveTexts>
+        ) : <div className="adm-card"><p>אין עדיין מסד נתונים מחובר, אז אי אפשר לשמור טקסטים.</p></div>}
       </div>
     </div>
   );

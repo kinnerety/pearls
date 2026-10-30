@@ -108,3 +108,19 @@ p.adm-report{flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px}
 .adm-side a:hover{background:var(--cream)}
 .adm-side a[aria-current]{background:var(--sage)}
 @media (max-width:760px){.adm-split{grid-template-columns:1fr}.adm-side{position:static;flex-direction:row;flex-wrap:wrap}}
+
+/* texts edited in place: the real popup / forms / map tip on the admin page (Kinneret, 30.10.2026) */
+.adm-live{display:flex;flex-direction:column;gap:14px;align-items:stretch}
+.adm-live .form-pop.static{display:flex;flex-direction:column;gap:18px;width:min(620px,100%);max-height:none;overflow:visible;margin:0 auto}
+.adm-live .check-pop.static{margin:0 auto;width:100%}
+.adm-live .maphelp.static{align-self:flex-start;padding-bottom:0}
+.adm-live .maphelp.static .maphelp-tip{position:static;transform:none;margin-top:8px}
+.adm-live .pre{white-space:pre-wrap}
+.adm-live input:not(.edt),.adm-live textarea,.adm-live .send,.adm-live .check-pop button{pointer-events:none;opacity:.85}
+.edt{display:inline;min-width:1.5em;border-radius:4px;outline:1.5px dashed transparent;outline-offset:2px;cursor:text;white-space:pre-wrap;transition:outline-color .15s}
+.edt:hover{outline-color:var(--line)}
+.edt:focus{outline:2px solid var(--teal);background:var(--sheet)}
+.edt[data-changed]{background:var(--sun)}
+.edt:empty::before{content:"(ריק)";color:var(--muted)}
+.adm-changed summary{cursor:pointer;font-weight:600}
+.adm-changed ul{margin:8px 0 0;padding-inline-start:18px;display:flex;flex-direction:column;gap:6px}
