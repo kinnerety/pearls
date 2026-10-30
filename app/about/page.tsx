@@ -7,6 +7,7 @@ import { linkFaqForms, linkForms, parseAbout, parseFaq, plainText } from '@/lib/
 import { DIVIDER_SVG } from '@/components/art';
 import Rich, { Paras } from '@/components/Rich';
 import Forms from '@/components/Forms';
+import SiteFooter from '@/components/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'אודות | פנינים ישראליות',
@@ -91,6 +92,7 @@ export default async function About() {
       </main>
       <Forms texts={texts} />
       <svg className="divider" viewBox="0 0 560 44" aria-hidden="true" dangerouslySetInnerHTML={{ __html: DIVIDER_SVG }} />
+      <SiteFooter />
     </div>
   );
 }

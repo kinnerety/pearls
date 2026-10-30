@@ -6,7 +6,7 @@ import { getTexts } from '@/lib/store';
 import { parseAbout } from '@/lib/texts';
 import Rich from '@/components/Rich';
 import Forms from '@/components/Forms';
-import SiteFoot from '@/components/SiteFoot';
+import SiteFooter from '@/components/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'הצהרת נגישות | פנינים ישראליות',
@@ -31,7 +31,7 @@ export default async function Accessibility() {
           {blocks.map((b, i) => <Fragment key={i}>{b.kind === 'h2' ? <h2><Rich text={b.text} /></h2> : <p><Rich text={b.text} /></p>}</Fragment>)}
         </article>
       </main>
-      <SiteFoot label={texts['about.link']} />
+      <SiteFooter />
       {/* "טופס יצירת הקשר" in the text opens the contact popup */}
       <Forms texts={texts} />
     </div>
