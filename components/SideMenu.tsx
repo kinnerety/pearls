@@ -10,7 +10,7 @@ const PHONE = `<path d="M14 42c10 12 26 20 36 20 4 0 8-3 8-7l-2-7c-1-3-4-4-7-3l-
 
 // The small menu under the filter panel (Kinneret, 30.10.2026): looks like a menu, not like filter chips.
 // "אודות" lives here instead of beside the recommend button; the suggest and report links open the popup forms (Forms.tsx);
-// "ליצור קשר" is shown but not active until its form exists (thread "בניית טופס יצירת קשר").
+// "ליצור קשר" opens the contact form (#contact, Forms.tsx).
 export default function SideMenu({ texts }: { texts: Texts }) {
   return (
     <nav className={'side-menu ' + menuFont.className} aria-label="תפריט">
