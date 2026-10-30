@@ -6,10 +6,11 @@ import { SITE_KEYS } from '@/lib/texts';
 import LiveTexts from '@/components/admin/LiveTexts';
 import CheckPopup from '@/components/CheckPopup';
 import MapHelp from '@/components/MapHelp';
+import AccessTip from '@/components/AccessTip';
 import TextsMenu from '@/components/admin/TextsMenu';
 
 // The popup and the map tip are shown as they are on the site and edited in place; the rest as plain fields
-const LIVE = SITE_KEYS.filter(k => k.startsWith('popup.') || k.startsWith('maphelp.'));
+const LIVE = SITE_KEYS.filter(k => k.startsWith('popup.') || k.startsWith('maphelp.') || k.startsWith('access.'));
 const FIELDS = SITE_KEYS.filter(k => !LIVE.includes(k));
 
 export default async function SiteTexts() {
@@ -30,6 +31,9 @@ export default async function SiteTexts() {
             <CheckPopup texts={texts} />
             <h2 className="adm-h2">הטיפ מעל המפה</h2>
             <MapHelp texts={texts} />
+            <h2 className="adm-h2">הצ'יפ "נגישות" בפאנל הסינון</h2>
+            <p className="adm-hint">מתחת ל"עוד העדפות". לחיצה עליו באתר פותחת את ההסבר הזה.</p>
+            <AccessTip texts={texts} />
           </LiveTexts>
         ) : <div className="adm-card"><p>אין עדיין מסד נתונים מחובר, אז אי אפשר לשמור טקסטים.</p></div>}
       </div>

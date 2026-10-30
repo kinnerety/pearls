@@ -8,6 +8,7 @@ import { DIVIDER_SVG } from './art';
 import Illo from './Illo';
 import MapHelp from './MapHelp';
 import SideMenu from './SideMenu';
+import AccessTip from './AccessTip';
 import { ACORN_BARE } from './art';
 import PlaceCard from './PlaceCard';
 import { TextsProvider } from './TextsContext';
@@ -200,6 +201,8 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
                 if (!n && !on) return null;
                 return <Chip key={k} pressed={on} n={n} onClick={() => togglePref(k, on)}>{PREF_LABEL[k]}</Chip>;
               })}
+              {/* the "נגישות" chip with its tooltip (Kinneret, 30.10.2026): not a filter, under the preferences */}
+              <AccessTip texts={texts} />
               {hide === 'cat' && <p className="fnote under">{texts['prefs.note']}</p>}
             </div>
           </div>
