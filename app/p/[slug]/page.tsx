@@ -12,7 +12,7 @@ import PlaceMap from '@/components/PlaceMap';
 import ShareButton from '@/components/ShareButton';
 import { shareText } from '@/lib/share';
 import { TextsProvider } from '@/components/TextsContext';
-import SiteFoot from '@/components/SiteFoot';
+import SiteFooter from '@/components/SiteFooter';
 import Forms from '@/components/Forms';
 import { isApprox } from '@/lib/geo';
 import { catShareImage } from '@/lib/share-image';
@@ -99,8 +99,8 @@ export default async function PlacePage({ params }: Props) {
         </section>
       )}
       </main>
-      <SiteFoot label={texts['about.link']} />
       <Forms texts={texts} />
+      <SiteFooter />
     </div>
   );
 }

@@ -4,7 +4,8 @@ import { SITE_URL } from '@/lib/slug';
 import { getTexts } from '@/lib/store';
 import { TextsProvider } from '@/components/TextsContext';
 import { Contact } from '@/components/Forms';
-import SiteFoot from '@/components/SiteFoot';
+import SiteFooter from '@/components/SiteFooter';
+import Forms from '@/components/Forms';
 
 export const metadata: Metadata = {
   title: 'ליצור קשר | פנינים ישראליות',
@@ -25,7 +26,9 @@ export default async function ContactPage() {
         <h1 className="sr-only">ליצור קשר</h1>
         <TextsProvider texts={texts}><Contact texts={texts} inline /></TextsProvider>
       </main>
-      <SiteFoot label={texts['about.link']} />
+      <SiteFooter />
+      {/* the suggest/report popups, for the footer links */}
+      <Forms texts={texts} />
     </div>
   );
 }

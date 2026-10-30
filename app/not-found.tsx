@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { getTexts } from '@/lib/store';
 import Hero from '@/components/Hero';
 import NotFound from '@/components/NotFound';
-import SiteFoot from '@/components/SiteFoot';
+import SiteFooter from '@/components/SiteFooter';
 import Forms from '@/components/Forms';
 import ScrollCenter from '@/components/ScrollCenter';
 
@@ -17,7 +17,7 @@ export default async function NotFoundPage() {
       <NotFound texts={texts} />
       {/* the page opens scrolled so the card is centred (Kinneret, 30.10.2026) */}
       <ScrollCenter id="nf" />
-      <SiteFoot label={texts['about.link']} />
+      <SiteFooter />
       {/* the suggest-a-pearl popup, opened by the recommend button */}
       <Forms texts={texts} />
     </div>

@@ -4,7 +4,7 @@ import { SITE_DESCRIPTION, SITE_URL, slugOf } from '@/lib/slug';
 import { CATS, CAT_SLUG, REGIONS, REGION_SLUG } from '@/lib/config';
 import Hero from '@/components/Hero';
 import Explorer from '@/components/Explorer';
-import SiteFoot from '@/components/SiteFoot';
+import SiteFooter from '@/components/SiteFooter';
 import Forms from '@/components/Forms';
 
 // pninim-il.co.il is the one official address, so the backup vercel.app address doesn't count as a second site
@@ -30,7 +30,8 @@ export default async function Home() {
     <div className="wrap">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <Hero />
-      <main id="content" className="contents"><Explorer places={places} texts={texts} foot={<SiteFoot index menu />} /></main>
+      <main id="content" className="contents"><Explorer places={places} texts={texts} /></main>
+      <SiteFooter />
       {/* the suggest-a-pearl popup, opened by the button of the empty gallery */}
       <Forms texts={texts} />
     </div>
