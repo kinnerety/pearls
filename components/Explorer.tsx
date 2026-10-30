@@ -41,7 +41,7 @@ function countText(n: number, active: boolean, empty: string, scope?: Scope) {
 
 // `scope`: a region page gets the places of that region and no region clouds; a category page no category chips
 // `total`: how many pearls the whole site has, shown on the "לכל הפנינים" link so it reads as a way back to the home page
-export default function Explorer({ places, texts, scope, total }: { places: Place[]; texts: Texts; scope?: Scope; total?: number }) {
+export default function Explorer({ places, texts, scope, total, foot }: { places: Place[]; texts: Texts; scope?: Scope; total?: number; foot?: React.ReactNode }) {
   const hide = scope?.kind;
   const [st, setSt] = useState<FilterState>(EMPTY);
   const [ready, setReady] = useState(false);
@@ -229,6 +229,8 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
               <span className="legend-pick"><i className="pk"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" /></svg></i>המלצת המערכת</span>
             </div>
           </aside>
+          {/* the page footer lives in the gallery column so it lines up with the cards (Kinneret, 30.10.2026) */}
+          {foot}
         </div>
       </div>
       <CheckPopup ref={popRef} texts={texts} />

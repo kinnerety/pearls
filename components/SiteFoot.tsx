@@ -1,9 +1,19 @@
 import Link from 'next/link';
 import { CATS, CAT_SLUG, REGIONS, REGION_SLUG } from '@/lib/config';
 
-// Bottom of the public pages: the small "אודות" link on the right (Kinneret, 2026-10-27; since 28.10 the home page has it in the top panel instead), and on the home page
-// two quiet index lines to the region and category pages, so search engines find all 29 from the home page
-export default function SiteFoot({ label, index = false }: { label?: string; index?: boolean }) {
+// Bottom of the public pages. Place pages (and 404/contact) keep the small "אודות" link on the right (Kinneret, 2026-10-27).
+// On the home page and the region/category pages (Kinneret, 30.10.2026) the footer sits inside the gallery column, aligned
+// with the cards: the two quiet index lines to the 29 region and category pages (home only, so search engines find them all),
+// and under them one row with every item of the side menu. "הצהרת נגישות" (the accessibility-statement thread, same day) is the fifth.
+const MENU: { href: string; label: string }[] = [
+  { href: '/about', label: 'אודות' },
+  { href: '#suggest', label: 'להמליץ על פנינה' },
+  { href: '#report', label: 'לדווח על טעות' },
+  { href: '#contact', label: 'ליצור קשר' },
+  { href: '/accessibility', label: 'הצהרת נגישות' },
+];
+
+export default function SiteFoot({ label, index = false, menu = false }: { label?: string; index?: boolean; menu?: boolean }) {
   return (
     <footer className="site-foot">
       {index && (
@@ -12,8 +22,12 @@ export default function SiteFoot({ label, index = false }: { label?: string; ind
           <p><b>לפי קטגוריה:</b> {CATS.map((c, i) => <span key={c}>{i > 0 && ' · '}<Link href={`/category/${CAT_SLUG[c]}`}>{c}</Link></span>)}</p>
         </div>
       )}
+      {menu && (
+        <p className="site-links">
+          {MENU.map((m, i) => <span key={m.href}>{i > 0 && ' · '}{m.href.startsWith('#') ? <a href={m.href}>{m.label}</a> : <Link href={m.href}>{m.label}</Link>}</span>)}
+        </p>
+      )}
       {label && <Link href="/about">{label}</Link>}
-      {index && <Link href="/contact">ליצור קשר</Link>}
     </footer>
   );
 }
