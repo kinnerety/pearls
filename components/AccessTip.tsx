@@ -13,23 +13,24 @@ export default function AccessTip({ texts }: { texts: Texts }) {
   const closeT = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const paras = texts['access.text'].split('\n').map(s => s.trim()).filter(Boolean);
 
+  // in the admin the tip is always open for editing: no closing on an outside click, Escape or mouse-leave
   useEffect(() => {
-    if (!stuck) return;
+    if (!stuck || editing) return;
     const away = (e: Event) => { if (!box.current?.contains(e.target as Node)) { setStuck(false); setOpen(false); } };
     const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') { setStuck(false); setOpen(false); } };
     document.addEventListener('pointerdown', away);
     document.addEventListener('keydown', esc);
     return () => { document.removeEventListener('pointerdown', away); document.removeEventListener('keydown', esc); };
-  }, [stuck]);
+  }, [stuck, editing]);
 
   const enter = () => { clearTimeout(closeT.current); setOpen(true); };
-  const leave = () => { if (!stuck) closeT.current = setTimeout(() => setOpen(false), 200); };
+  const leave = () => { if (!stuck && !editing) closeT.current = setTimeout(() => setOpen(false), 200); };
 
   return (
     <div className={'access' + (editing ? ' static' : '')} ref={box} onMouseEnter={enter} onMouseLeave={leave}>
       <button type="button" className="chip access-chip" aria-expanded={open} aria-controls="access-tip"
         onClick={() => { if (editing) return; const s = !stuck; setStuck(s); setOpen(s); }}><T k="access.chip" /></button>
-      {open && (
+      {(open || editing) && (
         <div className="maphelp-tip access-tip" id="access-tip" role="tooltip">
           <b className="maphelp-title"><T k="access.title" /></b>
           {paras.map((_, i) => <p key={i}><T k="access.text" line={i} /></p>)}
