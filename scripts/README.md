@@ -6,4 +6,4 @@
   ```
 - `validate-data.mjs` — רץ אוטומטית לפני כל build (`npm run build`). אם הנתונים שבורים, הבנייה נכשלת ושום דבר לא עולה לאתר.
 - `tags.py` — מילון התגיות האחיד (עותק מ-`site-sketch/tags.py`).
-- `share-images.cjs` — מייצר את תמונות השיתוף (אחת לכל סוג) אל `public/share/`. צריך Playwright ואת האתר רץ מקומית בפורט 3100.
+- `share-images.cjs` — מייצר את תמונות התצוגה המקדימה של קישורים משותפים (og:image) אל `public/share/`: `cat-<קטגוריה>.jpg` לכל קטגוריה ו-`zone-<ענן>.jpg` לכל ענן אזורים, 1200×630: האייקון של הקטגוריה/הענן (`lib/illo.ts`) על עיגול נייר לבן עם הכותרת. צריך Playwright ורשת (הפונטים מגוגל). אחרי שינוי באייקון: `node scripts/share-images.cjs`.

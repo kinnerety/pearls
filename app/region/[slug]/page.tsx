@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { REGIONS, REGION_OF_SLUG, REGION_SLUG, zoneOf } from '@/lib/config';
 import { ZONE_HERO } from '@/lib/headers';
+import { zoneShareImage } from '@/lib/share-image';
 import { getPlaces, getTexts } from '@/lib/store';
 import { INTRO_GENERIC } from '@/lib/texts';
 import Collection from '@/components/Collection';
@@ -23,7 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const d = await load((await params).slug);
   if (!d) return {};
   const names = d.places.slice(0, 6).map(p => p.name).join(', ');
-  return { title: `${d.title} | פנינים ישראליות`, description: `${d.lede}. ${names}`, alternates: { canonical: `/region/${REGION_SLUG[d.region]}` } };
+  const url = `/region/${REGION_SLUG[d.region]}`, description = `${d.lede}. ${names}`, img = zoneShareImage(zoneOf(d.region));
+  return { title: `${d.title} | פנינים ישראליות`, description, alternates: { canonical: url }, openGraph: { title: d.title, description, url, siteName: 'פנינים ישראליות', locale: 'he_IL', type: 'website', images: [img] }, twitter: { card: 'summary_large_image', images: [img.url] } };
 }
 
 export default async function RegionPage({ params }: Props) {

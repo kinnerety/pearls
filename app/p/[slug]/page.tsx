@@ -15,6 +15,7 @@ import { TextsProvider } from '@/components/TextsContext';
 import SiteFoot from '@/components/SiteFoot';
 import Forms from '@/components/Forms';
 import { isApprox } from '@/lib/geo';
+import { catShareImage } from '@/lib/share-image';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -29,9 +30,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${title} | פנינים ישראליות`, description,
     alternates: { canonical: url },
-    // the category's picture is what WhatsApp & co. show next to a shared link
-    openGraph: { title, description, url, siteName: 'פנינים ישראליות', locale: 'he_IL', type: 'article', images: [{ url: `/share/${CAT_ILLO[p.cats[0]] || 'valley'}.jpg`, width: 1080, height: 1080, alt: p.cats[0] }] },
-    twitter: { card: 'summary_large_image', title, description, images: [`/share/${CAT_ILLO[p.cats[0]] || 'valley'}.jpg`] },
+    // the main category's header picture is what WhatsApp & co. show next to a shared link (1200×630, lib/share-image.ts)
+    openGraph: { title, description, url, siteName: 'פנינים ישראליות', locale: 'he_IL', type: 'article', images: [catShareImage(p.cats[0])] },
+    twitter: { card: 'summary_large_image', title, description, images: [catShareImage(p.cats[0]).url] },
   };
 }
 

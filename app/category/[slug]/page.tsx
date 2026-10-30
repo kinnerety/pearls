@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { CATS, CAT_OF_SLUG, CAT_SLUG } from '@/lib/config';
 import { CAT_HERO } from '@/lib/headers';
+import { catShareImage } from '@/lib/share-image';
 import { getPlaces, getTexts } from '@/lib/store';
 import { INTRO_GENERIC } from '@/lib/texts';
 import Collection from '@/components/Collection';
@@ -23,7 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const d = await load((await params).slug);
   if (!d) return {};
   const names = d.places.slice(0, 6).map(p => p.name).join(', ');
-  return { title: `${d.cat} בישראל | פנינים ישראליות`, description: `${d.lede}. ${names}`, alternates: { canonical: `/category/${CAT_SLUG[d.cat]}` } };
+  const url = `/category/${CAT_SLUG[d.cat]}`, description = `${d.lede}. ${names}`, img = catShareImage(d.cat);
+  return { title: `${d.cat} בישראל | פנינים ישראליות`, description, alternates: { canonical: url }, openGraph: { title: d.cat, description, url, siteName: 'פנינים ישראליות', locale: 'he_IL', type: 'website', images: [img] }, twitter: { card: 'summary_large_image', images: [img.url] } };
 }
 
 export default async function CategoryPage({ params }: Props) {

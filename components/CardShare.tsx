@@ -2,17 +2,17 @@
 import { useState } from 'react';
 import type { Place } from '@/lib/types';
 import { shareText } from '@/lib/share';
+import { shareOrCopy } from '@/lib/share-sheet';
 import { useTexts } from './TextsContext';
 
-// Phones open the share sheet (WhatsApp, sending to yourself, notes...); desktops copy the text.
+// Phones open the share sheet (WhatsApp, sending to yourself, notes...); desktops copy the text (lib/share-sheet.ts explains why).
 // The picture comes from the link preview of the place's page (see lib/share.ts), not as a separate attachment.
 export default function CardShare({ p }: { p: Place }) {
   const [done, setDone] = useState(false);
   const texts = useTexts();
   const share = async () => {
     const text = shareText(p, location.origin, texts);
-    if (navigator.share) { try { await navigator.share({ title: p.name, text }); } catch {} return; }
-    try { await navigator.clipboard.writeText(text); setDone(true); setTimeout(() => setDone(false), 2000); } catch { prompt('העתיקו את הטקסט:', text); }
+    if (await shareOrCopy(p.name, text)) { setDone(true); setTimeout(() => setDone(false), 2500); }
   };
   return (
     <button type="button" className="sh" onClick={share}>

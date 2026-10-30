@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Suez_One, Assistant } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SITE_DESCRIPTION, SITE_URL } from '@/lib/slug';
+import { catShareImage } from '@/lib/share-image';
 import './globals.css';
 
 const display = Suez_One({ subsets: ['hebrew', 'latin'], weight: '400', variable: '--font-display', display: 'swap' });
@@ -14,7 +15,9 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   // proves to Google Search Console (account kinneret@drafttt.co.il) that the site is Kinneret's
   verification: { google: 'AGdNMcuWajpwXubzXC3KvokLG5WinRlZrdmh_f1Jrcc' },
-  openGraph: { title: 'פנינים ישראליות', description: 'מקומות קטנים ומיוחדים מהמלצות של חברים', locale: 'he_IL', type: 'website' },
+  // the link preview of the home page (and of any page without its own picture) = the home header
+  openGraph: { title: 'פנינים ישראליות', description: 'מקומות קטנים ומיוחדים מהמלצות של חברים', locale: 'he_IL', type: 'website', images: [catShareImage()] },
+  twitter: { card: 'summary_large_image', images: [catShareImage().url] },
 };
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: '#FAF7EF' };
 
