@@ -179,6 +179,38 @@ const FIXED_DEFAULTS = {
   'contact.done.button': { label: 'יצירת קשר: הכפתור בהודעת ההצלחה', text: 'חזרה לגלריית הפנינים' },
   'about.back': { label: 'אודות: הכפתור בתחתית העמוד', text: 'חזרה לגלריית הפנינים' },
   'about.link': { label: 'הקישור לעמוד "אודות" בתחתית העמודים', text: 'אודות' },
+  // The accessibility statement (/accessibility, 30.10.2026): a first draft by Claude from the site's real audit; Kinneret rewrites it in /admin/accessibility
+  'a11y.title': { label: 'הצהרת נגישות: הכותרת', text: 'הצהרת נגישות' },
+  'a11y.date': { label: 'הצהרת נגישות: התאריכים (מתחת לכותרת)', text: 'תאריך ההצהרה: 30.10.2026 · עדכון אחרון: 30.10.2026', hint: 'כשמשהו בהצהרה משתנה, לעדכן כאן את תאריך העדכון האחרון' },
+  'a11y.main': {
+    label: 'הצהרת נגישות: הטקסט', multi: true, big: true,
+    hint: 'שורה שמתחילה ב-## היא כותרת. כל שורה אחרת היא פסקה. **מילים בין כוכביות** מודגשות, ו-[מילה](#contact) פותחת את טופס יצירת הקשר.',
+    text: [
+      'אנחנו רוצים שכל מי שמחפש רעיון לטיול יוכל להשתמש באתר, גם מי שמשתמש במקלדת בלבד, בקורא מסך או בהגדלת תצוגה.',
+      '## תקן הנגישות',
+      'האתר נבנה לפי ההנחיות של התקן הישראלי ת"י 5568, שמבוסס על הנחיות WCAG 2.0 ברמה AA. האתר לא נבדק על ידי מורשה נגישות, ולכן איננו מצהירים שהוא עומד בתקן במלואו.',
+      '## מה הונגש באתר',
+      '**ניווט במקלדת:** אפשר להגיע לכל הכפתורים, הסינונים, הקישורים והטפסים בעזרת המקלדת, ומסגרת כהה מסמנת איפה נמצאים. בתחילת כל עמוד יש קישור "דילוג לתוכן".',
+      '**קוראי מסך:** שפת העמודים מוגדרת כעברית, אזורי העמוד מסומנים (כותרת, תוכן ראשי, תפריט, תחתית), כפתורי הסינון מודיעים אם הם בחורים, ואחרי כל סינון מוקרא כמה פנינים נמצאו.',
+      '**טקסט חלופי:** לתמונות יש תיאור, ואיורים שהם קישוט בלבד מוסתרים מקוראי מסך.',
+      '**כותרות:** בכל עמוד יש כותרת ראשית אחת, ומתחתיה כותרות משנה לפי הסדר.',
+      '**ניגודיות:** הטקסט כתוב בצבע כהה על רקע בהיר, ביחס ניגודיות של 4.5:1 לפחות.',
+      '**הגדלת תצוגה:** אפשר להגדיל את האתר בדפדפן ובטלפון, והתוכן מסתדר מחדש גם במסך צר בלי גלילה הצידה.',
+      '**חלונות:** הטפסים וההודעות נפתחים כחלון, הפוקוס עובר אליהם, ומקש Esc סוגר אותם.',
+      '**תנועה:** מי שהגדיר במכשיר "הפחתת תנועה" לא יראה את האנימציות שבראש העמודים.',
+      '## סביבת הבדיקה',
+      'הנגישות נבדקה ב-30.10.2026 בדפדפן Chrome במחשב: בדיקה אוטומטית בכלי axe-core של כל סוגי העמודים, מעבר עם מקלדת בלבד, תצוגה ברוחב של טלפון צר והגדלת ריווח הטקסט. האתר עדיין לא נבדק עם קורא מסך (כמו NVDA או VoiceOver) ולא בדפדפנים אחרים.',
+      '## מגבלות ידועות וחלופות',
+      '**המפה:** קשה להשתמש בה עם קורא מסך או במקלדת בלבד. כל הפנינים שעל המפה מופיעות גם ב"גלריית פנינים", עם אותם סינונים ואותם פרטים.',
+      '**אתרים של המקומות:** הכפתור "לאתר" מוביל לאתרים של המקומות עצמם, שאינם חלק מהאתר הזה, והנגישות שלהם עשויה להיות שונה.',
+      '**נגישות המקומות עצמם:** באתר אין מידע על הנגישות הפיזית של הפנינים. כדאי לבדוק מול המקום לפני שמגיעים.',
+      'אנחנו ממשיכים לשפר את האתר, וציון מגבלה כאן לא פוטר אותנו מלתקן אותה.',
+      '## פנייה בנושא נגישות',
+      'נתקלת בבעיית נגישות או צריך מידע בדרך אחרת? אפשר לכתוב לנו ב[טופס יצירת הקשר](#contact), בנושא "משהו אחר". כדאי לצרף את הקישור לעמוד שבו הייתה הבעיה ולתאר בקצרה מה לא עבד.',
+      '## קבלת קהל',
+      'האתר פועל באינטרנט בלבד, ואין בו קבלת קהל או פעילות במקום פיזי.',
+    ].join('\n'),
+  },
 } satisfies Record<string, TextDef>;
 
 export type TextKey = keyof typeof FIXED_DEFAULTS | `intro.region.${string}` | `intro.cat.${string}`;
@@ -190,7 +222,9 @@ export const ABOUT_KEYS = TEXT_KEYS.filter(k => k.startsWith('about.') && k !== 
 /** The popup forms' texts (suggest, report, contact) get their own admin screen (/admin/forms) */
 export const FORM_KEYS = TEXT_KEYS.filter(k => k.startsWith('suggest.') || k.startsWith('report.') || k.startsWith('contact.'));
 export const INTRO_KEYS = TEXT_KEYS.filter(k => k.startsWith('intro.'));
-export const SITE_KEYS = TEXT_KEYS.filter(k => !ABOUT_KEYS.includes(k) && !INTRO_KEYS.includes(k) && !FORM_KEYS.includes(k));
+/** The accessibility statement gets its own admin screen (/admin/accessibility) */
+export const A11Y_KEYS = TEXT_KEYS.filter(k => k.startsWith('a11y.'));
+export const SITE_KEYS = TEXT_KEYS.filter(k => !ABOUT_KEYS.includes(k) && !INTRO_KEYS.includes(k) && !FORM_KEYS.includes(k) && !A11Y_KEYS.includes(k));
 export const DEFAULT_TEXTS = Object.fromEntries(TEXT_KEYS.map(k => [k, TEXT_DEFAULTS[k].text])) as Texts;
 
 /** The about page's main text: every line is a paragraph, "## " = a section heading */

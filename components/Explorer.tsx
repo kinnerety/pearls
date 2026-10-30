@@ -21,7 +21,7 @@ const MOBILE = '(max-width:860px)';
 const isMobile = () => typeof window !== 'undefined' && matchMedia(MOBILE).matches;
 
 function Chip({ pressed, onClick, n, className = '', children }: { pressed: boolean; onClick: () => void; n: number | ''; className?: string; children: React.ReactNode }) {
-  return <button className={('chip ' + className).trim()} aria-pressed={pressed} onClick={onClick}>{children}<span className="n">{n}</span></button>;
+  return <button className={('chip ' + className).trim()} aria-pressed={pressed} onClick={onClick}>{children}<span className="n" aria-hidden="true">{n}</span><span className="sr-only">, {n} פנינים</span></button>;
 }
 
 // A region or category page fixes one facet: the count names it ("12 פנינים באזור גולן") and the page offers a way back to all the pearls
@@ -160,7 +160,7 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
         <div className="now">
           <span className={'blob' + (pop ? ' pop' : '')} id="now-illo">{nowK === 'shell' ? <img className="illo" src="/art/shell.png" alt="" /> : <Illo k={nowK} />}</span>
           {/* h2 so the heading order is title → count → card names (search engines and screen readers); styled like before */}
-          <div><h2 className={'count' + (act ? ' long' : '')} id="count">{countText(items.length, !!act, texts['empty.top'], scope)}</h2> <span id="countnote" className="where" /></div>
+          <div aria-live="polite"><h2 className={'count' + (act ? ' long' : '')} id="count">{countText(items.length, !!act, texts['empty.top'], scope)}</h2> <span id="countnote" className="where" /></div>
         </div>
         <div className="views" role="group" aria-label="תצוגה">
           {scope && <div className="qbar">{qform}</div>}

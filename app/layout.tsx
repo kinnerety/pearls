@@ -22,6 +22,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="he" dir="rtl" className={`${display.variable} ${body.variable}`}>
       <body>
+        {/* keyboard and screen-reader users jump over the header and the filters' top strip straight to the page's content */}
+        <a className="skip" href="#content">דילוג לתוכן</a>
         {children}
         <Analytics />
       </body>
