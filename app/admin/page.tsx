@@ -17,6 +17,7 @@ export default async function AdminHome() {
   const [places, subs, drafts] = await Promise.all([allPlaces(), listSubmissions(), listDrafts('pending')]);
   const preparing = subs.filter(s => s.kind === 'suggest' && s.status === 'new').length;
   const reports = subs.filter(s => s.kind === 'report' && s.status === 'new').length;
+  const messages = subs.filter(s => s.kind === 'contact' && s.status === 'new').length;
   const live = places.filter(p => !p.hidden).length;
   return (
     <div className="adm-doors">
@@ -26,7 +27,7 @@ export default async function AdminHome() {
       </Link>
       <Link className="adm-door d2" href="/admin/places">
         <b>פנינים באתר</b>
-        <span>{live} פנינים באתר{reports ? ` · ${reports === 1 ? 'דיווח אחד' : `${reports} דיווחים`} על טעות` : ''}</span>
+        <span>{live} פנינים באתר{reports ? ` · ${reports === 1 ? 'דיווח אחד' : `${reports} דיווחים`} על טעות` : ''}{messages ? ` · ${messages === 1 ? 'פנייה אחת' : `${messages} פניות`}` : ''}</span>
       </Link>
       <Link className="adm-door d3" href="/admin/texts">
         <b>טקסטים קבועים</b>
