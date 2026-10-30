@@ -190,6 +190,15 @@ export async function addDraft(place: Place, submissionId: number | null): Promi
   return id;
 }
 
+/** Claude rewrote a pending draft (e.g. after Kinneret's notes), so the approval page shows the new version. */
+export async function updateDraft(id: number, place: Place): Promise<boolean> {
+  if (!sql) throw new Error('אין עדיין מסד נתונים מחובר');
+  await ensure();
+  const clean: Place = { ...place, id: 0, checked: false, ctags: canonTags(place.tags || []) };
+  const rows = await sql`update drafts set data = ${JSON.stringify(clean)}::jsonb where id = ${id} and status = 'pending' returning id`;
+  return rows.length > 0;
+}
+
 /** A pending draft with the same name as an existing place or another pending draft (so the daily run never doubles). */
 export async function draftExists(name: string): Promise<boolean> {
   if (!sql) return false;
