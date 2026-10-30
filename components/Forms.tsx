@@ -16,11 +16,13 @@ export default function Forms({ texts }: { texts: Texts }) {
 
   useEffect(() => {
     if (editing) return;
-    const open = (hash: string) => {
+    const open = (hash: string, place?: string) => {
       const m = /^#(suggest|report)$/.exec(hash);
       if (!m) return false;
       const d = refs[m[1] as Kind].current;
       if (!d) return false;
+      // a link with data-place (the "יש כאן טעות" button on a place page) opens the report form with that pearl's name filled in
+      if (m[1] === 'report') { const f = d.querySelector<HTMLInputElement>('input[name="place"]'); if (f && place !== undefined) f.value = place; }
       d.showModal();
       d.focus(); // focus the popup itself, not the close button (no ring around the X on open)
       return true;
@@ -28,7 +30,7 @@ export default function Forms({ texts }: { texts: Texts }) {
     open(decodeURIComponent(location.hash));
     const onClick = (e: MouseEvent) => {
       const a = (e.target as Element | null)?.closest?.('a[href^="#"]');
-      if (a && open(a.getAttribute('href') || '')) e.preventDefault();
+      if (a && open(a.getAttribute('href') || '', (a as HTMLElement).dataset.place)) e.preventDefault();
     };
     // a click before the page finished loading only changes the address
     const onHash = () => { if (open(decodeURIComponent(location.hash))) history.replaceState(null, '', location.pathname + location.search); };
