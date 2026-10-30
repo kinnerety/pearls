@@ -121,7 +121,8 @@ export function Contact({ ref_, texts, inline = false }: { ref_?: React.RefObjec
           </select>}
     </Row>
   );
-  const head = <><svg className="pic" viewBox="0 28 160 70" aria-hidden="true" dangerouslySetInnerHTML={{ __html: ACORN_REST_SVG }} /><h2 id="contact-title"><T k="contact.title" /></h2></>;
+  // Kinneret's rotary phone, the same picture as "ליצור קשר" in the menu (30.10.2026)
+  const head = <><img className="pic phone" src="/art/menu-phone.png" alt="" /><h2 id="contact-title"><T k="contact.title" /></h2><p className="sub"><T k="contact.subtitle" /></p></>;
 
   // the admin shows everything one after the other, so every text can be edited
   if (editing) return (
