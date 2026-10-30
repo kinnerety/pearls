@@ -160,9 +160,11 @@ export default function GoogleMap({ items, zoom, apiKey, onFail }: Props) {
         [google.maps.MapsLibrary, google.maps.CoreLibrary];
       if (dead || !box.current) return;
       const { MarkerLayer, CardPopup } = overlays(maps, core);
+      // on touch screens Google's camera control (the four arrows) sat right on the card's share button (30.10.2026); people drag anyway
+      const touch = matchMedia('(hover:none) and (pointer:coarse)').matches;
       const m = new maps.Map(box.current, {
         styles: STYLES, backgroundColor: '#DDEEF6', clickableIcons: false, gestureHandling: 'cooperative',
-        mapTypeControl: false, streetViewControl: false, fullscreenControl: false, zoomControl: true, maxZoom: 18,
+        mapTypeControl: false, streetViewControl: false, fullscreenControl: false, zoomControl: true, cameraControl: !touch, maxZoom: 18,
       });
       m.fitBounds(ISRAEL, 0);
       const el = box.current;
@@ -244,6 +246,7 @@ export default function GoogleMap({ items, zoom, apiKey, onFail }: Props) {
   // slid inward near the sides; the tip stays on the marker)
   useLayoutEffect(() => {
     const m = map.current, pop = popup.current, b = box.current;
+    if (b) b.toggleAttribute('data-open', !!open); // while a card is open on a phone the zoom buttons hide, so they never sit on the card
     if (!open || !m || !pop || !b) return;
     const pt = pop.point();
     if (!pt) return;
