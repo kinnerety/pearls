@@ -118,19 +118,23 @@ export default function Explorer({ places, texts, scope, total }: { places: Plac
   // top-left of the region panel: opens the suggest-a-pearl form (Kinneret, 27.10.2026). 28.10: the favicon acorn without its light-blue ring,
   // tilted a little and LEFT of the text, with a soft shadow so it reads on the yellow. The "אודות" link that sat beside it moved to the
   // menu panel under the filters (Kinneret, 30.10.2026)
-  // (Kinneret chose option ד, 28.10: a big acorn peeking out of the button's left end). The small "אודות" link sits right of the button (option א)
-  const recommend = <span className="topacts"><a className="recommend" href="#suggest">להמליץ על פנינה<svg className="fav" viewBox="10 3 44 61" aria-hidden="true" dangerouslySetInnerHTML={{ __html: ACORN_BARE }} /></a></span>;
+  // (Kinneret chose option ד, 28.10: a big acorn peeking out of the button's left end)
+  // 30.10 (Kinneret): where the "אודות" link sat, a dashed "כל האזורים" button that clears only the regions, shown only while a region is chosen
+  // (the "נקה בחירה" chip that sat inside the north cloud whatever region was chosen is gone)
+  const recommend = <span className="topacts">
+    {st.regions.length > 0 && <button type="button" className="allreg" onClick={() => update(s => ({ ...s, regions: [] }))}>כל האזורים</button>}
+    <a className="recommend" href="#suggest">להמליץ על פנינה<svg className="fav" viewBox="10 3 44 61" aria-hidden="true" dangerouslySetInnerHTML={{ __html: ACORN_BARE }} /></a>
+  </span>;
   // the region clouds: on the home page and on category pages (Kinneret, 27.10.2026: "דווקא שם זה חשוב"); a region page has no use for them
   const clouds = (
         <div className="clouds" id="f-region">
-          {Object.keys(ZONES).map((g, gi) => (
+          {Object.keys(ZONES).map(g => (
             <div className="cloud" key={g}>
               <span className="gname"><Illo k={ZONE_ILLO[g]} />{g}</span>
               {ZONES[g].map(k => (
                 <Chip key={k} className="sm" pressed={st.regions.includes(k)} onClick={() => toggleRegion(k)}
                   n={places.filter(p => matches(p, st, 'region') && p.region.includes(k)).length}>{k}</Chip>
               ))}
-              {gi === 0 && st.regions.length > 0 && <Chip className="sm clear" pressed={false} n="" onClick={() => update(s => ({ ...s, regions: [] }))}>נקה בחירה</Chip>}
             </div>
           ))}
         </div>
