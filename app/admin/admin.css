@@ -124,3 +124,5 @@ p.adm-report{flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px}
 .edt:empty::before{content:"(ריק)";color:var(--muted)}
 .adm-changed summary{cursor:pointer;font-weight:600}
 .adm-changed ul{margin:8px 0 0;padding-inline-start:18px;display:flex;flex-direction:column;gap:6px}
+.adm-live .pill.add{font:inherit;font-size:.85rem;border:1.5px dashed var(--line);background:transparent;color:var(--muted);cursor:pointer;pointer-events:auto;opacity:1}
+.adm-live .pill.add:hover{border-color:var(--ink);color:var(--ink)}
