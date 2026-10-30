@@ -14,6 +14,8 @@ export default function SiteFoot({ label, index = false }: { label?: string; ind
       )}
       {label && <Link href="/about">{label}</Link>}
       {index && <Link href="/contact">ליצור קשר</Link>}
+      {/* on every public page (30.10.2026) */}
+      <Link href="/accessibility">הצהרת נגישות</Link>
     </footer>
   );
 }

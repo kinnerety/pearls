@@ -493,3 +493,4 @@ main.contents{display:contents}
 .skip{position:absolute;top:8px;right:8px;z-index:1000;background:var(--ink);color:var(--sheet);font-weight:700;padding:8px 16px;border-radius:999px;text-decoration:none;transform:translateY(-200%)}
 .skip:focus{transform:none}
 .a11y-page .date{color:var(--muted);font-size:.92rem;margin:-.4em 0 1.2em}
+.site-foot > a + a{margin-inline-start:24px}
