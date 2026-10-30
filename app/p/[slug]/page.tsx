@@ -80,9 +80,9 @@ export default async function PlacePage({ params }: Props) {
           {/* share on the right, the site link on the left, no Waze (Kinneret, 2026-10-26: locations are often town-level) */}
           <ShareButton title={p.name} text={shareText(p, SITE_URL, texts)} />
           {p.link && <a className="go" href={p.link} target="_blank" rel="noopener">לאתר ←</a>}
+          {/* left of "לאתר": opens the report form with this pearl's name already filled in (Kinneret, 30.10.2026) */}
+          <a className="mistake" href="#report" data-place={p.name}>מצאת טעות?</a>
         </div>
-        {/* opens the report form with this pearl's name already filled in (Kinneret, 30.10.2026) */}
-        <a className="mistake" href="#report" data-place={p.name}>יש כאן טעות</a>
       </article>
       {p.lat != null && (
         <section className="mapbox place-map" aria-label="מפה">
