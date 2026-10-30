@@ -13,6 +13,7 @@ import type { Place } from '@/lib/types';
 // POST { locate: "name, town" } → Google Maps (Places) candidates for an exact location
 // PATCH { draft_id, place } → rewrite a draft that is still pending
 // PATCH { place_id, location: { lat, lng, address?, geo_source } } → set an existing place's exact location (nothing else changes)
+// PATCH { place_id, link } → set an existing place's "לאתר" link (nothing else changes)
 export const dynamic = 'force-dynamic';
 
 function allowed(req: Request) {
@@ -48,8 +49,9 @@ export async function POST(req: Request) {
 
 export async function PATCH(req: Request) {
   if (!allowed(req)) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
-  const body = await req.json().catch(() => null) as { draft_id?: number; place?: Place; place_id?: number; location?: Location } | null;
+  const body = await req.json().catch(() => null) as { draft_id?: number; place?: Place; place_id?: number; location?: Location; link?: string } | null;
   if (body?.place_id && body.location) return setLocation(body.place_id, body.location);
+  if (body?.place_id && body.link) return setLink(body.place_id, body.link);
   if (!body?.draft_id || !body.place) return NextResponse.json({ error: 'missing draft_id or place' }, { status: 400 });
   const errors = checkPlace(body.place);
   if (errors.length) return NextResponse.json({ error: errors.join(', ') }, { status: 400 });
@@ -65,5 +67,12 @@ async function setLocation(id: number, loc: Location) {
   try {
     await patchPlace(id, p => ({ ...p, lat, lng, precision: 'exact', approx: false, geo_source: loc.geo_source || 'Google Maps', ...(loc.address ? { address: loc.address } : {}) }));
   } catch (e) { return NextResponse.json({ error: (e as Error).message }, { status: 404 }); }
+  return NextResponse.json({ ok: true, place_id: id });
+}
+
+async function setLink(id: number, link: string) {
+  if (!/^https?:\/\/\S+$/.test(link)) return NextResponse.json({ error: 'קישור לא תקין' }, { status: 400 });
+  try { await patchPlace(id, p => ({ ...p, link })); }
+  catch (e) { return NextResponse.json({ error: (e as Error).message }, { status: 404 }); }
   return NextResponse.json({ ok: true, place_id: id });
 }
