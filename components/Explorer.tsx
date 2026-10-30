@@ -8,6 +8,7 @@ import { DIVIDER_SVG } from './art';
 import Illo from './Illo';
 import MapHelp from './MapHelp';
 import SideMenu from './SideMenu';
+import { ACORN_BARE } from './art';
 import PlaceCard from './PlaceCard';
 import { TextsProvider } from './TextsContext';
 import CheckPopup, { checkSeen } from './CheckPopup';
@@ -25,9 +26,6 @@ function Chip({ pressed, onClick, n, className = '', children }: { pressed: bool
 
 // A region or category page fixes one facet: the count names it ("12 פנינים באזור גולן") and the page offers a way back to all the pearls
 // the favicon acorn on its light-blue circle (app/icon.svg)
-const FAVICON_ACORN = `<circle cx="32" cy="32" r="31" fill="#DDEEF6"/><g transform="translate(32 31) scale(1.06) translate(-32 -33)"><path d="M19 31C18.5 48 26 58.5 32 59C38 58.5 45.5 48 45 31Z" fill="#FAD771"/><path d="M34 31C34.5 45 36 53 32 59C38 58.5 45.5 48 45 31Z" fill="#22333B" fill-opacity=".14"/><path d="M24.5 36C24.5 44 27 50 30 54" fill="none" stroke="#FCF0B4" stroke-width="2.6" stroke-linecap="round"/><path d="M30.5 58.3L32 61.8L33.5 58.3Z" fill="#1C4F66"/><path d="M14 31C14 20 21.5 13.5 32 13.5S50 20 50 31C50 33.5 48 35 45.5 35H18.5C16 35 14 33.5 14 31Z" fill="#1C4F66"/><path d="M19 22.5l4 4M25 18l4 4M31 16.5l4 4M37 18l4 4M43 22.5l3 3M18 29l3-3M23 29l4-4M29 29l4-4M35 29l4-4M41 29l4-4M47 28l1.5-1.5" stroke="#FFFFFF" stroke-opacity=".3" stroke-width="1.3" stroke-linecap="round"/><path d="M31.5 14C31 9.5 32.8 6.5 36.5 5" fill="none" stroke="#1C4F66" stroke-width="3.2" stroke-linecap="round"/></g>`;
-// the same acorn without the ring (the recommend button, Kinneret 28.10.2026)
-const ACORN_BARE = FAVICON_ACORN.replace(/^<circle[^>]*\/>/, '');
 
 export type Scope = { kind: 'region' | 'cat'; name: string };
 
