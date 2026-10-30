@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from 'next';
-import { Frank_Ruhl_Libre, Assistant } from 'next/font/google';
+import { Suez_One, Assistant } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SITE_DESCRIPTION, SITE_URL } from '@/lib/slug';
 import './globals.css';
 
-const display = Frank_Ruhl_Libre({ subsets: ['hebrew', 'latin'], weight: ['700', '900'], variable: '--font-display', display: 'swap' });
+const display = Suez_One({ subsets: ['hebrew', 'latin'], weight: '400', variable: '--font-display', display: 'swap' });
 const body = Assistant({ subsets: ['hebrew', 'latin'], weight: ['400', '600', '700'], variable: '--font-body', display: 'swap' });
 
 export const metadata: Metadata = {
