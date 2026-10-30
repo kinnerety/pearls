@@ -57,7 +57,7 @@ function overlays(maps: google.maps.MapsLibrary, core: google.maps.CoreLibrary) 
   class MarkerLayer extends maps.OverlayView {
     root = document.createElement('div');
     pts: { at: google.maps.LatLng; el: HTMLElement }[] = [];
-    constructor(private show: Show, private hide: () => void) {
+    constructor(private show: Show, private hide: () => void, private keyOpen: (el: HTMLElement) => void) {
       super();
       this.root.className = 'gmk-layer';
       maps.OverlayView.preventMapHitsAndGesturesFrom(this.root);
@@ -74,7 +74,8 @@ function overlays(maps: google.maps.MapsLibrary, core: google.maps.CoreLibrary) 
         el.innerHTML = iconHtml(p);
         el.addEventListener('mouseenter', () => this.show(p, at, false));
         el.addEventListener('mouseleave', this.hide);
-        el.addEventListener('click', () => this.show(p, at, true));
+        // Enter/space on a marker (a click with no mouse, detail 0): the card opens and the keyboard moves into it (accessibility, 30.10.2026)
+        el.addEventListener('click', e => { this.show(p, at, true); if (e.detail === 0) this.keyOpen(el); });
         this.root.appendChild(el);
         this.pts.push({ at, el });
       }
@@ -106,6 +107,8 @@ function overlays(maps: google.maps.MapsLibrary, core: google.maps.CoreLibrary) 
       this.el.style.setProperty('--gap', `${GAP}px`);
       this.el.style.display = 'none';
       this.box.className = 'gpop-box';
+      this.box.tabIndex = -1;
+      this.box.setAttribute('role', 'dialog');
       this.close.type = 'button';
       this.close.className = 'gpop-x';
       this.close.setAttribute('aria-label', 'סגירה');
@@ -175,7 +178,19 @@ export default function GoogleMap({ items, zoom, apiKey, onFail }: Props) {
       el.addEventListener('wheel', noPageZoom, { passive: false });
 
       const pop = new CardPopup();
-      const shut = () => { clearTimeout(closeT.current); pop.shut(); sticky.current = false; openId.current = null; setOpen(null); };
+      // the marker a keyboard user opened the card from: closing the card puts the keyboard back on it
+      let back: HTMLElement | null = null;
+      const shut = () => {
+        clearTimeout(closeT.current); pop.shut(); sticky.current = false; openId.current = null; setOpen(null);
+        if (back && pop.el.contains(document.activeElement)) back.focus();
+        back = null;
+      };
+      const keyOpen = (el: HTMLElement) => {
+        back = el;
+        pop.box.setAttribute('aria-label', el.getAttribute('aria-label') || '');
+        setTimeout(() => pop.box.focus({ preventScroll: true }), 60); // after React has put the card in
+      };
+      pop.el.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); shut(); } });
       pop.el.addEventListener('mouseenter', () => clearTimeout(closeT.current));
       pop.el.addEventListener('mouseleave', () => { if (!sticky.current) closeT.current = setTimeout(shut, 250); });
       pop.close.addEventListener('click', shut);
@@ -193,7 +208,7 @@ export default function GoogleMap({ items, zoom, apiKey, onFail }: Props) {
         setOpen(p);
       };
       const hide = () => { if (!sticky.current) closeT.current = setTimeout(shut, 250); };
-      const g = new MarkerLayer(show, hide);
+      const g = new MarkerLayer(show, hide, keyOpen);
       g.setMap(m);
 
       // the map view starts hidden behind the gallery: fit once it has a size (a frame later, so Google has seen it too)
