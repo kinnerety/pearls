@@ -13,6 +13,7 @@ export default function SiteFoot({ label, index = false }: { label?: string; ind
         </div>
       )}
       {label && <Link href="/about">{label}</Link>}
+      {index && <Link href="/contact">ליצור קשר</Link>}
     </footer>
   );
 }

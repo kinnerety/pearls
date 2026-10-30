@@ -453,3 +453,12 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .hd-leg2{animation:hdLeg .4s ease-in-out 8 both;animation-delay:-.2s}
 @keyframes hdLeg{0%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}100%{transform:rotate(-14deg)}}
 @media (prefers-reduced-motion:reduce){.hd-cloud,.hd-heli,.hd-bird,.hd-ibex,.hd-leg,.hd-leg2{animation:none}}
+/* the contact form (Kinneret, 30.10.2026): "באיזה עניין?" as a list, the matching form under it */
+.form-pop select{width:100%;border-radius:10px;border:1.5px solid var(--line);background:#fff;padding:7px 11px;font-size:1rem}
+.form-pop select:focus{outline:2px solid var(--mist);outline-offset:1px;border-color:var(--mist)}
+.form-pop .topic{margin-bottom:20px}
+.form-pop .topics{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.form-pop .topics .pill{background:var(--cream);border-radius:999px;padding:4px 14px}
+.form-pop .note-q{position:relative;background:var(--sun);border-radius:12px;padding:10px 14px;line-height:1.6;margin:0 0 6px}
+.form-pop .note-q p{margin:0}
+.form-pop.static.contact-page{display:block;width:min(620px,100%);max-height:none;overflow:visible;margin:12px auto 0}

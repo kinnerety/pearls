@@ -136,7 +136,7 @@ export async function saveTexts(t: Partial<Texts>) {
 }
 
 /** What visitors send from the two popup forms: "suggest" (a new pearl) or "report" (a mistake). Admin only. */
-export type SubmissionKind = 'suggest' | 'report';
+export type SubmissionKind = 'suggest' | 'report' | 'contact';
 export type SubmissionStatus = 'new' | 'drafted' | 'done';
 export type Submission = { id: number; kind: SubmissionKind; data: Record<string, string>; status: SubmissionStatus; created_at: string };
 

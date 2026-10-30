@@ -13,7 +13,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   let counts = { drafts: 0, reports: 0 };
   if (signedIn) {
     const [drafts, subs] = await Promise.all([listDrafts('pending'), listSubmissions()]);
-    counts = { drafts: drafts.length, reports: subs.filter(s => s.kind === 'report' && s.status === 'new').length };
+    counts = { drafts: drafts.length, reports: subs.filter(s => (s.kind === 'report' || s.kind === 'contact') && s.status === 'new').length };
   }
   return (
     <div className="wrap admin">
