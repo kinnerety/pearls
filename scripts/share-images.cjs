@@ -3,6 +3,9 @@
 // 1200×630 (the size WhatsApp, Facebook, Telegram and iMessage show as a large preview), JPEG well under WhatsApp's 300 KB limit.
 // The picture = the category (or cloud) ICON on a white paper cutout over a coloured, white-dotted background, with the site title in
 // Suez One (Kinneret, 30.10.2026: the icon, not the page header; same look as the square share pictures of 25.10, now landscape).
+// Everything sits in the CENTRAL SQUARE (x 285..915): WhatsApp Desktop shows every preview as a small square cut from the middle of the picture
+// (Kinneret, 30.10.2026 afternoon), so the icon is centred at the top, the title under it in one line and the subtitle in two lines,
+// with the same margin under the subtitle as above the white cutout (~45px).
 // Fonts come from Google Fonts, so the network must be reachable.   node scripts/share-images.cjs [outDir]
 const { chromium } = require('playwright');
 const fs = require('fs');
@@ -43,18 +46,18 @@ const page = ({ svg, bg }) => `<!doctype html><html lang="he" dir="rtl"><head><m
 html,body{margin:0;padding:0;background:${bg}}
 #card{position:relative;width:1200px;height:630px;overflow:hidden;background:${bg}}
 .dots{position:absolute;inset:0;opacity:.55}
-.blob{position:absolute;left:290px;top:315px;width:460px;height:430px;transform:translate(-50%,-50%) rotate(-3deg);background:#FFFFFF;border-radius:46% 54% 50% 50%/52% 46% 54% 48%;box-shadow:0 4px 0 rgba(60,55,30,.08),0 22px 40px -16px rgba(60,55,30,.45)}
-.icon{position:absolute;left:290px;top:315px;width:310px;height:310px;transform:translate(-50%,-50%)}
-.title{position:absolute;right:80px;top:50%;transform:translateY(-50%);text-align:right;color:#22333B;width:540px}
-.title h1{margin:0;font:400 108px/1.02 'Suez One',serif}
-.title p{margin:22px 0 0;font:600 56px/1.15 Assistant,sans-serif;color:rgba(34,51,59,.8)}
+.blob{position:absolute;left:600px;top:200px;width:330px;height:310px;transform:translate(-50%,-50%) rotate(-3deg);background:#FFFFFF;border-radius:46% 54% 50% 50%/52% 46% 54% 48%;box-shadow:0 4px 0 rgba(60,55,30,.08),0 22px 40px -16px rgba(60,55,30,.45)}
+.icon{position:absolute;left:600px;top:200px;width:224px;height:224px;transform:translate(-50%,-50%)}
+.title{position:absolute;left:0;right:0;top:368px;text-align:center;color:#22333B}
+.title h1{margin:0;font:400 84px/1 'Suez One',serif}
+.title p{margin:14px 0 0;font:600 50px/1.2 Assistant,sans-serif;color:rgba(34,51,59,.8)}
 ${ILLO_CSS}
 </style></head><body>
 <div id="card">
   <svg class="dots" width="1200" height="630"><defs><pattern id="d" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(12)"><circle cx="6" cy="6" r="3" fill="#fff"/><circle cx="19" cy="19" r="3" fill="#fff"/></pattern></defs><rect width="1200" height="630" fill="url(#d)"/></svg>
   <div class="blob"></div>
   <svg class="illo icon" viewBox="0 0 64 64">${svg}</svg>
-  <div class="title"><h1>פנינים<br>ישראליות</h1><p>מקומות קטנים ומיוחדים מהמלצות של חברים</p></div>
+  <div class="title"><h1>פנינים ישראליות</h1><p>מקומות קטנים ומיוחדים<br>מהמלצות של חברים</p></div>
 </div></body></html>`;
 
 (async () => {
