@@ -7,7 +7,7 @@ import LiveTexts from '@/components/admin/LiveTexts';
 import Forms from '@/components/Forms';
 import TextsMenu from '@/components/admin/TextsMenu';
 
-// The two popup forms (suggest a pearl / report a mistake) shown as they are on the site, every text edited in place
+// The popup forms (suggest a pearl / report a mistake / contact) shown as they are on the site, every text edited in place
 export default async function FormTexts() {
   if (!(await isAdmin())) redirect('/admin');
   const texts = await getTexts();
@@ -20,6 +20,7 @@ export default async function FormTexts() {
           <div className="adm-row">
             <Link className="adm-btn ghost" href="/about#suggest" target="_blank">טופס ההצעה באתר</Link>
             <Link className="adm-btn ghost" href="/about#report" target="_blank">טופס הדיווח באתר</Link>
+            <Link className="adm-btn ghost" href="/contact" target="_blank">טופס יצירת הקשר באתר</Link>
           </div>
         </div>
         {hasDb ? (

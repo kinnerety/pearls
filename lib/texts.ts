@@ -159,6 +159,20 @@ const FIXED_DEFAULTS = {
   'report.done.title': { label: 'דיווח על טעות: הודעת ההצלחה, הכותרת', text: 'תודה רבה!' },
   'report.done.text': { label: 'דיווח על טעות: הודעת ההצלחה, הטקסט', multi: true, text: 'נבדוק את העניין ונתקן בהקדם את מה שצריך.\nזה לא מובן מאליו שהשקעת זמן בלספר לנו על זה, אנחנו מאוד מעריכים את זה' },
   'report.done.button': { label: 'דיווח על טעות: הכפתור בהודעת ההצלחה', text: 'חזרה לגלריית הפנינים' },
+  'contact.title': { label: 'טופס יצירת קשר: הכותרת', text: 'נשמח לשמוע ממך :)' },
+  'contact.subtitle': { label: 'יצירת קשר: המשפט מתחת לכותרת', text: 'דרך הטופס הזה אפשר לפנות אלינו מהר ובקלות' },
+  'contact.topic': { label: 'יצירת קשר: השאלה על הנושא', text: 'באיזה עניין?' },
+  'contact.topic.pick': { label: 'יצירת קשר: מה כתוב ברשימה לפני שבוחרים', text: 'בחירת נושא' },
+  'contact.topics': { label: 'יצירת קשר: הנושאים ברשימה (שורה לכל נושא, בסדר הזה: המלצה / טעות / שאלה על פנינה / משהו אחר)', multi: true, text: 'המלצה על פנינה\nדיווח על טעות באתר\nשאלה על פנינה שראיתי באתר\nמשהו אחר' },
+  'contact.question': { label: 'יצירת קשר: מה מופיע כשבוחרים "שאלה על פנינה"', multi: true, text: 'תודה! אין לנו עוד פרטים על הפנינים מעבר למה שמופיע כאן.\nלמידע נוסף צריך לעבור לאתר המקורי של הפנינה דרך הכפתור שמופיע לידה.' },
+  'contact.name': { label: 'יצירת קשר, "משהו אחר": שאלה 1', text: 'מה שמך?' },
+  'contact.email': { label: 'יצירת קשר, "משהו אחר": שאלה 2', text: 'מה המייל שלך?' },
+  'contact.email.hint': { label: 'יצירת קשר, "משהו אחר": ההסבר לשאלה 2', text: 'חשוב: אנחנו לא מבטיחים לחזור לכל פנייה' },
+  'contact.message': { label: 'יצירת קשר, "משהו אחר": שאלה 3', text: 'מה רצית להגיד לנו?' },
+  'contact.send': { label: 'יצירת קשר: הכפתור', text: 'שליחה' },
+  'contact.done.title': { label: 'יצירת קשר: הודעת ההצלחה, הכותרת', text: 'תודה!' },
+  'contact.done.text': { label: 'יצירת קשר: הודעת ההצלחה, הטקסט', multi: true, text: 'הפנייה הגיעה אלינו. יכול לקחת לנו שבועיים פלוס מינוס לקרוא ולהגיב אם צריך' },
+  'contact.done.button': { label: 'יצירת קשר: הכפתור בהודעת ההצלחה', text: 'חזרה לגלריית הפנינים' },
   'about.back': { label: 'אודות: הכפתור בתחתית העמוד', text: 'חזרה לגלריית הפנינים' },
   'about.link': { label: 'הקישור לעמוד "אודות" בתחתית העמודים', text: 'אודות' },
 } satisfies Record<string, TextDef>;
@@ -169,8 +183,8 @@ export type Texts = Record<TextKey, string>;
 export const TEXT_KEYS = Object.keys(TEXT_DEFAULTS) as TextKey[];
 /** The about page's own texts get their own admin screen (/admin/about); the rest stay in /admin/texts */
 export const ABOUT_KEYS = TEXT_KEYS.filter(k => k.startsWith('about.') && k !== 'about.link');
-/** The two popup forms' texts get their own admin screen (/admin/forms) */
-export const FORM_KEYS = TEXT_KEYS.filter(k => k.startsWith('suggest.') || k.startsWith('report.'));
+/** The popup forms' texts (suggest, report, contact) get their own admin screen (/admin/forms) */
+export const FORM_KEYS = TEXT_KEYS.filter(k => k.startsWith('suggest.') || k.startsWith('report.') || k.startsWith('contact.'));
 export const INTRO_KEYS = TEXT_KEYS.filter(k => k.startsWith('intro.'));
 export const SITE_KEYS = TEXT_KEYS.filter(k => !ABOUT_KEYS.includes(k) && !INTRO_KEYS.includes(k) && !FORM_KEYS.includes(k));
 export const DEFAULT_TEXTS = Object.fromEntries(TEXT_KEYS.map(k => [k, TEXT_DEFAULTS[k].text])) as Texts;

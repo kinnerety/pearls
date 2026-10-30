@@ -3,14 +3,16 @@ import { createHash } from 'crypto';
 import { headers } from 'next/headers';
 import { addSubmission, type SubmissionKind } from '@/lib/store';
 
-// The public popup forms (suggest a pearl / report a mistake). Spam: a hidden field people never fill, a minimum time
+// The public popup forms (suggest a pearl / report a mistake / contact). Spam: a hidden field people never fill, a minimum time
 // to fill the form, few links, and at most a few sends an hour from the same address (kept only as a hash).
 const FIELDS: Record<SubmissionKind, { keys: string[]; required: string[] }> = {
   suggest: {
-    keys: ['name', 'what', 'link', 'where', 'love', 'shabbat', 'family', 'more', 'credit', 'credit_name', 'email_ok', 'email', 'agree'],
+    keys: ['name', 'what', 'link', 'where', 'love', 'shabbat', 'family', 'more', 'credit', 'credit_name', 'email_ok', 'email', 'agree', 'via'],
     required: ['name', 'what', 'where', 'agree'],
   },
-  report: { keys: ['place', 'what', 'email_ok', 'email'], required: ['what'] },
+  report: { keys: ['place', 'what', 'email_ok', 'email', 'via'], required: ['what'] },
+  // "משהו אחר" in the contact form (Kinneret, 30.10.2026); the email is always asked there
+  contact: { keys: ['name', 'email', 'message'], required: ['name', 'email', 'message'] },
 };
 
 export type SendResult = { ok: true } | { ok: false; error: string };
@@ -28,7 +30,7 @@ export async function sendForm(kind: SubmissionKind, raw: Record<string, string>
   }
   if (f.required.some(k => !data[k])) return { ok: false, error: 'חסר שדה חובה' };
   if (data.credit !== 'yes') delete data.credit_name;
-  if (data.email_ok !== 'yes') delete data.email;
+  if (kind !== 'contact' && data.email_ok !== 'yes') delete data.email;
   if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return { ok: false, error: 'כתובת המייל לא נראית תקינה' };
   if ((Object.values(data).join(' ').match(/https?:\/\//g) || []).length > 3) return { ok: true };
   const h = await headers();
