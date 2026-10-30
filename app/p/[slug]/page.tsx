@@ -69,7 +69,7 @@ export default async function PlacePage({ params }: Props) {
         </div>
         <h1>{p.name}</h1>
         <div className="where">
-          {p.town || ''}{p.town ? ' · ' : ''}{p.region.map((r, i) => <span key={r}>{i > 0 && ', '}<Link href={`/region/${REGION_SLUG[r]}`}>{r}</Link></span>)}
+          {p.town && !p.region.includes(p.town) ? p.town + ' · ' : ''}{p.region.map((r, i) => <span key={r}>{i > 0 && ', '}<Link href={`/region/${REGION_SLUG[r]}`}>{r}</Link></span>)}
           {zonesOf(p).map(z => <span key={z} className={`cat zone z${ZONE_NAMES.indexOf(z)}`}>{z}</span>)}
         </div>
         <div className="cats">{p.cats.map(c => <Link key={c} href={`/category/${CAT_SLUG[c]}`} className="cat">{c}</Link>)}</div>
