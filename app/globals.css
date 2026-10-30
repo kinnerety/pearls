@@ -467,3 +467,4 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .form-pop .note-q{position:relative;background:var(--sun);border-radius:12px;padding:10px 14px;line-height:1.6;margin:0 0 6px}
 .form-pop .note-q p{margin:0}
 .form-pop.static.contact-page{display:block;width:min(620px,100%);max-height:none;overflow:visible;margin:12px auto 0}
+.form-pop.static .hp{left:0;top:0;clip-path:inset(50%);pointer-events:none}
