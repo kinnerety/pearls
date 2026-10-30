@@ -37,7 +37,7 @@ export default function DraftReview({ rows, texts }: { rows: Row[]; texts: Texts
                   <dl className="adm-draft-meta">
                     <dt>שבת</dt><dd>{{ open: 'פתוח בשבת', closed: 'סגור בשבת', unknown: 'לא ידוע' }[p.shabbat]}</dd>
                     <dt>משפחות</dt><dd>{{ yes: 'גם למשפחות', no: 'לא', unknown: 'לא ידוע' }[p.family]}</dd>
-                    <dt>מיקום</dt><dd>{p.lat == null ? 'אין' : p.precision === 'exact' ? 'מדויק' : 'משוער (מרכז היישוב)'}{p.geo_source ? ` · ${p.geo_source}` : ''}</dd>
+                    <dt>מיקום</dt><dd>{p.lat != null && p.precision === 'exact' ? 'מדויק' : <strong>לא מצאתי מיקום מדויק{p.lat != null ? ' (כרגע במרכז היישוב)' : ''}</strong>}{p.geo_source ? ` · ${p.geo_source}` : ''}</dd>
                     {p.hours && <><dt>שעות ומידע</dt><dd>{p.hours}</dd></>}
                     {p.tags.length > 0 && <><dt>תגיות</dt><dd>{p.tags.join(', ')}</dd></>}
                   </dl>
