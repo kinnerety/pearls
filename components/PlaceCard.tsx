@@ -29,7 +29,8 @@ export default function PlaceCard({ p }: { p: Place }) {
           {/* the name opens the place's own page (Kinneret, 2026-10-27); a draft (id 0) has no page yet */}
           <h3>{p.id ? <Link href={`/p/${encodeURIComponent(slugOf(p))}`}>{p.name}</Link> : p.name}</h3>
           {zonesOf(p).map(z => <span key={z} className={`cat zone z${ZONE_NAMES.indexOf(z)}`}>{z}</span>)}
-          <div className="where">{p.town || ''}{p.town ? ' · ' : ''}{p.region.join(', ')}</div>
+          {/* the town is skipped when it is also the region's name, so Jerusalem does not read "ירושלים · ירושלים" (Kinneret, 30.10.2026) */}
+          <div className="where">{p.town && !p.region.includes(p.town) ? p.town + ' · ' : ''}{p.region.join(', ')}</div>
         </TitleRow>
       </div>
       {/* one row of pills: the yellow families pill first (rightmost), then the green ones (Shabbat, categories) */}
