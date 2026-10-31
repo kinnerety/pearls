@@ -34,7 +34,7 @@ function PinMapGoogle({ lat, lng, onMove, onFail }: Props & { onFail: () => void
       });
     } else pin.current.setPosition(at);
     m.setCenter(at);
-    m.setZoom(Math.max(m.getZoom() ?? 0, 14));
+    m.setZoom(Math.max(m.getZoom() ?? 0, 15));
   }
 
   useEffect(() => {
@@ -45,11 +45,13 @@ function PinMapGoogle({ lat, lng, onMove, onFail }: Props & { onFail: () => void
       const maps = await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
       await google.maps.importLibrary('marker');
       if (dead || !box.current) return;
+      // with a point the map opens zoomed on it (fitBounds after the fact used to win and show the whole Middle East); without one, all of Israel
       const m = new maps.Map(box.current, {
         styles: STYLES, backgroundColor: '#DDEEF6', clickableIcons: false, gestureHandling: 'greedy',
         mapTypeControl: false, streetViewControl: false, fullscreenControl: false, zoomControl: true, maxZoom: 19,
+        ...(lat != null && lng != null ? { center: { lat, lng }, zoom: 15 } : {}),
       });
-      m.fitBounds(ISRAEL, 0);
+      if (lat == null || lng == null) m.fitBounds(ISRAEL, 0);
       m.addListener('click', (e: google.maps.MapMouseEvent) => {
         if (e.latLng) cb.current(+e.latLng.lat().toFixed(5), +e.latLng.lng().toFixed(5));
       });

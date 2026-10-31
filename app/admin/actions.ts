@@ -6,6 +6,7 @@ import { CATS } from '@/lib/config';
 import type { Texts } from '@/lib/texts';
 import { checkPlace } from '@/lib/validate';
 import type { Place } from '@/lib/types';
+import { locate } from '@/lib/places-search';
 
 export async function login(_: string | null, form: FormData): Promise<string | null> {
   if (!passwordOk(String(form.get('password') || ''))) return 'הסיסמה לא נכונה';
@@ -69,11 +70,21 @@ export async function remove(id: number) {
   redirect('/admin/places');
 }
 
-export type GeoHit = { name: string; lat: number; lng: number; kind: string };
-// Address / place search for the admin form (OpenStreetMap Nominatim, Israel only)
+export type GeoHit = { name: string; address?: string; lat: number; lng: number; kind: 'town' | 'exact'; url?: string };
+const TOWN_TYPES = ['locality', 'sublocality', 'administrative_area_level_1', 'administrative_area_level_2', 'administrative_area_level_3', 'neighborhood'];
+// Place / address search for the admin form: Google Maps (Places), the same lookup the daily run uses, so the admin finds
+// whatever Google Maps finds (Kinneret, 31.10.2026: "תצפית מנזר מאר סאבא" exists on Google Maps but OpenStreetMap had no such point).
+// OpenStreetMap (Nominatim) stays only as the fallback when there is no GOOGLE_PLACES_KEY.
 export async function geocode(q: string): Promise<GeoHit[]> {
   await requireAdmin();
   if (!q.trim()) return [];
+  try {
+    const found = await locate(q);
+    return found.map(c => ({ name: c.name, address: c.address || undefined, lat: c.lat, lng: c.lng, url: c.maps_url || undefined,
+      kind: c.types.some(t => TOWN_TYPES.includes(t)) ? 'town' : 'exact' }));
+  } catch (e) {
+    if (process.env.GOOGLE_PLACES_KEY) throw e;
+  }
   const u = new URL('https://nominatim.openstreetmap.org/search');
   for (const [k, v] of Object.entries({ q, format: 'jsonv2', countrycodes: 'il', 'accept-language': 'he', limit: '6' })) u.searchParams.set(k, v);
   const r = await fetch(u, { headers: { 'User-Agent': 'pninim-israeliot-admin/1.0 (https://github.com/kinnerety/pearls)' }, cache: 'no-store' });
