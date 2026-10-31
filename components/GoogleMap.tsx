@@ -10,7 +10,7 @@ import PlaceCard from './PlaceCard';
 // Markers and the popup are our own HTML overlays (no Map ID needed): each marker is the category's illustration on a
 // paper cutout; hovering (tapping on a phone) opens the place's card itself, so the map never shows a different,
 // shorter version of a place.
-type Props = { items: Place[]; visible: boolean; zoom?: number; apiKey: string; onFail: () => void };
+type Props = { items: Place[]; visible: boolean; zoom?: number; card?: boolean; apiKey: string; onFail: () => void };
 
 export const ISRAEL = { south: 29.45, west: 34.25, north: 33.35, east: 35.9 };
 const STAR = 'M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z';
@@ -62,20 +62,23 @@ function overlays(maps: google.maps.MapsLibrary, core: google.maps.CoreLibrary) 
       this.root.className = 'gmk-layer';
       maps.OverlayView.preventMapHitsAndGesturesFrom(this.root);
     }
-    setPlaces(items: Place[]) {
+    // card=false: plain markers that open nothing (the place page shows the full card above the map)
+    setPlaces(items: Place[], card = true) {
       this.root.replaceChildren();
       this.pts = [];
       // picks last so they sit on top
       for (const p of items.filter(p => p.lat != null).sort((a, b) => +a.pick - +b.pick)) {
-        const at = new core.LatLng(p.lat!, p.lng!), el = document.createElement('button');
-        el.type = 'button';
-        el.className = 'gmk';
-        el.setAttribute('aria-label', p.name);
+        const at = new core.LatLng(p.lat!, p.lng!), el = document.createElement(card ? 'button' : 'div');
+        if (el instanceof HTMLButtonElement) el.type = 'button';
+        el.className = 'gmk' + (card ? '' : ' still');
+        el.setAttribute(card ? 'aria-label' : 'title', p.name);
         el.innerHTML = iconHtml(p);
-        el.addEventListener('mouseenter', () => this.show(p, at, false));
-        el.addEventListener('mouseleave', this.hide);
-        // Enter/space on a marker (a click with no mouse, detail 0): the card opens and the keyboard moves into it (accessibility, 30.10.2026)
-        el.addEventListener('click', e => { this.show(p, at, true); if (e.detail === 0) this.keyOpen(el); });
+        if (card) {
+          el.addEventListener('mouseenter', () => this.show(p, at, false));
+          el.addEventListener('mouseleave', this.hide);
+          // Enter/space on a marker (a click with no mouse, detail 0): the card opens and the keyboard moves into it (accessibility, 30.10.2026)
+          el.addEventListener('click', e => { this.show(p, at, true); if ((e as MouseEvent).detail === 0) this.keyOpen(el); });
+        }
         this.root.appendChild(el);
         this.pts.push({ at, el });
       }
@@ -137,7 +140,10 @@ function overlays(maps: google.maps.MapsLibrary, core: google.maps.CoreLibrary) 
 }
 type Overlays = ReturnType<typeof overlays>;
 
-export default function GoogleMap({ items, zoom, apiKey, onFail }: Props) {
+export default function GoogleMap({ items, zoom, card = true, apiKey, onFail }: Props) {
+  // what the map should show the moment it is created (see below)
+  const first = useRef({ items, zoom });
+  first.current = { items, zoom };
   const box = useRef<HTMLDivElement>(null);
   const map = useRef<google.maps.Map | null>(null);
   const layer = useRef<InstanceType<Overlays['MarkerLayer']> | null>(null);
@@ -165,11 +171,17 @@ export default function GoogleMap({ items, zoom, apiKey, onFail }: Props) {
       const { MarkerLayer, CardPopup } = overlays(maps, core);
       // on touch screens Google's camera control (the four arrows) sat right on the card's share button (30.10.2026); people drag anyway
       const touch = matchMedia('(hover:none) and (pointer:coarse)').matches;
+      // a single place (the place page): the map is born centred on it at the requested zoom. Until 31.10.2026 it was created on the
+      // whole country and the place's zoom was set right after; Google applied the deferred country fit last, so the page opened on
+      // the whole Middle East (Kinneret's screenshot). Several places: fit the country, the markers effect refits to them
+      const one = first.current.items.filter(p => p.lat != null);
+      const start = one.length === 1 ? { center: { lat: one[0].lat!, lng: one[0].lng! }, zoom: first.current.zoom ?? 12 } : {};
       const m = new maps.Map(box.current, {
+        ...start,
         styles: STYLES, backgroundColor: '#DDEEF6', clickableIcons: false, gestureHandling: 'cooperative',
         mapTypeControl: false, streetViewControl: false, fullscreenControl: false, zoomControl: true, cameraControl: !touch, maxZoom: 18,
       });
-      m.fitBounds(ISRAEL, 0);
+      if (one.length !== 1) m.fitBounds(ISRAEL, 0);
       const el = box.current;
       el.dataset.z = zoomClass(m.getZoom() ?? 8);
       m.addListener('zoom_changed', () => { el.dataset.z = zoomClass(m.getZoom() ?? 8); });
@@ -241,7 +253,7 @@ export default function GoogleMap({ items, zoom, apiKey, onFail }: Props) {
       if (!m || !g || !pop) return;
       clearTimeout(closeT.current);
       pop.shut(); sticky.current = false; openId.current = null; setOpen(null);
-      g.setPlaces(items);
+      g.setPlaces(items, card);
       const pts = items.filter(p => p.lat != null);
       fit.current = () => {
         if (pts.length > 1) {
@@ -255,7 +267,7 @@ export default function GoogleMap({ items, zoom, apiKey, onFail }: Props) {
       // a hidden map (gallery view) has no size: fit once it is shown
       if (box.current && box.current.offsetWidth > 0) fit.current();
     });
-  }, [items]);
+  }, [items, card]);
 
   // the card is rendered into the popup: place it where it fits (above the marker, below it near the top edge,
   // slid inward near the sides; the tip stays on the marker)

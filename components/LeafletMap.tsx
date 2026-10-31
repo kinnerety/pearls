@@ -12,7 +12,7 @@ import PlaceCard from './PlaceCard';
 // Fallback map (Leaflet + OpenStreetMap tiles), used until a Google Maps key is set. Gets the same filtered array as the gallery.
 // Each marker is the category's illustration on a paper cutout; hovering (tapping on a phone) opens the place's
 // card itself as the popup, so the map never shows a different, shorter version of a place.
-type Props = { items: Place[]; visible: boolean; zoom?: number };
+type Props = { items: Place[]; visible: boolean; zoom?: number; card?: boolean };
 
 const ISRAEL: [[number, number], [number, number]] = [[29.45, 34.25], [33.35, 35.9]];
 const STAR = 'M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z';
@@ -27,7 +27,7 @@ function iconHtml(p: Place) {
 // marker size follows the zoom: small in the overview (the Galilee is crowded), full size once you zoom in
 const zoomClass = (z: number) => (z <= 8 ? 's' : z <= 9 ? 'm' : 'l');
 
-export default function LeafletMap({ items, visible, zoom }: Props) {
+export default function LeafletMap({ items, visible, zoom, card = true }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
   const lib = useRef<typeof L | null>(null);
@@ -92,14 +92,16 @@ export default function LeafletMap({ items, visible, zoom }: Props) {
       // picks last so they sit on top
       for (const p of [...pts].sort((a, b) => +a.pick - +b.pick)) {
         const mk = Lf.marker([p.lat!, p.lng!], {
-          icon: Lf.divIcon({ html: iconHtml(p), className: 'mk-wrap', iconSize: [SIZE, SIZE], iconAnchor: [SIZE / 2, SIZE / 2] }),
-          keyboard: true, title: p.name, riseOnHover: true,
-        })
+          icon: Lf.divIcon({ html: iconHtml(p), className: 'mk-wrap' + (card ? '' : ' still'), iconSize: [SIZE, SIZE], iconAnchor: [SIZE / 2, SIZE / 2] }),
+          keyboard: card, interactive: card, title: p.name, riseOnHover: card,
+        });
+        // card=false (place page): a plain marker that opens nothing, the full card is above the map (Kinneret, 31.10.2026)
+        if (card) mk
           .on('mouseover', () => show(p, mk, false))
           .on('mouseout', hide)
           .on('click', () => show(p, mk, true))
-          .on('keypress', e => { if ((e.originalEvent as KeyboardEvent).key === 'Enter') show(p, mk, true); })
-          .addTo(g);
+          .on('keypress', e => { if ((e.originalEvent as KeyboardEvent).key === 'Enter') show(p, mk, true); });
+        mk.addTo(g);
       }
       fit.current = (animate: boolean) => {
         const o = { duration: .6, animate };
@@ -110,7 +112,7 @@ export default function LeafletMap({ items, visible, zoom }: Props) {
       // a hidden map (gallery view) has no size: fit once it is shown
       if (box.current && box.current.offsetWidth > 0) fit.current(true);
     });
-  }, [items]);
+  }, [items, card]);
 
   // the card is rendered into the popup after it opens: tell Leaflet the size changed, then place it where it fits
   useLayoutEffect(() => {

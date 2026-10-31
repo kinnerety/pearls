@@ -255,6 +255,7 @@ a.chip.home{display:inline-block;text-decoration:none;line-height:1.3;white-spac
 .gmk:hover,.gmk:focus-visible{z-index:2;outline:none}
 .gmk:hover .mk,.gmk:focus-visible .mk{transform:scale(calc(var(--mks,1) * 1.15))}
 .gmk:focus-visible .mk{outline:2px solid var(--ink);outline-offset:1px}
+.gmk.still{cursor:default}.gmk.still:hover .mk{transform:none}.mk-wrap.still{cursor:default}
 .gpop{position:absolute;width:0;height:0;z-index:3}
 .gpop-box{position:absolute;left:0;bottom:var(--gap);transform:translateX(calc(-50% + var(--dx,0px)));width:min(330px,calc(100vw - 76px));direction:rtl;text-align:right;font-family:var(--body);font-size:16px;line-height:1.55;color:var(--ink);cursor:auto}
 .gpop.below .gpop-box{bottom:auto;top:var(--gap)}
