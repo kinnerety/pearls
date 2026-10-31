@@ -8,7 +8,8 @@ import LeafletMap from './LeafletMap';
 // Google Maps in Hebrew when the key is set in Vercel (NEXT_PUBLIC_GOOGLE_MAPS_KEY); otherwise, or if Google refuses
 // the key, the OpenStreetMap map. Both get the same filtered array and open the same PlaceCard.
 // zoom: the zoom level used when there is a single place (the place page asks for a closer look)
-type Props = { items: Place[]; visible: boolean; zoom?: number };
+// card: false = the markers are just markers, no card opens on hover/click (the place page already shows the full card above the map; Kinneret, 31.10.2026)
+type Props = { items: Place[]; visible: boolean; zoom?: number; card?: boolean };
 
 export default function MapView(props: Props) {
   const [failed, setFailed] = useState(false);
