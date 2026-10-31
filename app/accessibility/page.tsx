@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import { Fragment } from 'react';
-import Link from 'next/link';
 import { SITE_URL } from '@/lib/slug';
 import { getTexts } from '@/lib/store';
 import { parseAbout } from '@/lib/texts';
 import Rich from '@/components/Rich';
 import Forms from '@/components/Forms';
 import SiteFooter from '@/components/SiteFooter';
+import BackSign from '@/components/BackSign';
 
 export const metadata: Metadata = {
   title: 'הצהרת נגישות | פנינים ישראליות',
@@ -23,7 +23,7 @@ export default async function Accessibility() {
   return (
     <div className="wrap place-page a11y-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
-      <nav className="crumbs"><Link href="/" className="sign"><span>לכל הפנינים</span></Link></nav>
+      <nav className="crumbs"><BackSign /></nav>
       <main id="content" className="contents">
         <article className="place about">
           <h1>{texts['a11y.title']}</h1>
