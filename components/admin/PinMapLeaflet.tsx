@@ -34,7 +34,7 @@ export default function PinMapLeaflet({ lat, lng, onMove }: { lat: number | null
       pin.current = Lf.marker([la, ln], { draggable: true, icon: Lf.divIcon({ html: '<span class="mk on"></span>', className: 'mk-wrap', iconSize: [16, 16], iconAnchor: [8, 8] }) }).addTo(m);
       pin.current.on('dragend', () => { const p = pin.current!.getLatLng(); cb.current(+p.lat.toFixed(5), +p.lng.toFixed(5)); });
     } else pin.current.setLatLng([la, ln]);
-    if (zoom) m.setView([la, ln], Math.max(m.getZoom(), 14));
+    if (zoom) m.setView([la, ln], Math.max(m.getZoom(), 15));
   }
   const last = useRef<string>('');
   useEffect(() => {

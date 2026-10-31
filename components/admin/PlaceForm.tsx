@@ -36,8 +36,10 @@ export default function PlaceForm({ initial, hidden, updatedAt, draft, texts, re
   const set = <K extends keyof Place>(k: K, v: Place[K]) => { setP(x => ({ ...x, [k]: v })); setMsg(''); };
   const toggle = (k: 'region' | 'cats', v: string) => set(k, p[k].includes(v) ? p[k].filter(x => x !== v) : [...p[k], v]);
   // a new spot from the map or the search replaces the saved address and source, so the text under the map never describes an old point
-  const setLoc = (lat: number, lng: number, precision: 'exact' | 'town', found?: string) =>
-    setP(x => ({ ...x, lat, lng, precision, approx: precision !== 'exact', geo_source: found ? `חיפוש בדף הניהול: ${found}` : 'עודכן בדף הניהול', address: found } as Place));
+  const setLoc = (lat: number, lng: number, precision: 'exact' | 'town', hit?: GeoHit) =>
+    setP(x => ({ ...x, lat, lng, precision, approx: precision !== 'exact',
+      geo_source: !hit ? 'עודכן בדף הניהול' : hit.url ? `Google Maps: ${hit.name} · ${hit.url}` : `חיפוש בדף הניהול: ${hit.name}`,
+      address: hit ? (hit.address || hit.name) : undefined } as Place));
 
   const search = (text: string) => start(async () => { setHits(await geocode(text)); });
   const submit = () => start(async () => {
@@ -120,16 +122,16 @@ export default function PlaceForm({ initial, hidden, updatedAt, draft, texts, re
 
       <section className="adm-card">
         <h2>מיקום</h2>
-        <p className="adm-hint">אפשר לחפש כתובת או שם מקום, ללחוץ על המפה, או לגרור את הנקודה. בלי מיקום מדויק, הנקודה תוצג במרכז היישוב.</p>
+        <p className="adm-hint">אפשר לחפש בגוגל מפס שם מקום או כתובת (כמו בגוגל מפס עצמו), ללחוץ על המפה, או לגרור את הנקודה. בלי מיקום מדויק, הנקודה תוצג במרכז היישוב.</p>
         <div className="adm-row">
           <input value={q} onChange={e => setQ(e.target.value)} placeholder="כתובת או שם המקום" onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); search(q || `${p.name} ${p.town}`); } }} />
           <button type="button" className="adm-btn" disabled={busy} onClick={() => search(q || `${p.name} ${p.town}`)}>חיפוש מיקום</button>
           {p.town && <button type="button" className="adm-btn ghost" disabled={busy} onClick={() => start(async () => {
             const h = (await geocode(p.town)).find(x => x.kind === 'town') || (await geocode(p.town))[0];
-            if (h) { setLoc(h.lat, h.lng, 'town'); setHits(null); } else setHits([]);
+            if (h) { setLoc(h.lat, h.lng, 'town', h); setHits(null); } else setHits([]);
           })}>רק מרכז היישוב</button>}
         </div>
-        {hits && (hits.length ? <ul className="adm-hits">{hits.map((h, i) => <li key={i}><button type="button" onClick={() => { setLoc(h.lat, h.lng, h.kind === 'town' ? 'town' : 'exact', h.name); setHits(null); }}>{h.name}</button></li>)}</ul> : <p className="adm-hint">לא נמצא. נסי ניסוח אחר, או לחצי על המפה.</p>)}
+        {hits && (hits.length ? <ul className="adm-hits">{hits.map((h, i) => <li key={i}><button type="button" onClick={() => { setLoc(h.lat, h.lng, h.kind, h); setHits(null); }}>{h.name}{h.address && h.address !== h.name && <small> · {h.address}</small>}</button></li>)}</ul> : <p className="adm-hint">גוגל מפס לא מצא. נסי ניסוח אחר (כמו שמחפשים בגוגל מפס), או לחצי על המפה.</p>)}
         <LocNow p={p} />
         <PinMap lat={p.lat} lng={p.lng} onMove={(la, ln) => setLoc(la, ln, 'exact')} />
       </section>
