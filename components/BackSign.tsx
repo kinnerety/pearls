@@ -5,10 +5,11 @@ import { useEffect, useState } from 'react';
 // the "לכל הפנינים" sign: goes back to the gallery WITH the filters the visitor chose (Kinneret, 31.10.2026:
 // "אני רוצה שהסינונים שלי ישמרו"). Explorer remembers its last address (path + filters) in sessionStorage;
 // the sign opens that address (or the plain home page when there is none, e.g. a shared link) and the gallery
-// scrolls back to where the visitor was when they opened the pearl.
+// scrolls back to where the visitor was when they opened the pearl, in the same (random) order.
 export const BACK_KEY = 'pearls:back';
 export const SCROLL_KEY = 'pearls:scroll';
 export const RESTORE_KEY = 'pearls:restore';
+export const ORDER_KEY = 'pearls:order';
 
 export default function BackSign({ label = 'לכל הפנינים' }: { label?: string }) {
   const [href, setHref] = useState('/');

@@ -13,7 +13,7 @@ import MobileMenu from './MobileMenu';
 import { ACORN_BARE } from './art';
 import PlaceCard from './PlaceCard';
 import { TextsProvider } from './TextsContext';
-import { BACK_KEY, RESTORE_KEY, SCROLL_KEY } from './BackSign';
+import { BACK_KEY, ORDER_KEY, RESTORE_KEY, SCROLL_KEY } from './BackSign';
 import CheckPopup, { checkSeen } from './CheckPopup';
 import dynamic from 'next/dynamic';
 import { FULL, OUTLINE, poly } from '@/lib/outline';
@@ -75,27 +75,43 @@ export default function Explorer({ places, texts, scope, total, foot }: { places
   // the server renders the stored order, the shuffle happens after hydration
   const [rank, setRank] = useState<Map<number, number> | null>(null);
   const shuffleKey = JSON.stringify([st.regions, st.cats, st.prefs]);
+  // coming back through the "לכל הפנינים" sign returns to the same spot AND the same order (Kinneret, 31.10.2026:
+  // the order is random per visit, so a reshuffle would put other cards at that spot). Opening a pearl remembers
+  // the scroll position and the current order; the sign sets a flag, read once here on mount
+  const restore = useRef<{ y: number; order: Map<number, number> | null } | null>(null);
   useEffect(() => {
-    if (ready) setRank(new Map(places.map(p => [p.id, Math.random()])));
-  }, [ready, places, shuffleKey]);
-  // opening a pearl remembers how far down the gallery the visitor was; coming back through the "לכל הפנינים" sign
-  // returns there (Kinneret, 31.10.2026). The order is reshuffled on every visit, so it is the spot, not the same card
-  useEffect(() => {
+    try {
+      if (sessionStorage.getItem(RESTORE_KEY) === '1') {
+        sessionStorage.removeItem(RESTORE_KEY);
+        const o = JSON.parse(sessionStorage.getItem(ORDER_KEY) || 'null') as [number, number][] | null;
+        restore.current = { y: Number(sessionStorage.getItem(SCROLL_KEY)) || 0, order: o ? new Map(o) : null };
+      }
+    } catch {}
     const onClick = (e: MouseEvent) => {
       const a = (e.target as Element | null)?.closest?.('a[href^="/p/"]');
-      if (a) try { sessionStorage.setItem(SCROLL_KEY, String(Math.round(scrollY))); } catch {}
+      if (!a) return;
+      try {
+        sessionStorage.setItem(SCROLL_KEY, String(Math.round(scrollY)));
+        sessionStorage.setItem(ORDER_KEY, JSON.stringify([...(rankRef.current || [])]));
+      } catch {}
     };
     document.addEventListener('click', onClick, true);
     return () => document.removeEventListener('click', onClick, true);
   }, []);
+  const rankRef = useRef<Map<number, number> | null>(null);
   useEffect(() => {
-    if (!rank) return;
-    try {
-      if (sessionStorage.getItem(RESTORE_KEY) !== '1') return;
-      sessionStorage.removeItem(RESTORE_KEY);
-      const y = Number(sessionStorage.getItem(SCROLL_KEY));
-      if (y > 0) requestAnimationFrame(() => scrollTo({ top: y, behavior: 'auto' }));
-    } catch {}
+    if (!ready) return;
+    const kept = restore.current?.order;
+    if (restore.current) restore.current.order = null;
+    const r = kept && kept.size ? new Map(places.map(p => [p.id, kept.get(p.id) ?? Math.random()])) : new Map(places.map(p => [p.id, Math.random()]));
+    rankRef.current = r;
+    setRank(r);
+  }, [ready, places, shuffleKey]);
+  useEffect(() => {
+    if (!rank || !restore.current) return;
+    const y = restore.current.y;
+    restore.current = null;
+    if (y > 0) requestAnimationFrame(() => scrollTo({ top: y, behavior: 'auto' }));
   }, [rank]);
   const items = useMemo(() => {
     const out = places.filter(p => matches(p, st));
