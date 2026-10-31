@@ -70,27 +70,45 @@ export async function remove(id: number) {
   redirect('/admin/places');
 }
 
-export type GeoHit = { name: string; address?: string; lat: number; lng: number; kind: 'town' | 'exact'; url?: string };
+export type GeoHit = { name: string; address?: string; lat: number; lng: number; kind: 'town' | 'exact'; url?: string; coords?: true };
 const TOWN_TYPES = ['locality', 'sublocality', 'administrative_area_level_1', 'administrative_area_level_2', 'administrative_area_level_3', 'neighborhood'];
 // Place / address search for the admin form: Google Maps (Places), the same lookup the daily run uses, so the admin finds
 // whatever Google Maps finds (Kinneret, 31.10.2026: "תצפית מנזר מאר סאבא" exists on Google Maps but OpenStreetMap had no such point).
 // OpenStreetMap (Nominatim) stays only as the fallback when there is no GOOGLE_PLACES_KEY.
-export async function geocode(q: string): Promise<GeoHit[]> {
+// Typed coordinates ("31.704373, 35.333518", also a Google Maps link with @lat,lng or q=lat,lng) go straight to the map:
+// Google's text search rejects them with an error (Kinneret hit it 31.10.2026 and the whole edit page crashed).
+const COORDS = /(-?\d{1,2}(?:\.\d+)?)\s*,\s*(-?\d{1,3}(?:\.\d+)?)/;
+function coordsIn(q: string): GeoHit | null {
+  const t = q.trim();
+  const m = /^-?\d/.test(t) ? t.match(new RegExp(`^${COORDS.source}$`)) : t.match(/[@=]\s*(-?\d{1,2}(?:\.\d+)?)\s*,\s*(-?\d{1,3}(?:\.\d+)?)/);
+  if (!m) return null;
+  const lat = +m[1], lng = +m[2];
+  if (!(lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180)) return null;
+  return { name: `נ"צ ${lat}, ${lng}`, lat, lng, kind: 'exact', coords: true };
+}
+
+/** Location search in the admin form. Never throws: a failure comes back as `error`, so the page stays up (31.10.2026). */
+export async function geocode(q: string): Promise<{ hits: GeoHit[]; error?: string }> {
   await requireAdmin();
-  if (!q.trim()) return [];
+  if (!q.trim()) return { hits: [] };
+  const typed = coordsIn(q);
+  if (typed) return { hits: [typed] };
   try {
-    const found = await locate(q);
-    return found.map(c => ({ name: c.name, address: c.address || undefined, lat: c.lat, lng: c.lng, url: c.maps_url || undefined,
-      kind: c.types.some(t => TOWN_TYPES.includes(t)) ? 'town' : 'exact' }));
+    if (process.env.GOOGLE_PLACES_KEY) {
+      const found = await locate(q);
+      return { hits: found.map(c => ({ name: c.name, address: c.address || undefined, lat: c.lat, lng: c.lng, url: c.maps_url || undefined,
+        kind: c.types.some(t => TOWN_TYPES.includes(t)) ? 'town' : 'exact' })) };
+    }
+    const u = new URL('https://nominatim.openstreetmap.org/search');
+    for (const [k, v] of Object.entries({ q, format: 'jsonv2', countrycodes: 'il', 'accept-language': 'he', limit: '6' })) u.searchParams.set(k, v);
+    const r = await fetch(u, { headers: { 'User-Agent': 'pninim-israeliot-admin/1.0 (https://github.com/kinnerety/pearls)' }, cache: 'no-store' });
+    if (!r.ok) return { hits: [], error: 'החיפוש לא הצליח כרגע' };
+    const res = await r.json() as { display_name: string; lat: string; lon: string; category?: string; class?: string; type: string }[];
+    return { hits: res.map(x => ({ name: x.display_name.split(',').slice(0, 3).join(','), lat: +x.lat, lng: +x.lon, kind: (x.category || x.class) === 'place' || (x.category || x.class) === 'boundary' ? 'town' : 'exact' })) };
   } catch (e) {
-    if (process.env.GOOGLE_PLACES_KEY) throw e;
+    console.error('geocode failed', q, e);
+    return { hits: [], error: 'החיפוש לא הצליח כרגע, אפשר לנסות שוב, ללחוץ על המפה או להקליד נ"צ (כמו 31.70, 35.33)' };
   }
-  const u = new URL('https://nominatim.openstreetmap.org/search');
-  for (const [k, v] of Object.entries({ q, format: 'jsonv2', countrycodes: 'il', 'accept-language': 'he', limit: '6' })) u.searchParams.set(k, v);
-  const r = await fetch(u, { headers: { 'User-Agent': 'pninim-israeliot-admin/1.0 (https://github.com/kinnerety/pearls)' }, cache: 'no-store' });
-  if (!r.ok) return [];
-  const res = await r.json() as { display_name: string; lat: string; lon: string; category?: string; class?: string; type: string }[];
-  return res.map(x => ({ name: x.display_name.split(',').slice(0, 3).join(','), lat: +x.lat, lng: +x.lon, kind: (x.category || x.class) === 'place' || (x.category || x.class) === 'boundary' ? 'town' : 'exact' }));
 }
 
 /** A suggestion or a mistake report from the site's forms: marked as handled (or back to new), or deleted */
