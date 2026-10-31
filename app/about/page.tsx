@@ -8,6 +8,7 @@ import { DIVIDER_SVG } from '@/components/art';
 import Rich, { Paras } from '@/components/Rich';
 import Forms from '@/components/Forms';
 import SiteFooter from '@/components/SiteFooter';
+import BackSign from '@/components/BackSign';
 
 export const metadata: Metadata = {
   title: 'אודות | פנינים ישראליות',
@@ -29,7 +30,7 @@ export default async function About() {
   return (
     <div className="wrap place-page about-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
-      <nav className="crumbs"><Link href="/" className="sign"><span>לכל הפנינים</span></Link></nav>
+      <nav className="crumbs"><BackSign /></nav>
       <main id="content" className="contents">
       <article className="place about">
         <h1>{texts['about.h1'].split('\n').map((l, i) => <Fragment key={i}>{i > 0 && <br />}<Rich text={l} /></Fragment>)}</h1>

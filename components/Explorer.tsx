@@ -13,6 +13,7 @@ import MobileMenu from './MobileMenu';
 import { ACORN_BARE } from './art';
 import PlaceCard from './PlaceCard';
 import { TextsProvider } from './TextsContext';
+import { BACK_KEY, RESTORE_KEY, SCROLL_KEY } from './BackSign';
 import CheckPopup, { checkSeen } from './CheckPopup';
 import dynamic from 'next/dynamic';
 import { FULL, OUTLINE, poly } from '@/lib/outline';
@@ -66,6 +67,8 @@ export default function Explorer({ places, texts, scope, total, foot }: { places
     if (!ready) return;
     const s = toSearch(st) + (view === 'map' ? (toSearch(st) ? '&' : '?') + 'v=map' : '');
     if (s !== location.search) history.replaceState(null, '', location.pathname + s);
+    // remembered for the "לכל הפנינים" sign on the pearl page, so the filters survive the round trip (Kinneret, 31.10.2026)
+    try { sessionStorage.setItem(BACK_KEY, location.pathname + s); } catch {}
   }, [st, view, ready]);
 
   // a fresh random order on every visit and every filter change (typing in the search keeps it);
@@ -75,6 +78,25 @@ export default function Explorer({ places, texts, scope, total, foot }: { places
   useEffect(() => {
     if (ready) setRank(new Map(places.map(p => [p.id, Math.random()])));
   }, [ready, places, shuffleKey]);
+  // opening a pearl remembers how far down the gallery the visitor was; coming back through the "לכל הפנינים" sign
+  // returns there (Kinneret, 31.10.2026). The order is reshuffled on every visit, so it is the spot, not the same card
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const a = (e.target as Element | null)?.closest?.('a[href^="/p/"]');
+      if (a) try { sessionStorage.setItem(SCROLL_KEY, String(Math.round(scrollY))); } catch {}
+    };
+    document.addEventListener('click', onClick, true);
+    return () => document.removeEventListener('click', onClick, true);
+  }, []);
+  useEffect(() => {
+    if (!rank) return;
+    try {
+      if (sessionStorage.getItem(RESTORE_KEY) !== '1') return;
+      sessionStorage.removeItem(RESTORE_KEY);
+      const y = Number(sessionStorage.getItem(SCROLL_KEY));
+      if (y > 0) requestAnimationFrame(() => scrollTo({ top: y, behavior: 'auto' }));
+    } catch {}
+  }, [rank]);
   const items = useMemo(() => {
     const out = places.filter(p => matches(p, st));
     return rank ? out.sort((a, b) => rank.get(a.id)! - rank.get(b.id)!) : out;

@@ -16,6 +16,7 @@ import SiteFooter from '@/components/SiteFooter';
 import Forms from '@/components/Forms';
 import { isApprox } from '@/lib/geo';
 import { catShareImage } from '@/lib/share-image';
+import BackSign from '@/components/BackSign';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -60,7 +61,7 @@ export default async function PlacePage({ params }: Props) {
     <div className="wrap place-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       {/* a wooden signpost pointing back to all the pearls (Kinneret, 2026-10-26: no site title on this page) */}
-      <nav className="crumbs"><Link href="/" className="sign"><span>לכל הפנינים</span></Link></nav>
+      <nav className="crumbs"><BackSign /></nav>
       <main id="content" className="contents">
       <article className="place">
         {p.pick && <span className="pick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" /></svg>המלצת המערכת</span>}

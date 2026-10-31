@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { SITE_URL } from '@/lib/slug';
 import { getTexts } from '@/lib/store';
 import { TextsProvider } from '@/components/TextsContext';
 import { Contact } from '@/components/Forms';
 import SiteFooter from '@/components/SiteFooter';
 import Forms from '@/components/Forms';
+import BackSign from '@/components/BackSign';
 
 export const metadata: Metadata = {
   title: 'ליצור קשר | פנינים ישראליות',
@@ -21,7 +21,7 @@ export default async function ContactPage() {
   return (
     <div className="wrap place-page contact">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
-      <nav className="crumbs"><Link href="/" className="sign"><span>לכל הפנינים</span></Link></nav>
+      <nav className="crumbs"><BackSign /></nav>
       <main id="content" className="contents">
         <h1 className="sr-only">ליצור קשר</h1>
         <TextsProvider texts={texts}><Contact texts={texts} inline /></TextsProvider>
