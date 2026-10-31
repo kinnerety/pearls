@@ -35,8 +35,9 @@ export default function PlaceForm({ initial, hidden, updatedAt, draft, texts, re
   const isNew = !initial.id;
   const set = <K extends keyof Place>(k: K, v: Place[K]) => { setP(x => ({ ...x, [k]: v })); setMsg(''); };
   const toggle = (k: 'region' | 'cats', v: string) => set(k, p[k].includes(v) ? p[k].filter(x => x !== v) : [...p[k], v]);
-  const setLoc = (lat: number, lng: number, precision: 'exact' | 'town', address?: string) =>
-    setP(x => ({ ...x, lat, lng, precision, approx: precision !== 'exact', geo_source: 'עודכן בדף הניהול', ...(address ? { address } : {}) } as Place));
+  // a new spot from the map or the search replaces the saved address and source, so the text under the map never describes an old point
+  const setLoc = (lat: number, lng: number, precision: 'exact' | 'town', found?: string) =>
+    setP(x => ({ ...x, lat, lng, precision, approx: precision !== 'exact', geo_source: found ? `חיפוש בדף הניהול: ${found}` : 'עודכן בדף הניהול', address: found } as Place));
 
   const search = (text: string) => start(async () => { setHits(await geocode(text)); });
   const submit = () => start(async () => {
@@ -128,9 +129,9 @@ export default function PlaceForm({ initial, hidden, updatedAt, draft, texts, re
             if (h) { setLoc(h.lat, h.lng, 'town'); setHits(null); } else setHits([]);
           })}>רק מרכז היישוב</button>}
         </div>
-        {hits && (hits.length ? <ul className="adm-hits">{hits.map((h, i) => <li key={i}><button type="button" onClick={() => { setLoc(h.lat, h.lng, h.kind === 'town' ? 'town' : 'exact', q || undefined); setHits(null); }}>{h.name}</button></li>)}</ul> : <p className="adm-hint">לא נמצא. נסי ניסוח אחר, או לחצי על המפה.</p>)}
+        {hits && (hits.length ? <ul className="adm-hits">{hits.map((h, i) => <li key={i}><button type="button" onClick={() => { setLoc(h.lat, h.lng, h.kind === 'town' ? 'town' : 'exact', h.name); setHits(null); }}>{h.name}</button></li>)}</ul> : <p className="adm-hint">לא נמצא. נסי ניסוח אחר, או לחצי על המפה.</p>)}
         <PinMap lat={p.lat} lng={p.lng} onMove={(la, ln) => setLoc(la, ln, 'exact')} />
-        <p className="adm-hint">{p.lat == null ? 'אין עדיין מיקום' : `${p.precision === 'exact' ? 'מיקום מדויק' : 'מיקום משוער (מרכז היישוב)'} · ${p.lat}, ${p.lng}`}</p>
+        <LocNow p={p} />
       </section>
 
       <div className="adm-save">
@@ -163,6 +164,25 @@ export default function PlaceForm({ initial, hidden, updatedAt, draft, texts, re
     <div className="adm-review">
       {form}
       <DraftSide p={p} info={draft} texts={texts} />
+    </div>
+  );
+}
+
+// What the map shows right now, in words (Kinneret, 31.10.2026): the place Google found and its address, a spot she searched
+// for, a point she marked by hand, or the town centre; plus the coordinates and a link to open the same spot in Google Maps.
+function LocNow({ p }: { p: Place }) {
+  if (p.lat == null || p.lng == null) return <p className="adm-hint">אין עדיין מיקום</p>;
+  const src = p.geo_source || '';
+  const google = src.match(/^Google Maps: (.*?)(?: · (https?:\S+))?$/);
+  const searched = src.match(/^חיפוש בדף הניהול: (.*)$/);
+  const what = p.precision !== 'exact' ? `מרכז היישוב${p.town ? ` ${p.town}` : ''}`
+    : google ? google[1] : searched ? searched[1] : src === 'עודכן בדף הניהול' ? 'נקודה שסומנה ידנית על המפה' : src || 'מיקום מדויק';
+  const url = google?.[2] || `https://www.google.com/maps?q=${p.lat},${p.lng}`;
+  return (
+    <div className="adm-loc">
+      <p><b>על המפה עכשיו:</b> {what}</p>
+      {p.address && p.address !== what && <p className="adm-loc-addr">{p.address}</p>}
+      <p className="adm-hint">{p.precision === 'exact' ? 'מיקום מדויק' : 'מיקום משוער'} · {p.lat}, {p.lng} · <a href={url} target="_blank" rel="noopener">לפתוח בגוגל מפות ↗</a></p>
     </div>
   );
 }
