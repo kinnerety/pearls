@@ -130,8 +130,8 @@ export default function PlaceForm({ initial, hidden, updatedAt, draft, texts, re
           })}>רק מרכז היישוב</button>}
         </div>
         {hits && (hits.length ? <ul className="adm-hits">{hits.map((h, i) => <li key={i}><button type="button" onClick={() => { setLoc(h.lat, h.lng, h.kind === 'town' ? 'town' : 'exact', h.name); setHits(null); }}>{h.name}</button></li>)}</ul> : <p className="adm-hint">לא נמצא. נסי ניסוח אחר, או לחצי על המפה.</p>)}
-        <PinMap lat={p.lat} lng={p.lng} onMove={(la, ln) => setLoc(la, ln, 'exact')} />
         <LocNow p={p} />
+        <PinMap lat={p.lat} lng={p.lng} onMove={(la, ln) => setLoc(la, ln, 'exact')} />
       </section>
 
       <div className="adm-save">
@@ -170,6 +170,7 @@ export default function PlaceForm({ initial, hidden, updatedAt, draft, texts, re
 
 // What the map shows right now, in words (Kinneret, 31.10.2026): the place Google found and its address, a spot she searched
 // for, a point she marked by hand, or the town centre; plus the coordinates and a link to open the same spot in Google Maps.
+// Above the map (Kinneret, 31.10); the address is Google's full formatted address, street and number included when it has one.
 function LocNow({ p }: { p: Place }) {
   if (p.lat == null || p.lng == null) return <p className="adm-hint">אין עדיין מיקום</p>;
   const src = p.geo_source || '';
