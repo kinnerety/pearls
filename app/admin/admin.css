@@ -133,3 +133,4 @@ p.adm-report{flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px}
 .adm-loc p+p{margin-top:3px}
 .adm-loc-addr{font-size:.95rem}
 .adm-loc a{color:inherit}
+.adm-err-line{margin:4px 0 0;color:var(--ink);background:var(--sun);border-radius:10px;padding:6px 12px;font-size:.95rem}

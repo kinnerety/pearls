@@ -2,7 +2,7 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState, useTransition } from 'react';
+import { useEffect, useRef, useState, useTransition } from 'react';
 import type { Place } from '@/lib/types';
 import type { Texts } from '@/lib/texts';
 import { CATS, ZONES } from '@/lib/config';
@@ -30,18 +30,65 @@ export default function PlaceForm({ initial, hidden, updatedAt, draft, texts, re
   const [msg, setMsg] = useState('');
   const [q, setQ] = useState('');
   const [hits, setHits] = useState<GeoHit[] | null>(null);
+  const [geoErr, setGeoErr] = useState('');
   const [busy, start] = useTransition();
   const router = useRouter();
   const isNew = !initial.id;
+  // Nothing typed here is lost any more (Kinneret, 31.10.2026, after a crash wiped a pearl she was writing):
+  // every change is kept in this browser under the pearl's key until it is saved, so a crash or a wrong click can be undone,
+  // and leaving the page with unsaved changes asks first.
+  const storeKey = `pearl-draft:${draftId ? `d${draftId}` : initial.id ? `p${initial.id}` : 'new'}`;
+  const snap = JSON.stringify({ p, tags, types });
+  const dirty = snap !== JSON.stringify({ p: initial, tags: initial.tags.join(', '), types: (initial.types || []).join(', ') });
+  const leaving = useRef(false);
+  const [restore, setRestore] = useState<{ p: Place; tags: string; types: string; at: string } | null>(null);
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(storeKey);
+      if (raw) { const d = JSON.parse(raw); if (d?.p && JSON.stringify({ p: d.p, tags: d.tags, types: d.types }) !== snap) setRestore(d); }
+    } catch { /* no storage */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storeKey]);
+  useEffect(() => {
+    if (!dirty || leaving.current) return;
+    const t = setTimeout(() => { try { localStorage.setItem(storeKey, JSON.stringify({ p, tags, types, at: new Date().toISOString() })); } catch { /* full or blocked */ } }, 400);
+    return () => clearTimeout(t);
+  }, [snap, dirty, storeKey, p, tags, types]);
+  useEffect(() => {
+    if (!dirty) return;
+    const ask = 'יש שינויים שלא נשמרו. לצאת בכל זאת?';
+    const unload = (e: BeforeUnloadEvent) => { if (!leaving.current) { e.preventDefault(); e.returnValue = ask; } };
+    // links inside the admin (the top bar, "חזרה") are caught before Next navigates; new-tab links pass
+    const click = (e: MouseEvent) => {
+      if (leaving.current || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey) return;
+      const a = (e.target as Element | null)?.closest?.('a[href]') as HTMLAnchorElement | null;
+      if (!a || a.target === '_blank' || a.getAttribute('href')?.startsWith('#')) return;
+      if (!confirm(ask)) { e.preventDefault(); e.stopPropagation(); }
+    };
+    window.addEventListener('beforeunload', unload);
+    document.addEventListener('click', click, true);
+    return () => { window.removeEventListener('beforeunload', unload); document.removeEventListener('click', click, true); };
+  }, [dirty]);
+  const forget = () => { try { localStorage.removeItem(storeKey); } catch { /* ignore */ } };
+  // leaving on purpose (after a save, a decline or a delete): the guard steps aside and the kept copy is dropped
+  const go = (href: string) => { leaving.current = true; forget(); router.push(href); };
   const set = <K extends keyof Place>(k: K, v: Place[K]) => { setP(x => ({ ...x, [k]: v })); setMsg(''); };
   const toggle = (k: 'region' | 'cats', v: string) => set(k, p[k].includes(v) ? p[k].filter(x => x !== v) : [...p[k], v]);
   // a new spot from the map or the search replaces the saved address and source, so the text under the map never describes an old point
   const setLoc = (lat: number, lng: number, precision: 'exact' | 'town', hit?: GeoHit) =>
     setP(x => ({ ...x, lat, lng, precision, approx: precision !== 'exact',
-      geo_source: !hit ? 'עודכן בדף הניהול' : hit.url ? `Google Maps: ${hit.name} · ${hit.url}` : `חיפוש בדף הניהול: ${hit.name}`,
-      address: hit ? (hit.address || hit.name) : undefined } as Place));
+      geo_source: !hit ? 'עודכן בדף הניהול' : hit.coords ? 'נ"צ שהוקלד בדף הניהול' : hit.url ? `Google Maps: ${hit.name} · ${hit.url}` : `חיפוש בדף הניהול: ${hit.name}`,
+      address: hit && !hit.coords ? (hit.address || hit.name) : undefined } as Place));
 
-  const search = (text: string) => start(async () => { setHits(await geocode(text)); });
+  // the lookup never takes the page down: typed coordinates are placed at once, and any failure is a line of text here
+  const lookup = async (text: string) => {
+    try { const r = await geocode(text); setGeoErr(r.error || ''); return r.hits; }
+    catch { setGeoErr('החיפוש לא הצליח כרגע, אפשר לנסות שוב או ללחוץ על המפה'); return null; }
+  };
+  const search = (text: string) => start(async () => {
+    const h = await lookup(text);
+    if (h && h.length === 1 && h[0].coords) { setLoc(h[0].lat, h[0].lng, 'exact', h[0]); setHits(null); setQ(''); } else setHits(h);
+  });
   const submit = () => start(async () => {
     const split = (t: string) => t.split(/[,،]/).map(s => s.trim()).filter(Boolean);
     const place: Place = { ...p, tags: split(tags), types: split(types) };
@@ -50,20 +97,20 @@ export default function PlaceForm({ initial, hidden, updatedAt, draft, texts, re
     setErrors([]); setMsg('נשמר ✓');
     if (report) await markSubmission(report.id, 'done');
     const ok = `?ok=${encodeURIComponent(place.name)}`;
-    if (draft) router.push(draft.next ? `/admin/drafts/${draft.next}${ok}` : `/admin/drafts${ok}`);
-    else router.push(`/admin/places${ok}`);
+    if (draft) go(draft.next ? `/admin/drafts/${draft.next}${ok}` : `/admin/drafts${ok}`);
+    else go(`/admin/places${ok}`);
   });
   // "המקום נסגר": the pearl leaves the site but stays in the list (hidden), and can come back
   const setLive = (live: boolean) => start(async () => {
     const r = await save({ ...p, tags: tags.split(/[,،]/).map(x => x.trim()).filter(Boolean), types: types.split(/[,،]/).map(x => x.trim()).filter(Boolean) }, !live);
     if (!r.ok) { setErrors(r.errors); return; }
-    router.push(`/admin/places?${live ? 'back' : 'closed'}=${encodeURIComponent(p.name)}`);
+    go(`/admin/places?${live ? 'back' : 'closed'}=${encodeURIComponent(p.name)}`);
   });
   const reject = () => { if (draft && confirm(`להוריד את "${p.name}" מהרשימה בלי להעלות לאתר?`)) start(async () => {
     const r = await declineDraft(draft.id);
     if (!r.ok) { setErrors([r.error]); return; }
     const no = `?no=${encodeURIComponent(p.name)}`;
-    router.push(draft.next ? `/admin/drafts/${draft.next}${no}` : `/admin/drafts${no}`);
+    go(draft.next ? `/admin/drafts/${draft.next}${no}` : `/admin/drafts${no}`);
   }); };
   const back = draft || isNew ? '/admin/drafts' : '/admin/places';
 
@@ -74,6 +121,16 @@ export default function PlaceForm({ initial, hidden, updatedAt, draft, texts, re
         {draft && draft.total > 0 && <span>פנינה {draft.pos} מתוך {draft.total}</span>}
       </div>
       {notice && <p className="adm-toast">{notice}</p>}
+      {restore && (
+        <div className="adm-confirm">
+          <b>נשארו כאן שינויים שלא נשמרו ({new Date(restore.at).toLocaleString('he-IL', { timeZone: 'Asia/Jerusalem' })})</b>
+          <span className="adm-hint">זה מה שהוקלד בפעם הקודמת ולא נשמר. לשחזר את זה לטופס?</span>
+          <div className="adm-row">
+            <button type="button" className="adm-btn" onClick={() => { setP(restore.p); setTags(restore.tags); setTypes(restore.types); setRestore(null); }}>לשחזר</button>
+            <button type="button" className="adm-btn ghost" onClick={() => { forget(); setRestore(null); }}>לא, למחוק את זה</button>
+          </div>
+        </div>
+      )}
       <div className="adm-top">
         <h1>{isNew && !draft ? 'פנינה חדשה' : p.name || 'עריכה'}</h1>
         {!isNew && <Link className="adm-btn ghost" href={`/p/${slugOf(initial)}`} target="_blank">לראות באתר</Link>}
@@ -122,15 +179,17 @@ export default function PlaceForm({ initial, hidden, updatedAt, draft, texts, re
 
       <section className="adm-card">
         <h2>מיקום</h2>
-        <p className="adm-hint">אפשר לחפש בגוגל מפס שם מקום או כתובת (כמו בגוגל מפס עצמו), ללחוץ על המפה, או לגרור את הנקודה. בלי מיקום מדויק, הנקודה תוצג במרכז היישוב.</p>
+        <p className="adm-hint">אפשר לחפש בגוגל מפס שם מקום או כתובת (כמו בגוגל מפס עצמו), להקליד נ"צ (כמו 31.70, 35.33), ללחוץ על המפה, או לגרור את הנקודה. בלי מיקום מדויק, הנקודה תוצג במרכז היישוב.</p>
         <div className="adm-row">
-          <input value={q} onChange={e => setQ(e.target.value)} placeholder="כתובת או שם המקום" onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); search(q || `${p.name} ${p.town}`); } }} />
+          <input value={q} onChange={e => setQ(e.target.value)} placeholder='כתובת, שם המקום או נ"צ' onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); search(q || `${p.name} ${p.town}`); } }} />
           <button type="button" className="adm-btn" disabled={busy} onClick={() => search(q || `${p.name} ${p.town}`)}>חיפוש מיקום</button>
           {p.town && <button type="button" className="adm-btn ghost" disabled={busy} onClick={() => start(async () => {
-            const h = (await geocode(p.town)).find(x => x.kind === 'town') || (await geocode(p.town))[0];
-            if (h) { setLoc(h.lat, h.lng, 'town', h); setHits(null); } else setHits([]);
+            const all = await lookup(p.town);
+            const h = all?.find(x => x.kind === 'town') || all?.[0];
+            if (h) { setLoc(h.lat, h.lng, 'town', h); setHits(null); } else if (all) setHits([]);
           })}>רק מרכז היישוב</button>}
         </div>
+        {geoErr && <p className="adm-err-line">{geoErr}</p>}
         {hits && (hits.length ? <ul className="adm-hits">{hits.map((h, i) => <li key={i}><button type="button" onClick={() => { setLoc(h.lat, h.lng, h.kind, h); setHits(null); }}>{h.name}{h.address && h.address !== h.name && <small> · {h.address}</small>}</button></li>)}</ul> : <p className="adm-hint">גוגל מפס לא מצא. נסי ניסוח אחר (כמו שמחפשים בגוגל מפס), או לחצי על המפה.</p>)}
         <LocNow p={p} />
         <PinMap lat={p.lat} lng={p.lng} onMove={(la, ln) => setLoc(la, ln, 'exact')} />
@@ -155,7 +214,7 @@ export default function PlaceForm({ initial, hidden, updatedAt, draft, texts, re
           {draft && <span className="adm-hint">אחרי האישור עוברים לבאה בתור</span>}
           <span className="adm-sp" />
           {!isNew && !hidden && <button type="button" className="adm-btn ghost" disabled={busy} onClick={() => setClosing(true)}>המקום נסגר</button>}
-          {!isNew && <button type="button" className="adm-btn danger" disabled={busy} onClick={() => { if (confirm(`למחוק את "${p.name}" לצמיתות? בדרך כלל עדיף "המקום נסגר", שאפשר להחזיר.`)) start(() => remove(p.id)); }}>מחיקה</button>}
+          {!isNew && <button type="button" className="adm-btn danger" disabled={busy} onClick={() => { if (confirm(`למחוק את "${p.name}" לצמיתות? בדרך כלל עדיף "המקום נסגר", שאפשר להחזיר.`)) start(async () => { leaving.current = true; forget(); await remove(p.id); }); }}>מחיקה</button>}
         </div>
         {updatedAt && <p className="adm-hint">עודכן לאחרונה: {new Date(updatedAt).toLocaleString('he-IL')}</p>}
       </div>
@@ -179,7 +238,7 @@ function LocNow({ p }: { p: Place }) {
   const google = src.match(/^Google Maps: (.*?)(?: · (https?:\S+))?$/);
   const searched = src.match(/^חיפוש בדף הניהול: (.*)$/);
   const what = p.precision !== 'exact' ? `מרכז היישוב${p.town ? ` ${p.town}` : ''}`
-    : google ? google[1] : searched ? searched[1] : src === 'עודכן בדף הניהול' ? 'נקודה שסומנה ידנית על המפה' : src || 'מיקום מדויק';
+    : google ? google[1] : searched ? searched[1] : src === 'עודכן בדף הניהול' ? 'נקודה שסומנה ידנית על המפה' : src === 'נ"צ שהוקלד בדף הניהול' ? 'נ"צ שהוקלד' : src || 'מיקום מדויק';
   const url = google?.[2] || `https://www.google.com/maps?q=${p.lat},${p.lng}`;
   return (
     <div className="adm-loc">
